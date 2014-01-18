@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="Sumerics.Controls.ConsoleControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Sumerics.Controls"
+    xmlns:c="clr-namespace:FastColoredTextBoxNS;assembly=Console"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="600">
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="Seperator" TargetType="Line">
+                <Setter Property="X1" Value="0" />
+                <Setter Property="X2" Value="0" />
+                <Setter Property="Y1" Value="10" />
+                <Setter Property="Y2" Value="30" />
+                <Setter Property="Stroke" Value="DarkGray" />
+                <Setter Property="Width" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <Popup IsOpen="False" x:Name="Notification" Height="80" Width="300" AllowsTransparency="True"
+               Placement="Center">
+            <Border Background="Red" CornerRadius="8" Margin="15">
+                <TextBlock Text="New notification available!" FontWeight="Light"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="White" FontSize="20" />
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0" Color="Black" Opacity="1" BlurRadius="12"/>
+                </Border.Effect>
+            </Border>
+        </Popup>
+
+        <WindowsFormsHost Grid.Row="0" x:Name="Host">
+            <c:FastColoredTextBox FontSize="16" x:Name="Console" />
+        </WindowsFormsHost>
+
+        <local:KeyboardControl Grid.Row="1" x:Name="InputPanel" />
+
+        <ListBox Name="CommandHistoryList" HorizontalContentAlignment="Stretch" Grid.Row="2"
+                 Visibility="Collapsed" MaxHeight="120">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <!--<Setter Property="Width" Value="200"/>-->
+                    <Setter Property="MaxHeight" Value="60"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{DynamicResource SquareButtonStyle}" Margin="0"
+                                    HorizontalAlignment="Stretch" Click="CommandHistoryClick">
+                        <TextBlock Text="{Binding}" TextTrimming="CharacterEllipsis" />
+                    </Button>
+                    
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="EvaluateButton" ToolTip="Evaluate input">
+                <Image Source="Images/check.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+            
+            <Button Style="{StaticResource MetroCircleButton}" 
+                    IsEnabled="False" Name="StopButton"
+                    ToolTip="Stop current evaluations">
+                <Image Source="Images/stop.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="MathInputButton" ToolTip="Draw expression">
+                <Image Source="Images/pen.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="HistoryButton" ToolTip="Command History">
+                <Image Source="Images/history.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="AutocompleteButton" ToolTip="Show autocomplete">
+                <Image Source="Images/auto.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="InputPanelButton" ToolTip="Toggle input panel">
+                <Image Source="Images/keyboard.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="CollapseButton" ToolTip="Collapse all blocks">
+                <Image Source="Images/collapse.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="ExpandButton" ToolTip="Expand all blocks">
+                <Image Source="Images/expand.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="EditorButton" ToolTip="Open editor">
+                <Image Source="Images/editor.png" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

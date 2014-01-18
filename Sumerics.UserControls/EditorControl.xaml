@@ -1,0 +1,188 @@
+﻿<UserControl x:Class="Sumerics.Controls.EditorControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:FastColoredTextBoxNS;assembly=Console"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Sumerics.Controls"
+    mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Buttons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="Seperator" TargetType="Line">
+                <Setter Property="X1" Value="0" />
+                <Setter Property="X2" Value="0" />
+                <Setter Property="Y1" Value="10" />
+                <Setter Property="Y2" Value="30" />
+                <Setter Property="Stroke" Value="DarkGray" />
+                <Setter Property="Width" Value="12" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="SaveButton" ToolTip="Save file">
+                <Image Source="Images/save.png" />
+            </Button>
+            
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="SaveAsButton" ToolTip="Save file as ...">
+                <Image Source="Images/saveas.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="UndoButton" ToolTip="Undo">
+                <Image Source="Images/undo.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="RedoButton" ToolTip="Redo">
+                <Image Source="Images/redo.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="CopyButton" ToolTip="Copy to clipboard">
+                <Image Source="Images/copy.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="PasteButton" ToolTip="Paste from clipboard">
+                <Image Source="Images/paste.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="CloseButton" ToolTip="Close file">
+                <Image Source="Images/close.png" />
+            </Button>
+        </StackPanel>
+
+        <WindowsFormsHost Grid.Row="1" x:Name="Host">
+            <c:FastColoredTextBox FontSize="12" x:Name="Editor" />
+        </WindowsFormsHost>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="ExecuteButton" ToolTip="Execute">
+                <Image Source="Images/check.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="MathInputButton" ToolTip="Draw expression">
+                <Image Source="Images/pen.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="AutocompleteButton" ToolTip="Show autocomplete">
+                <Image Source="Images/auto.png" />
+            </Button>
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="InputPanelButton" ToolTip="Toggle input panel">
+                <Image Source="Images/keyboard.png" />
+            </Button>
+
+            <Line Style="{StaticResource Seperator}" />
+
+            <Button Style="{StaticResource MetroCircleButton}"
+                    Name="ShowErrorsButton" ToolTip="Show / hide errors">
+                <Image Source="Images/errors.png" />
+            </Button>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Background="#F2F2F2" Margin="5"
+              Visibility="Collapsed" x:Name="ErrorGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="Line" Grid.Column="0"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="Col" Grid.Column="1"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="Message" Grid.Column="2"
+                       HorizontalAlignment="Center" />
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="100"
+                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4">
+                <ItemsControl x:Name="Errors">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="{Binding Line}" Grid.Column="0"
+                                       FontWeight="Bold" />
+                                <TextBlock Text="{Binding Column}" Grid.Column="1"
+                                       FontWeight="Bold" />
+                                <TextBlock Text="{Binding Message}" Grid.Column="2"
+                                       TextTrimming="CharacterEllipsis"
+                                       Foreground="Red"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+
+        <Grid Grid.Row="4" Margin="10 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="40" />
+                <ColumnDefinition Width="30" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="err" Grid.Column="1" HorizontalAlignment="Center" />
+
+            <TextBlock Text="0" Grid.Column="2" FontWeight="Bold" x:Name="ErrorCount" />
+
+            <TextBlock Text="ln" Grid.Column="3" HorizontalAlignment="Center" />
+
+            <TextBlock Text="1" Grid.Column="4" FontWeight="Bold" x:Name="Line" />
+
+            <TextBlock Text="col" Grid.Column="5" HorizontalAlignment="Center" />
+
+            <TextBlock Text="1" Grid.Column="6" FontWeight="Bold" x:Name="Column" />
+        </Grid>
+
+        <local:KeyboardControl Grid.Row="5" x:Name="InputPanel" />
+    </Grid>
+</UserControl>

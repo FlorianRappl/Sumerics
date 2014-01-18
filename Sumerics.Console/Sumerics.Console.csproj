@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6DD14A85-CCFC-4774-BD26-0F5772512319}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FastColoredTextBoxNS</RootNamespace>
+    <AssemblyName>Console</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Events\AutoIndentEventArgs.cs" />
+    <Compile Include="Events\ToolTipNeededEventArgs.cs" />
+    <Compile Include="Images.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Images.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Lines\Char.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Export.cs" />
+    <Compile Include="FindEndOfFoldingBlockStrategy.cs" />
+    <Compile Include="HighlightingRangeType.cs" />
+    <Compile Include="IndentMarker.cs" />
+    <Compile Include="Lines\LineInfo.cs" />
+    <Compile Include="Events\LineInsertedEventArgs.cs" />
+    <Compile Include="Events\LineRemovedEventArgs.cs" />
+    <Compile Include="Lines\LinesAccessor.cs" />
+    <Compile Include="OutputRegion.cs" />
+    <Compile Include="Events\PaintLineEventArgs.cs" />
+    <Compile Include="Events\QueryEventArgs.cs" />
+    <Compile Include="Lines\RangeInfo.cs" />
+    <Compile Include="Lines\RangeRect.cs" />
+    <Compile Include="Lines\StyleIndex.cs" />
+    <Compile Include="SyntaxHighlighter.cs" />
+    <Compile Include="FastColoredTextBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\ClearSelectedCommand.cs" />
+    <Compile Include="Commands\InsertCharCommand.cs" />
+    <Compile Include="Commands\InsertTextCommand.cs" />
+    <Compile Include="Commands\MultiRangeCommand.cs" />
+    <Compile Include="Commands\RemoveLinesCommand.cs" />
+    <Compile Include="Commands\ReplaceMultipleTextCommand.cs" />
+    <Compile Include="Commands\ReplaceTextCommand.cs" />
+    <Compile Include="Commands\UndoableCommand.cs" />
+    <Compile Include="LimitedStack.cs" />
+    <Compile Include="Lines\Line.cs" />
+    <Compile Include="Lines\Place.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Lines\Range.cs" />
+    <Compile Include="Lines\Style.cs" />
+    <Compile Include="Events\TextChangedEventArgs.cs" />
+    <Compile Include="Events\TextChangingEventArgs.cs" />
+    <Compile Include="TextSource.cs" />
+    <Compile Include="TypeDescriptor.cs" />
+    <Compile Include="VisibleState.cs" />
+    <Compile Include="VisualMarker.cs" />
+    <Compile Include="WordWrapMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\collapsed.png" />
+    <Content Include="Images\expanded.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Images.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

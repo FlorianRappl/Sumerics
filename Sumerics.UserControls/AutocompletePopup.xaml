@@ -1,0 +1,48 @@
+﻿<Popup x:Class="Sumerics.Controls.AutocompletePopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Placement="Custom" MaxHeight="200"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Popup.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Popup.Resources>
+
+    <Border Background="WhiteSmoke">
+        <ListBox Name="Liste" HorizontalContentAlignment="Stretch" Margin="0"
+                 VirtualizingStackPanel.IsVirtualizing="False">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0"/>
+                    <EventSetter Event="PreviewMouseDoubleClick" Handler="OnItemClicked" />
+                    <EventSetter Event="PreviewTouchDown" Handler="OnItemTouched" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0" Height="30"
+                                ToolTip="{Binding ToolTip}">
+                        <Image Source="{Binding Path=Icon}" Width="30" Height="30" />
+                        <TextBlock Text="{Binding Text}" HorizontalAlignment="Left" FontSize="14"
+                                   VerticalAlignment="Center" Margin="4, 0, 8, 0" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Border>
+</Popup>

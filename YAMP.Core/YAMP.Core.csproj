@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09BF8F58-1691-41A0-94CB-FBA0BDFE30A3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YAMP</RootNamespace>
+    <AssemblyName>YAMP.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\DescriptionAttribute.cs" />
+    <Compile Include="Attributes\ExampleAttribute.cs" />
+    <Compile Include="Attributes\KindAttribute.cs" />
+    <Compile Include="Attributes\LinkAttribute.cs" />
+    <Compile Include="Attributes\NoDescriptionAttribute.cs" />
+    <Compile Include="Core\ChangeState.cs" />
+    <Compile Include="Core\Context.cs" />
+    <Compile Include="Core\CustomConstant.cs" />
+    <Compile Include="Core\CustomFunction.cs" />
+    <Compile Include="Core\TypeMetric.cs" />
+    <Compile Include="Core\YConstant.cs" />
+    <Compile Include="Core\Constants\DegConstant.cs" />
+    <Compile Include="Core\Constants\EConstant.cs" />
+    <Compile Include="Core\Constants\PhiConstant.cs" />
+    <Compile Include="Core\Constants\PiConstant.cs" />
+    <Compile Include="Core\YException.cs" />
+    <Compile Include="Expressions\ArrayExpression.cs" />
+    <Compile Include="Expressions\EmptyExpression.cs" />
+    <Compile Include="Core\Functions\Conversion\Bin2DecFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Cart2PolFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Cart2SphFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Hex2DecFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Oct2DecFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Pol2CartFunction.cs" />
+    <Compile Include="Core\Functions\Conversion\Sph2CartFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsComplexFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsInfiniteFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsIntFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsNaNFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsPrimeFunction.cs" />
+    <Compile Include="Core\Functions\Logic\IsRealFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandbFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandeFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandgFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandiFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandlFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandnFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandpFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandrFunction.cs" />
+    <Compile Include="Core\Functions\Random\RandwFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\AbsFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\ArgFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\CeilFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\ConjFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\DimFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\ExpFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\FacFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\FixFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\FloorFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\HeavisideFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\ImagFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\LengthFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\LinspaceFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\LnFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\Log10Function.cs" />
+    <Compile Include="Core\Functions\Mathematics\Log2Function.cs" />
+    <Compile Include="Core\Functions\Mathematics\LogFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\LogspaceFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\NcrFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\RealFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\RoundFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\SignFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\SizeFunction.cs" />
+    <Compile Include="Core\Functions\Mathematics\SqrtFunction.cs" />
+    <Compile Include="Core\Functions\System\ClearFunction.cs" />
+    <Compile Include="Core\Functions\System\HelpFunction.cs" />
+    <Compile Include="Core\Functions\System\SleepFunction.cs" />
+    <Compile Include="Core\Functions\System\DateFunction.cs" />
+    <Compile Include="Core\Functions\System\TimerFunction.cs" />
+    <Compile Include="Core\Functions\System\TypeFunction.cs" />
+    <Compile Include="Core\Functions\System\VerFunction.cs" />
+    <Compile Include="Core\Functions\System\WhoFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArccosFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArccotFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArccscFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArcoshFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArcothFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArcschFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArcsecFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArcsinFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArctanFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArsechFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArsinhFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\ArtanhFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CosFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CoshFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CotFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CothFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CscFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\CschFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\SecFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\SechFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\SinFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\SinhFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\TanFunction.cs" />
+    <Compile Include="Core\Functions\Trigonometric\TanhFunction.cs" />
+    <Compile Include="Interfaces\IAddable.cs" />
+    <Compile Include="Interfaces\ICallable.cs" />
+    <Compile Include="Interfaces\IMeasurable.cs" />
+    <Compile Include="Interfaces\IConsole.cs" />
+    <Compile Include="Interfaces\IConstant.cs" />
+    <Compile Include="Interfaces\IExample.cs" />
+    <Compile Include="Interfaces\IFunction.cs" />
+    <Compile Include="Interfaces\IFunctionItem.cs" />
+    <Compile Include="Interfaces\IFunctionResolver.cs" />
+    <Compile Include="Interfaces\INotifyOnChanged.cs" />
+    <Compile Include="Interfaces\IObject.cs" />
+    <Compile Include="Interfaces\IPowable.cs" />
+    <Compile Include="Interfaces\ITransposable.cs" />
+    <Compile Include="Report\LanguageToken.cs" />
+    <Compile Include="Report\LanguageTokenCategory.cs" />
+    <Compile Include="Report\ParserError.cs" />
+    <Compile Include="Types\Dynamic.cs" />
+    <Compile Include="Transporters\ExceptionType.cs" />
+    <Compile Include="Types\DynamicList.cs" />
+    <Compile Include="Types\Matrix.cs" />
+    <Compile Include="Types\Nothing.cs" />
+    <Compile Include="Numerics\Functions\Bessel.cs" />
+    <Compile Include="Numerics\BlasL1.cs" />
+    <Compile Include="Numerics\BlasL2.cs" />
+    <Compile Include="Numerics\BlasL3.cs" />
+    <Compile Include="Numerics\LinearAlgebra\CholeskyDecomposition.cs" />
+    <Compile Include="Numerics\Functions\Dawson.cs" />
+    <Compile Include="Numerics\LinearAlgebra\DirectSolver.cs" />
+    <Compile Include="Numerics\LinearAlgebra\Eigenvalues.cs" />
+    <Compile Include="Numerics\Functions\ErrorFunction.cs" />
+    <Compile Include="Numerics\Functions\Gamma.cs" />
+    <Compile Include="Numerics\LinearAlgebra\GivensDecomposition.cs" />
+    <Compile Include="Numerics\Helpers.cs" />
+    <Compile Include="Numerics\LinearAlgebra\HouseholderDecomposition.cs" />
+    <Compile Include="Numerics\LinearAlgebra\LUDecomposition.cs" />
+    <Compile Include="Numerics\LinearAlgebra\QRDecomposition.cs" />
+    <Compile Include="Numerics\LinearAlgebra\SingularValueDecomposition.cs" />
+    <Compile Include="Numerics\Functions\Zeta.cs" />
+    <Compile Include="Numerics\RNG\BinomialDistribution.cs" />
+    <Compile Include="Numerics\RNG\ContinuousUniformDistribution.cs" />
+    <Compile Include="Numerics\RNG\DiscreteUniformDistribution.cs" />
+    <Compile Include="Numerics\RNG\Distribution.cs" />
+    <Compile Include="Numerics\RNG\ExponentialDistribution.cs" />
+    <Compile Include="Numerics\RNG\GammaDistribution.cs" />
+    <Compile Include="Numerics\RNG\Generator.cs" />
+    <Compile Include="Numerics\RNG\LaplaceDistribution.cs" />
+    <Compile Include="Numerics\RNG\MT19937Generator.cs" />
+    <Compile Include="Numerics\RNG\NormalDistribution.cs" />
+    <Compile Include="Numerics\RNG\PoissonDistribution.cs" />
+    <Compile Include="Numerics\RNG\RayleighDistribution.cs" />
+    <Compile Include="Numerics\RNG\WeibullDistribution.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Types\Range.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Repl\Color.cs" />
+    <Compile Include="Statements\StatementList.cs" />
+    <Compile Include="Tables\ConstantContainer.cs" />
+    <Compile Include="Tables\Container.cs" />
+    <Compile Include="Tables\FunctionContainer.cs" />
+    <Compile Include="Tables\Maps\MethodMapping.cs" />
+    <Compile Include="Tables\VariableContainer.cs" />
+    <Compile Include="Report\ParserReport.cs" />
+    <Compile Include="Transporters\ArrayType.cs" />
+    <Compile Include="Transporters\FunctionType.cs" />
+    <Compile Include="Transporters\MatrixType.cs" />
+    <Compile Include="Transporters\ObjectType.cs" />
+    <Compile Include="Runtime.cs" />
+    <Compile Include="Tables\Libraries.cs" />
+    <Compile Include="Tables\Maps\MappingItem.cs" />
+    <Compile Include="Core\StandardLibrary.cs" />
+    <Compile Include="Tables\Workspace.cs" />
+    <Compile Include="Core\YFunction.cs" />
+    <Compile Include="Core\YObject.cs" />
+    <Compile Include="Core\YPlugin.cs" />
+    <Compile Include="Interfaces\IType.cs" />
+    <Compile Include="Core\Optimization.cs" />
+    <Compile Include="Core\RunContext.cs" />
+    <Compile Include="Expressions\BinaryExpression.cs" />
+    <Compile Include="Parser\Chars.cs" />
+    <Compile Include="Parser\ErrorCode.cs" />
+    <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Expressions\FunctionExpression.cs" />
+    <Compile Include="Expressions\LambdaExpression.cs" />
+    <Compile Include="Expressions\ListExpression.cs" />
+    <Compile Include="Expressions\LiteralExpression.cs" />
+    <Compile Include="Expressions\MatrixExpression.cs" />
+    <Compile Include="Expressions\RightUnaryExpression.cs" />
+    <Compile Include="Parser\Backend.cs" />
+    <Compile Include="Parser\ParseError.cs" />
+    <Compile Include="Parser\Frontend.cs" />
+    <Compile Include="Statements\BreakStatement.cs" />
+    <Compile Include="Statements\ClassStatement.cs" />
+    <Compile Include="Statements\ConditionalStatement.cs" />
+    <Compile Include="Statements\DoLoopStatement.cs" />
+    <Compile Include="Statements\EmptyStatement.cs" />
+    <Compile Include="Statements\ForLoopStatement.cs" />
+    <Compile Include="Statements\FunctionStatement.cs" />
+    <Compile Include="Statements\LetStatement.cs" />
+    <Compile Include="Statements\ReturnStatement.cs" />
+    <Compile Include="Core\Scope.cs" />
+    <Compile Include="Statements\Statement.cs" />
+    <Compile Include="Expressions\TernaryExpression.cs" />
+    <Compile Include="Statements\WhileLoopStatement.cs" />
+    <Compile Include="Parser\Token.cs" />
+    <Compile Include="Parser\TokenCategory.cs" />
+    <Compile Include="Parser\TokenType.cs" />
+    <Compile Include="Expressions\LeftUnaryExpression.cs" />
+    <Compile Include="Expressions\VariableExpression.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MathQuery.cs" />
+    <Compile Include="Repl\Repl.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="Types\Complex.cs" />
+    <Compile Include="Transporters\BooleanType.cs" />
+    <Compile Include="Transporters\ComplexType.cs" />
+    <Compile Include="Transporters\IntegerType.cs" />
+    <Compile Include="Transporters\RealType.cs" />
+    <Compile Include="Transporters\StringType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Functions\IO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

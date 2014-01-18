@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{936CED45-07A3-47F7-8FF1-B6D2C456CC6A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sumerics</RootNamespace>
+    <AssemblyName>Sumerics</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppUp|AnyCPU'">
+    <OutputPath>bin\AppUp\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppUp|x64'">
+    <OutputPath>bin\x64\AppUp\</OutputPath>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppUp|x86'">
+    <OutputPath>bin\x86\AppUp\</OutputPath>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MahApps.Metro, Version=0.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="YAMP, Version=1.2.2.571, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YAMP.1.2.2\lib\net35\YAMP.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Codebase\ActionButton.xaml.cs">
+      <DependentUpon>ActionButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Codebase\BindableStaticResource.cs" />
+    <Compile Include="Codebase\ColorPicker.cs" />
+    <Compile Include="Codebase\IsNullConverter.cs" />
+    <Compile Include="Codebase\ListBoxItemBehavior.cs" />
+    <Compile Include="Codebase\MathMLParser.cs" />
+    <Compile Include="Codebase\StaticHelpers.cs" />
+    <Compile Include="Commands\CdCommand.cs" />
+    <Compile Include="Commands\CpCommand.cs" />
+    <Compile Include="Commands\DateCommand.cs" />
+    <Compile Include="Commands\LivePlotCommand.cs" />
+    <Compile Include="Commands\LsCommand.cs" />
+    <Compile Include="Commands\MvCommand.cs" />
+    <Compile Include="Commands\PwdCommand.cs" />
+    <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Commands\SleepCommand.cs" />
+    <Compile Include="Commands\TimerCommand.cs" />
+    <Compile Include="Commands\TimeSeriesCommand.cs" />
+    <Compile Include="Commands\TitleCommand.cs" />
+    <Compile Include="Commands\TypeCommand.cs" />
+    <Compile Include="Commands\VerCommand.cs" />
+    <Compile Include="Commands\WhoCommand.cs" />
+    <Compile Include="ConsoleEnterWindow.xaml.cs">
+      <DependentUpon>ConsoleEnterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ContourSeriesWindow.xaml.cs">
+      <DependentUpon>ContourSeriesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DecisionDialog.xaml.cs">
+      <DependentUpon>DecisionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OutputDialog.xaml.cs">
+      <DependentUpon>OutputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Functions\DockFunction.cs" />
+    <Compile Include="Functions\StopFunction.cs" />
+    <Compile Include="Functions\SwitchTabFunction.cs" />
+    <Compile Include="Functions\UndockFunction.cs" />
+    <Compile Include="Functions\WindowFunction.cs" />
+    <Compile Include="Models\Icons.cs" />
+    <Compile Include="PlotWindow.xaml.cs">
+      <DependentUpon>PlotWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SubPlotSettingsWindow.xaml.cs">
+      <DependentUpon>SubPlotSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HeatSeriesWindow.xaml.cs">
+      <DependentUpon>HeatSeriesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DemoBrowser.xaml.cs">
+      <DependentUpon>DemoBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\DialogBaseViewModel.cs" />
+    <Compile Include="Dialogs\FileBaseViewModel.cs" />
+    <Compile Include="Dialogs\FileModel.cs" />
+    <Compile Include="Dialogs\FolderModel.cs" />
+    <Compile Include="Dialogs\OpenFileViewModel.cs" />
+    <Compile Include="Dialogs\OpenFileWindow.xaml.cs">
+      <DependentUpon>OpenFileWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SaveFileViewModel.cs" />
+    <Compile Include="Dialogs\SaveFileWindow.xaml.cs">
+      <DependentUpon>SaveFileWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SaveImageViewModel.cs" />
+    <Compile Include="Dialogs\SaveImageWindow.xaml.cs">
+      <DependentUpon>SaveImageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditorWindow.xaml.cs">
+      <DependentUpon>EditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FolderBrowseWindow.xaml.cs">
+      <DependentUpon>FolderBrowseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HelpWindow.xaml.cs">
+      <DependentUpon>HelpWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Core.cs" />
+    <Compile Include="OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlotSeriesWindow.xaml.cs">
+      <DependentUpon>PlotSeriesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlotSettingsWindow.xaml.cs">
+      <DependentUpon>PlotSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ContourViewModel.cs" />
+    <Compile Include="ViewModels\HeatmapViewModel.cs" />
+    <Compile Include="ViewModels\DocumentationViewModel.cs" />
+    <Compile Include="Dialogs\FolderBrowseViewModel.cs" />
+    <Compile Include="ViewModels\EditorFileViewModel.cs" />
+    <Compile Include="ViewModels\EditorViewModel.cs" />
+    <Compile Include="ViewModels\HelpTileViewModel.cs" />
+    <Compile Include="ViewModels\HelpViewModel.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
+    <Compile Include="ViewModels\PlotSettingsViewModel.cs" />
+    <Compile Include="ViewModels\PlotViewModel.cs" />
+    <Compile Include="ViewModels\PluginViewModel.cs" />
+    <Compile Include="ViewModels\SeriesElementViewModel.cs" />
+    <Compile Include="ViewModels\SeriesViewModel.cs" />
+    <Compile Include="ViewModels\SubPlotSettingsViewModel.cs" />
+    <Compile Include="ViewModels\VariableViewModel.cs" />
+    <Page Include="AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Codebase\ActionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConsoleEnterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContourSeriesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\DecisionDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\InputDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\OutputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubPlotSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HeatSeriesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DemoBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\OpenFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SaveFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SaveImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\FolderBrowseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Codebase\BaseViewModel.cs" />
+    <Compile Include="Codebase\RelayCommand.cs" />
+    <Compile Include="Commands\ClearCommand.cs" />
+    <Compile Include="Commands\ClsCommand.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\LoadCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Commands\YCommand.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlotSeriesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlotSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetSparkle_DSA.pub" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logic_hd.png" />
+    <Resource Include="Resources\logic.png" />
+    <Resource Include="Resources\random_hd.png" />
+    <Resource Include="Resources\random.png" />
+    <Resource Include="Resources\statistics_hd.png" />
+    <Resource Include="Resources\statistics.png" />
+    <Resource Include="Resources\trigonometric_hd.png" />
+    <Resource Include="Resources\trigonometric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Sumerics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\search.png" />
+    <Resource Include="Icons\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Scripts\Sumerics.Scripts.csproj">
+      <Project>{be7752ef-094a-4ae3-836f-4e8689d51c2f}</Project>
+      <Name>Sumerics.Scripts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.UserControls\Sumerics.UserControls.csproj">
+      <Project>{87ae97e6-f957-441b-9315-cadea63a847d}</Project>
+      <Name>Sumerics.UserControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YAMPSensors\YAMPSensors.csproj">
+      <Project>{764a5fe6-5866-4855-ac96-d380b9e88306}</Project>
+      <Name>YAMPSensors</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\function.png" />
+    <Resource Include="Resources\matrix.png" />
+    <Resource Include="Resources\scalar.png" />
+    <Resource Include="Resources\plot.png" />
+    <Resource Include="Resources\string.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\command.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant.png" />
+    <Resource Include="Resources\sensor.png" />
+    <Resource Include="Resources\system.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant_hd.png" />
+    <Resource Include="Resources\function_hd.png" />
+    <Resource Include="Resources\plot_hd.png" />
+    <Resource Include="Resources\sensor_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\system_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\plugin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Dialogs\Icons\folder.png" />
+    <Resource Include="Dialogs\Icons\heart.png" />
+    <Resource Include="Dialogs\Icons\home.png" />
+    <Resource Include="Dialogs\Icons\library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Dialogs\Icons\file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Dialogs\Icons\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\new.png" />
+    <Resource Include="Icons\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\message.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\internet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\failure.png" />
+    <Resource Include="Icons\information.png" />
+    <Resource Include="Icons\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\dialog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ui.png" />
+    <Resource Include="Resources\ui_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant_ac.png" />
+    <Resource Include="Resources\function_ac.png" />
+    <Resource Include="Resources\keyword_ac.png" />
+    <Resource Include="Resources\variable_ac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\conversion.png" />
+    <Resource Include="Resources\conversion_hd.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

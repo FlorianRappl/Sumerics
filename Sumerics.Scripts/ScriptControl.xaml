@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="Sumerics.Controls.ScriptControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:Sumerics.Controls"
+             x:Name="ctrl"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="400" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/ScriptTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <local:CanvasDragSource x:Key="sourceForDragOp" />
+            <local:CanvasDropTarget x:Key="targetForDragOp" />
+            
+        </ResourceDictionary>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="40" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="150" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="150" />
+		</Grid.ColumnDefinitions>
+
+		<Canvas Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
+                Name="TopContainer">
+		</Canvas>
+        
+        <Canvas Grid.Column="0" Grid.Row="1" Name="LeftContainer"
+		        local:DragDropManager.DragSource="{StaticResource sourceForDragOp}">
+        </Canvas>
+        
+		<Canvas Grid.Column="2" Grid.Row="1" Name="RightContainer"
+                local:DragDropManager.DragSource="{StaticResource sourceForDragOp}">
+        </Canvas>
+        
+        <!--
+        local:DragDropManager.DragSource="{StaticResource sourceForDragOp}"
+        -->
+
+        <Border x:Name="CanvasBorder" BorderBrush="LightGray" Grid.Column="1" Grid.Row="1"
+                BorderThickness="1">
+            <Canvas Name="CenterContainer" ClipToBounds="True" Background="#FFFDFDFD"
+                local:DragDropManager.DropTarget="{StaticResource targetForDragOp}">
+            </Canvas>
+        </Border>
+
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Orientation="Horizontal">
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Add argument"
+                    Name="AddInputButton" Click="AddInputButtonClick">
+                <Image Source="Images/addinput.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Delete argument"
+                    IsEnabled="False" Name="DeleteInputButton" Click="DeleteInputButtonClick">
+                <Image Source="Images/delinput.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Toggle connectors"
+                    Name="ToggleConnectorsButton" Click="ToggleConnectorsButtonClick">
+                <Image Source="Images/connect.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Execute script"
+                    Name="MagnifyInButton" Click="MagnifyInButtonClick">
+                <Image Source="Images/magnifyin.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Center view"
+                    Name="CenterButton" Click="CenterButtonClick">
+                <Image Source="Images/center.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Execute script"
+                    Name="MagnifyOutButton" Click="MagnifyOutButtonClick">
+                <Image Source="Images/magnifyout.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Change settings"
+                    Name="SettingsButton" CommandParameter="{Binding ElementName=ctrl}">
+                <Image Source="Images/settings.png" />
+            </Button>
+
+            <Button Style="{DynamicResource ScriptMetroCircleButton}" ToolTip="Execute script"
+                    IsEnabled="False" Name="RunButton" CommandParameter="{Binding ElementName=ctrl}">
+                <Image Source="Images/run.png" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

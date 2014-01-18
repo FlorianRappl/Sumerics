@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8405F81C-3889-4AA0-BF46-9F17EB5B12CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YAMP.LinearAlgebra</RootNamespace>
+    <AssemblyName>YAMP.LinearAlgebra</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Decompositions\CGFunction.cs" />
+    <Compile Include="Decompositions\CholFunction.cs" />
+    <Compile Include="Extension.cs" />
+    <Compile Include="Foundation\CGSolver.cs" />
+    <Compile Include="Foundation\Euler.cs" />
+    <Compile Include="Foundation\GMRESkSolver.cs" />
+    <Compile Include="Foundation\Integrator.cs" />
+    <Compile Include="Foundation\Interpolation.cs" />
+    <Compile Include="Foundation\IterativeSolver.cs" />
+    <Compile Include="Foundation\NevilleInterpolator.cs" />
+    <Compile Include="Foundation\NewtonInterpolation.cs" />
+    <Compile Include="Foundation\NewtonMethod.cs" />
+    <Compile Include="Foundation\NonLinearBase.cs" />
+    <Compile Include="Foundation\ODEBase.cs" />
+    <Compile Include="Foundation\RungeKutta.cs" />
+    <Compile Include="Foundation\SimpsonIntegrator.cs" />
+    <Compile Include="Foundation\SplineInterpolation.cs" />
+    <Compile Include="Foundation\TrapezIntegrator.cs" />
+    <Compile Include="Matrices\DetFunction.cs" />
+    <Compile Include="Generators\DiagFunction.cs" />
+    <Compile Include="Numerics\DiffFunction.cs" />
+    <Compile Include="Matrices\EigFunction.cs" />
+    <Compile Include="Matrices\EigValFunction.cs" />
+    <Compile Include="Matrices\EigVecFunction.cs" />
+    <Compile Include="Generators\EyeFunction.cs" />
+    <Compile Include="Decompositions\GMRESFunction.cs" />
+    <Compile Include="Numerics\IntFunction.cs" />
+    <Compile Include="Decompositions\InvFunction.cs" />
+    <Compile Include="Fitting\LinfitFunction.cs" />
+    <Compile Include="Decompositions\LUFunction.cs" />
+    <Compile Include="Generators\MagicFunction.cs" />
+    <Compile Include="Generators\MeshgridFunction.cs" />
+    <Compile Include="Numerics\OdeFunction.cs" />
+    <Compile Include="Generators\OnesFunction.cs" />
+    <Compile Include="Fitting\PolyfitFunction.cs" />
+    <Compile Include="Fitting\PolyvalFunction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Decompositions\QRFunction.cs" />
+    <Compile Include="Numerics\RootFunction.cs" />
+    <Compile Include="Numerics\SimpsFunction.cs" />
+    <Compile Include="Decompositions\SolveFunction.cs" />
+    <Compile Include="Generators\SphereFunction.cs" />
+    <Compile Include="Fitting\SplineFunction.cs" />
+    <Compile Include="Decompositions\SvdFunction.cs" />
+    <Compile Include="Matrices\TraceFunction.cs" />
+    <Compile Include="Numerics\TrapzFunction.cs" />
+    <Compile Include="Decompositions\TrilFunction.cs" />
+    <Compile Include="Decompositions\TriuFunction.cs" />
+    <Compile Include="Matrices\VectorFunction.cs" />
+    <Compile Include="Generators\ZerosFunction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YAMP.Core\YAMP.Core.csproj">
+      <Project>{09bf8f58-1691-41a0-94cb-fba0bdfe30a3}</Project>
+      <Name>YAMP.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
