@@ -1,19 +1,19 @@
-﻿using System;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+
     class HelpCommand : YCommand
     {
         public HelpCommand() : base(0, 1)
         {
         }
 
-        public string Invocation()
+        public String Invocation()
         {
             return "help()";
         }
 
-        public string Invocation(string method)
+        public String Invocation(String method)
         {
             return "help(\"" + method + "\")";
         }

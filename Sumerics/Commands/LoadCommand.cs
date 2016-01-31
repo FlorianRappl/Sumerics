@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System.Text;
+
     class LoadCommand : YCommand
     {
         public LoadCommand() : base(1)

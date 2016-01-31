@@ -1,8 +1,7 @@
-﻿using System;
-using System.Text;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System.Text;
+
     class SaveCommand : YCommand
     {
         public SaveCommand() : base(1)
@@ -22,7 +21,9 @@ namespace Sumerics
             sb.Append("\"");
 
             if (Parameters.Length > 0)
+            {
                 sb.Append(", \"").Append(string.Join("\", \"", Parameters)).Append("\"");
+            }
 
             sb.Append(")");
             return sb.ToString();

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sumerics.Commands
+﻿namespace Sumerics.Commands
 {
+    using System.Text;
+
     class LivePlotCommand : YCommand
     {
         public LivePlotCommand()
@@ -18,7 +14,7 @@ namespace Sumerics.Commands
             var sb = new StringBuilder();
             sb.Append("liveplot(\"").Append(Parameters[0]).Append("\"");
 
-            for (int i = 1; i < Parameters.Length; i++)
+            for (var i = 1; i < Parameters.Length; i++)
             {
                 sb.Append(", ").Append(Parameters[i]);
             }

@@ -1,17 +1,17 @@
-﻿using System;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+
     class ExitCommand : YCommand
     {
         public ExitCommand() : base(0, 0)
         {
         }
 
-        public string Invocation()
+        public String Invocation()
         {
             App.Current.Shutdown();
-            return string.Empty;
+            return String.Empty;
         }
     }
 }

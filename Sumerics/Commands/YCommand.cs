@@ -1,19 +1,18 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
+
     abstract class YCommand
 	{
-		#region Members
+		#region Fields
 
-		int _minArguments;
-        int _maxArguments;
-        Dictionary<int, Func<object, object[], object>> invocations;
+		Int32 _minArguments;
+        Int32 _maxArguments;
+        Dictionary<Int32, Func<Object, Object[], Object>> invocations;
 
 		#endregion
 
