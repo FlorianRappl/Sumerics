@@ -1,21 +1,20 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using FastColoredTextBoxNS;
-using YAMP;
-using System.Collections.Generic;
-using System.Threading;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using FastColoredTextBoxNS;
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Text;
+    using System.Threading;
+    using YAMP;
+
     public class QueryResultViewModel
     {
-        #region Members
+        #region Fields
 
         Value result;
         Exception exception;
-		bool running;
+		Boolean running;
 
 		#endregion
 
@@ -78,7 +77,7 @@ namespace Sumerics
             }
         }
 
-        public bool Running
+        public Boolean Running
         {
             get { return running; }
             set
@@ -88,12 +87,16 @@ namespace Sumerics
                 if (running)
                 {
                     if (!runningQueries.Contains(this))
+                    {
                         AddRunningQuery(this);
+                    }
                 }
                 else
                 {
                     if (runningQueries.Contains(this))
+                    {
                         RemoveRunningQuery(this);
+                    }
                 }
 
                 RaisePropertyChanged();

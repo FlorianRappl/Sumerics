@@ -1,16 +1,12 @@
-﻿using Sumerics.Controls;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Input;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using Sumerics.Controls;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using YAMP;
+
     /// <summary>
     /// ViewModel for one tab in the editor, i.e. one file.
     /// </summary>
@@ -69,9 +65,13 @@ namespace Sumerics
         public void Save()
         {
             if (IsSaveAs)
+            {
                 SaveAs();
+            }
             else
+            {
                 SaveText();
+            }
         }
 
         public void SaveAs()
@@ -82,7 +82,9 @@ namespace Sumerics
             dialog.ShowDialog();
 
             if (dialog.Accepted)
+            {
                 SaveText(dialog.SelectedFile);
+            }
         }
 
         public void Close()
@@ -90,10 +92,12 @@ namespace Sumerics
             if (Changed)
             {
                 var result = DecisionDialog.Show("The content has been changed. Save the changes?",
-                    new[] { "Yes, save the changes.", "No, but thanks!", "Cancel closing." }); 
+                    new[] { "Yes, save the changes.", "No, but thanks!", "Cancel closing." });
 
                 if (result == 2)
+                {
                     return;
+                }
                 else if (result == 0)
                 {
                     Save();
@@ -116,27 +120,29 @@ namespace Sumerics
         public void Compile()
         {
             Clean();
-            var p = Parser.Parse(debugContext, Text.Replace("\r\n", "\n"));
+            var p = Core.Parser.Parse(Text.Replace("\r\n", "\n"));
 
-            if (p.Context.Parser.HasErrors)
+            if (p.Parser.HasErrors)
             {
-                foreach (var error in p.Context.Parser.Errors)
+                foreach (var error in p.Parser.Errors)
+                {
                     ed.SetError(error.Line, error.Column, error.Length, error.Message);
+                }
 
                 ed.Refresh();
             }
 
-            AddVariableSymbols(p.Context.Parser.CollectedSymbols);
+            AddVariableSymbols(p.Parser.CollectedSymbols);
         }
 
         public void Execute()
         {
-            if (currentExecution != null && currentExecution.Running)
-                return;
-
-            awaiting = true;
-            App.Window.RunQuery(Text, "Evaluating " + FileName);
-            awaiting = false;
+            if (currentExecution == null || currentExecution.Running)
+            {
+                awaiting = true;
+                App.Window.RunQuery(Text, "Evaluating " + FileName);
+                awaiting = false;
+            }
         }
 
         #endregion

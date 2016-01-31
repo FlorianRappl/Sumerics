@@ -128,6 +128,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NAudio.1.6\lib\net20\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -147,9 +151,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YAMP, Version=1.2.2.571, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="YAMP, Version=1.5.0.7513, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.1.2.2\lib\net35\YAMP.dll</HintPath>
+      <HintPath>..\packages\YAMP.1.5.0.7513\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
+    </Reference>
+    <Reference Include="YAMP.Io">
+      <HintPath>..\packages\YAMP.Io.1.5.0.7911\lib\net40\YAMP.Io.dll</HintPath>
+    </Reference>
+    <Reference Include="YAMP.Physics">
+      <HintPath>..\packages\YAMP.Physics.1.5.0.7895\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
+    </Reference>
+    <Reference Include="YAMP.Sensors">
+      <HintPath>..\packages\YAMP.Sensors.1.5.0.7948\lib\net45\YAMP.Sensors.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -426,10 +439,6 @@
     <ProjectReference Include="..\Sumerics.UserControls\Sumerics.UserControls.csproj">
       <Project>{87ae97e6-f957-441b-9315-cadea63a847d}</Project>
       <Name>Sumerics.UserControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\YAMPSensors\YAMPSensors.csproj">
-      <Project>{764a5fe6-5866-4855-ac96-d380b9e88306}</Project>
-      <Name>YAMPSensors</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

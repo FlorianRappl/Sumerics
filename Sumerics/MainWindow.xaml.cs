@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using YAMP;
-//using YAMP.Sensors;
-using System.IO;
-using System.Windows.Interop;
-using System.Runtime.InteropServices;
-using Sumerics.Controls;
-using System.Diagnostics;
-using System.Windows.Controls.Primitives;
-using System.Timers;
-using System.Collections.Specialized;
-using System.ComponentModel;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    //using YAMP.Sensors;
+    using Sumerics.Controls;
+    using System;
+    using System.Collections.Specialized;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using YAMP;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -176,14 +162,20 @@ namespace Sumerics
             if (Core.IsWindows8)
             {
                 SensorsTab.Visibility = System.Windows.Visibility.Visible;
-                
+
                 if (settings.LivePlotActive && !sensorRunning)
+                {
                     PerformMeasurement().FireAndForget();
+                }
                 else if (!settings.LivePlotActive && sensorRunning)
+                {
                     sensorRunning = false;
+                }
             }
             else
+            {
                 SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
+            }
 
 			initial = false;
 		}

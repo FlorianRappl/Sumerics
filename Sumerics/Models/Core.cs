@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
-using YAMP;
-using YAMP.Help;
-using YAMP.Sensors;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Threading;
+    using YAMP;
+    using YAMP.Exceptions;
+    using YAMP.Help;
+    using YAMP.Io;
+    using YAMP.Physics;
+    using YAMP.Sensors;
+
     /// <summary>
     /// Contains the main YAMP core and libraries.
     /// </summary>
@@ -54,27 +56,33 @@ namespace Sumerics
 
         #endregion
 
-        #region Members
+        #region Fields
 
         static Documentation documentation;
-        static ParseContext primary;
-        static ParseContext context;
 
-        static Dispatcher dispatcher;
-        static List<PluginViewModel> plugins;
+        static Parser parser = new Parser();
+        static Dispatcher dispatcher = Application.Current.Dispatcher;
+        static List<PluginViewModel> plugins = new List<PluginViewModel>();
 
         #endregion
 
         #region Properties
 
         /// <summary>
+        /// Gets the parser.
+        /// </summary>
+        public static Parser Parser
+        {
+            get { return parser; }
+        }
+
+        /// <summary>
         /// Gets the path to the error log.
         /// </summary>
-        public static string ErrorLog
+        public static String ErrorLog
         {
             get
             {
-                //var directory = AppDomain.CurrentDomain.BaseDirectory;
                 var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 return directory + @"\Sumerics\errors.log";
             }
@@ -83,11 +91,10 @@ namespace Sumerics
         /// <summary>
         /// Gets the path to the global startup script.
         /// </summary>
-        public static string GlobalScript
+        public static String GlobalScript
         {
             get
             {
-                //var directory = AppDomain.CurrentDomain.BaseDirectory;
                 var directory = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
                 return directory + @"\Sumerics\profile.ys";
             }
@@ -96,7 +103,7 @@ namespace Sumerics
         /// <summary>
         /// Gets the path to the local (user bound) startup script.
         /// </summary>
-        public static string LocalScript
+        public static String LocalScript
         {
             get
             {
@@ -108,7 +115,7 @@ namespace Sumerics
         /// <summary>
         /// Gets the status of the OS. Is it sensor capable (in theory)?
         /// </summary>
-        public static bool IsWindows8
+        public static Boolean IsWindows8
         {
             //Only load sensors if the OS is version is >= 6.2 [ Build 9200 ]
             get { return Environment.OSVersion.Version >= new Version(6, 2); }
@@ -117,31 +124,34 @@ namespace Sumerics
         /// <summary>
         /// Gets the status of the core. Is it ready?
         /// </summary>
-        public static bool IsLoaded { get; private set; }
+        public static Boolean IsLoaded 
+        { 
+            get; 
+            private set; 
+        }
 
         /// <summary>
         /// Gets the documentation system.
         /// </summary>
-        public static Documentation Help { get { return documentation; } }
+        public static Documentation Help 
+        {
+            get { return documentation; } 
+        }
 
         /// <summary>
         /// Gets the primary parse context of YAMP.
         /// </summary>
-        public static ParseContext Context { get { return context; } }
+        public static ParseContext Context 
+        {
+            get { return parser.Context; } 
+        }
 
         /// <summary>
         /// Gets the plugins loaded by the YAMP parse context.
         /// </summary>
-        public static List<PluginViewModel> Plugins { get { return plugins; } }
-
-        #endregion
-
-        #region ctor
-
-        static Core()
-        {
-            plugins = new List<PluginViewModel>();
-            dispatcher = Application.Current.Dispatcher;
+        public static List<PluginViewModel> Plugins 
+        { 
+            get { return plugins; } 
         }
 
         #endregion
@@ -155,29 +165,26 @@ namespace Sumerics
         {
             if (!IsLoaded)
             {
-                Parser.UseScripting = true;
-
-                primary = Parser.Load();
-                context = new ParseContext(primary);
-
+                parser.UseScripting = true;
+                
                 LoadUIManipulators();
                 LoadPlugins();
 
-                context.OnLastPlotChanged += RaisePlotCreated;
-                context.OnVariableChanged += RaiseVariableChanged;
-                context.OnVariableCreated += RaiseVariableCreated;
-                context.OnVariableRemoved += RaiseVariableRemoved;
+                Context.OnLastPlotChanged += RaisePlotCreated;
+                Context.OnVariableChanged += RaiseVariableChanged;
+                Context.OnVariableCreated += RaiseVariableCreated;
+                Context.OnVariableRemoved += RaiseVariableRemoved;
 
-                documentation = Documentation.Create(context);
+                documentation = Documentation.Create(Context);
 
                 Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
                 ExecuteGlobalScript();
                 ExecuteLocalScript();
 
-                Parser.InteractiveMode = true;
-                Parser.OnNotificationReceived += RaiseNotificationReceived;
-                Parser.OnUserInputRequired += RaiseUserInputRequired;
+                parser.InteractiveMode = true;
+                parser.NotificationReceived += RaiseNotificationReceived;
+                parser.UserInputRequired += RaiseUserInputRequired;
 
                 IsLoaded = true;
             }
@@ -188,9 +195,9 @@ namespace Sumerics
         /// </summary>
         /// <param name="query">The query to evaluate.</param>
         /// <returns>The query context.</returns>
-        public static async Task<QueryContext> RunAsync(string query)
+        public static async Task<Value> RunAsync(String query)
         {
-            return await Task.Run(() => context.Run(query.Replace("\r\n", "\n")));
+            return await Task.Run(() => parser.Evaluate(query.Replace("\r\n", "\n")));
         }
 
         /// <summary>
@@ -198,9 +205,9 @@ namespace Sumerics
         /// </summary>
         /// <param name="qrvm">The query context to operate within.</param>
         /// <param name="query">The (maybe modified) query to execute.</param>
-        public static async void RunAsync(QueryResultViewModel qrvm, string query)
+        public static async void RunAsync(QueryResultViewModel qrvm, String query)
         {
-            if (query.Equals(string.Empty))
+            if (query.Equals(String.Empty))
             {
                 qrvm.Running = false;
                 return;
@@ -211,22 +218,28 @@ namespace Sumerics
                 var result = await Task.Run(() =>
                 {
                     qrvm.Thread = Thread.CurrentThread;
-                    return context.Run(query.Replace("\r\n", "\n"));
+                    return parser.Evaluate(query.Replace("\r\n", "\n"));
                 });
-                qrvm.Context = result.Context;
+                qrvm.Context = Context;
                 qrvm.Running = false;
 
-                if (!result.IsMuted)
-                    qrvm.Value = result.Output;
+                //if (!result.IsMuted)
+                {
+                    qrvm.Value = result;
+                }
             }
             catch (YAMPParseException ex)
             {
                 var firsterr = ex.Errors.FirstOrDefault();
 
                 if (firsterr != null)
+                {
                     qrvm.Error = new YAMPException(firsterr.Message);
+                }
                 else
+                {
                     qrvm.Error = ex;
+                }
             }
             catch (YAMPRuntimeException ex)
             {
@@ -247,18 +260,18 @@ namespace Sumerics
         /// Loads some workspace from the specified file asynchronously.
         /// </summary>
         /// <param name="fileName">The path to the file.</param>
-        public static async void LoadWorkspaceAsync(string fileName)
+        public static async void LoadWorkspaceAsync(String fileName)
         {
-            await Task.Run(() => context.Load(fileName));
+            await Task.Run(() => Context.Load(fileName));
         }
 
         /// <summary>
         /// Loads the workspace to the specified file asynchronously.
         /// </summary>
         /// <param name="fileName">The path to the file.</param>
-        public static async void SaveWorkspaceAsync(string fileName)
+        public static async void SaveWorkspaceAsync(String fileName)
         {
-            await Task.Run(() => context.Save(fileName));
+            await Task.Run(() => Context.Save(fileName));
         }
 
         #endregion
@@ -307,26 +320,32 @@ namespace Sumerics
 
         static void LoadPlugins()
         {
+            LoadPlugin(typeof(IoPlugin).Assembly);
+            LoadPlugin(typeof(PhysicsPlugin).Assembly);
+
             if (IsWindows8)
             {
-                var assembly = Assembly.GetAssembly(typeof(SensorFunction));
-                LoadPlugin(assembly);
+                LoadPlugin(typeof(SensorsPlugin).Assembly);
             }
 
-            var files = new string[0];
+            var files = new String[0];
 
             try
             {
                 if (Directory.Exists("Plugins"))
+                {
                     files = Directory.GetFiles("Plugins", "*.dll");
+                }
             }
             catch { }
 
             foreach (var file in files)
+            {
                 LoadPlugin(file);
+            }
         }
 
-        static void LoadPlugin(string assemblyPath)
+        static void LoadPlugin(String assemblyPath)
         {
             try
             {
@@ -336,7 +355,9 @@ namespace Sumerics
                 plugins.Add(model);
 
                 if (model.Active)
-                    Parser.LoadPlugin(primary, assembly);
+                {
+                    parser.LoadPlugin(assembly);
+                }
             }
             catch (Exception ex)
             {
@@ -347,13 +368,15 @@ namespace Sumerics
         static void LoadPlugin(Assembly assembly)
         {
             plugins.Add(new PluginViewModel(assembly));
-            Parser.LoadPlugin(primary, assembly);
+            parser.LoadPlugin(assembly);
         }
 
-        static bool PluginActive(string path)
+        static Boolean PluginActive(String path)
         {
             if (Properties.Settings.Default.ActivePlugins != null)
+            {
                 return Properties.Settings.Default.ActivePlugins.Contains(path);
+            }
 
             return false;
         }
@@ -364,11 +387,11 @@ namespace Sumerics
 
         static void LoadUIManipulators()
         {
-            context.AddFunction("switchtab", SwitchTabFunction.Create());
-            context.AddFunction("undock", UndockFunction.Create());
-            context.AddFunction("window", WindowFunction.Create());
-            context.AddFunction("dock", DockFunction.Create());
-            context.AddFunction("stop", StopFunction.Create());
+            Context.AddFunction("switchtab", SwitchTabFunction.Create());
+            Context.AddFunction("undock", UndockFunction.Create());
+            Context.AddFunction("window", WindowFunction.Create());
+            Context.AddFunction("dock", DockFunction.Create());
+            Context.AddFunction("stop", StopFunction.Create());
         }
 
         #endregion
@@ -386,7 +409,7 @@ namespace Sumerics
             {
                 var script = File.ReadAllText(path);
 
-                try { context.Run(script); }
+                try { parser.Evaluate(script); }
                 catch (Exception ex) { LogError(ex); }
             }
         }
@@ -402,7 +425,7 @@ namespace Sumerics
             {
                 var script = File.ReadAllText(path);
 
-                try { context.Run(script); }
+                try { parser.Evaluate(script); }
                 catch (Exception ex) { LogError(ex); }
             }
         }

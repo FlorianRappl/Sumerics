@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Sumerics.Controls;
-using YAMP;
-using YAMP.Help;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using Sumerics.Controls;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Windows.Input;
+    using System.Windows.Threading;
+    using YAMP;
+
     /// <summary>
     /// This is the main view model - the central point!
     /// </summary>
@@ -351,7 +343,7 @@ namespace Sumerics
 
         void FillLists()
 		{
-            foreach (var k in Parser.Keywords)
+            foreach (var k in Core.Parser.Keywords)
             {
                 var item = new AutocompleteItem(k, "The " + k + " keyword.", Icons.KeywordIcon);
                 EditorViewModel.BasicItems.Add(item);
