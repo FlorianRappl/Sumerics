@@ -20,7 +20,7 @@ namespace Sumerics
     /// </summary>
     public partial class ActionButton : UserControl
     {
-        #region Static Members
+        #region Fields
 
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(ActionButton), new PropertyMetadata(null, OnCommandChanged));

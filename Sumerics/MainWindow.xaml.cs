@@ -143,73 +143,73 @@
 
             if (settings == null)
             {
-                Set(AccelerometerPlot, true, 30);
-                Set(GyrometerPlot, true, 30);
-                Set(InclinometerPlot, true, 30);
-                Set(LightPlot, true, 30);
-                Set(CompassPlot, true, 30);
+                //Set(AccelerometerPlot, true, 30);
+                //Set(GyrometerPlot, true, 30);
+                //Set(InclinometerPlot, true, 30);
+                //Set(LightPlot, true, 30);
+                //Set(CompassPlot, true, 30);
                 MyConsole.ConsoleFontSize = 16f;
                 return;
             }
 
-			Set(AccelerometerPlot, settings.Accelerometer, settings.LivePlotHistory);
-			Set(GyrometerPlot, settings.Gyrometer, settings.LivePlotHistory);
-			Set(InclinometerPlot, settings.Inclinometer, settings.LivePlotHistory);
-			Set(LightPlot, settings.Light, settings.LivePlotHistory);
-			Set(CompassPlot, settings.Compass, settings.LivePlotHistory);
+            //Set(AccelerometerPlot, settings.Accelerometer, settings.LivePlotHistory);
+            //Set(GyrometerPlot, settings.Gyrometer, settings.LivePlotHistory);
+            //Set(InclinometerPlot, settings.Inclinometer, settings.LivePlotHistory);
+            //Set(LightPlot, settings.Light, settings.LivePlotHistory);
+            //Set(CompassPlot, settings.Compass, settings.LivePlotHistory);
 			MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
 
-            if (Core.IsWindows8)
-            {
-                SensorsTab.Visibility = System.Windows.Visibility.Visible;
+            //if (Core.IsWindows8)
+            //{
+            //    SensorsTab.Visibility = System.Windows.Visibility.Visible;
 
-                if (settings.LivePlotActive && !sensorRunning)
-                {
-                    PerformMeasurement().FireAndForget();
-                }
-                else if (!settings.LivePlotActive && sensorRunning)
-                {
-                    sensorRunning = false;
-                }
-            }
-            else
-            {
-                SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
-            }
+            //    if (settings.LivePlotActive && !sensorRunning)
+            //    {
+            //        PerformMeasurement().FireAndForget();
+            //    }
+            //    else if (!settings.LivePlotActive && sensorRunning)
+            //    {
+            //        sensorRunning = false;
+            //    }
+            //}
+            //else
+            //{
+            //    SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
+            //}
 
 			initial = false;
 		}
 
 		void Set(SensorPlot plot, bool show, int length)
 		{
-			plot.Length = length;
-			plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-			SensorGrid.RowDefinitions[Grid.GetRow(plot)].Height = show ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-			plot.Maximized = false;
+            //plot.Length = length;
+            //plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            //SensorGrid.RowDefinitions[Grid.GetRow(plot)].Height = show ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
+            //plot.Maximized = false;
 
-			if (initial)
-			{
-				plot.PreviewMouseDown += (s, e) =>
-				{
-					var row = Grid.GetRow(plot);
+            //if (initial)
+            //{
+            //    plot.PreviewMouseDown += (s, e) =>
+            //    {
+            //        var row = Grid.GetRow(plot);
 
-					for (var i = 0; i < SensorGrid.RowDefinitions.Count; i++)
-					{
-						if (i == row)
-							continue;
+            //        for (var i = 0; i < SensorGrid.RowDefinitions.Count; i++)
+            //        {
+            //            if (i == row)
+            //                continue;
 
-						var sensor = SensorGrid.Children[i] as SensorPlot;
+            //            var sensor = SensorGrid.Children[i] as SensorPlot;
 
-                        if (sensor == null)
-                            return;
+            //            if (sensor == null)
+            //                return;
 
-						if(sensor.Visibility == System.Windows.Visibility.Visible)
-							SensorGrid.RowDefinitions[i].Height = plot.Maximized ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-					}
+            //            if (sensor.Visibility == System.Windows.Visibility.Visible)
+            //                SensorGrid.RowDefinitions[i].Height = plot.Maximized ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
+            //        }
 
-					plot.Maximized = !plot.Maximized;
-				};
-			}
+            //        plot.Maximized = !plot.Maximized;
+            //    };
+            //}
 		}
 
         async Task PerformMeasurement()
