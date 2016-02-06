@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OxyPlot;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Series;
+    using YAMP;
+
 	class SumericsPlot2D : SumericsOxyPlot
 	{
 		#region Members
@@ -38,11 +35,8 @@ namespace Sumerics.Controls
 
 				for (var j = 0; j < points.Count; j++)
 				{
-					series.Points.Add(new DataPoint
-					{
-						X = points[j].X,
-						Y = points[j].Y
-					});
+                    var point = new DataPoint(points[j].X, points[j].Y);
+					series.Points.Add(point);
 				}
 
 				UpdateLineSeries(series, points);

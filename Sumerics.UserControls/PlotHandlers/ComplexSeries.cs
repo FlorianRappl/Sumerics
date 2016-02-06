@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using OxyPlot;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Series;
+    using System;
+    using YAMP;
+
 	class ComplexSeries : XYAxisSeries
 	{
 		#region Constants
@@ -14,11 +13,11 @@ namespace Sumerics.Controls
 
 		#endregion
 
-		#region Members
+		#region Fields
 
 		Func<ScalarValue, ScalarValue> f;
 		BufferState buffer;
-		OxyBitmap points;
+		//OxyBitmap points;
 
 		#endregion
 
@@ -34,18 +33,18 @@ namespace Sumerics.Controls
 
 		#region Methods
 
-		public override TrackerHitResult GetNearestPoint(ScreenPoint point, bool interpolate)
+		public override TrackerHitResult GetNearestPoint(ScreenPoint point, Boolean interpolate)
 		{
 			return null;
 		}
 
-		protected override bool IsValidPoint(IDataPoint pt, Axis xaxis, Axis yaxis)
+		protected override Boolean IsValidPoint(DataPoint pt)
 		{
 			return false;
 		}
 
-		public override void Render(IRenderContext rc, PlotModel model)
-		{
+        public override void Render(IRenderContext rc)
+        {
 			var origin = XAxis.InverseTransform(XAxis.ScreenMin.X, YAxis.ScreenMin.Y, YAxis);
 			var end = XAxis.InverseTransform(XAxis.ScreenMax.X, YAxis.ScreenMax.Y, YAxis);
 
@@ -66,7 +65,7 @@ namespace Sumerics.Controls
                 var height = (int)state.Height / g;
                 var scaleX = (XAxis.ScreenMax.X - XAxis.ScreenMin.X) / width;
                 var scaleY = (YAxis.ScreenMax.Y - YAxis.ScreenMin.Y) / height;
-                points = new OxyBitmap(width, height);
+                //points = new OxyBitmap(width, height);
                 buffer = state;
 
 				var dx = (end.X - origin.X) / width;
@@ -82,7 +81,7 @@ namespace Sumerics.Controls
                     for (var j = 0; j < height; j++)
 					{
                         var value = f(z);
-						points.SetPixel(i, j, GetColor(value));
+						//points.SetPixel(i, j, GetColor(value));
 						sy += scaleY;
 						z.ImaginaryValue += dy;
 					}
@@ -92,13 +91,7 @@ namespace Sumerics.Controls
 				}
 			}
 
-            rc.DrawImage(new OxyRect 
-            {
-                Left = XAxis.ScreenMin.X,
-                Top = YAxis.ScreenMin.Y,
-                Width = state.Width,
-                Height = state.Height
-            }, points);
+            //rc.DrawImage(new OxyRect(XAxis.ScreenMin.X, YAxis.ScreenMin.Y, state.Width,state.Height), points);
 		}
 
 		#endregion
@@ -107,25 +100,27 @@ namespace Sumerics.Controls
 
 		static OxyColor GetColor(ScalarValue fz)
 		{
-			double re = fz.Re;
-			double im = fz.Im;
+			var re = fz.Re;
+			var im = fz.Im;
 
-			if (double.IsInfinity(re) || double.IsNaN(re) || double.IsInfinity(im) || double.IsNaN(im))
-				return OxyColors.White;
+            if (!Double.IsInfinity(re) && !Double.IsNaN(re) && !Double.IsInfinity(im) && !Double.IsNaN(im))
+            {
+                // convert the complex function value to a HSV color triplet
+                var hsv = ComplexToHsv(re, im);
 
-			// convert the complex function value to a HSV color triplet
-			ColorTriplet hsv = ComplexToHsv(re, im);
+                // convert the HSV color triplet to an RBG color triplet
+                var rgb = HsvToRgb(hsv);
+                var r = (Byte)Math.Truncate(255.0 * rgb.X);
+                var g = (Byte)Math.Truncate(255.0 * rgb.Y);
+                var b = (Byte)Math.Truncate(255.0 * rgb.Z);
 
-			// convert the HSV color triplet to an RBG color triplet
-			ColorTriplet rgb = HsvToRgb(hsv);
-			var r = (byte)Math.Truncate(255.0 * rgb.X);
-			var g = (byte)Math.Truncate(255.0 * rgb.Y);
-			var b = (byte)Math.Truncate(255.0 * rgb.Z);
+                return OxyColor.FromRgb(r, g, b);
+            }
 
-			return OxyColor.FromRgb(r, g, b);
+			return OxyColors.White;
 		}
 
-		static ColorTriplet ComplexToHsv(double re, double im)
+        static ColorTriplet ComplexToHsv(Double re, Double im)
 		{
 			// extract a phase 0 <= t < 2 pi
 			var t = Math.Atan2(im, re);
@@ -181,62 +176,66 @@ namespace Sumerics.Controls
 			var g = 0.0;
 			var b = 0.0;
 
-			if (s == 0)
-				return new ColorTriplet { X = v, Y = v, Z = v };
+			if (s != 0)
+            {
+                if (h == 1.0)
+                {
+                    h = 0.0;
+                }
 
-			if (h == 1.0)
-				h = 0.0;
+                var z = Math.Truncate(6 * h);
+                var i = (int)z;
+                var f = h * 6 - z;
+                var p = v * (1 - s);
+                var q = v * (1 - s * f);
+                var t = v * (1 - s * (1 - f));
 
-			var z = Math.Truncate(6 * h);
-			var i = (int)z;
-			var f = h * 6 - z;
-			var p = v * (1 - s);
-			var q = v * (1 - s * f);
-			var t = v * (1 - s * (1 - f));
+                switch (i)
+                {
+                    case 0:
+                        r = v;
+                        g = t;
+                        b = p;
+                        break;
 
-			switch (i)
-			{
-				case 0:
-					r = v;
-					g = t;
-					b = p;
-					break;
+                    case 1:
+                        r = q;
+                        g = v;
+                        b = p;
+                        break;
 
-				case 1:
-					r = q;
-					g = v;
-					b = p;
-					break;
+                    case 2:
+                        r = p;
+                        g = v;
+                        b = t;
+                        break;
 
-				case 2:
-					r = p;
-					g = v;
-					b = t;
-					break;
+                    case 3:
+                        r = p;
+                        g = q;
+                        b = v;
+                        break;
 
-				case 3:
-					r = p;
-					g = q;
-					b = v;
-					break;
+                    case 4:
+                        r = t;
+                        g = p;
+                        b = v;
+                        break;
 
-				case 4:
-					r = t;
-					g = p;
-					b = v;
-					break;
+                    case 5:
+                        r = v;
+                        g = p;
+                        b = q;
+                        break;
 
-				case 5:
-					r = v;
-					g = p;
-					b = q;
-					break;
+                    default:
+                        throw new InvalidOperationException();
+                }
 
-				default:
-					throw new InvalidOperationException();
-			}
+                return new ColorTriplet { X = r, Y = g, Z = b };
+            }
 
-			return new ColorTriplet { X = r, Y = g, Z = b };
+			return new ColorTriplet { X = v, Y = v, Z = v };
 		}
 
 		#endregion

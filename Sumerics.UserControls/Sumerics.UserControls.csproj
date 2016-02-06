@@ -102,6 +102,15 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0-unstable1976\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0-unstable1976\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Xps">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0-unstable1976\lib\net45\OxyPlot.Xps.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -121,9 +130,8 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="YAMP, Version=1.2.2.571, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.1.2.2\lib\net35\YAMP.dll</HintPath>
+    <Reference Include="YAMP">
+      <HintPath>..\packages\YAMP.1.5.0.7513\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +161,6 @@
       <DependentUpon>PlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlotHandlers\ComplexSeries.cs" />
-    <Compile Include="PlotHandlers\HeatmapSeries.cs" />
     <Compile Include="PlotHandlers\SumericsBarPlot.cs" />
     <Compile Include="PlotHandlers\SumericsComplexPlot.cs" />
     <Compile Include="PlotHandlers\SumericsContourPlot.cs" />
@@ -260,10 +267,6 @@
     <Resource Include="Images\fix.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OxyPlot\OxyPlot.csproj">
-      <Project>{87f519b8-5a2f-48c6-ad53-c5f13a82ea6b}</Project>
-      <Name>OxyPlot</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Sumerics.Console\Sumerics.Console.csproj">
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>Sumerics.Console</Name>
@@ -271,10 +274,6 @@
     <ProjectReference Include="..\Sumerics.Plots3D\Sumerics.Plots3D.csproj">
       <Project>{38ee1803-0f43-4eb3-9322-00a936f41548}</Project>
       <Name>Sumerics.Plots3D</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sumerics.Plots\Sumerics.Plots.csproj">
-      <Project>{698ccd8e-adcc-4565-8517-5edd36f07155}</Project>
-      <Name>Sumerics.Plots</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,35 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using OxyPlot;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Series;
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Controls;
+
     /// <summary>
     /// Interaction logic for SensorPlot.xaml
     /// </summary>
     public partial class SensorPlot : UserControl
 	{
-		#region Members
+		#region Fields
 
-		PlotModel model;
-		bool maximized;
-		int t;
-		int length;
+		readonly PlotModel _model;
 
-		static OxyColor[] colors = new OxyColor[] { OxyColors.Blue, OxyColors.Red, OxyColors.Green };
-		static MarkerType[] markers = new MarkerType[] { MarkerType.Square, MarkerType.Circle, MarkerType.Diamond };
+		Boolean _maximized;
+		Int32 _time;
+		Int32 _length;
+
+		static readonly OxyColor[] colors = new[] 
+        { 
+            OxyColors.Blue, 
+            OxyColors.Red,
+            OxyColors.Green 
+        };
+
+		static readonly MarkerType[] markers = new[] 
+        { 
+            MarkerType.Square, 
+            MarkerType.Circle, 
+            MarkerType.Diamond 
+        };
 
 		#endregion
 
@@ -39,55 +42,61 @@ namespace Sumerics.Controls
         {
             InitializeComponent();
             PlotControl.IsManipulationEnabled = false;
-			PlotControl.Model = SetupModel();
+            PlotControl.Model = _model = CreateModel();
 		}
 
 		#endregion
 
 		#region Properties
 
-		public string Title
+		public String Title
         {
-            get { return model.Title; }
-			set { model.Title = value; }
+            get { return _model.Title; }
+			set { _model.Title = value; }
         }
 
-		public bool Maximized
+		public Boolean Maximized
 		{
-			get { return maximized; }
+			get { return _maximized; }
 			set
 			{
-				maximized = value;
+				_maximized = value;
 
-				if (maximized)
-					model.Subtitle = "(Click to reduce)";
-				else
-					model.Subtitle = string.Empty;
+                if (_maximized)
+                {
+                    _model.Subtitle = "(Click to reduce)";
+                }
+                else
+                {
+                    _model.Subtitle = string.Empty;
+                }
 			}
 		}
 
-        public string Unit
+        public String Unit
         {
-			get { return model.Axes[1].Title; }
-			set { model.Axes[1].Title = value; }
+			get { return _model.Axes[1].Title; }
+			set { _model.Axes[1].Title = value; }
         }
 
-		public int Length
+		public Int32 Length
 		{
-			get { return length; }
-			set { length = value; }
+			get { return _length; }
+			set { _length = value; }
 		}
 
-        public string Legend
+        public String Legend
         {
             get 
 			{
-				var labels = new List<string>();
+				var labels = new List<String>();
 
-				foreach(var series in model.Series)
-					labels.Add(series.Title);
+                foreach (var series in _model.Series)
+                {
+                    labels.Add(series.Title);
+                }
 
-				return string.Join(",", labels.ToArray()); 
+				return String.Join(",", labels.ToArray()); 
 			}
             set
             {
@@ -95,14 +104,16 @@ namespace Sumerics.Controls
 
 				for (var i = 0; i < labels.Length; i++)
 				{
-					if (model.Series.Count > i)
-						model.Series[i].Title = labels[i];
-					else
-					{
-						var series = new LineSeries(colors[i], 1.0, labels[i]);
-						series.MarkerType = markers[i];
-						model.Series.Add(series);
-					}
+                    if (_model.Series.Count > i)
+                    {
+                        _model.Series[i].Title = labels[i];
+                    }
+                    else
+                    {
+                        var series = new LineSeries { Color = colors[i], StrokeThickness = 1.0, Title = labels[i] };
+                        series.MarkerType = markers[i];
+                        _model.Series.Add(series);
+                    }
 				}
             }
 		}
@@ -111,11 +122,11 @@ namespace Sumerics.Controls
 
 		#region Methods
 
-		PlotModel SetupModel()
-		{
-			model = new PlotModel();
+		static PlotModel CreateModel()
+        {
+            var model = new PlotModel();
 			model.TitleFontWeight = 1.0;
-			model.TitleFontSize = 16;
+			model.TitleFontSize = 16.0;
 			model.TitleColor = OxyColors.DarkGray;
 			model.Axes.Add(new LinearAxis());
 			model.Axes.Add(new LinearAxis());
@@ -127,34 +138,36 @@ namespace Sumerics.Controls
 			model.Padding = new OxyThickness(0, 10, 10, 0);
 			model.LegendBackground = OxyColor.FromArgb(100, 240, 240, 240);
 			model.LegendBorder = OxyColors.LightGray;
-			model.PlotAreaBorderThickness = 0;
+			model.PlotAreaBorderThickness = new OxyThickness(0);
 			model.LegendOrientation = LegendOrientation.Horizontal;
-			return model;
+            return model;
 		}
 
-        public void AddValues(params double[] values)
+        public void AddValues(params Double[] values)
         {
-            for(var i = 0; i < values.Length; i++)
+            for (var i = 0; i < values.Length; i++)
             {
-				var series = (LineSeries)model.Series[i];
+				var series = (LineSeries)_model.Series[i];
 				
-				series.Points.Add(new DataPoint
-				{
-					X = t,
-					Y = values[i]
-				});
+				series.Points.Add(new DataPoint(_time, values[i]));
 
-				while (series.Points.Count > length)
-					series.Points.RemoveAt(0);
+                while (series.Points.Count > _length)
+                {
+                    series.Points.RemoveAt(0);
+                }
             }
 
-			if(model.PlotControl != null)
-				model.RefreshPlot(true);
+            if (_model.PlotView != null)
+            {
+                _model.PlotView.InvalidatePlot(true);
+            }
 
-            if(!maximized)
+            if (!_maximized)
+            {
                 PlotControl.ResetAllAxes();
+            }
 
-			t++;
+			_time++;
 		}
 
 		#endregion

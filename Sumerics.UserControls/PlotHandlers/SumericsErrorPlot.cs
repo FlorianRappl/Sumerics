@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OxyPlot;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Series;
+    using YAMP;
+
 	class SumericsErrorPlot : SumericsOxyPlot
 	{
 		#region Members
@@ -34,17 +31,12 @@ namespace Sumerics.Controls
 			for (var i = 0; i < _plot.Count; i++)
 			{
 				var points = _plot[i];
-				var series = new ErrorSeries();
+				var series = new ScatterErrorSeries();
 
 				for (var j = 0; j < points.Count; j++)
 				{
-					series.Points.Add(new ErrorItem
-					{
-						X = points[j].X,
-						Y = points[j].Y,
-						XError = points[j].Xerr,
-						YError = points[j].Yerr
-					});
+                    var point = new ScatterErrorPoint(points[j].X, points[j].Y, points[j].Xerr, points[j].Yerr);
+					series.Points.Add(point);
 				}
 
 				UpdateLineSeries(series, points);

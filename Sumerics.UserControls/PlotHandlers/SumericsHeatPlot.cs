@@ -1,19 +1,16 @@
-﻿using OxyPlot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YAMP;
-
-namespace Sumerics.Controls 
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Wpf;
+    using YAMP;
+
     class SumericsHeatPlot : SumericsOxyPlot
     {
-		#region Members
+		#region Fields
 
 		HeatmapPlotValue _plot;
-        HeatmapSeries ser;
+        HeatMapSeries ser;
 
 		#endregion
 
@@ -51,10 +48,10 @@ namespace Sumerics.Controls
 
         #region Methods
 
-        void UpdateSeries(HeatmapSeries series, IPointSeries points)
+        void UpdateSeries(HeatMapSeries series, IPointSeries points)
         {
             series.Title = points.Label;
-            series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
+            //series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
         }
 
 		void SetSeries(PlotModel model)
@@ -62,18 +59,18 @@ namespace Sumerics.Controls
             for (var i = 0; i < _plot.Count; i++)
             {
                 var points = _plot[i];
-                ser = new HeatmapSeries((int)_plot.MaxX, (int)_plot.MaxY, points);
-                UpdateSeries(ser, points);
-                model.Series.Add(ser);
+                //ser = new HeatMapSeries((int)_plot.MaxX, (int)_plot.MaxY, points);
+                //UpdateSeries(ser, points);
+                //model.Series.Add(ser);
             }
 		}
 
 		void SetProperties(PlotModel model)
         {
-            ser.IsInterpolated = _plot.IsInterpolated;
+            //ser.IsInterpolated = _plot.IsInterpolated;
 
-			model.Axes.Add(new LinearAxis());
-			model.Axes.Add(new LinearAxis());
+			model.Axes.Add(new OxyPlot.Axes.LinearAxis());
+			model.Axes.Add(new OxyPlot.Axes.LinearAxis());
 
             model.Axes[0].Position = AxisPosition.Bottom;
             model.Axes[1].Position = AxisPosition.Left;
@@ -92,7 +89,7 @@ namespace Sumerics.Controls
 
 		void UpdateProperties(PlotModel model)
         {
-            ser.IsInterpolated = _plot.IsInterpolated;
+            //ser.IsInterpolated = _plot.IsInterpolated;
 
 			model.Axes[0].Title = _plot.XLabel;
 			model.Axes[1].Title = _plot.YLabel;
@@ -116,8 +113,8 @@ namespace Sumerics.Controls
             for (var i = 0; i < _plot.Count; i++)
             {
                 var data = _plot.GetSeries(i);
-                var series = (HeatmapSeries)Model.Series[i];
-                UpdateSeries(series, data);
+                //var series = (HeatmapSeries)Model.Series[i];
+                //UpdateSeries(series, data);
             }
 
 			Refresh();

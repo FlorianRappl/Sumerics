@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OxyPlot;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Series;
+    using YAMP;
+
 	class SumericsPolarPlot : SumericsOxyPlot
 	{
 		PolarPlotValue _plot;
@@ -28,11 +25,8 @@ namespace Sumerics.Controls
 
 				for (var j = 0; j < points.Count; j++)
 				{
-					series.Points.Add(new DataPoint
-					{
-						X = points[j].Magnitude,
-						Y = points[j].Angle
-					});
+                    var point = new DataPoint(points[j].Magnitude, points[j].Angle);
+					series.Points.Add(point);
 				}
 
 				UpdateLineSeries(series, points);
@@ -44,11 +38,15 @@ namespace Sumerics.Controls
 		{
 			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
 			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
-			model.PlotAreaBorderThickness = 0;
+			model.PlotAreaBorderThickness = new OxyThickness(0);
 			model.PlotType = PlotType.Polar;
 
-			model.Axes.Add(new AngleAxis(_plot.MinX, _plot.MaxX, _plot.MaxX / 8.0, _plot.MaxX / 16.0)
+			model.Axes.Add(new AngleAxis
 			{
+                StartAngle = _plot.MinX,
+                EndAngle = _plot.MaxX,
+                MinorStep = _plot.MaxX / 16.0,
+                MajorStep = _plot.MaxX / 8.0,
 				MajorGridlineStyle = major,
 				MinorGridlineStyle = minor,
 				FormatAsFractions = true,

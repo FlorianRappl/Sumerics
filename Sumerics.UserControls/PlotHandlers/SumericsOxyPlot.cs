@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using OxyPlot;
-using YAMP;
-using System.Windows.Media.Imaging;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Series;
+    using System.Windows;
+    using System.Windows.Controls;
+    using YAMP;
+
 	abstract class SumericsOxyPlot : SumericsPlot
     {
-        #region Members
+        #region Fields
 
         PlotModel model;
 		OxyPlot.Wpf.Plot control;
@@ -28,7 +23,7 @@ namespace Sumerics.Controls
             this.plot = plot;
             model = new PlotModel();
             control = new OxyPlot.Wpf.Plot();
-            control.Model = model;
+            control.DataContext = model;
             SetGeneralProperties(model);
 		}
 
@@ -57,9 +52,8 @@ namespace Sumerics.Controls
 
         public override void RenderToCanvas(Canvas canvas)
         {
-            var rc = new OxyPlot.Wpf.ShapesRenderContext(canvas);
-            model.Update();
-            model.Render(rc);
+            //var rc = new OxyPlot.Wpf.CanvasRenderContext(canvas);
+            //model.Render(rc);
         }
 
 		public override void CenterPlot()
@@ -92,19 +86,18 @@ namespace Sumerics.Controls
 		{
 			IsPreview = true;
 
-			model.PlotAreaBorderThickness = 0;
+			model.PlotAreaBorderThickness = new OxyThickness(0);
 			model.PlotMargins = new OxyThickness(0);
 			model.Padding = new OxyThickness(0);
 			model.IsLegendVisible = false;
 			model.Axes[0].IsAxisVisible = false;
 			model.Axes[1].IsAxisVisible = false;
-            model.AutoAdjustPlotMargins = false;
 
             model.Axes[0].IsZoomEnabled = false;
             model.Axes[1].IsZoomEnabled = false;
             control.IsManipulationEnabled = false;
 
-			control.PlotAreaBorderThickness = 0;
+			control.PlotAreaBorderThickness = new Thickness(0);
 			control.PlotMargins = new Thickness(0);
 			control.Padding = new Thickness(0);
 			control.Margin = new Thickness(0);
@@ -126,26 +119,22 @@ namespace Sumerics.Controls
 			model.LegendPosition = (OxyPlot.LegendPosition)plot.LegendPosition;
 		}
 
-		protected void UpdateLineSeries(LineSeries series, IPointSeries points)
-		{
-			if (!points.Lines)
-				series.StrokeThickness = 0.0;
-			else
-				series.StrokeThickness = points.LineWidth;
-
-			series.Title = points.Label;
-			series.Color = points.Color.OxyColorFromString();
-			series.MarkerType = (MarkerType)((int)points.Symbol);
-			series.MarkerFill = series.Color;
-			series.MarkerSize = 3.0;
-			series.MarkerStroke = series.Color;
-			series.MarkerStrokeThickness = 1.0;
+        protected void UpdateLineSeries(XYAxisSeries series, IPointSeries points)
+        {
+            series.Title = points.Label;
+            //series.StrokeThickness = points.Lines ? points.LineWidth : 0.0;
+            //series.Color = points.Color.OxyColorFromString();
+            //series.MarkerType = (MarkerType)((int)points.Symbol);
+            //series.MarkerFill = series.Color;
+            //series.MarkerSize = 3.0;
+            //series.MarkerStroke = series.Color;
+            //series.MarkerStrokeThickness = 1.0;
 		}
 
 		protected void Refresh()
 		{
-			if (Model.PlotControl != null)
-				Model.RefreshPlot(false);
+			if (Model.PlotView != null)
+				Model.InvalidatePlot(false);
 		}
 
         #endregion

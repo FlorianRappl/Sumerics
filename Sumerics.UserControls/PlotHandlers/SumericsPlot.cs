@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using YAMP;
+
 	public abstract class SumericsPlot
 	{
 		#region Members
 
 		PlotValue _plot;
-		bool _preview;
+		Boolean _preview;
 
 		#endregion
 
@@ -34,7 +29,7 @@ namespace Sumerics.Controls
 		/// <summary>
 		/// Gets the current status of this control.
 		/// </summary>
-		public bool IsPreview
+        public Boolean IsPreview
 		{
 			get { return _preview; }
 			protected set { _preview = value; }
@@ -43,7 +38,7 @@ namespace Sumerics.Controls
 		/// <summary>
 		/// Gets whether the series button should be enabled.
 		/// </summary>
-		public virtual bool IsSeriesEnabled
+        public virtual Boolean IsSeriesEnabled
 		{
 			get { return true; }
 		}
@@ -51,7 +46,7 @@ namespace Sumerics.Controls
 		/// <summary>
 		/// Gets whether the grid button should be enabled.
 		/// </summary>
-		public virtual bool IsGridEnabled
+        public virtual Boolean IsGridEnabled
 		{
 			get { return true; }
 		}
@@ -78,13 +73,13 @@ namespace Sumerics.Controls
 
         public abstract void RenderToCanvas(Canvas canvas);
 
-		void PlotValueChanged(object sender, PlotEventArgs e)
+		void PlotValueChanged(Object sender, PlotEventArgs e)
 		{
-			var source = e.Property;
+			var source = e.PropertyName;
 
 			Content.Dispatcher.Invoke((Action)(() =>
 			{
-				switch (e.Property)
+				switch (source)
 				{
 					case "Data":
 						RefreshData();
@@ -94,8 +89,10 @@ namespace Sumerics.Controls
 						RefreshSeries();
 						break;
 					default:
-						if(!IsPreview)
-							RefreshProperties();
+                        if (!IsPreview)
+                        {
+                            RefreshProperties();
+                        }
 						break;
 				}
 			}));
@@ -119,7 +116,7 @@ namespace Sumerics.Controls
 		/// <param name="fileName">Where to save the file.</param>
 		/// <param name="width">The width in px.</param>
 		/// <param name="height">The height in px.</param>
-		public abstract void ExportPlot(string fileName, int width, int height);
+        public abstract void ExportPlot(String fileName, Int32 width, Int32 height);
 
 		/// <summary>
 		/// Creates the Control to use in preview mode.

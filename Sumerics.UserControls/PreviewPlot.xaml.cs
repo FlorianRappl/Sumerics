@@ -1,22 +1,12 @@
-﻿using OxyPlot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using OxyPlot.Axes;
+    using OxyPlot.Series;
+    using System.Windows;
+    using System.Windows.Controls;
+    using YAMP;
+
     /// <summary>
     /// Interaction logic for PreviewPlot.xaml
     /// </summary>
@@ -109,24 +99,23 @@ namespace Sumerics.Controls
                 var sv = value as ScalarValue;
                 var sqrt = sv.Sqrt();
 				var series = new ScatterSeries();
-				series.Points.Add(new DataPoint(sv.Re, sv.Im));
-				series.Points.Add(new DataPoint(sv.IntValue, sv.ImaginaryIntValue));
-				series.Points.Add(new DataPoint(sv.Abs(), 0));
-				series.Points.Add(new DataPoint(sqrt.Re, sqrt.Im));
+				series.Points.Add(new ScatterPoint(sv.Re, sv.Im));
+                series.Points.Add(new ScatterPoint(sv.IntValue, sv.ImaginaryIntValue));
+                series.Points.Add(new ScatterPoint(sv.Abs(), 0));
+                series.Points.Add(new ScatterPoint(sqrt.Re, sqrt.Im));
 				model.Series.Add(series);
 			}
 
-			model.Axes.Add(new LinearAxis(AxisPosition.Left, string.Empty));
-			model.Axes.Add(new LinearAxis(AxisPosition.Bottom, string.Empty));
-			model.PlotAreaBorderThickness = 0;
+			model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
+			model.PlotAreaBorderThickness = new OxyThickness(0);
 			model.PlotMargins = new OxyThickness(0);
 			model.Padding = new OxyThickness(0);
 			model.IsLegendVisible = false;
 			model.Axes[0].IsAxisVisible = false;
 			model.Axes[1].IsAxisVisible = false;
-			model.AutoAdjustPlotMargins = false;
 			var ctrl = new OxyPlot.Wpf.Plot();
-			ctrl.Model = model;
+			//ctrl.Model = model;
 			return ctrl;
         }
 
