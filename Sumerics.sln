@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Plots3D", "Sumeric
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DTools", "3DTools\3DTools.csproj", "{5F603892-DE40-4246-A969-1C6717AFE35D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Tests", "Sumerics.Tests\Sumerics.Tests.csproj", "{2C5AA625-8C55-49D7-8D6B-68001953E6A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppUp|Any CPU = AppUp|Any CPU
@@ -136,6 +138,18 @@ Global
 		{5F603892-DE40-4246-A969-1C6717AFE35D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F603892-DE40-4246-A969-1C6717AFE35D}.Release|x64.ActiveCfg = Release|Any CPU
 		{5F603892-DE40-4246-A969-1C6717AFE35D}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.AppUp|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.AppUp|Any CPU.Build.0 = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.AppUp|x64.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.AppUp|x86.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{2C5AA625-8C55-49D7-8D6B-68001953E6A7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
