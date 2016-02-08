@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class SaveImageViewModel : SaveFileViewModel
-    {
-        #region Members
+    using System;
 
-        int imageWidth;
-        int imageHeight;
+    sealed class SaveImageViewModel : SaveFileViewModel
+    {
+        #region Fields
+
+        Int32 imageWidth;
+        Int32 imageHeight;
 
         #endregion
 
         #region ctor
 
-        public SaveImageViewModel(string startFileOrFolder)
-            : base(startFileOrFolder)
+        public SaveImageViewModel(String startFileOrFolder, IContainer container)
+            : base(startFileOrFolder, container)
         {
             AddFilter("PNG File (*.png)", "*.png");
         }

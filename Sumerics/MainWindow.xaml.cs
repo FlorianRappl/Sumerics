@@ -1,7 +1,6 @@
 ﻿namespace Sumerics
 {
     using MahApps.Metro.Controls;
-    //using YAMP.Sensors;
     using Sumerics.Controls;
     using System;
     using System.Collections.Specialized;
@@ -18,35 +17,37 @@
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        #region Members
+        #region Fields
 
-		bool sensorRunning;
-		bool initial;
+		Boolean _sensorRunning;
+		Boolean _initial;
 
         #endregion
 
         #region ctor
 
-        public MainWindow()
+        public MainWindow(IContainer container)
 		{
             App.Window = this;
-			initial = true;
+			_initial = true;
 
             InitializeComponent();
-            this.AllowDrop = true;
+            AllowDrop = true;
 
 			LoadSettings();
 			Loaded += MainWindowLoaded;
 			Closing += MainWindowClosing;
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
+
+            DataContext = new MainViewModel(container);
         }
 
         #endregion
 
         #region Events
 
-        async void CurrentTabChanged(object sender, SelectionChangedEventArgs e)
+        async void CurrentTabChanged(Object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 1 && e.AddedItems[0] is HeaderedContentControl)
             {
@@ -61,7 +62,7 @@
             }
         }
 
-        void MainWindowClosing(object sender, CancelEventArgs e)
+        void MainWindowClosing(Object sender, CancelEventArgs e)
 		{
 			var pers = Properties.Settings.Default;
 
@@ -72,22 +73,23 @@
 
 				foreach (var cmd in history)
 				{
-					if (!string.IsNullOrEmpty(cmd))
-						pers.History.Add(cmd);
+                    if (!String.IsNullOrEmpty(cmd))
+                    {
+                        pers.History.Add(cmd);
+                    }
 				}
 
 				pers.Save();
 			}
 		}
 
-		void MainWindowLoaded(object sender, RoutedEventArgs e)
+        void MainWindowLoaded(Object sender, RoutedEventArgs e)
 		{
-			DataContext = new MainViewModel();
 			var pers = Properties.Settings.Default;
 
 			if (pers != null && pers.History != null)
 			{
-				int index = 0;
+				var index = 0;
 
 				foreach (var cmd in pers.History)
 				{
@@ -99,16 +101,20 @@
 			MyConsole.SetFocus();
 		}
 
-        void MathInputReceived(object sender, string result)
+        void MathInputReceived(Object sender, String result)
         {
             Debug.WriteLine(result);
             var query = MathMLParser.Parse(result);
             Debug.WriteLine(query);
 
             if (Properties.Settings.Default != null && Properties.Settings.Default.AutoEvaluateMIP)
+            {
                 MyConsole.InsertAndRun(query);
+            }
             else
+            {
                 MyConsole.Input = query;
+            }
         }
 
         #endregion
@@ -119,7 +125,7 @@
         /// Runs a query with the given query string.
         /// </summary>
         /// <param name="query">The query string to evaluate.</param>
-		public void RunQuery(string query)
+		public void RunQuery(String query)
 		{
 			MyConsole.InsertAndRun(query);
 		}
@@ -129,7 +135,7 @@
         /// </summary>
         /// <param name="query">The query string to evaluate.</param>
         /// <param name="message">The message to display as a comment.</param>
-        public void RunQuery(string query, string message)
+        public void RunQuery(String query, String message)
         {
             MyConsole.InsertAndRun(query, message);
         }
@@ -177,10 +183,10 @@
             //    SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
             //}
 
-			initial = false;
+			_initial = false;
 		}
 
-		void Set(SensorPlot plot, bool show, int length)
+		void Set(SensorPlot plot, Boolean show, Int32 length)
 		{
             //plot.Length = length;
             //plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
@@ -234,14 +240,16 @@
             //}
         }
 
-		void OptionsClick(object sender, RoutedEventArgs e)
+		void OptionsClick(Object sender, RoutedEventArgs e)
 		{
-            OpenOptionsWindow();
+            var container = (DataContext as MainViewModel).Container;
+            OpenOptionsWindow(container);
 		}
 
-		void AboutClick(object sender, RoutedEventArgs e)
-		{
-            OpenAboutWindow();
+        void AboutClick(Object sender, RoutedEventArgs e)
+        {
+            var container = (DataContext as MainViewModel).Container;
+            OpenAboutWindow(container);
 		}
 
         /// <summary>
@@ -261,7 +269,7 @@
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+                var files = e.Data.GetData(DataFormats.FileDrop) as String[];
 
                 if (files != null && files.Length > 0)
                 {
@@ -277,21 +285,27 @@
         protected override void OnDragOver(DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
                 e.Effects = DragDropEffects.Link;
+            }
             else
+            {
                 e.Effects = DragDropEffects.None;
+            }
         }
 
         #endregion
 
         #region UI Manipulators
 
-        internal void ChangeTab(int index)
+        internal void ChangeTab(Int32 index)
         {
             Dispatcher.Invoke(() =>
             {
-                if(index >= 0 && index < MainTabs.Items.Count)
+                if (index >= 0 && index < MainTabs.Items.Count)
+                {
                     MainTabs.SelectedIndex = index;
+                }
             });
         }
 
@@ -305,12 +319,17 @@
 
         internal void UndockImage(PlotValue value)
         {
+            var container = (DataContext as MainViewModel).Container;
             Dispatcher.Invoke(() =>
             {
-                if(MyLastPlot.Data == null || MyLastPlot.Data.Plot != value)
-                    new PlotViewModel(value).UndockPlot();
+                if (MyLastPlot.Data == null || MyLastPlot.Data.Plot != value)
+                {
+                    new PlotViewModel(value, container).UndockPlot();
+                }
                 else
+                {
                     MyLastPlot.Undock();
+                }
             });
         }
 
@@ -318,19 +337,21 @@
         {
             Dispatcher.Invoke(() =>
             {
-                PlotWindow win = null;
+                var win = default(PlotWindow);
 
                 foreach (var window in App.Current.Windows)
                 {
                     if (window is PlotWindow)
+                    {
                         win = (PlotWindow)window;
+                    }
                 }
 
-                if (win == null)
-                    return;
-
-                (DataContext as MainViewModel).LastPlot = win.PlotModel;
-                win.Close();
+                if (win != null)
+                {
+                    (DataContext as MainViewModel).LastPlot = win.PlotModel;
+                    win.Close();
+                }
             });
         }
 
@@ -354,84 +375,90 @@
             });
         }
 
-        internal void OpenOptionsWindow()
+        internal void OpenOptionsWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                StaticHelpers.GetWindow<OptionsWindow>();
+                StaticHelpers.GetWindow<OptionsWindow>(container);
             });
         }
 
-        internal void OpenAboutWindow()
+        internal void OpenAboutWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                StaticHelpers.GetWindow<AboutWindow>();
+                StaticHelpers.GetWindow<AboutWindow>(container);
             });
         }
 
-        internal void OpenEditorWindow()
+        internal void OpenEditorWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                StaticHelpers.GetWindow<EditorWindow>();
+                StaticHelpers.GetWindow<EditorWindow>(container);
             });
         }
 
-        internal void OpenDocumentationWindow()
+        internal void OpenDocumentationWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                StaticHelpers.GetWindow<DemoBrowser>().Show();
+                StaticHelpers.GetWindow<DemoBrowser>(container).Show();
             });
         }
 
-        internal void OpenHelpWindow()
+        internal void OpenHelpWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                StaticHelpers.GetWindow<HelpWindow>().Show();
+                StaticHelpers.GetWindow<HelpWindow>(container).Show();
             });
         }
 
-        internal void OpenDirectoryWindow()
+        internal void OpenDirectoryWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                var dialog = new FolderBrowseWindow();
+                var dialog = new FolderBrowseWindow(container);
                 dialog.ShowDialog();
 
                 if (dialog.Accepted)
+                {
                     Environment.CurrentDirectory = dialog.SelectedDirectory;
+                }
             });
         }
 
-        internal void OpenLoadWindow()
+        internal void OpenLoadWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                var dialog = new OpenFileWindow();
+                var dialog = new OpenFileWindow(container);
                 dialog.Title = "Open workspace ...";
                 dialog.AddFilter("All files (*.*)", "*.*");
                 dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
                 dialog.ShowDialog();
 
                 if (dialog.Accepted)
+                {
                     Core.LoadWorkspaceAsync(dialog.SelectedFile);
+                }
             });
         }
 
-        internal void OpenSaveWindow()
+        internal void OpenSaveWindow(IContainer container)
         {
             Dispatcher.Invoke(() =>
             {
-                var dialog = new SaveFileWindow();
+                var dialog = new SaveFileWindow(container);
                 dialog.Title = "Save workspace as ...";
                 dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
                 dialog.ShowDialog();
 
                 if (dialog.Accepted)
+                {
                     Core.SaveWorkspaceAsync(dialog.SelectedFile);
+                }
             });
         }
 

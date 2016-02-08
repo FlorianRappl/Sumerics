@@ -350,7 +350,7 @@
             try
             {
                 var assembly = Assembly.LoadFrom(assemblyPath);
-                var model = new PluginViewModel(assembly, assemblyPath);
+                var model = new PluginViewModel(assembly, assemblyPath, null);//TODO
                 model.Active = PluginActive(assemblyPath);
                 plugins.Add(model);
 
@@ -367,7 +367,7 @@
 
         static void LoadPlugin(Assembly assembly)
         {
-            plugins.Add(new PluginViewModel(assembly));
+            plugins.Add(new PluginViewModel(assembly, null));//TODO
             parser.LoadPlugin(assembly);
         }
 
@@ -389,7 +389,7 @@
         {
             Context.AddFunction("switchtab", SwitchTabFunction.Create());
             Context.AddFunction("undock", UndockFunction.Create());
-            Context.AddFunction("window", WindowFunction.Create());
+            Context.AddFunction("window", WindowFunction.Create(null));//TODO
             Context.AddFunction("dock", DockFunction.Create());
             Context.AddFunction("stop", StopFunction.Create());
         }

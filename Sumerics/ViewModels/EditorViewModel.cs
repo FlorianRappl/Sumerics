@@ -1,20 +1,17 @@
-﻿using Sumerics.Controls;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using Sumerics.Controls;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Windows.Input;
+
     /// <summary>
     /// ViewModel for the editor in general.
     /// </summary>
-    class EditorViewModel : BaseViewModel
+    sealed class EditorViewModel : BaseViewModel
     {
-        #region Members
+        #region Fields
 
         EditorFileViewModel selectedFile;
 
@@ -22,15 +19,11 @@ namespace Sumerics
 
         #region ctor
 
-        static EditorViewModel()
-        {
-            BasicItems = new List<AutocompleteItem>();
-        }
-
-        public EditorViewModel()
+        public EditorViewModel(IContainer container)
+            : base(container)
         {
             Files = new ObservableCollection<EditorFileViewModel>();
-            Files.Add(new EditorFileViewModel(this));
+            Files.Add(new EditorFileViewModel(this, container));
         }
 
         #endregion
@@ -43,11 +36,7 @@ namespace Sumerics
             set;
         }
 
-        public static List<AutocompleteItem> BasicItems
-        {
-            get;
-            private set;
-        }
+        public static readonly List<AutocompleteItem> BasicItems = new List<AutocompleteItem>();
 
         public EditorFileViewModel SelectedFile
         {
@@ -67,16 +56,22 @@ namespace Sumerics
         /// Opens a specific file in the editor.
         /// </summary>
         /// <param name="file">The path to the file to open.</param>
-        public void OpenFile(string file)
+        public void OpenFile(String file)
         {
-            if (Files.Count == 1 && Files[0].Text.Equals(string.Empty) && !Files[0].Changed)
+            if (Files.Count == 1 && Files[0].Text.Equals(String.Empty) && !Files[0].Changed)
+            {
                 Remove(Files[0]);
+            }
 
-            for(var i = 0; i != Files.Count; i++)
+            for (var i = 0; i != Files.Count; i++)
+            {
                 if (Files[i].FilePath != null && Files[i].FilePath.Equals(file, StringComparison.CurrentCultureIgnoreCase))
+                {
                     return;
+                }
+            }
 
-            var tab = new EditorFileViewModel(this, file);
+            var tab = new EditorFileViewModel(this, file, Container);
             Files.Add(tab);
             SelectedFile = tab;
         }
@@ -94,31 +89,39 @@ namespace Sumerics
         /// Closes all tabs.
         /// </summary>
         /// <returns>True: Cancel Close. False: Do not cancel.</returns>
-        public bool CloseAll()
+        public Boolean CloseAll()
         {
-            int filesChanged = 0;
+            var filesChanged = 0;
 
             for (var i = 0; i < Files.Count; i++)
             {
                 if (Files[i].Changed)
+                {
                     filesChanged++;
+                }
             }
 
             if (filesChanged > 0)
             {
                 var result = DecisionDialog.Show(
-                    string.Format("You have {0} unsaved file(s). Do you want to save them?", filesChanged),
+                    String.Format("You have {0} unsaved file(s). Do you want to save them?", filesChanged),
                     new[] { "Yes, I want to save them.", "No, but thanks!", "Cancel closing." });
 
                 if (result == 1)
+                {
                     return false;
+                }
                 else if (result == 2)
+                {
                     return true;
+                }
 
                 for (var i = 0; i < Files.Count; i++)
                 {
                     if (Files[i].Changed)
+                    {
                         Files[i].Save();
+                    }
                 }
 
                 return CloseAll();
@@ -137,7 +140,7 @@ namespace Sumerics
             {
                 return new RelayCommand(x =>
                 {
-                    var newfile = new EditorFileViewModel(this);
+                    var newfile = new EditorFileViewModel(this, Container);
                     Files.Add(newfile);
                     SelectedFile = newfile;
                 });
@@ -150,14 +153,16 @@ namespace Sumerics
             {
                 return new RelayCommand(x =>
                 {
-                    var dialog = new OpenFileWindow();
+                    var dialog = new OpenFileWindow(Container);
                     dialog.Title = "Open file ...";
                     dialog.AddFilter("All files (*.*)", "*.*");
                     dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
                     dialog.ShowDialog();
 
                     if (dialog.Accepted)
+                    {
                         OpenFile(dialog.SelectedFile);
+                    }
                 });
             }
         }

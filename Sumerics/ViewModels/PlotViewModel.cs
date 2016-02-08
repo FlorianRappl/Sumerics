@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Sumerics.Controls;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class PlotViewModel : BaseViewModel, IPlotViewModel
+    using Sumerics.Controls;
+    using System;
+    using System.IO;
+    using YAMP;
+
+    sealed class PlotViewModel : BaseViewModel, IPlotViewModel
     {
-        #region Members
+        #region Fields
 
         PlotValue _plot;
 
@@ -20,7 +15,8 @@ namespace Sumerics
 
         #region ctor
 
-        public PlotViewModel(PlotValue plot)
+        public PlotViewModel(PlotValue plot, IContainer container)
+            : base(container)
         {
             _plot = plot;
         }
@@ -47,12 +43,12 @@ namespace Sumerics
         {
             if (_plot is XYPlotValue)
             {
-                var window = new PlotSettingsWindow((XYPlotValue)_plot);
+                var window = new PlotSettingsWindow((XYPlotValue)_plot, Container);
                 window.ShowDialog();
             }
             else if (_plot is SubPlotValue)
             {
-                var window = new SubPlotSettingsWindow((SubPlotValue)_plot);
+                var window = new SubPlotSettingsWindow((SubPlotValue)_plot, Container);
                 window.ShowDialog();
             }
         }
@@ -61,17 +57,17 @@ namespace Sumerics
         {
             if (_plot is ContourPlotValue)
             {
-                var window = new ContourSeriesWindow((ContourPlotValue)_plot);
+                var window = new ContourSeriesWindow((ContourPlotValue)_plot, Container);
                 window.ShowDialog();
             }
             else if (_plot is HeatmapPlotValue)
             {
-                var window = new HeatSeriesWindow((HeatmapPlotValue)_plot);
+                var window = new HeatSeriesWindow((HeatmapPlotValue)_plot, Container);
                 window.ShowDialog();
             }
             else if (_plot is XYPlotValue)
             {
-                var window = new PlotSeriesWindow((XYPlotValue)_plot);
+                var window = new PlotSeriesWindow((XYPlotValue)_plot, Container);
                 window.ShowDialog();
             }
         }
@@ -90,7 +86,9 @@ namespace Sumerics
                     var win = (PlotWindow)window;
 
                     if (win.PlotModel == this)
+                    {
                         win.Close();
+                    }
                 }
             }
                     
@@ -99,20 +97,22 @@ namespace Sumerics
 
         public void SavePlot(SumericsPlot frame)
         {
-            var dialog = new SaveImageWindow();
+            var dialog = new SaveImageWindow(Container);
             dialog.ImageWidth = 640;
             dialog.ImageHeight = 480;
             dialog.Title = "Save plot as ...";
 
-            if (!string.IsNullOrEmpty(_plot.Title))
+            if (!String.IsNullOrEmpty(_plot.Title))
+            {
                 dialog.SelectedFile = _plot.Title;
+            }
 
             dialog.ShowDialog();
 
             if (dialog.Accepted)
             {
                 frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
-                OutputDialog.Show("File created", string.Format("The plot has been successfully saved in the file {0}.",
+                OutputDialog.Show("File created", String.Format("The plot has been successfully saved in the file {0}.",
                     Path.GetFileName(dialog.SelectedFile)));
             }
         }

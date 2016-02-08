@@ -1,91 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using YAMP.Help;
-using System.Windows.Navigation;
-using System.Runtime.InteropServices;
-using System.Reflection;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    using Sumerics.Commands;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Navigation;
+    using YAMP.Help;
+
     /// <summary>
     /// Interaction logic for HelpWindow.xaml
     /// </summary>
     public partial class HelpWindow : MetroWindow
 	{
-		#region Members
+		#region Fields
 
-		HelpSection topic;
-		ObservableCollection<HelpSection> results;
+        readonly YCommandFactory _commands;
+        readonly ObservableCollection<HelpSection> _results;
 
-        const string UA = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
+		HelpSection _topic;
+
+        const String UA = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
 
 		#endregion
 
 		#region ctor
 
-		public HelpWindow()
+		public HelpWindow(IContainer container)
         {
-			results = new ObservableCollection<HelpSection>();
+			_results = new ObservableCollection<HelpSection>();
+            _commands = container.Get<YCommandFactory>();
 			InitializeComponent();
-			SearchResults.ItemsSource = results;
-			Loaded += HelpWindowLoaded;
+			SearchResults.ItemsSource = _results;
+            DataContext = container.Get<DocumentationViewModel>();
             Browser.Navigated += Browser_Navigated;
         }
 
-        void Browser_Navigated(object sender, NavigationEventArgs e)
+        void Browser_Navigated(Object sender, NavigationEventArgs e)
         {
             SetSilent(Browser, true);
         }
 
 		#endregion
 
-		#region Properties
-		
-		public HelpSection Topic
-		{
-			get { return topic; }
-			set
-			{
-				topic = value;
-				HelpSource.Text = "Documentation > " + topic.Topic;
-				HelpTitle.Text = topic.Name;
-                InfoButton.Visibility = topic.HasLink ? Visibility.Visible : Visibility.Collapsed;
-				FillDocumentation();
-				Tabs.SelectedIndex = 1;
-			}
-		}
+        #region Properties
 
-		#endregion
+        public HelpSection Topic
+        {
+            get { return _topic; }
+            set
+            {
+                _topic = value;
+                HelpSource.Text = "Documentation > " + _topic.Topic;
+                HelpTitle.Text = _topic.Name;
+                InfoButton.Visibility = _topic.HasLink ? Visibility.Visible : Visibility.Collapsed;
+                FillDocumentation();
+                Tabs.SelectedIndex = 1;
+            }
+        }
 
-		#region Methods
+        #endregion
 
-		void HelpWindowLoaded(object sender, RoutedEventArgs e)
-		{
-			DataContext = DocumentationViewModel.Instance;
-		}
+        #region Methods
 
 		void FillDocumentation()
 		{
 			var doc = new FlowDocument();
 			doc.Blocks.Add(GetDescription());
 
-			if (topic is HelpFunctionSection)
+			if (_topic is HelpFunctionSection)
 			{
-				var hasCommand = YCommand.HasCommand(topic.Name);
-				var usages = (topic as HelpFunctionSection).Usages;
+				var hasCommand = _commands.HasCommand(_topic.Name);
+				var usages = (_topic as HelpFunctionSection).Usages;
 
 				if (usages.Count > 0)
 				{
@@ -100,23 +93,23 @@ namespace Sumerics
 				}
 				else
 				{
-					var p = new Paragraph();
-					InsertIntoParagraph(p, "No usages available.");
-					doc.Blocks.Add(p);
+					var paragraph = new Paragraph();
+					InsertIntoParagraph(paragraph, "No usages available.");
+					doc.Blocks.Add(paragraph);
 				}
 			}
 
 			HelpText.Document = doc;
 		}
 
-		void BackClick(object sender, RoutedEventArgs e)
+		void BackClick(Object sender, RoutedEventArgs e)
 		{
 			Tabs.SelectedIndex = 0;
 			HelpTitle.Text = "Help";
 			HelpSource.Text = "Documentation > Overview";
 		}
 
-        void InternetBackClick(object sender, RoutedEventArgs e)
+        void InternetBackClick(Object sender, RoutedEventArgs e)
         {
             Tabs.SelectedIndex = 1;
             HelpTitle.Text = "Help";
@@ -125,13 +118,13 @@ namespace Sumerics
             Browser.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        void InfoClick(object sender, RoutedEventArgs e)
+        void InfoClick(Object sender, RoutedEventArgs e)
         {
             Tabs.SelectedIndex = 2;
-            Browser.Navigate(topic.Link);
+            Browser.Navigate(_topic.Link);
         }
 
-        void ContentLoaded(object sender, NavigationEventArgs e)
+        void ContentLoaded(Object sender, NavigationEventArgs e)
         {
             Loading.Visibility = System.Windows.Visibility.Hidden;
             Browser.Visibility = System.Windows.Visibility.Visible;
@@ -175,11 +168,11 @@ namespace Sumerics
 		Paragraph GetDescription()
 		{
 			var p = new Paragraph();
-			InsertIntoParagraph(p, topic.Description);
+			InsertIntoParagraph(p, _topic.Description);
 			return p;
 		}
 
-		Paragraph GetUsage(bool hasCommand, HelpFunctionUsage usage)
+		Paragraph GetUsage(Boolean hasCommand, HelpFunctionUsage usage)
 		{
 			var p = new Paragraph();
 			var r = new Run("Usage");
@@ -192,9 +185,9 @@ namespace Sumerics
 			u.FontWeight = FontWeights.Bold;
 			p.Inlines.Add(u);
 
-			if (hasCommand && YCommand.HasOverload(topic.Name, usage.Arguments.Count))
+            if (hasCommand && _commands.HasOverload(_topic.Name, usage.Arguments.Count))
 			{
-				var o = new Run(topic.Name + " " + string.Join(" ", usage.ArgumentNames));
+				var o = new Run(_topic.Name + " " + String.Join(" ", usage.ArgumentNames));
 				o.Foreground = new SolidColorBrush(Colors.SteelBlue);
 				o.FontWeight = FontWeights.Bold;
 				p.Inlines.Add(o); 
@@ -204,31 +197,39 @@ namespace Sumerics
 			return p;
 		}
 
-		Paragraph GetDescription(string description)
+		Paragraph GetDescription(String description)
 		{
 			var p = new Paragraph();
 
-			if(string.IsNullOrEmpty(description))
-				InsertIntoParagraph(p, "Description", "No description available.");
-			else
-				InsertIntoParagraph(p, "Description", description);
+            if (String.IsNullOrEmpty(description))
+            {
+                InsertIntoParagraph(p, "Description", "No description available.");
+            }
+            else
+            {
+                InsertIntoParagraph(p, "Description", description);
+            }
 
 			return p;
 		}
 
-		Paragraph GetArguments(List<string> arguments)
+		Paragraph GetArguments(List<String> arguments)
 		{
 			var p = new Paragraph();
 
-			if(arguments.Count == 0)
-				InsertIntoParagraph(p, "Arguments", "---");
-			else
-				InsertIntoParagraph(p, "Arguments", arguments);
+            if (arguments.Count == 0)
+            {
+                InsertIntoParagraph(p, "Arguments", "---");
+            }
+            else
+            {
+                InsertIntoParagraph(p, "Arguments", arguments);
+            }
 
 			return p;
 		}
 
-		Paragraph GetReturns(List<string> returns)
+		Paragraph GetReturns(List<String> returns)
 		{
 			var p = new Paragraph();
 			InsertIntoParagraph(p, "Returns", returns);
@@ -242,7 +243,7 @@ namespace Sumerics
 			return p;
 		}
 
-		void InsertIntoParagraph(Paragraph p, string title, List<HelpExample> examples)
+		void InsertIntoParagraph(Paragraph p, String title, List<HelpExample> examples)
 		{
 			var r = new Run(title);
 			r.Foreground = new SolidColorBrush(Colors.Black);
@@ -251,8 +252,10 @@ namespace Sumerics
 
 			if (examples.Count > 0)
 			{
-				for (var i = 0; i < examples.Count; )
-					InsertIntoParagraph(p, examples[i], ++i);
+                for (var i = 0; i < examples.Count; )
+                {
+                    InsertIntoParagraph(p, examples[i], ++i);
+                }
 			}
 			else
 			{
@@ -264,7 +267,7 @@ namespace Sumerics
 			p.Inlines.Add(new LineBreak());
 		}
 
-		void InsertIntoParagraph(Paragraph p, HelpExample example, int nr)
+		void InsertIntoParagraph(Paragraph p, HelpExample example, Int32 nr)
 		{
 			var c = new Run("( copy ) ");
 			c.Foreground = new SolidColorBrush(Colors.LightGray);
@@ -282,7 +285,7 @@ namespace Sumerics
 			p.Inlines.Add(new LineBreak());
 		}
 
-		void InsertIntoParagraph(Paragraph p, string title, IEnumerable<string> text)
+		void InsertIntoParagraph(Paragraph p, String title, IEnumerable<String> text)
 		{
 			var r = new Run(title);
 			r.Foreground = new SolidColorBrush(Colors.Black);
@@ -298,7 +301,7 @@ namespace Sumerics
 			}
 		}
 
-		void InsertIntoParagraph(Paragraph p, string title, string text)
+		void InsertIntoParagraph(Paragraph p, String title, String text)
 		{
 			var r = new Run(title);
 			r.Foreground = new SolidColorBrush(Colors.Black);
@@ -327,42 +330,49 @@ namespace Sumerics
 
 		#region Search
 
-		void SearchChanged(object sender, KeyEventArgs e)
+		void SearchChanged(Object sender, KeyEventArgs e)
 		{
-			results.Clear();
+			_results.Clear();
 			var search = Search.Text.ToLower();
+            var documentation = DataContext as DocumentationViewModel;
 
-			foreach (var c in DocumentationViewModel.Instance.Document.Sections)
+            foreach (var section in documentation.Document.Sections)
 			{
-				if (c.Name.ToLower().Contains(search))
-					results.Add(c);
-				else if (c.Description.ToLower().Contains(search))
-					results.Add(c);
+                if (section.Name.ToLower().Contains(search))
+                {
+                    _results.Add(section);
+                }
+                else if (section.Description.ToLower().Contains(search))
+                {
+                    _results.Add(section);
+                }
 			}
 		}
 
-		void SearchGotFocus(object sender, EventArgs e)
+		void SearchGotFocus(Object sender, EventArgs e)
 		{
 			SearchPopup.IsOpen = true;
 		}
 
-		void SearchLostFocus(object sender, EventArgs e)
+        void SearchLostFocus(Object sender, EventArgs e)
 		{
 			SearchPopup.IsOpen = false;
 		}
 
-		void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void SelectionChanged(Object sender, SelectionChangedEventArgs e)
 		{
-			if (e.AddedItems == null)
-				return;
+            if (e.AddedItems != null)
+            {
+                foreach (var item in e.AddedItems)
+                {
+                    var section = item as HelpSection;
 
-			foreach (var item in e.AddedItems)
-			{
-				var section = item as HelpSection;
-
-				if (section != null)
-					Topic = section;
-			}
+                    if (section != null)
+                    {
+                        Topic = section;
+                    }
+                }
+            }
 		}
 
 		#endregion

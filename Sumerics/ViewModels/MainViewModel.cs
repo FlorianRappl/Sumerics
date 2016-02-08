@@ -1,8 +1,11 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Commands;
     using Sumerics.Controls;
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Timers;
     using System.Windows.Input;
     using System.Windows.Threading;
     using YAMP;
@@ -10,9 +13,9 @@
     /// <summary>
     /// This is the main view model - the central point!
     /// </summary>
-    class MainViewModel : BaseViewModel
+    sealed class MainViewModel : BaseViewModel
     {
-        #region Members
+        #region Fields
 
         IPlotViewModel lastPlot;
         VariableViewModel selectedVariable;
@@ -21,20 +24,21 @@
 		ObservableCollection<AutocompleteItem> availableItems;
         ObservableCollection<NotificationViewModel> notifications;
 
-        bool hasNotification;
-        string input;
-        string functionFilter;
-        string variableFilter;
+        Boolean hasNotification;
+        String input;
+        String functionFilter;
+        String variableFilter;
 
-        System.Timers.Timer popupTimer;
+        Timer popupTimer;
 
         #endregion
 
         #region ctor
 
-        public MainViewModel()
+        public MainViewModel(IContainer container)
+            : base(container)
         {
-            popupTimer = new System.Timers.Timer();
+            popupTimer = new Timer();
             popupTimer.Interval = 5000;
             popupTimer.Elapsed += NotifyTimerElapsed;
 
@@ -52,8 +56,8 @@
             Core.NotificationReceived += NotificationReceived;
             Core.UserInputRequired += UserInputRequired;
 
-			FunctionFilter = string.Empty;
-			VariableFilter = string.Empty;
+			FunctionFilter = String.Empty;
+			VariableFilter = String.Empty;
 
 			FillLists();
         }
@@ -65,7 +69,7 @@
         /// <summary>
         /// Gets or sets if notifications are available.
         /// </summary>
-        public bool HasNotification
+        public Boolean HasNotification
         {
             get { return hasNotification; }
             set
@@ -90,7 +94,9 @@
                 foreach (var section in sections)
                 {
                     if (section.Name.Contains(functionFilter))
-                        Functions.Add(new HelpViewModel(section));
+                    {
+                        Functions.Add(new HelpViewModel(section, Container));
+                    }
                 }
 
                 RaisePropertyChanged();
@@ -100,7 +106,7 @@
         /// <summary>
         /// Gets or sets the currently applied variable filter.
         /// </summary>
-		public string VariableFilter
+		public String VariableFilter
 		{
 			get { return variableFilter; }
 			set
@@ -111,8 +117,11 @@
 
 				foreach (var variable in variables)
 				{
-					if (variable.Key.Contains(variableFilter))
-						Variables.Add(new VariableViewModel(variable.Key, variable.Value));
+                    if (variable.Key.Contains(variableFilter))
+                    {
+                        var vm = new VariableViewModel(variable.Key, variable.Value, Container);
+                        Variables.Add(vm);
+                    }
 				}
 
 				RaisePropertyChanged();
@@ -218,7 +227,9 @@
                 RaisePropertyChanged("SelectedValue");
 
                 if (value != null && value.Value is PlotValue)
+                {
                     Core.Context.ChangeLastPlotTo((PlotValue)value.Value);
+                }
             }
         }
 
@@ -242,8 +253,10 @@
         {
             get 
             {
-                if(SelectedVariable == null)
+                if (SelectedVariable == null)
+                {
                     return null;
+                }
 
                 return SelectedVariable.Value; 
             }
@@ -259,7 +272,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenEditorWindow();
+                    App.Window.OpenEditorWindow(Container);
                 });
             }
         }
@@ -270,7 +283,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenHelpWindow();
+                    App.Window.OpenHelpWindow(Container);
                 });
             }
         }
@@ -281,7 +294,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenDocumentationWindow();
+                    App.Window.OpenDocumentationWindow(Container);
                 });
             }
         }
@@ -292,7 +305,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenDirectoryWindow();
+                    App.Window.OpenDirectoryWindow(Container);
                 });
             }
         }
@@ -303,7 +316,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenLoadWindow();
+                    App.Window.OpenLoadWindow(Container);
                 });
             }
         }
@@ -314,7 +327,7 @@
             {
                 return new RelayCommand(x =>
                 {
-                    App.Window.OpenSaveWindow();
+                    App.Window.OpenSaveWindow(Container);
                 });
             }
         }
@@ -327,10 +340,12 @@
                 {
                     var qrvm = x as QueryResultViewModel;
                     var query = qrvm.Query;
-                    var newQuery = YCommand.TryCommand(query);
+                    var newQuery = Container.Get<YCommandFactory>().TryCommand(query);
 
                     if (newQuery != null)
+                    {
                         query = newQuery;
+                    }
 
                     Core.RunAsync(qrvm, query);
                 });
@@ -371,13 +386,13 @@
 
         #region Event-Handling
 
-        void NotifyTimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        void NotifyTimerElapsed(Object sender, System.Timers.ElapsedEventArgs e)
         {
             popupTimer.Stop();
             Dispatcher.CurrentDispatcher.Invoke(() => HasNotification = false);
         }
 
-        void VariableChanged(object sender, VariableEventArgs e)
+        void VariableChanged(Object sender, VariableEventArgs e)
         {
             for (var i = 0; i < variables.Count; i++)
             {
@@ -386,22 +401,27 @@
 					variables[i].Value = e.Value;
 
                     if (SelectedVariable != null && e.Name == SelectedVariable.Name)
+                    {
                         SelectedVariable = variables[i];
+                    }
 
                     break;
                 }
             }
         }
 
-        void VariableCreated(object sender, VariableEventArgs e)
+        void VariableCreated(Object sender, VariableEventArgs e)
         {
             if (e.Name.Contains(variableFilter))
-                variables.Add(new VariableViewModel(e.Name, e.Value));
+            {
+                var vm = new VariableViewModel(e.Name, e.Value, Container);
+                variables.Add(vm);
+            }
 
             availableItems.Add(new AutocompleteItem(e.Name, "Variable", Icons.VariableIcon));
         }
 
-        void VariableRemoved(object sender, VariableEventArgs e)
+        void VariableRemoved(Object sender, VariableEventArgs e)
         {
             for (var i = 0; i < variables.Count; i++)
             {
@@ -413,7 +433,9 @@
             }
 
             if (SelectedVariable != null && e.Name == SelectedVariable.Name)
+            {
                 SelectedVariable = null;
+            }
 
             for (var k = 0; k < availableItems.Count; k++)
             {
@@ -425,12 +447,12 @@
             }
         }
 
-        void PlotCreated(object sender, PlotEventArgs e)
+        void PlotCreated(Object sender, PlotEventArgs e)
         {
-            LastPlot = new PlotViewModel(e.Value);
+            LastPlot = new PlotViewModel(e.Value, Container);
         }
 
-        void UserInputRequired(object sender, UserInputEventArgs e)
+        void UserInputRequired(Object sender, UserInputEventArgs e)
         {
             var input = new InputDialog();
             input.UserMessage = e.Message;
@@ -438,9 +460,9 @@
             input.Show();
         }
 
-        void NotificationReceived(object sender, NotificationEventArgs e)
+        void NotificationReceived(Object sender, NotificationEventArgs e)
         {
-            notifications.Insert(0, new NotificationViewModel(e));
+            notifications.Insert(0, new NotificationViewModel(e, Container));
             HasNotification = true;
             popupTimer.Stop();
             popupTimer.Start();

@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using Sumerics.Controls;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class PlotSettingsViewModel : BaseViewModel
-	{
-		#region Members
+    using Sumerics.Controls;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using YAMP;
 
-		string title;
-		bool isLegendVisible;
+	sealed class PlotSettingsViewModel : BaseViewModel
+	{
+		#region Fields
+
+		String title;
+		Boolean isLegendVisible;
 		SolidColorBrush legendBackground;
 		SolidColorBrush legendBorder;
 		XYPlotValue value;
@@ -25,7 +23,8 @@ namespace Sumerics
 
 		#region ctor
 
-		public PlotSettingsViewModel(XYPlotValue value)
+		public PlotSettingsViewModel(XYPlotValue value, IContainer container)
+            : base(container)
 		{
 			this.value = value;
 			Title = value.Title;

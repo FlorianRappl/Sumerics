@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Threading;
-using MahApps.Metro.Controls;
-using YAMP.Help;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class DocumentationViewModel : BaseViewModel
+    using MahApps.Metro.Controls;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using YAMP.Help;
+
+	sealed class DocumentationViewModel : BaseViewModel
 	{
-		#region Members
+		#region Fields
 
 		static DocumentationViewModel instance;
 
@@ -22,7 +15,8 @@ namespace Sumerics
 
 		#region ctor
 
-		private DocumentationViewModel ()
+		public DocumentationViewModel(IContainer container)
+            : base(container)
 		{
 			Groups = new ObservableCollection<PanoramaGroup>();
 
@@ -32,26 +26,13 @@ namespace Sumerics
                 var content = new List<HelpTileViewModel>();
 
                 foreach (var item in topic)
-                    content.Add(new HelpTileViewModel(item));
+                {
+                    content.Add(new HelpTileViewModel(item, container));
+                }
 
                 pg.SetSource(content);
                 Groups.Add(pg);
             }
-		}
-
-		#endregion
-
-		#region Singleton
-
-		public static DocumentationViewModel Instance
-		{
-			get
-			{
-				if (instance == null)
-					instance = new DocumentationViewModel();
-
-				return instance;
-			}
 		}
 
 		#endregion

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System.Threading.Tasks;
+    using System.Windows;
+
 	public static class StaticHelpers
 	{
-		public static T GetWindow<T>() where T : Window, new()
+		public static T GetWindow<T>(IContainer container) 
+            where T : Window
 		{
 			foreach (Window window in App.Current.Windows)
 			{
@@ -23,7 +17,7 @@ namespace Sumerics
 				}
 			}
 
-			var win = new T();
+			var win = container.Create<T>();
 			win.Show();
 			return win;
 		}

@@ -1,33 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Linq;
+    using System.Windows;
+
     class SaveFileViewModel : FileBaseViewModel
     {
-        #region Members
+        #region Fields
 
-        string fileName;
+        String fileName;
 
         #endregion
 
         #region ctor
 
-        public SaveFileViewModel(string startFileOrFolder)
+        public SaveFileViewModel(String startFileOrFolder, IContainer container)
+            : base(container)
         {
-            fileName = string.Empty;
+            fileName = String.Empty;
             Directories = new ObservableCollection<FolderModel>();
 
             if (Directory.Exists(startFileOrFolder))
+            {
                 CurrentDirectory = new FolderModel(startFileOrFolder);
+            }
             else
+            {
                 SelectedFile = new FileModel(startFileOrFolder);
+            }
         }
 
         #endregion

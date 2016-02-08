@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class OptionsViewModel : BaseViewModel
-	{
-		#region Members
+    using System;
+    using System.IO;
+    using System.Windows.Input;
 
-		bool liveSensorData;
-		int consoleFontSize;
-		int liveSensorHistory;
-		bool autoSaveHistory;
-		bool autoEvaluate;
-		bool accelerometer;
-		bool gyrometer;
-		bool inclinometer;
-		bool compass;
-		bool light;
+	sealed class OptionsViewModel : BaseViewModel
+	{
+		#region Fields
+
+		Boolean liveSensorData;
+		Int32 consoleFontSize;
+		Int32 liveSensorHistory;
+		Boolean autoSaveHistory;
+		Boolean autoEvaluate;
+		Boolean accelerometer;
+		Boolean gyrometer;
+		Boolean inclinometer;
+		Boolean compass;
+		Boolean light;
 
 		#endregion
 
 		#region ctor
 
-		public OptionsViewModel()
+		public OptionsViewModel(IContainer container)
+            : base(container)
 		{
 			var settings = Properties.Settings.Default;
 			liveSensorData = settings.LivePlotActive;
@@ -247,18 +245,20 @@ namespace Sumerics
 
         #region Methods
 
-        void LoadEditor(string file)
+        void LoadEditor(String file)
         {
-            if (!System.IO.File.Exists(file))
+            if (!File.Exists(file))
             {
                 var dir = System.IO.Path.GetDirectoryName(file);
 
                 try
                 {
-                    if (!System.IO.Directory.Exists(dir))
-                        System.IO.Directory.CreateDirectory(dir);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
 
-                    System.IO.File.Create(file).Close();
+                    File.Create(file).Close();
                 }
                 catch
                 {
@@ -268,7 +268,7 @@ namespace Sumerics
                 }
             }
 
-            var editor = StaticHelpers.GetWindow<EditorWindow>();
+            var editor = StaticHelpers.GetWindow<EditorWindow>(Container);
             editor.OpenFile(file);
         }
 

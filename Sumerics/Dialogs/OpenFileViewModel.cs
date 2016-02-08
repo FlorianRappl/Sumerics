@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class OpenFileViewModel : FileBaseViewModel
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+
+    sealed class OpenFileViewModel : FileBaseViewModel
     {
         #region ctor
 
-        public OpenFileViewModel(string startFileOrFolder)
+        public OpenFileViewModel(String startFileOrFolder, IContainer container)
+            : base(container)
         {
             Directories = new ObservableCollection<FolderModel>();
 
             if (File.Exists(startFileOrFolder))
+            {
                 SelectedFile = new FileModel(startFileOrFolder);
+            }
             else if (Directory.Exists(startFileOrFolder))
+            {
                 CurrentDirectory = new FolderModel(startFileOrFolder);
+            }
             else
+            {
                 CurrentDirectory = new FolderModel(Environment.CurrentDirectory);
+            }
         }
 
         #endregion

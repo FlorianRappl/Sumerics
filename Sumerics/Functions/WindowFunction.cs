@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YAMP;
-using YAMP.Converter;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using YAMP;
+    using YAMP.Converter;
+
     [Description("Modifies the UI in such a sense that it opens the specified Window. Note: Not all Dialogs / Windows can be opened from the console.")]
     [Kind("UI")]
     sealed class WindowFunction : ArgumentFunction
     {
-        public static IFunction Create()
+        static IContainer _container;
+
+        public static IFunction Create(IContainer container)
         {
+            _container = container;
             return new WindowFunction();
         }
 
@@ -28,28 +26,28 @@ namespace Sumerics
             switch (value)
             {
                 case Windows.Editor:
-                    App.Window.OpenEditorWindow();
+                    App.Window.OpenEditorWindow(_container);
                     break;
                 case Windows.LoadWS:
-                    App.Window.OpenLoadWindow();
+                    App.Window.OpenLoadWindow(_container);
                     break;
                 case Windows.SaveWS:
-                    App.Window.OpenSaveWindow();
+                    App.Window.OpenSaveWindow(_container);
                     break;
                 case Windows.Help:
-                    App.Window.OpenHelpWindow();
+                    App.Window.OpenHelpWindow(_container);
                     break;
                 case Windows.Demos:
-                    App.Window.OpenDocumentationWindow();
+                    App.Window.OpenDocumentationWindow(_container);
                     break;
                 case Windows.About:
-                    App.Window.OpenAboutWindow();
+                    App.Window.OpenAboutWindow(_container);
                     break;
                 case Windows.Options:
-                    App.Window.OpenOptionsWindow();
+                    App.Window.OpenOptionsWindow(_container);
                     break;
                 case Windows.Directory:
-                    App.Window.OpenDirectoryWindow();
+                    App.Window.OpenDirectoryWindow(_container);
                     break;
             }
         }

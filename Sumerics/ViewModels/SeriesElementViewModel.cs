@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Media;
-using YAMP;
-using Sumerics.Controls;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class SeriesElementViewModel : BaseViewModel
-	{
-		#region Members
+    using Sumerics.Controls;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Media;
+    using YAMP;
 
-		int index;
-		string title;
+	sealed class SeriesElementViewModel : BaseViewModel
+	{
+		#region Fields
+
+		Int32 index;
+		String title;
 		SolidColorBrush color;
 		PointSymbol symbol;
-		bool lines;
+		Boolean lines;
 		IPointSeries series;
 
 		#endregion
 
 		#region ctor
 
-		public SeriesElementViewModel(IPointSeries series, int index)
+		public SeriesElementViewModel(IPointSeries series, Int32 index, IContainer container)
+            : base(container)
 		{
 			this.index = index;
 			this.series = series;

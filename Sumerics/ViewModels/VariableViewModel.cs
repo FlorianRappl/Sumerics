@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Media.Imaging;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class VariableViewModel : BaseViewModel
-	{
-		#region Members
+    using System;
+    using System.Windows.Media.Imaging;
+    using YAMP;
 
-		string type;
-        string shortInfo;
+    sealed class VariableViewModel : BaseViewModel
+	{
+		#region Fields
+
+		String type;
+        String shortInfo;
 		Value value;
         BitmapImage icon;
 
@@ -20,7 +17,8 @@ namespace Sumerics
 
 		#region ctor
 
-		public VariableViewModel(string name, Value value)
+		public VariableViewModel(String name, Value value, IContainer container)
+            : base(container)
         {
             Name = name;
             Value = value;

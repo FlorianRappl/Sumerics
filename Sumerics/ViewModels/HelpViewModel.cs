@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using YAMP;
-using YAMP.Help;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class HelpViewModel : BaseViewModel
+    using System;
+    using System.Text.RegularExpressions;
+    using System.Windows.Input;
+    using System.Windows.Media.Imaging;
+    using YAMP.Help;
+
+    sealed class HelpViewModel : BaseViewModel
     {
-        #region Members
+        #region Fields
 
         HelpSection help;
         BitmapImage icon;
@@ -23,7 +18,8 @@ namespace Sumerics
 
         #region ctor
 
-        public HelpViewModel(HelpSection entry)
+        public HelpViewModel(HelpSection entry, IContainer container)
+            : base(container)
 		{
 			help = entry;
             icon = Icons.GetLowImage(entry.Topic);
@@ -33,17 +29,17 @@ namespace Sumerics
 
         #region Properties
 
-        public string Name
+        public String Name
         {
             get { return help.Name; }
         }
 
-		public string Description
+		public String Description
 		{
 			get { return help.Description; }
 		}
 
-        public string ToolTip
+        public String ToolTip
         {
             get 
             {
@@ -56,7 +52,9 @@ namespace Sumerics
                 }
 
                 if (str.Length > 70)
+                {
                     str = str.Substring(0, 66) + " ...";
+                }
 
                 return str;
             }
@@ -81,7 +79,7 @@ namespace Sumerics
             {
                 return new RelayCommand(x =>
                 {
-					var hw = StaticHelpers.GetWindow<HelpWindow>();
+					var hw = StaticHelpers.GetWindow<HelpWindow>(Container);
                     hw.Topic = help;
                 });
             }

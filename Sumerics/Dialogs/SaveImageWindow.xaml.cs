@@ -1,20 +1,12 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    using System;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
     /// <summary>
     /// Interaction logic for SaveFileWindow.xaml
     /// </summary>
@@ -28,9 +20,9 @@ namespace Sumerics
 
         #region ctor
 
-        public SaveImageWindow()
+        public SaveImageWindow(IContainer container)
         {
-            model = new SaveImageViewModel(Environment.CurrentDirectory);
+            model = new SaveImageViewModel(Environment.CurrentDirectory, container);
             InitializeComponent();
             DataContext = model;
         }

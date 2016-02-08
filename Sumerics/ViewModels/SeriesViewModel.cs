@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class SeriesViewModel : BaseViewModel
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Input;
+    using YAMP;
+
+	sealed class SeriesViewModel : BaseViewModel
 	{
-		#region Members
+		#region Fields
 
 		PlotValue value;
 		SeriesElementViewModel selected;
@@ -23,7 +18,8 @@ namespace Sumerics
 
 		#region ctor
 
-		public SeriesViewModel(XYPlotValue value)
+		public SeriesViewModel(XYPlotValue value, IContainer container)
+            : base(container)
 		{
 			int index = 1;
 			this.value = value;
@@ -31,7 +27,8 @@ namespace Sumerics
 
 			for (var i = 0; i < value.Count; i++)
 			{
-				var child = new SeriesElementViewModel(value.GetSeries(i), index++);
+                var series = value.GetSeries(i);
+				var child = new SeriesElementViewModel(series, index++, container);
 				Children.Add(child);
 			}
 

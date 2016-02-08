@@ -1,38 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-	class PluginViewModel : BaseViewModel
-	{
-		#region Members
+    using System;
+    using System.Reflection;
+    using System.Windows.Media.Imaging;
 
-		string description;
-		string title;
-		string company;
-		string version;
-		bool active;
+	sealed class PluginViewModel : BaseViewModel
+	{
+		#region Fields
+
+		String description;
+		String title;
+		String company;
+		String version;
+		Boolean active;
 		BitmapImage icon;
-		bool custom;
-		string fileName;
+		Boolean custom;
+		String fileName;
 
 		#endregion
 
 		#region ctor
 
-		public PluginViewModel(Assembly assembly)
+		public PluginViewModel(Assembly assembly, IContainer container)
+            : base(container)
 		{
 			custom = false;
 			active = true;
 			InspectAssembly(assembly);
 		}
 
-		public PluginViewModel(Assembly assembly, string fileName)
+        public PluginViewModel(Assembly assembly, String fileName, IContainer container)
+            : base(container)
 		{
 			custom = true;
 			this.fileName = fileName;

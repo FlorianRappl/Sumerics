@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class SubPlotSettingsViewModel : BaseViewModel
+    using System;
+    using System.Windows.Input;
+    using YAMP;
+
+    sealed class SubPlotSettingsViewModel : BaseViewModel
     {
-        #region Members
+        #region Fields
 
         SubPlotValue value;
-        string title;
-        int columns;
-        int rows;
+        String title;
+        Int32 columns;
+        Int32 rows;
 
         #endregion
 
         #region ctor
 
-        public SubPlotSettingsViewModel(SubPlotValue plot)
+        public SubPlotSettingsViewModel(SubPlotValue plot, IContainer container)
+            : base(container)
         {
             value = plot;
             title = plot.Title;

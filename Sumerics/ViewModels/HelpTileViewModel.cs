@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using MahApps.Metro.Controls;
-using YAMP.Help;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    using System;
+    using System.Windows.Input;
+    using System.Windows.Media.Imaging;
+    using YAMP.Help;
+
 	public class HelpTileViewModel : BaseViewModel, IPanoramaTile
     {
-        #region Members
+        #region Fields
 
         HelpEntry _entry;
         BitmapImage _icon;
@@ -22,7 +17,8 @@ namespace Sumerics
 
         #region ctor
 
-        public HelpTileViewModel(HelpEntry entry)
+        public HelpTileViewModel(HelpEntry entry, IContainer container)
+            : base(container)
 		{
 			_entry = entry;
             _icon = Icons.GetHighImage(entry.Topic.Kind);
@@ -32,7 +28,7 @@ namespace Sumerics
 
         #region Properties
 
-        public string Name
+        public String Name
 		{
 			get { return _entry.Name; }
 		}
@@ -53,8 +49,8 @@ namespace Sumerics
 			{
 				return new RelayCommand(x =>
 				{
-					var window = StaticHelpers.GetWindow<HelpWindow>();
-					window.Topic = DocumentationViewModel.Instance.Document.Get(_entry.Name);
+					var window = StaticHelpers.GetWindow<HelpWindow>(Container);
+					window.Topic = Container.Get<DocumentationViewModel>().Document.Get(_entry.Name);
 				});
 			}
         }

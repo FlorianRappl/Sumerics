@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class FolderBrowseViewModel : DialogBaseViewModel
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+
+    sealed class FolderBrowseViewModel : DialogBaseViewModel
     {
-        #region Members
+        #region Fields
 
         FolderModel selectedDirectory;
         FolderModel selectedTopDirectory;
@@ -21,7 +16,8 @@ namespace Sumerics
 
         #region ctor
 
-        public FolderBrowseViewModel(string startFolder)
+        public FolderBrowseViewModel(String startFolder, IContainer container)
+            : base(container)
         {
             CanAccept = true;
             CurrentDirectories = new ObservableCollection<FolderModel>();
@@ -29,9 +25,13 @@ namespace Sumerics
             TopDirectories = new ObservableCollection<FolderModel>();
 
             if (Directory.Exists(startFolder))
+            {
                 SelectedDirectory = new FolderModel(startFolder);
+            }
             else
+            {
                 SelectedDirectory = new FolderModel(Environment.CurrentDirectory);
+            }
         }
 
         #endregion

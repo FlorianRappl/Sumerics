@@ -178,25 +178,11 @@
     </Compile>
     <Compile Include="Codebase\BindableStaticResource.cs" />
     <Compile Include="Codebase\ColorPicker.cs" />
+    <Compile Include="Codebase\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />
     <Compile Include="Codebase\MathMLParser.cs" />
     <Compile Include="Codebase\StaticHelpers.cs" />
-    <Compile Include="Commands\CdCommand.cs" />
-    <Compile Include="Commands\CpCommand.cs" />
-    <Compile Include="Commands\DateCommand.cs" />
-    <Compile Include="Commands\LivePlotCommand.cs" />
-    <Compile Include="Commands\LsCommand.cs" />
-    <Compile Include="Commands\MvCommand.cs" />
-    <Compile Include="Commands\PwdCommand.cs" />
-    <Compile Include="Commands\SetCommand.cs" />
-    <Compile Include="Commands\SleepCommand.cs" />
-    <Compile Include="Commands\TimerCommand.cs" />
-    <Compile Include="Commands\TimeSeriesCommand.cs" />
-    <Compile Include="Commands\TitleCommand.cs" />
-    <Compile Include="Commands\TypeCommand.cs" />
-    <Compile Include="Commands\VerCommand.cs" />
-    <Compile Include="Commands\WhoCommand.cs" />
     <Compile Include="ConsoleEnterWindow.xaml.cs">
       <DependentUpon>ConsoleEnterWindow.xaml</DependentUpon>
     </Compile>
@@ -360,13 +346,6 @@
     </Compile>
     <Compile Include="Codebase\BaseViewModel.cs" />
     <Compile Include="Codebase\RelayCommand.cs" />
-    <Compile Include="Commands\ClearCommand.cs" />
-    <Compile Include="Commands\ClsCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\HelpCommand.cs" />
-    <Compile Include="Commands\LoadCommand.cs" />
-    <Compile Include="Commands\SaveCommand.cs" />
-    <Compile Include="Commands\YCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -432,6 +411,14 @@
     <Resource Include="Icons\settings.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Commands\Sumerics.Commands.csproj">
+      <Project>{f939f9e5-14de-47c7-bdaf-9ed28a635ae8}</Project>
+      <Name>Sumerics.Commands</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
+      <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
+      <Name>Sumerics.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sumerics.Scripts\Sumerics.Scripts.csproj">
       <Project>{be7752ef-094a-4ae3-836f-4e8689d51c2f}</Project>
       <Name>Sumerics.Scripts</Name>

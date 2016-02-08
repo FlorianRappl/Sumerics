@@ -1,33 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Windows.Input;
+
     abstract class FileBaseViewModel : DialogBaseViewModel
     {
-        #region Members
+        #region Fields
 
         protected FolderModel currentDirectory;
         protected FileModel selectedFile;
 
-        Dictionary<string, string> filters;
-        string selectedFilter;
+        Dictionary<String, String> filters;
+        String selectedFilter;
 
         #endregion
 
         #region ctor
 
-        public FileBaseViewModel()
+        public FileBaseViewModel(IContainer container)
+            : base(container)
         {
             Files = new ObservableCollection<FileModel>();
-            filters = new Dictionary<string, string>();
-            Filters = new ObservableCollection<string>();
+            filters = new Dictionary<String, String>();
+            Filters = new ObservableCollection<String>();
         }
 
         #endregion

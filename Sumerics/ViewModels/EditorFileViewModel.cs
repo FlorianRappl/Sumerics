@@ -10,16 +10,16 @@
     /// <summary>
     /// ViewModel for one tab in the editor, i.e. one file.
     /// </summary>
-    class EditorFileViewModel : BaseViewModel, IScriptFileModel
+    sealed class EditorFileViewModel : BaseViewModel, IScriptFileModel
     {
-        #region Members
+        #region Fields
 
-        string path;
-        bool awaiting;
-        bool changed;
+        String path;
+        Boolean awaiting;
+        Boolean changed;
         EditorViewModel parent;
         EditorControl ed;
-        string originalText;
+        String originalText;
         QueryResultViewModel currentExecution;
 
         ParseContext debugContext;
@@ -28,7 +28,8 @@
 
         #region ctor
 
-        public EditorFileViewModel(EditorViewModel parent)
+        public EditorFileViewModel(EditorViewModel parent, IContainer container)
+            : base(container)
         {
             QueryResultViewModel.RunningQueriesChanged += OnRunningQueriesChanged;
             debugContext = new ParseContext(Core.Context);
@@ -38,13 +39,15 @@
             VariableItems = new List<AutocompleteItem>();
 
             foreach (var item in EditorViewModel.BasicItems)
+            {
                 Items.Add(item);
+            }
 
             InitEditor();
         }
 
-        public EditorFileViewModel(EditorViewModel parent, string path)
-            : this(parent)
+        public EditorFileViewModel(EditorViewModel parent, String path, IContainer container)
+            : this(parent, container)
         {
             this.path = path;
             ReadText();
@@ -76,7 +79,7 @@
 
         public void SaveAs()
         {
-            var dialog = new SaveFileWindow();
+            var dialog = new SaveFileWindow(Container);
             dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
             dialog.AddFilter("Textfile (*.txt)", "*.txt");
             dialog.ShowDialog();

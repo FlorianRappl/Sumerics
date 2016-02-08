@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Input;
+
     abstract class DialogBaseViewModel : BaseViewModel
     {
-        #region Members
+        #region Fields
 
-        bool canAccept;
+        Boolean canAccept;
         FileSystemWatcher watcher;
 
         #endregion
 
         #region ctor
 
-        public DialogBaseViewModel()
+        public DialogBaseViewModel(IContainer container)
+            : base(container)
         {
             Places = new ObservableCollection<FolderModel>();
             PopulatePlaces();
