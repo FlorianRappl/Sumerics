@@ -1,10 +1,11 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Commands
 {
     using System;
 
-    class HelpCommand : YCommand
+    sealed class HelpCommand : YCommand
     {
-        public HelpCommand() : base(0, 1)
+        public HelpCommand() :
+            base(0, 1)
         {
         }
 

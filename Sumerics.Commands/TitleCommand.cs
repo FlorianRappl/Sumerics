@@ -1,23 +1,25 @@
 ﻿namespace Sumerics.Commands
 {
-    class TitleCommand:YCommand
+    using System;
+
+    sealed class TitleCommand : YCommand
     {
         public TitleCommand()
             : base(0, 2)
         {
         }
 
-        public string Invocation()
+        public String Invocation()
         {
             return "title()";
         }
 
-        public string Invocation(string parameter)
+        public String Invocation(String parameter)
         {
             return "title(" + parameter + ")";
         }
 
-        public string Invocation(string plot, string title)
+        public String Invocation(String plot, String title)
         {
             return "title(" + plot + ", " + title + ")";
         }

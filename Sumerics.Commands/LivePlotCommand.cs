@@ -1,15 +1,16 @@
 ﻿namespace Sumerics.Commands
 {
+    using System;
     using System.Text;
 
-    class LivePlotCommand : YCommand
+    sealed class LivePlotCommand : YCommand
     {
         public LivePlotCommand()
             : base(3)
         {
         }
 
-        public string Invocation(params string[] Parameters)
+        public String Invocation(params String[] Parameters)
         {
             var sb = new StringBuilder();
             sb.Append("liveplot(\"").Append(Parameters[0]).Append("\"");

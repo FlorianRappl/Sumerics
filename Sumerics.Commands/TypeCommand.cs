@@ -1,13 +1,15 @@
 ﻿namespace Sumerics.Commands
 {
-    class TypeCommand:YCommand
+    using System;
+
+    sealed class TypeCommand : YCommand
     {
         public TypeCommand()
             : base(1, 1)
         {
         }
 
-        public string Invocation(string filter)
+        public String Invocation(String filter)
         {
             return "type(" + filter + ")";
         }

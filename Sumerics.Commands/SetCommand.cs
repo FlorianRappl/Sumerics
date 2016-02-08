@@ -1,23 +1,25 @@
 ﻿namespace Sumerics.Commands
 {
-    class SetCommand:YCommand
+    using System;
+
+    sealed class SetCommand : YCommand
     {
         public SetCommand()
             : base(2, 4)
         {
         }
 
-        public string Invocation(string parameter0, string parameter1)
+        public String Invocation(String parameter0, String parameter1)
         {
             return "set(" + parameter0 + ", " + parameter1 + ")";
         }
 
-        public string Invocation(string parameter0, string parameter1, string parameter2)
+        public String Invocation(String parameter0, String parameter1, String parameter2)
         {
             return "set(" + parameter0 + ", " + parameter1 + ", " + parameter2 + ")";
         }
 
-        public string Invocation(string parameter0, string parameter1, string parameter2, string parameter3)
+        public String Invocation(String parameter0, String parameter1, String parameter2, String parameter3)
         {
             return "set(" + parameter0 + ", " + parameter1 + ", " + parameter2 + ", " + parameter3 + ")";
         }

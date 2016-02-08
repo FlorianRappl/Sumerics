@@ -1,18 +1,20 @@
 ﻿namespace Sumerics.Commands
 {
-    class WhoCommand:YCommand
+    using System;
+
+    sealed class WhoCommand : YCommand
     {
         public WhoCommand()
             : base(0, 1)
         {
         }
 
-        public string Invocation()
+        public String Invocation()
         {
             return "who()";
         }
 
-        public string Invocation(string name)
+        public String Invocation(String name)
         {
             return "who(\"" + name + "\")";
         }

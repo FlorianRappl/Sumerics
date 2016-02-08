@@ -1,21 +1,24 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Commands
 {
-	class TimerCommand : YCommand
+    using System;
+
+	sealed class TimerCommand : YCommand
 	{
-		public TimerCommand() : base(0, 1)
+		public TimerCommand() :
+            base(0, 1)
 		{
 		}
 
-		public string Invocation()
+		public String Invocation()
 		{
 			return "timer()";
 		}
 
-		public string Invocation(string arg)
+		public String Invocation(String arg)
 		{
-			int pc = 0;
+			var pc = 0;
 
-			if (!int.TryParse(arg, out pc))
+			if (!Int32.TryParse(arg, out pc))
 			{
 				switch(arg)
 				{
