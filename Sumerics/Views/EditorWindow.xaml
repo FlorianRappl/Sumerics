@@ -1,12 +1,14 @@
 ﻿<Controls:MetroWindow x:Class="Sumerics.EditorWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Sumerics"
-        xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Editor" Icon="Icons/Sumerics.png"
-        WindowStartupLocation="CenterScreen"
-        Height="600" Width="950">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="clr-namespace:Sumerics"
+                      xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="Editor"
+                      Icon="../Icons/Sumerics.png"
+                      WindowStartupLocation="CenterScreen"
+                      Height="600"
+                      Width="950">
     
     <Window.Resources>
         <ResourceDictionary>
@@ -33,23 +35,33 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Border Background="#FEFEFE" Grid.Column="0" Padding="4 0 0 0">
-                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <Border Background="#FEFEFE"
+                    Grid.Column="0" 
+                    Padding="4 0 0 0">
+                <StackPanel Orientation="Vertical" 
+                            VerticalAlignment="Center">
                     <Button Style="{StaticResource MetroCircleButton}"
-                        Name="NewButton" ToolTip="New file" Command="{Binding Create}">
-                        <Image Source="Icons/new.png" />
+                            Name="NewButton" 
+                            ToolTip="New file" 
+                            Command="{Binding Create}">
+                        <Image Source="../Icons/new.png" />
                     </Button>
                 
                     <Button Style="{StaticResource MetroCircleButton}"
-                        Name="OpenButton" ToolTip="Open file" Command="{Binding Open}">
-                        <Image Source="Icons/open.png" />
+                            Name="OpenButton" 
+                            ToolTip="Open file"
+                            Command="{Binding Open}">
+                        <Image Source="../Icons/open.png" />
                     </Button>
                 </StackPanel>
             </Border>
             
-            <Border Background="#EEE" Grid.Column="1" />
+            <Border Background="#EEE" 
+                    Grid.Column="1" />
 
-            <TabControl ItemsSource="{Binding Files}" Grid.Column="2" Margin="15"
+            <TabControl ItemsSource="{Binding Files}" 
+                        Grid.Column="2"
+                        Margin="15"
                         SelectedItem="{Binding SelectedFile}"
                         SelectionChanged="SelectedTabChanged">
                 

@@ -170,7 +170,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AboutWindow.xaml.cs">
+    <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Codebase\ActionButton.xaml.cs">
@@ -183,19 +183,19 @@
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />
     <Compile Include="Codebase\MathMLParser.cs" />
     <Compile Include="Codebase\StaticHelpers.cs" />
-    <Compile Include="ConsoleEnterWindow.xaml.cs">
+    <Compile Include="Views\ConsoleEnterWindow.xaml.cs">
       <DependentUpon>ConsoleEnterWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ContourSeriesWindow.xaml.cs">
+    <Compile Include="Views\ContourSeriesWindow.xaml.cs">
       <DependentUpon>ContourSeriesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DecisionDialog.xaml.cs">
+    <Compile Include="Views\DecisionDialog.xaml.cs">
       <DependentUpon>DecisionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\InputDialog.xaml.cs">
+    <Compile Include="Views\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\OutputDialog.xaml.cs">
+    <Compile Include="Views\OutputDialog.xaml.cs">
       <DependentUpon>OutputDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Functions\DockFunction.cs" />
@@ -204,57 +204,57 @@
     <Compile Include="Functions\UndockFunction.cs" />
     <Compile Include="Functions\WindowFunction.cs" />
     <Compile Include="Models\Icons.cs" />
-    <Compile Include="PlotWindow.xaml.cs">
+    <Compile Include="Views\PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SubPlotSettingsWindow.xaml.cs">
+    <Compile Include="Views\SubPlotSettingsWindow.xaml.cs">
       <DependentUpon>SubPlotSettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HeatSeriesWindow.xaml.cs">
+    <Compile Include="Views\HeatSeriesWindow.xaml.cs">
       <DependentUpon>HeatSeriesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DemoBrowser.xaml.cs">
+    <Compile Include="Views\DemoBrowser.xaml.cs">
       <DependentUpon>DemoBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\DialogBaseViewModel.cs" />
-    <Compile Include="Dialogs\FileBaseViewModel.cs" />
-    <Compile Include="Dialogs\FileModel.cs" />
-    <Compile Include="Dialogs\FolderModel.cs" />
-    <Compile Include="Dialogs\OpenFileViewModel.cs" />
-    <Compile Include="Dialogs\OpenFileWindow.xaml.cs">
+    <Compile Include="ViewModels\DialogBaseViewModel.cs" />
+    <Compile Include="ViewModels\FileBaseViewModel.cs" />
+    <Compile Include="ViewModels\FileModel.cs" />
+    <Compile Include="ViewModels\FolderModel.cs" />
+    <Compile Include="ViewModels\OpenFileViewModel.cs" />
+    <Compile Include="Views\OpenFileWindow.xaml.cs">
       <DependentUpon>OpenFileWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SaveFileViewModel.cs" />
-    <Compile Include="Dialogs\SaveFileWindow.xaml.cs">
+    <Compile Include="ViewModels\SaveFileViewModel.cs" />
+    <Compile Include="Views\SaveFileWindow.xaml.cs">
       <DependentUpon>SaveFileWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SaveImageViewModel.cs" />
-    <Compile Include="Dialogs\SaveImageWindow.xaml.cs">
+    <Compile Include="ViewModels\SaveImageViewModel.cs" />
+    <Compile Include="Views\SaveImageWindow.xaml.cs">
       <DependentUpon>SaveImageWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditorWindow.xaml.cs">
+    <Compile Include="Views\EditorWindow.xaml.cs">
       <DependentUpon>EditorWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\FolderBrowseWindow.xaml.cs">
+    <Compile Include="Views\FolderBrowseWindow.xaml.cs">
       <DependentUpon>FolderBrowseWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HelpWindow.xaml.cs">
+    <Compile Include="Views\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Core.cs" />
-    <Compile Include="OptionsWindow.xaml.cs">
+    <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlotSeriesWindow.xaml.cs">
+    <Compile Include="Views\PlotSeriesWindow.xaml.cs">
       <DependentUpon>PlotSeriesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlotSettingsWindow.xaml.cs">
+    <Compile Include="Views\PlotSettingsWindow.xaml.cs">
       <DependentUpon>PlotSettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ContourViewModel.cs" />
     <Compile Include="ViewModels\HeatmapViewModel.cs" />
     <Compile Include="ViewModels\DocumentationViewModel.cs" />
-    <Compile Include="Dialogs\FolderBrowseViewModel.cs" />
+    <Compile Include="ViewModels\FolderBrowseViewModel.cs" />
     <Compile Include="ViewModels\EditorFileViewModel.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\HelpTileViewModel.cs" />
@@ -268,7 +268,7 @@
     <Compile Include="ViewModels\SeriesViewModel.cs" />
     <Compile Include="ViewModels\SubPlotSettingsViewModel.cs" />
     <Compile Include="ViewModels\VariableViewModel.cs" />
-    <Page Include="AboutWindow.xaml">
+    <Page Include="Views\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -276,67 +276,67 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ConsoleEnterWindow.xaml">
+    <Page Include="Views\ConsoleEnterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ContourSeriesWindow.xaml">
+    <Page Include="Views\ContourSeriesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\DecisionDialog.xaml">
+    <Page Include="Views\DecisionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\InputDialog.xaml">
+    <Page Include="Views\InputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dialogs\OutputDialog.xaml">
+    <Page Include="Views\OutputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlotWindow.xaml">
+    <Page Include="Views\PlotWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SubPlotSettingsWindow.xaml">
+    <Page Include="Views\SubPlotSettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HeatSeriesWindow.xaml">
+    <Page Include="Views\HeatSeriesWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DemoBrowser.xaml">
+    <Page Include="Views\DemoBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\OpenFileWindow.xaml">
+    <Page Include="Views\OpenFileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\SaveFileWindow.xaml">
+    <Page Include="Views\SaveFileWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\SaveImageWindow.xaml">
+    <Page Include="Views\SaveImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditorWindow.xaml">
+    <Page Include="Views\EditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dialogs\FolderBrowseWindow.xaml">
+    <Page Include="Views\FolderBrowseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HelpWindow.xaml">
+    <Page Include="Views\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -347,19 +347,19 @@
     <Compile Include="Codebase\BaseViewModel.cs" />
     <Compile Include="Codebase\RelayCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OptionsWindow.xaml">
+    <Page Include="Views\OptionsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlotSeriesWindow.xaml">
+    <Page Include="Views\PlotSeriesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlotSettingsWindow.xaml">
+    <Page Include="Views\PlotSettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -497,16 +497,16 @@
     <SplashScreen Include="splash.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Dialogs\Icons\folder.png" />
-    <Resource Include="Dialogs\Icons\heart.png" />
-    <Resource Include="Dialogs\Icons\home.png" />
-    <Resource Include="Dialogs\Icons\library.png" />
+    <Resource Include="Icons\folder.png" />
+    <Resource Include="Icons\heart.png" />
+    <Resource Include="Icons\home.png" />
+    <Resource Include="Icons\library.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Dialogs\Icons\file.png" />
+    <Resource Include="Icons\file.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Dialogs\Icons\next.png" />
+    <Resource Include="Icons\next.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\new.png" />

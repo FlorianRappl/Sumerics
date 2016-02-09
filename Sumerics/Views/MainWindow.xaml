@@ -8,7 +8,7 @@
                       Title="Sumerics" 
                       ResizeMode="CanResizeWithGrip" 
                       WindowStartupLocation="CenterScreen" 
-                      Icon="Icons/Sumerics.png" 
+                      Icon="../Icons/Sumerics.png" 
                       Height="700" 
                       Width="1100" 
                       MinHeight="400" 
@@ -313,7 +313,8 @@
                     </Grid>
                 </TabItem>
                 
-                <TabItem Header="Sensors" x:Name="SensorsTab">
+                <TabItem Header="Sensors" 
+                         x:Name="SensorsTab">
                     <Grid x:Name="SensorGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition />

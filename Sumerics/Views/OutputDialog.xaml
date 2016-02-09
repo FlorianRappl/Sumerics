@@ -1,10 +1,13 @@
-﻿<Controls:MetroWindow x:Class="Sumerics.DecisionDialog"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Sumerics" Title="Decision required"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Icon="../Icons/Sumerics.png" WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Height="200" Width="450">
+﻿<Controls:MetroWindow x:Class="Sumerics.OutputDialog"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:local="clr-namespace:Sumerics"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Icon="../Icons/Sumerics.png" 
+                      WindowStartupLocation="CenterScreen"
+                      ResizeMode="NoResize" 
+                      Height="160" 
+                      Width="450">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -24,22 +27,31 @@
                 <ColumnDefinition Width="80" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="45" />
-                <RowDefinition Height="45" />
             </Grid.RowDefinitions>
             
-            <Image Source="../Icons/dialog.png" Grid.Column="0" Grid.RowSpan="3" VerticalAlignment="Top" />
+            <Image Source="../Icons/message.png"
+                   Grid.Column="0"
+                   Grid.RowSpan="2"
+                   VerticalAlignment="Top" />
 
-            <TextBlock Name="Message" FontSize="20" Grid.Column="1" TextWrapping="Wrap"
-                       VerticalAlignment="Center" />
+            <TextBlock Name="Output"
+                       FontSize="16"
+                       Grid.Column="1"
+                       TextWrapping="Wrap"
+                       TextTrimming="WordEllipsis" />
 
-            <ComboBox Name="Input" FontSize="20" TabIndex="0" Grid.Column="1" Grid.Row="1"
-                      Margin="0,5,0,0" PreviewKeyDown="TextBoxEnter" />
-
-            <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="40" Margin="0,5,0,0" Grid.Column="1"
-                    Grid.Row="2" HorizontalAlignment="Right" ToolTip="Close" Click="CloseClick">
+            <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                    Width="40"
+                    Margin="0,5,0,0"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    ToolTip="Close" 
+                    Click="CloseClick">
                 <Image Source="../Resources/check.png" />
             </Button>
         </Grid>
