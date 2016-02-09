@@ -22,7 +22,7 @@
 	{
 		#region Fields
 
-        readonly YCommandFactory _commands;
+        readonly CommandFactory _commands;
         readonly ObservableCollection<HelpSection> _results;
 
 		HelpSection _topic;
@@ -36,7 +36,7 @@
 		public HelpWindow(IContainer container)
         {
 			_results = new ObservableCollection<HelpSection>();
-            _commands = container.Get<YCommandFactory>();
+            _commands = container.Get<CommandFactory>();
 			InitializeComponent();
 			SearchResults.ItemsSource = _results;
             DataContext = container.Get<DocumentationViewModel>();

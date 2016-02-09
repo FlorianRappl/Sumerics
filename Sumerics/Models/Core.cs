@@ -167,7 +167,7 @@
             {
                 parser.UseScripting = true;
                 
-                LoadUIManipulators();
+                //TODO Add API
                 LoadPlugins();
 
                 Context.OnLastPlotChanged += RaisePlotCreated;
@@ -379,19 +379,6 @@
             }
 
             return false;
-        }
-
-        #endregion
-
-        #region Manipulators
-
-        static void LoadUIManipulators()
-        {
-            Context.AddFunction("switchtab", SwitchTabFunction.Create());
-            Context.AddFunction("undock", UndockFunction.Create());
-            Context.AddFunction("window", WindowFunction.Create(null));//TODO
-            Context.AddFunction("dock", DockFunction.Create());
-            Context.AddFunction("stop", StopFunction.Create());
         }
 
         #endregion

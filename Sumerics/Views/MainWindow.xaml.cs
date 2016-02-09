@@ -1,6 +1,7 @@
 ﻿namespace Sumerics
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Commands;
     using Sumerics.Controls;
     using System;
     using System.Collections.Specialized;
@@ -19,6 +20,8 @@
     {
         #region Fields
 
+        readonly IContainer _container;
+
 		Boolean _sensorRunning;
 		Boolean _initial;
 
@@ -26,7 +29,7 @@
 
         #region ctor
 
-        public MainWindow(IContainer container)
+        public MainWindow()
 		{
             App.Window = this;
 			_initial = true;
@@ -40,7 +43,24 @@
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
 
-            DataContext = new MainViewModel(container);
+            var container = new Container();
+            var vm = new MainViewModel(container);
+            var factory = new CommandFactory(container);
+            var application = CreateApplication(vm);
+            container.Register(container);
+            container.Register(application);
+
+            factory.RegisterCommands();
+            DataContext = vm;
+            _container = container;
+        }
+
+        IApplication CreateApplication(MainViewModel vm)
+        {
+            var console = new ConsoleProxy(MyConsole);
+            var visualizer = new VisualizerProxy(vm, MyLastPlot);
+            var kernel = new Kernel();
+            return new SumericsApp(console, visualizer, kernel);
         }
 
         #endregion
@@ -305,72 +325,6 @@
                 if (index >= 0 && index < MainTabs.Items.Count)
                 {
                     MainTabs.SelectedIndex = index;
-                }
-            });
-        }
-
-        internal void UndockImage()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                MyLastPlot.Undock();
-            });
-        }
-
-        internal void UndockImage(PlotValue value)
-        {
-            var container = (DataContext as MainViewModel).Container;
-            Dispatcher.Invoke(() =>
-            {
-                if (MyLastPlot.Data == null || MyLastPlot.Data.Plot != value)
-                {
-                    new PlotViewModel(value, container).UndockPlot();
-                }
-                else
-                {
-                    MyLastPlot.Undock();
-                }
-            });
-        }
-
-        internal void DockImage()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var win = default(PlotWindow);
-
-                foreach (var window in App.Current.Windows)
-                {
-                    if (window is PlotWindow)
-                    {
-                        win = (PlotWindow)window;
-                    }
-                }
-
-                if (win != null)
-                {
-                    (DataContext as MainViewModel).LastPlot = win.PlotModel;
-                    win.Close();
-                }
-            });
-        }
-
-        internal void DockImage(PlotValue value)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                foreach (var window in App.Current.Windows)
-                {
-                    if (window is PlotWindow)
-                    {
-                        var win = (PlotWindow)window;
-
-                        if (win.PlotModel.Plot == value)
-                        {
-                            DockImage(win.PlotModel);
-                            win.Close();
-                        }
-                    }
                 }
             });
         }

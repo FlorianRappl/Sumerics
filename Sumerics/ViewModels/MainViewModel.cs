@@ -340,7 +340,7 @@
                 {
                     var qrvm = x as QueryResultViewModel;
                     var query = qrvm.Query;
-                    var newQuery = Container.Get<YCommandFactory>().TryCommand(query);
+                    var newQuery = Container.Get<CommandFactory>().TryCommand(query);
 
                     if (newQuery != null)
                     {

@@ -39,30 +39,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CdCommand.cs" />
-    <Compile Include="ClearCommand.cs" />
-    <Compile Include="ClsCommand.cs" />
-    <Compile Include="CpCommand.cs" />
-    <Compile Include="DateCommand.cs" />
-    <Compile Include="ExitCommand.cs" />
-    <Compile Include="HelpCommand.cs" />
-    <Compile Include="LivePlotCommand.cs" />
-    <Compile Include="LoadCommand.cs" />
-    <Compile Include="LsCommand.cs" />
-    <Compile Include="MvCommand.cs" />
+    <Compile Include="Commands\CdCommand.cs" />
+    <Compile Include="Commands\ClearCommand.cs" />
+    <Compile Include="Commands\ClsCommand.cs" />
+    <Compile Include="Commands\CpCommand.cs" />
+    <Compile Include="Commands\DateCommand.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\LivePlotCommand.cs" />
+    <Compile Include="Commands\LoadCommand.cs" />
+    <Compile Include="Commands\LsCommand.cs" />
+    <Compile Include="Commands\MvCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PwdCommand.cs" />
-    <Compile Include="SaveCommand.cs" />
-    <Compile Include="SetCommand.cs" />
-    <Compile Include="SleepCommand.cs" />
-    <Compile Include="TimerCommand.cs" />
-    <Compile Include="TimeSeriesCommand.cs" />
-    <Compile Include="TitleCommand.cs" />
-    <Compile Include="TypeCommand.cs" />
-    <Compile Include="VerCommand.cs" />
-    <Compile Include="WhoCommand.cs" />
-    <Compile Include="YCommand.cs" />
-    <Compile Include="YCommandFactory.cs" />
+    <Compile Include="Commands\PwdCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
+    <Compile Include="Commands\SetCommand.cs" />
+    <Compile Include="Commands\SleepCommand.cs" />
+    <Compile Include="Commands\TimerCommand.cs" />
+    <Compile Include="Commands\TimeSeriesCommand.cs" />
+    <Compile Include="Commands\TitleCommand.cs" />
+    <Compile Include="Commands\TypeCommand.cs" />
+    <Compile Include="Commands\VerCommand.cs" />
+    <Compile Include="Commands\WhoCommand.cs" />
+    <Compile Include="BaseCommand.cs" />
+    <Compile Include="CommandFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">

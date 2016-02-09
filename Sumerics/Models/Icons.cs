@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using YAMP;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Windows.Media.Imaging;
+    using YAMP;
+
     /// <summary>
     /// Is a cache for images. Speedups loading of images by caching them and
     /// creating a uniform layer of accessing various icons.
@@ -64,7 +60,7 @@ namespace Sumerics
 
         #region Methods
 
-        public static BitmapImage GetLowImage(string category)
+        public static BitmapImage GetLowImage(String category)
         {
             switch (category)
             {
@@ -93,7 +89,7 @@ namespace Sumerics
             }
         }
 
-        public static BitmapImage GetHighImage(string category)
+        public static BitmapImage GetHighImage(String category)
         {
             switch (category)
             {

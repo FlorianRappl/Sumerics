@@ -170,6 +170,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Codebase\Kernel.cs" />
+    <Compile Include="Codebase\VisualizerProxy.cs" />
+    <Compile Include="SumericsApp.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -198,11 +201,6 @@
     <Compile Include="Views\OutputDialog.xaml.cs">
       <DependentUpon>OutputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Functions\DockFunction.cs" />
-    <Compile Include="Functions\StopFunction.cs" />
-    <Compile Include="Functions\SwitchTabFunction.cs" />
-    <Compile Include="Functions\UndockFunction.cs" />
-    <Compile Include="Functions\WindowFunction.cs" />
     <Compile Include="Models\Icons.cs" />
     <Compile Include="Views\PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
