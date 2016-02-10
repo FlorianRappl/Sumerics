@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    class SumericsApp : IApplication
+    sealed class SumericsApp : IApplication
     {
         readonly IConsole _console;
         readonly IVisualizer _visualizer;
         readonly IKernel _kernel;
+        readonly IDialogManager _dialogs;
+        readonly ITabManager _tabs;
 
-        public SumericsApp(IConsole console, IVisualizer visualizer, IKernel kernel)
+        public SumericsApp(IConsole console, IVisualizer visualizer, IKernel kernel, IDialogManager dialogs, ITabManager tabs)
         {
             _console = console;
             _visualizer = visualizer;
             _kernel = kernel;
+            _dialogs = dialogs;
+            _tabs = tabs;
         }
 
         public void Shutdown()
         {
             App.Current.Shutdown();
-        }
-
-        public void ChangeTab(Int32 selectedIndex)
-        {
-            throw new NotImplementedException();
         }
 
         public IConsole Console
@@ -44,9 +37,14 @@ namespace Sumerics
             get { return _kernel; }
         }
 
-        public void Open(Dialog value)
+        public ITabManager Tabs
         {
-            throw new NotImplementedException();
+            get { return _tabs; }
+        }
+
+        public IDialogManager Dialog
+        {
+            get { return _dialogs; }
         }
     }
 }

@@ -11,7 +11,6 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using YAMP;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -60,7 +59,9 @@
             var console = new ConsoleProxy(MyConsole);
             var visualizer = new VisualizerProxy(vm, MyLastPlot);
             var kernel = new Kernel();
-            return new SumericsApp(console, visualizer, kernel);
+            var dialogs = new DialogManager(vm.Container);
+            var tabs = new TabManager(MainTabs);
+            return new SumericsApp(console, visualizer, kernel, dialogs, tabs);
         }
 
         #endregion
@@ -262,14 +263,12 @@
 
 		void OptionsClick(Object sender, RoutedEventArgs e)
 		{
-            var container = (DataContext as MainViewModel).Container;
-            OpenOptionsWindow(container);
+            _container.Get<IApplication>().Dialog.Open(Dialog.Options);
 		}
 
         void AboutClick(Object sender, RoutedEventArgs e)
         {
-            var container = (DataContext as MainViewModel).Container;
-            OpenAboutWindow(container);
+            _container.Get<IApplication>().Dialog.Open(Dialog.About);
 		}
 
         /// <summary>
@@ -312,123 +311,6 @@
             {
                 e.Effects = DragDropEffects.None;
             }
-        }
-
-        #endregion
-
-        #region UI Manipulators
-
-        internal void ChangeTab(Int32 index)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (index >= 0 && index < MainTabs.Items.Count)
-                {
-                    MainTabs.SelectedIndex = index;
-                }
-            });
-        }
-
-        internal void OpenOptionsWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                StaticHelpers.GetWindow<OptionsWindow>(container);
-            });
-        }
-
-        internal void OpenAboutWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                StaticHelpers.GetWindow<AboutWindow>(container);
-            });
-        }
-
-        internal void OpenEditorWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                StaticHelpers.GetWindow<EditorWindow>(container);
-            });
-        }
-
-        internal void OpenDocumentationWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                StaticHelpers.GetWindow<DemoBrowser>(container).Show();
-            });
-        }
-
-        internal void OpenHelpWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                StaticHelpers.GetWindow<HelpWindow>(container).Show();
-            });
-        }
-
-        internal void OpenDirectoryWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var dialog = new FolderBrowseWindow(container);
-                dialog.ShowDialog();
-
-                if (dialog.Accepted)
-                {
-                    Environment.CurrentDirectory = dialog.SelectedDirectory;
-                }
-            });
-        }
-
-        internal void OpenLoadWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var dialog = new OpenFileWindow(container);
-                dialog.Title = "Open workspace ...";
-                dialog.AddFilter("All files (*.*)", "*.*");
-                dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
-                dialog.ShowDialog();
-
-                if (dialog.Accepted)
-                {
-                    Core.LoadWorkspaceAsync(dialog.SelectedFile);
-                }
-            });
-        }
-
-        internal void OpenSaveWindow(IContainer container)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                var dialog = new SaveFileWindow(container);
-                dialog.Title = "Save workspace as ...";
-                dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
-                dialog.ShowDialog();
-
-                if (dialog.Accepted)
-                {
-                    Core.SaveWorkspaceAsync(dialog.SelectedFile);
-                }
-            });
-        }
-
-        async internal void StopComputations()
-        {
-            await Task.Delay(5);
-            await Dispatcher.InvokeAsync(() =>
-            {
-                if (QueryResultViewModel.HasRunningQueries)
-                {
-                    foreach (var query in QueryResultViewModel.RunningQueries)
-                    {
-                        query.Cancel();
-                    }
-                }
-            });
         }
 
         #endregion

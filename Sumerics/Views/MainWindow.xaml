@@ -2,6 +2,7 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics"
+                      xmlns:d="clr-namespace:Sumerics;assembly=Common"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:s="clr-namespace:Sumerics.Controls;assembly=Scripts"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -59,27 +60,33 @@
 
                         <local:ActionButton Grid.Row="0" 
                                             Text="Load workspace"
-                                            Command="{Binding LoadWorksheet}" />
+                                            CommandParameter="{x:Static d:Dialog.LoadWorkspace}"
+                                            Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="1"
                                             Text="Save workspace"
-                                            Command="{Binding SaveWorksheet}" />
+                                            CommandParameter="{x:Static d:Dialog.SaveWorkspace}"
+                                            Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="2"
                                             Text="Change working directory"
-                                            Command="{Binding ChangeDirectory}" />
+                                            CommandParameter="{x:Static d:Dialog.Directory}"
+                                            Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="3"
                                             Text="Open editor"
-                                            Command="{Binding OpenEditor}" />
+                                            CommandParameter="{x:Static d:Dialog.Editor}"
+                                            Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="4"
                                             Text="Watch samples"
-                                            Command="{Binding WatchSamples}" />
+                                            CommandParameter="{x:Static d:Dialog.Demos}"
+                                            Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="5"
                                             Text="Open documentation"
-                                            Command="{Binding OpenDocumentation}" />
+                                            CommandParameter="{x:Static d:Dialog.Help}"
+                                            Command="{Binding OpenDialog}" />
 
                         <ListBox ItemsSource="{Binding Notifications}"
                                  Grid.Row="0"
@@ -171,7 +178,8 @@
                                           Focusable="True"
                                           HasNotification="{Binding HasNotification}"
                                           AutoCompleteItems="{Binding AvailableItems}"
-                                          OpenEditor="{Binding OpenEditor}" />
+                                          OpenEditorCommand="{Binding OpenDialog}"
+                                          OpenEditorCommandParameter="{x:Static d:Dialog.Editor}"/>
 
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>

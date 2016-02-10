@@ -30,24 +30,15 @@
 
         #region Properties
 
-        public bool Accepted
+        public Boolean Accepted
         {
-            get 
-            {
-                return model.Accepted;
-            }
+            get { return model.Accepted; }
         }
 
-        public string SelectedDirectory
+        public String SelectedDirectory
         {
-            get
-            {
-                return model.SelectedDirectory.FullName;
-            }
-            set
-            {
-                model.SelectedDirectory = new FolderModel(value);
-            }
+            get { return model.SelectedDirectory.FullName; }
+            set { model.SelectedDirectory = new FolderModel(value); }
         }
 
         #endregion

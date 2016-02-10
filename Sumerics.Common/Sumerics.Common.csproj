@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sumerics.Common</RootNamespace>
-    <AssemblyName>Sumerics.Common</AssemblyName>
+    <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,7 +49,9 @@
     <Compile Include="IApplication.cs" />
     <Compile Include="IConsole.cs" />
     <Compile Include="IContainer.cs" />
+    <Compile Include="IDialogManager.cs" />
     <Compile Include="IKernel.cs" />
+    <Compile Include="ITabManager.cs" />
     <Compile Include="IVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

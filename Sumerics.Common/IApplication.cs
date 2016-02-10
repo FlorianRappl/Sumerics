@@ -1,12 +1,10 @@
 ﻿namespace Sumerics
 {
-    using System;
-
     public interface IApplication
     {
         void Shutdown();
 
-        void ChangeTab(Int32 selectedIndex);
+        ITabManager Tabs { get; }
 
         IConsole Console { get; }
 
@@ -14,6 +12,6 @@
 
         IKernel Kernel { get; }
 
-        void Open(Dialog value);
+        IDialogManager Dialog { get; }
     }
 }

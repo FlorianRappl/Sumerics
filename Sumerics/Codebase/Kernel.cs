@@ -6,7 +6,13 @@
     {
         public void StopAll()
         {
-            throw new NotImplementedException();
+            if (QueryResultViewModel.HasRunningQueries)
+            {
+                foreach (var query in QueryResultViewModel.RunningQueries)
+                {
+                    query.Cancel();
+                }
+            }
         }
     }
 }

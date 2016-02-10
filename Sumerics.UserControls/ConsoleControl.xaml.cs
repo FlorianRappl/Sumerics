@@ -63,9 +63,15 @@
 			typeof(ConsoleControl),
 			new FrameworkPropertyMetadata(new ObservableCollection<AutocompleteItem>(), OnAutoCompleteItemsChange));
 
-        public static readonly DependencyProperty OpenEditorProperty =  DependencyProperty.Register(
-            "OpenEditor", 
+        public static readonly DependencyProperty OpenEditorCommandProperty =  DependencyProperty.Register(
+            "OpenEditorCommand", 
             typeof(ICommand), 
+            typeof(ConsoleControl),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty OpenEditorCommandParameterProperty = DependencyProperty.Register(
+            "OpenEditorCommandParameter",
+            typeof(Object),
             typeof(ConsoleControl),
             new PropertyMetadata(null));
 
@@ -182,16 +188,22 @@
 
         #region Properties
 
-        public bool HasNotification
+        public Boolean HasNotification
         {
-            get { return (bool)GetValue(HasNotificationProperty); }
+            get { return (Boolean)GetValue(HasNotificationProperty); }
             set { SetValue(HasNotificationProperty, value); }
         }
 
-        public ICommand OpenEditor
+        public ICommand OpenEditorCommand
         {
-            get { return (ICommand)GetValue(OpenEditorProperty); }
-            set { SetValue(OpenEditorProperty, value); }
+            get { return (ICommand)GetValue(OpenEditorCommandProperty); }
+            set { SetValue(OpenEditorCommandProperty, value); }
+        }
+
+        public Object OpenEditorCommandParameter
+        {
+            get { return (Object)GetValue(OpenEditorCommandParameterProperty); }
+            set { SetValue(OpenEditorCommandParameterProperty, value); }
         }
 
 		public ObservableCollection<AutocompleteItem> AutoCompleteItems
@@ -200,7 +212,7 @@
 			set { SetValue(AutoCompleteItemsProperty, value); }
 		}
 
-		public float ConsoleFontSize 
+		public Single ConsoleFontSize 
 		{
 			get { return Console.FontSize; }
 			set { Console.FontSize = value; }
@@ -252,7 +264,7 @@
 			e.Handled = true;
 		}
 
-        void OnRunningQueriesChanged(object sender, EventArgs e)
+        void OnRunningQueriesChanged(Object sender, EventArgs e)
         {
             StopButton.IsEnabled = QueryResultViewModel.HasRunningQueries;
         }
@@ -263,23 +275,28 @@
 			Console.Focus();
 		}
 
-        void EditorClick(object sender, RoutedEventArgs e)
+        void EditorClick(Object sender, RoutedEventArgs e)
         {
-            OpenEditor.Execute(null);
+            var command = OpenEditorCommand;
+
+            if (command != null)
+            {
+                command.Execute(OpenEditorCommandParameter);
+            }
         }
 
-        void StopButtonClick(object sender, RoutedEventArgs e)
+        void StopButtonClick(Object sender, RoutedEventArgs e)
         {
             foreach (var query in QueryResultViewModel.RunningQueries)
                 query.Cancel();
         }
 
-        void ExpandButtonClick(object sender, RoutedEventArgs e)
+        void ExpandButtonClick(Object sender, RoutedEventArgs e)
         {
             Console.ExpandAllFoldingBlocks();
         }
 
-        void CollapseButtonClick(object sender, RoutedEventArgs e)
+        void CollapseButtonClick(Object sender, RoutedEventArgs e)
         {
             Console.CollapseAllFoldingBlocks();
         }

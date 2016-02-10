@@ -17,6 +17,9 @@
     {
         #region Fields
 
+        readonly ICommand _openDialog;
+        readonly ICommand _runQuery;
+
         IPlotViewModel lastPlot;
         VariableViewModel selectedVariable;
         ObservableCollection<VariableViewModel> variables;
@@ -60,6 +63,26 @@
 			VariableFilter = String.Empty;
 
 			FillLists();
+
+            _openDialog = new RelayCommand(x =>
+            {
+                var dialog = (Dialog)x;
+                Container.Get<IApplication>().Dialog.Open(dialog);
+            });
+
+            _runQuery = new RelayCommand(x =>
+            {
+                var qrvm = x as QueryResultViewModel;
+                var query = qrvm.Query;
+                var newQuery = Container.Get<CommandFactory>().TryCommand(query);
+
+                if (newQuery != null)
+                {
+                    query = newQuery;
+                }
+
+                Core.RunAsync(qrvm, query);
+            });
         }
 
         #endregion
@@ -82,7 +105,7 @@
         /// <summary>
         /// Gets or sets the currently applied function (help) filter.
         /// </summary>
-        public string FunctionFilter
+        public String FunctionFilter
         {
             get { return functionFilter; }
             set 
@@ -191,7 +214,7 @@
         /// <summary>
         /// Gets or sets the current input command.
         /// </summary>
-        public string InputCommand
+        public String InputCommand
         {
             get { return input; }
             set
@@ -266,90 +289,14 @@
 
         #region Commands
 
-        public ICommand OpenEditor
+        public ICommand OpenDialog
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenEditorWindow(Container);
-                });
-            }
-        }
-
-        public ICommand OpenDocumentation
-        {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenHelpWindow(Container);
-                });
-            }
-        }
-
-        public ICommand WatchSamples
-        {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenDocumentationWindow(Container);
-                });
-            }
-        }
-
-        public ICommand ChangeDirectory
-        {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenDirectoryWindow(Container);
-                });
-            }
-        }
-
-        public ICommand LoadWorksheet
-        {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenLoadWindow(Container);
-                });
-            }
-        }
-
-        public ICommand SaveWorksheet
-        {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    App.Window.OpenSaveWindow(Container);
-                });
-            }
+            get { return _openDialog; }
         }
 
         public ICommand RunQuery
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    var qrvm = x as QueryResultViewModel;
-                    var query = qrvm.Query;
-                    var newQuery = Container.Get<CommandFactory>().TryCommand(query);
-
-                    if (newQuery != null)
-                    {
-                        query = newQuery;
-                    }
-
-                    Core.RunAsync(qrvm, query);
-                });
-            }
+            get { return _runQuery; }
         }
 
         #endregion
