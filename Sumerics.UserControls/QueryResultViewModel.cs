@@ -43,7 +43,7 @@
             set;
         }
 
-		public string Query
+		public String Query
 		{
 			get;
 			private set;
@@ -111,7 +111,7 @@
 
         public static event EventHandler RunningQueriesChanged;
 
-        public static bool HasRunningQueries
+        public static Boolean HasRunningQueries
         {
             get { return runningQueries.Count > 0; }
         }
@@ -121,7 +121,9 @@
             get
             {
                 foreach (var query in runningQueries)
+                {
                     yield return query;
+                }
             }
         }
 
