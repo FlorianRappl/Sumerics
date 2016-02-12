@@ -174,10 +174,10 @@
     <Compile Include="Codebase\Kernel.cs" />
     <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
-    <Compile Include="Codebase\TabManager.cs" />
-    <Compile Include="Codebase\VisualizerProxy.cs" />
-    <Compile Include="Codebase\DialogManager.cs" />
-    <Compile Include="Codebase\SettingsProxy.cs" />
+    <Compile Include="Managers\TabManager.cs" />
+    <Compile Include="Proxies\VisualizerProxy.cs" />
+    <Compile Include="Managers\DialogManager.cs" />
+    <Compile Include="Proxies\SettingsProxy.cs" />
     <Compile Include="SumericsApp.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -187,7 +187,7 @@
     </Compile>
     <Compile Include="Codebase\BindableStaticResource.cs" />
     <Compile Include="Codebase\ColorPicker.cs" />
-    <Compile Include="Codebase\ConsoleProxy.cs" />
+    <Compile Include="Proxies\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />
     <Compile Include="Codebase\MathMLParser.cs" />

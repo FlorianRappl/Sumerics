@@ -12,6 +12,8 @@
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using Sumerics.Proxies;
+    using Sumerics.Managers;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,13 +1,23 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Proxies
 {
     using Sumerics.Properties;
     using System;
 
     sealed class SettingsProxy : ISettings
     {
+        #region Fields
+
         readonly Settings _settings;
 
+        #endregion
+
+        #region Events
+
         public event EventHandler Changed;
+
+        #endregion
+
+        #region ctor
 
         public SettingsProxy(Settings settings)
         {
@@ -24,6 +34,10 @@
             Inclinometer = settings.Inclinometer;
             Light = settings.Light;
         }
+
+        #endregion
+
+        #region Properties
 
         public Boolean LiveSensorData { get; set; }
 
@@ -45,6 +59,10 @@
 
         public Boolean Light { get; set; }
 
+        #endregion
+
+        #region Methods
+
         public void Save()
         {
             _settings.ConsoleFontSize = ConsoleFontSize;
@@ -64,5 +82,7 @@
                 Changed(this, EventArgs.Empty);
             }
         }
+
+        #endregion
     }
 }

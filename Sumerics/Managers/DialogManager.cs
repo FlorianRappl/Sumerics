@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Managers
 {
     using Sumerics.Views;
     using System;

@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Managers
 {
     using System;
     using System.Windows.Controls;

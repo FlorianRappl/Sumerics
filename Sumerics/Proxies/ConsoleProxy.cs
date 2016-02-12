@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Proxies
 {
     using Sumerics.Controls;
     using System;
