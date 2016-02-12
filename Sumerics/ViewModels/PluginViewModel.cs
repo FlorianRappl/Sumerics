@@ -1,12 +1,16 @@
 ﻿namespace Sumerics
 {
     using System;
+    using System.Collections.Specialized;
     using System.Reflection;
     using System.Windows.Media.Imaging;
 
-	sealed class PluginViewModel : BaseViewModel
+	public sealed class PluginViewModel : BaseViewModel
 	{
-		#region Fields
+        #region Fields
+
+        readonly Boolean _custom;
+        readonly String _fileName;
 
 		String _description;
 		String _title;
@@ -14,8 +18,6 @@
 		String _version;
 		Boolean _active;
 		BitmapImage _icon;
-		Boolean _custom;
-		String _fileName;
 
 		#endregion
 
@@ -45,69 +47,64 @@
 			set
 			{
 				_icon = value;
-				RaisePropertyChanged("Icon");
+				RaisePropertyChanged();
 			}
 		}
 
-		public string Description
+		public String Description
 		{
 			get { return _description; }
 			set
 			{
 				_description = value;
-				RaisePropertyChanged("Description");
+				RaisePropertyChanged();
 			}
 		}
 
-		public string Title
+		public String Title
 		{
 			get { return _title; }
 			set
 			{
 				_title = value;
-				RaisePropertyChanged("Title");
+				RaisePropertyChanged();
 			}
 		}
 
-		public string Company
+		public String Company
 		{
 			get { return _company; }
 			set
 			{
 				_company = value;
-				RaisePropertyChanged("Company");
+				RaisePropertyChanged();
 			}
 		}
 
-		public string Version
+		public String Version
 		{
 			get { return _version; }
 			set
 			{
 				_version = value;
-				RaisePropertyChanged("Version");
+				RaisePropertyChanged();
 			}
 		}
 
-		public bool Active
+		public Boolean Active
 		{
 			get { return _active; }
 			set
 			{
 				_active = value;
-				RaisePropertyChanged("Active");
+				RaisePropertyChanged();
 				ActiveChanged();
 			}
 		}
 
-		public bool Custom
+		public Boolean Custom
 		{
 			get { return _custom; }
-			set
-			{
-				_custom = value;
-				RaisePropertyChanged("Custom");
-			}
 		}
 
 		#endregion
@@ -116,12 +113,14 @@
 
 		void ActiveChanged()
 		{
-			if (_custom && !string.IsNullOrEmpty(_fileName))
+			if (_custom && !String.IsNullOrEmpty(_fileName))
 			{
 				var settings = Properties.Settings.Default;
 
-				if (settings.ActivePlugins == null)
-					settings.ActivePlugins = new System.Collections.Specialized.StringCollection();
+                if (settings.ActivePlugins == null)
+                {
+                    settings.ActivePlugins = new StringCollection();
+                }
 
 				if (_active)
 				{

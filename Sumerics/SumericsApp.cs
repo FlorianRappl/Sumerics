@@ -7,8 +7,9 @@
         readonly IKernel _kernel;
         readonly IDialogManager _dialogs;
         readonly ITabManager _tabs;
+        readonly ISettings _settings;
 
-        public SumericsApp(IConsole console, IVisualizer visualizer, IKernel kernel, IDialogManager dialogs, ITabManager tabs)
+        public SumericsApp(IConsole console, IVisualizer visualizer, IKernel kernel, IDialogManager dialogs, ITabManager tabs, ISettings settings)
         {
             _console = console;
             _visualizer = visualizer;
@@ -45,6 +46,11 @@
         public IDialogManager Dialog
         {
             get { return _dialogs; }
+        }
+
+        public ISettings Settings
+        {
+            get { return _settings; }
         }
     }
 }

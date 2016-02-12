@@ -13,5 +13,7 @@
         IKernel Kernel { get; }
 
         IDialogManager Dialog { get; }
+
+        ISettings Settings { get; }
     }
 }

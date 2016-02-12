@@ -88,7 +88,7 @@
                                             CommandParameter="{x:Static d:Dialog.Help}"
                                             Command="{Binding OpenDialog}" />
 
-                        <ListBox ItemsSource="{Binding Notifications}"
+                        <ListBox ItemsSource="{Binding Notifications.Messages}"
                                  Grid.Row="0"
                                  Grid.RowSpan="6"
                                  Grid.Column="1"
@@ -176,7 +176,7 @@
                                           Input="{Binding InputCommand}"
                                           Margin="10, 0, 10, 0"
                                           Focusable="True"
-                                          HasNotification="{Binding HasNotification}"
+                                          HasNotification="{Binding Notifications.IsAvailable}"
                                           AutoCompleteItems="{Binding AvailableItems}"
                                           OpenEditorCommand="{Binding OpenDialog}"
                                           OpenEditorCommandParameter="{x:Static d:Dialog.Editor}"/>

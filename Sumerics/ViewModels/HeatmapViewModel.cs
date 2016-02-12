@@ -11,77 +11,74 @@
 	{
 		#region Fields
 
-		HeatmapPlotValue value;
-		String title;
-		ColorPalettes colorPalette;
+		readonly HeatmapPlotValue _value;
+        readonly ICommand _save;
+		String _title;
+		ColorPalettes _colorPalette;
 
 		#endregion
 
 		#region ctor
 
-        public HeatmapViewModel(HeatmapPlotValue value, IContainer container)
-            : base(container)
+        public HeatmapViewModel(HeatmapPlotValue value)
 		{
-			this.value = value;
-			this.title = value[0].Label;
-			this.colorPalette = value.ColorPalette;
+			_value = value;
+			_title = value[0].Label;
+			_colorPalette = value.ColorPalette;
+            _save = new RelayCommand(x =>
+            {
+                var window = x as Window;
+                _value.ColorPalette = _colorPalette;
+                _value[0].Label = _title;
+                _value.UpdateProperties();
+
+                if (window != null)
+                {
+                    window.Close();
+                }
+            });
 		}
 
 		#endregion
 
 		#region Properties
 
-		public string Title
+		public String Title
 		{
-			get
-			{
-				return title;
-			}
+			get { return _title; }
 			set
 			{
-				if (string.IsNullOrEmpty(value))
-					title = "Data";
-				else
-					title = value;
+                if (String.IsNullOrEmpty(value))
+                {
+                    _title = "Data";
+                }
+                else
+                {
+                    _title = value;
+                }
 
-				RaisePropertyChanged("Title");
+				RaisePropertyChanged();
 			}
 		}
 
 		public ColorPalettes ColorPalette
 		{
-			get
-			{
-				return colorPalette;
-			}
+			get { return _colorPalette; }
 			set
 			{
-				colorPalette = value;
-				RaisePropertyChanged("ColorPalette");
+				_colorPalette = value;
+				RaisePropertyChanged();
 			}
 		}
 
 		public IEnumerable<ColorPalettes> ColorPalettes
 		{
-			get
-			{
-				return Enum.GetValues(typeof(ColorPalettes)).Cast<ColorPalettes>();
-			}
+			get { return Enum.GetValues(typeof(ColorPalettes)).Cast<ColorPalettes>(); }
 		}
 
 		public ICommand SaveAndClose
 		{
-			get
-			{
-				return new RelayCommand(x =>
-				{
-					var window = x as Window;
-					value.ColorPalette = colorPalette;
-					value[0].Label = title;
-					value.UpdateProperties();
-					window.Close();
-				});
-			}
+			get { return _save; }
 		}
 
 		#endregion

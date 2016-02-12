@@ -5,7 +5,6 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Timers;
     using System.Windows.Input;
     using YAMP;
 
@@ -19,16 +18,14 @@
         readonly ICommand _openDialog;
         readonly ICommand _runQuery;
         readonly Kernel _kernel;
-        readonly Timer _popupTimer;
         readonly ObservableCollection<VariableViewModel> _variables;
         readonly ObservableCollection<HelpViewModel> _functions;
         readonly ObservableCollection<AutocompleteItem> _availableItems;
-        readonly ObservableCollection<NotificationViewModel> _notifications;
+        readonly NotificationsViewModel _notifications;
 
         IPlotViewModel _lastPlot;
         VariableViewModel _selectedVariable;
 
-        Boolean hasNotification;
         String input;
         String functionFilter;
         String variableFilter;
@@ -41,20 +38,17 @@
             : base(container)
         {
             _kernel = kernel;
-            _popupTimer = new Timer();
-            _popupTimer.Interval = 5000;
-            _popupTimer.Elapsed += NotifyTimerElapsed;
 
             _variables = new ObservableCollection<VariableViewModel>();
             _functions = new ObservableCollection<HelpViewModel>();
 			_availableItems = new ObservableCollection<AutocompleteItem>();
-            _notifications = new ObservableCollection<NotificationViewModel>();
+            _notifications = new NotificationsViewModel();
 
             _kernel.Context.OnLastPlotChanged += PlotCreated;
             _kernel.Context.OnVariableChanged += VariableChanged;
             _kernel.Context.OnVariableCreated += VariableCreated;
             _kernel.Context.OnVariableRemoved += VariableRemoved;
-            _kernel.Context.OnNotificationReceived += NotificationReceived;
+            _kernel.Context.OnNotificationReceived += _notifications.Received;
 
 			FunctionFilter = String.Empty;
 			VariableFilter = String.Empty;
@@ -85,19 +79,6 @@
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets or sets if notifications are available.
-        /// </summary>
-        public Boolean HasNotification
-        {
-            get { return hasNotification; }
-            set
-            {
-                hasNotification = value;
-                RaisePropertyChanged();
-            }
-        }
 
         /// <summary>
         /// Gets or sets the currently applied function (help) filter.
@@ -159,7 +140,7 @@
         /// <summary>
         /// Gets or sets the available notifications.
         /// </summary>
-        public ObservableCollection<NotificationViewModel> Notifications
+        public NotificationsViewModel Notifications
         {
             get { return _notifications; }
         }
@@ -310,15 +291,6 @@
 
         #region Event-Handling
 
-        void NotifyTimerElapsed(Object sender, ElapsedEventArgs e)
-        {
-            _popupTimer.Stop();
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                HasNotification = false;
-            });
-        }
-
         void VariableChanged(Object sender, VariableEventArgs e)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -387,18 +359,8 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                LastPlot = new PlotViewModel(e.Value, Container);
-            });
-        }
-
-        void NotificationReceived(Object sender, NotificationEventArgs e)
-        {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                _notifications.Insert(0, new NotificationViewModel(e, Container));
-                HasNotification = true;
-                _popupTimer.Stop();
-                _popupTimer.Start();
+                var app = Container.Get<IApplication>();
+                LastPlot = new PlotViewModel(e.Value, app);
             });
         }
 

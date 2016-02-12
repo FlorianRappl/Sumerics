@@ -11,93 +11,87 @@
 	{
 		#region Fields
 
-		ContourPlotValue value;
-		String title;
-		Boolean showLevels;
-		ColorPalettes colorPalette;
+        readonly ContourPlotValue _value;
+        readonly ICommand _save;
+		String _title;
+		Boolean _showLevels;
+		ColorPalettes _colorPalette;
 
 		#endregion
 
 		#region ctor
 
-		public ContourViewModel(ContourPlotValue value, IContainer container)
-            : base(container)
+		public ContourViewModel(ContourPlotValue value)
 		{
-			this.value = value;
-			this.title = value[0].Label;
-			this.colorPalette = value.ColorPalette;
-			this.showLevels = value.ShowLevel;
+			_value = value;
+			_title = value[0].Label;
+			_colorPalette = value.ColorPalette;
+			_showLevels = value.ShowLevel;
+            _save = new RelayCommand(x =>
+            {
+                var window = x as Window;
+                _value.ColorPalette = _colorPalette;
+                _value[0].Label = _title;
+                _value.ShowLevel = _showLevels;
+                _value.UpdateProperties();
+
+                if (window != null)
+                {
+                    window.Close();
+                }
+            });
 		}
 
 		#endregion
 
 		#region Properties
 
-		public string Title
+		public String Title
 		{
-			get
-			{
-				return title;
-			}
+			get { return _title; }
 			set
 			{
-				if (string.IsNullOrEmpty(value))
-					title = "Data";
-				else
-					title = value;
+                if (String.IsNullOrEmpty(value))
+                {
+                    _title = "Data";
+                }
+                else
+                {
+                    _title = value;
+                }
 
-				RaisePropertyChanged("Title");
+				RaisePropertyChanged();
 			}
 		}
 
 		public ColorPalettes ColorPalette
 		{
-			get
-			{
-				return colorPalette;
-			}
+			get { return _colorPalette; }
 			set
 			{
-				colorPalette = value;
-				RaisePropertyChanged("ColorPalette");
+				_colorPalette = value;
+				RaisePropertyChanged();
 			}
 		}
 
-		public bool ShowLevels
+		public Boolean ShowLevels
 		{
-			get
-			{
-				return showLevels;
-			}
+			get { return _showLevels; }
 			set
 			{
-				showLevels = value;
-				RaisePropertyChanged("ShowLevels");
+				_showLevels = value;
+				RaisePropertyChanged();
 			}
 		}
 
 		public IEnumerable<ColorPalettes> ColorPalettes
 		{
-			get
-			{
-				return Enum.GetValues(typeof(ColorPalettes)).Cast<ColorPalettes>();
-			}
+			get { return Enum.GetValues(typeof(ColorPalettes)).Cast<ColorPalettes>(); }
 		}
 
 		public ICommand SaveAndClose
 		{
-			get
-			{
-				return new RelayCommand(x =>
-				{
-					var window = x as Window;
-					value.ColorPalette = colorPalette;
-					value[0].Label = title;
-					value.ShowLevel = showLevels;
-					value.UpdateProperties();
-					window.Close();
-				});
-			}
+			get { return _save; }
 		}
 
 		#endregion

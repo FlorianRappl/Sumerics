@@ -20,21 +20,40 @@
 
 		#region ctor
 
-		public OptionsViewModel(IContainer container)
-            : base(container)
+		public OptionsViewModel(ISettings settings)
 		{
-            _options = new OptionsModel(Properties.Settings.Default);
+            _options = new OptionsModel
+            {
+                LiveSensorData = settings.LiveSensorData,
+                ConsoleFontSize = settings.ConsoleFontSize,
+                LiveSensorHistory = settings.LiveSensorHistory,
+                AutoSaveHistory = settings.AutoSaveHistory,
+                AutoEvaluate = settings.AutoEvaluate,
+                Accelerometer = settings.Accelerometer,
+                Compass = settings.Compass,
+                Gyrometer = settings.Gyrometer,
+                Inclinometer = settings.Inclinometer,
+                Light = settings.Light
+            };
             _save = new RelayCommand(x =>
             {
                 var window = x as OptionsWindow;
-                _options.Save(Properties.Settings.Default);
+                settings.LiveSensorData = _options.LiveSensorData;
+                settings.ConsoleFontSize = _options.ConsoleFontSize;
+                settings.LiveSensorHistory = _options.LiveSensorHistory;
+                settings.AutoSaveHistory = _options.AutoSaveHistory;
+                settings.AutoEvaluate = _options.AutoEvaluate;
+                settings.Accelerometer = _options.Accelerometer;
+                settings.Compass = _options.Compass;
+                settings.Gyrometer = _options.Gyrometer;
+                settings.Inclinometer = _options.Inclinometer;
+                settings.Light = _options.Light;
+                settings.Save();
 
                 if (window != null)
                 {
                     window.Close();
                 }
-
-                App.Window.LoadSettings();
             });
             _viewErrorLog = new RelayCommand(x =>
             {
@@ -226,7 +245,7 @@
                 }
             }
 
-            var editor = StaticHelpers.GetWindow<EditorWindow>(Container);
+            var editor = StaticHelpers.GetWindow<EditorWindow>();
             editor.OpenFile(file);
         }
 

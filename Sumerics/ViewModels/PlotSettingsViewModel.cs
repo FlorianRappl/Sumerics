@@ -12,121 +12,105 @@
 	{
 		#region Fields
 
-		String title;
-		Boolean isLegendVisible;
-		SolidColorBrush legendBackground;
-		SolidColorBrush legendBorder;
-		XYPlotValue value;
-        YAMP.LegendPosition position;
+        readonly XYPlotValue _value;
+        readonly ICommand _save;
+		String _title;
+		Boolean _isLegendVisible;
+		SolidColorBrush _legendBackground;
+		SolidColorBrush _legendBorder;
+        LegendPosition _position;
 
 		#endregion
 
 		#region ctor
 
-		public PlotSettingsViewModel(XYPlotValue value, IContainer container)
-            : base(container)
+		public PlotSettingsViewModel(XYPlotValue value)
 		{
-			this.value = value;
+			_value = value;
 			Title = value.Title;
 			IsLegendVisible = value.ShowLegend;
 			LegendBackground = value.LegendBackground.BrushFromString();
 			LegendBorder = value.LegendLineColor.BrushFromString();
             Position = value.LegendPosition;
+            _save = new RelayCommand(x =>
+            {
+                var window = x as PlotSettingsWindow;
+                _value.Title = _title;
+                _value.LegendPosition = _position;
+                _value.ShowLegend = _isLegendVisible;
+                _value.LegendLineColor = _legendBorder.ToHtml();
+                _value.LegendBackground = _legendBackground.ToHtml();
+                _value.UpdateLayout();
+
+                if (window != null)
+                {
+                    window.Close();
+                }
+            });
 		}
 
 		#endregion
 
         #region Properties
 
-        public IEnumerable<YAMP.LegendPosition> Positions
+        public IEnumerable<LegendPosition> Positions
         {
-            get
-            {
-                return Enum.GetValues(typeof(YAMP.LegendPosition)).Cast<YAMP.LegendPosition>();
-            }
+            get { return Enum.GetValues(typeof(LegendPosition)).Cast<LegendPosition>(); }
         }
 
-        public YAMP.LegendPosition Position
+        public LegendPosition Position
         {
-            get
-            {
-                return position;
-            }
+            get { return _position; }
             set
             {
-                position = value;
+                _position = value;
                 RaisePropertyChanged();
             }
         }
 
-		public string Title
+		public String Title
 		{
-			get
-			{
-				return title;
-			}
+			get { return _title; }
 			set
 			{
-				title = value;
+				_title = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool IsLegendVisible
+		public Boolean IsLegendVisible
 		{
-			get 
-			{ 
-				return isLegendVisible;
-			}
+			get { return _isLegendVisible; }
 			set
 			{
-				isLegendVisible = value;
+				_isLegendVisible = value;
 				RaisePropertyChanged();
 			}
 		}
 
 		public Brush LegendBackground
 		{
-			get
-			{
-				return legendBackground;
-			}
+			get { return _legendBackground; }
 			set
 			{
-				legendBackground = (SolidColorBrush)value;
+				_legendBackground = (SolidColorBrush)value;
 				RaisePropertyChanged();
 			}
 		}
 
 		public Brush LegendBorder
 		{
-			get
-			{
-				return legendBorder;
-			}
+			get { return _legendBorder; }
 			set
 			{
-				legendBorder = (SolidColorBrush)value;
+				_legendBorder = (SolidColorBrush)value;
 				RaisePropertyChanged();
 			}
 		}
 
 		public ICommand SaveAndClose
 		{
-			get
-			{
-				return new RelayCommand(x =>
-				{
-					var window = x as PlotSettingsWindow;
-					value.Title = title;
-                    value.LegendPosition = position;
-					value.ShowLegend = isLegendVisible;
-					value.LegendLineColor = legendBorder.ToHtml();
-					value.LegendBackground = legendBackground.ToHtml();
-					value.UpdateLayout();
-					window.Close();
-				});
-			}
+			get { return _save; }
 		}
 
 		#endregion

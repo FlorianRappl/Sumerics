@@ -8,10 +8,10 @@
 	/// </summary>
 	public partial class SubPlotSettingsWindow : MetroWindow
 	{
-        public SubPlotSettingsWindow(SubPlotValue value, IContainer container)
+        public SubPlotSettingsWindow(SubPlotValue value)
 		{
             InitializeComponent();
-            DataContext = new SubPlotSettingsViewModel(value, container);
+            DataContext = new SubPlotSettingsViewModel(value);
 		}
 	}
 }

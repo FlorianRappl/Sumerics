@@ -8,10 +8,10 @@
 	/// </summary>
 	public partial class HeatSeriesWindow : MetroWindow
 	{
-        public HeatSeriesWindow(HeatmapPlotValue value, IContainer container)
+        public HeatSeriesWindow(HeatmapPlotValue value)
 		{
             InitializeComponent();
-            DataContext = new HeatmapViewModel(value, container);
+            DataContext = new HeatmapViewModel(value);
 		}
 	}
 }

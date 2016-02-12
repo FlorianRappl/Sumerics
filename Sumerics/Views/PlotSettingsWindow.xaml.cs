@@ -8,10 +8,10 @@
 	/// </summary>
 	public partial class PlotSettingsWindow : MetroWindow
 	{
-		public PlotSettingsWindow(XYPlotValue value, IContainer container)
+		public PlotSettingsWindow(XYPlotValue value)
 		{
 			InitializeComponent();
-            DataContext = new PlotSettingsViewModel(value, container);
+            DataContext = new PlotSettingsViewModel(value);
 		}
 	}
 }

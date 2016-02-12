@@ -9,15 +9,16 @@
     {
         #region Fields
 
-        PlotValue _plot;
+        readonly IApplication _app;
+        readonly PlotValue _plot;
 
         #endregion
 
         #region ctor
 
-        public PlotViewModel(PlotValue plot, IContainer container)
-            : base(container)
+        public PlotViewModel(PlotValue plot, IApplication app)
         {
+            _app = app;
             _plot = plot;
         }
 
@@ -36,7 +37,7 @@
 
         public void OpenConsole()
         {
-            var window = Container.Create<ConsoleEnterWindow>();
+            var window = new ConsoleEnterWindow(_app.Console);
             window.ShowDialog();
         }
 
@@ -44,12 +45,12 @@
         {
             if (_plot is XYPlotValue)
             {
-                var window = new PlotSettingsWindow((XYPlotValue)_plot, Container);
+                var window = new PlotSettingsWindow((XYPlotValue)_plot);
                 window.ShowDialog();
             }
             else if (_plot is SubPlotValue)
             {
-                var window = new SubPlotSettingsWindow((SubPlotValue)_plot, Container);
+                var window = new SubPlotSettingsWindow((SubPlotValue)_plot);
                 window.ShowDialog();
             }
         }
@@ -58,42 +59,29 @@
         {
             if (_plot is ContourPlotValue)
             {
-                var window = new ContourSeriesWindow((ContourPlotValue)_plot, Container);
+                var window = new ContourSeriesWindow((ContourPlotValue)_plot);
                 window.ShowDialog();
             }
             else if (_plot is HeatmapPlotValue)
             {
-                var window = new HeatSeriesWindow((HeatmapPlotValue)_plot, Container);
+                var window = new HeatSeriesWindow((HeatmapPlotValue)_plot);
                 window.ShowDialog();
             }
             else if (_plot is XYPlotValue)
             {
-                var window = new PlotSeriesWindow((XYPlotValue)_plot, Container);
+                var window = new PlotSeriesWindow((XYPlotValue)_plot);
                 window.ShowDialog();
             }
         }
 
         public void UndockPlot()
         {
-            PlotWindow.Show(this);
+            _app.Visualizer.Undock(Plot);
         }
 
         public void DockPlot()
         {
-            foreach (var window in App.Current.Windows)
-            {
-                if (window is PlotWindow)
-                {
-                    var win = (PlotWindow)window;
-
-                    if (win.PlotModel == this)
-                    {
-                        win.Close();
-                    }
-                }
-            }
-                    
-            App.Window.DockImage(this);
+            _app.Visualizer.Dock(Plot);
         }
 
         public void SavePlot(SumericsPlot frame)

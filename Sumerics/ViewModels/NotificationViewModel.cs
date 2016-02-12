@@ -6,19 +6,17 @@
 
     sealed class NotificationViewModel : BaseViewModel
     {
-        readonly DateTime created;
-
-        public NotificationViewModel(NotificationEventArgs e, IContainer container)
-            : base(container)
+        public NotificationViewModel(NotificationEventArgs e)
         {
-            created = DateTime.Now;
+            Time = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
             Message = e.Message;
             Icon = Icons.GetMessageImage(e.Type);
         }
 
         public String Time 
         { 
-            get { return String.Format("{0} {1}", created.ToShortDateString(), created.ToShortTimeString()); } 
+            get;
+            private set; 
         }
 
         public String Message 

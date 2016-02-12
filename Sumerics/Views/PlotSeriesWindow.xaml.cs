@@ -8,10 +8,10 @@
 	/// </summary>
 	public partial class PlotSeriesWindow : MetroWindow
 	{
-		public PlotSeriesWindow(XYPlotValue value, IContainer container)
+		public PlotSeriesWindow(XYPlotValue value)
 		{
 			InitializeComponent();
-            DataContext = new SeriesViewModel(value, container);
+            DataContext = new SeriesViewModel(value);
 		}
 	}
 }

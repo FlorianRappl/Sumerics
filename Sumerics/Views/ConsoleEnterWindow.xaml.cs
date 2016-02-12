@@ -10,13 +10,13 @@
 	/// </summary>
 	public partial class ConsoleEnterWindow : MetroWindow
 	{
-        readonly IApplication _app;
+        readonly IConsole _console;
 
-		public ConsoleEnterWindow(IApplication app)
+		public ConsoleEnterWindow(IConsole console)
 		{
-            _app = app;
+            _console = console;
 			InitializeComponent();
-			Owner = App.Window;
+			//Owner = App.Window;
 			Input.Focus();
 		}
 
@@ -26,7 +26,7 @@
             {
                 var query = Input.Text;
                 Input.Text = String.Empty;
-                _app.Console.Execute(query);
+                _console.Execute(query);
             }
 
             Close();

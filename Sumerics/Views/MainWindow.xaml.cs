@@ -3,6 +3,7 @@
     using MahApps.Metro.Controls;
     using Sumerics.Commands;
     using Sumerics.Controls;
+    using Sumerics.Properties;
     using System;
     using System.Collections.Specialized;
     using System.ComponentModel;
@@ -20,6 +21,8 @@
         #region Fields
 
         readonly IContainer _container;
+        readonly MainViewModel _vm;
+        readonly SettingsProxy _settings;
 
 		Boolean _sensorRunning;
 		Boolean _initial;
@@ -28,44 +31,42 @@
 
         #region ctor
 
-        public MainWindow()
+        public MainWindow(IContainer container, Kernel kernel)
 		{
-            App.Window = this;
 			_initial = true;
 
             InitializeComponent();
             AllowDrop = true;
 
 			LoadSettings();
+
 			Loaded += MainWindowLoaded;
 			Closing += MainWindowClosing;
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
 
-            var container = new Container();
-            var logger = new FileLogger();
-            var kernel = new Kernel(logger);
-            var vm = new MainViewModel(container, kernel);
-            var factory = new CommandFactory(container);
-            var application = CreateApplication(vm, kernel);
-            container.Register(logger);
-            container.Register(kernel);
-            container.Register(container);
-            container.Register(application);
-            container.Register(factory);
-
-            factory.RegisterCommands();
-            DataContext = vm;
+            _vm = new MainViewModel(container, kernel);
+            _settings = new SettingsProxy(Settings.Default);
+            _settings.Changed += (s, ev) => LoadSettings();
             _container = container;
+
+            DataContext = _vm;
         }
 
-        IApplication CreateApplication(MainViewModel vm, IKernel kernel)
+        public CommandFactory CreateCommands()
+        {
+            var factory = new CommandFactory(_container);
+            factory.RegisterCommands();
+            return factory;
+        }
+
+        public IApplication CreateApplication(IKernel kernel)
         {
             var console = new ConsoleProxy(MyConsole);
-            var visualizer = new VisualizerProxy(vm, MyLastPlot);
-            var dialogs = new DialogManager(vm.Container);
+            var visualizer = new VisualizerProxy(_vm, MyLastPlot);
+            var dialogs = new DialogManager(_container);
             var tabs = new TabManager(MainTabs);
-            return new SumericsApp(console, visualizer, kernel, dialogs, tabs);
+            return new SumericsApp(console, visualizer, kernel, dialogs, tabs, _settings);
         }
 
         #endregion
@@ -158,11 +159,9 @@
         /// <summary>
         /// (Re-)Loads the settings.
         /// </summary>
-		public void LoadSettings()
+		void LoadSettings()
 		{
-			var settings = Properties.Settings.Default;
-
-            if (settings == null)
+            if (_settings == null)
             {
                 //Set(AccelerometerPlot, true, 30);
                 //Set(GyrometerPlot, true, 30);
@@ -178,7 +177,7 @@
             //Set(InclinometerPlot, settings.Inclinometer, settings.LivePlotHistory);
             //Set(LightPlot, settings.Light, settings.LivePlotHistory);
             //Set(CompassPlot, settings.Compass, settings.LivePlotHistory);
-			MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
+            MyConsole.ConsoleFontSize = _settings.ConsoleFontSize;
 
             //if (Core.IsWindows8)
             //{
@@ -264,15 +263,6 @@
         {
             _container.Get<IApplication>().Dialog.Open(Dialog.About);
 		}
-
-        /// <summary>
-        /// Docks an image to the visualization tab.
-        /// </summary>
-        /// <param name="plot"></param>
-        public void DockImage(IPlotViewModel plot)
-        {
-            (DataContext as MainViewModel).LastPlot = plot;
-        }
 
         #endregion
 

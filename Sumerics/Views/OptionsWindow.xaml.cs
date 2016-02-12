@@ -7,10 +7,10 @@
 	/// </summary>
 	public partial class OptionsWindow : MetroWindow
 	{
-		public OptionsWindow(IContainer container)
+		public OptionsWindow(IApplication app)
 		{
             InitializeComponent();
-            DataContext = new OptionsViewModel(container);
+            DataContext = new OptionsViewModel(app.Settings);
 		}
 	}
 }

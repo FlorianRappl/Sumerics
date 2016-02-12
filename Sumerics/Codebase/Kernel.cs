@@ -15,7 +15,7 @@
     using YAMP.Physics;
     using YAMP.Sensors;
 
-    sealed class Kernel : IKernel
+    public sealed class Kernel : IKernel
     {
         #region Fields
 
@@ -36,7 +36,16 @@
 
             LoadPlugins();
             _documentation = Documentation.Create(Context);
-            SetupEvents();
+
+            _parser.UserInputRequired += (sender, e) =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    var input = new InputDialog { UserMessage = e.Message };
+                    input.Closed += (s, ev) => e.Continue(input.UserInput);
+                    input.Show();
+                });
+            };
 
             Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
@@ -44,17 +53,6 @@
             ExecuteLocalScript();
 
             _parser.InteractiveMode = true;
-        }
-
-        private void SetupEvents()
-        {
-            _parser.UserInputRequired += (sender, e) =>
-            {
-                var input = new InputDialog();
-                input.UserMessage = e.Message;
-                input.Closed += (s, ev) => { e.Continue(input.UserInput); };
-                input.Show();
-            };
         }
 
         #endregion

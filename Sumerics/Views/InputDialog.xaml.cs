@@ -1,29 +1,19 @@
-﻿using MahApps.Metro.Controls;
-using Sumerics.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    using Sumerics.Controls;
+    using System;
+    using System.Windows;
+    using System.Windows.Input;
+
     /// <summary>
     /// Interaction logic for InputDialog.xaml
     /// </summary>
     public partial class InputDialog : MetroWindow
     {
-        #region Members
+        #region Fields
 
-        string input;
+        String input;
         MathInputPanelWrapper mipw;
 
         #endregion
@@ -32,7 +22,7 @@ namespace Sumerics
 
         public InputDialog()
         {
-            input = string.Empty;
+            input = String.Empty;
             InitializeComponent();
             SetupMathInput();
             Input.Focus();

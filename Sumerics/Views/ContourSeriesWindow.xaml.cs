@@ -8,10 +8,10 @@
 	/// </summary>
 	public partial class ContourSeriesWindow : MetroWindow
 	{
-		public ContourSeriesWindow(ContourPlotValue value, IContainer container)
+		public ContourSeriesWindow(ContourPlotValue value)
 		{
             InitializeComponent();
-            DataContext = new ContourViewModel(value, container);
+            DataContext = new ContourViewModel(value);
 		}
 	}
 }

@@ -71,7 +71,8 @@
             {
                 if (_plotter.Data == null || !Object.ReferenceEquals(_plotter.Data.Plot, context))
                 {
-                    var model = new PlotViewModel(context as PlotValue, _viewModel.Container);
+                    var app = _viewModel.Container.Get<IApplication>();
+                    var model = new PlotViewModel(context as PlotValue, app);
                     model.UndockPlot();
                 }
                 else

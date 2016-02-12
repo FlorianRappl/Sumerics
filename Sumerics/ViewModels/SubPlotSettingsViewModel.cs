@@ -8,81 +8,74 @@
     {
         #region Fields
 
-        SubPlotValue value;
-        String title;
-        Int32 columns;
-        Int32 rows;
+        readonly SubPlotValue _value;
+        readonly RelayCommand _save;
+        String _title;
+        Int32 _columns;
+        Int32 _rows;
 
         #endregion
 
         #region ctor
 
-        public SubPlotSettingsViewModel(SubPlotValue plot, IContainer container)
-            : base(container)
+        public SubPlotSettingsViewModel(SubPlotValue plot)
         {
-            value = plot;
-            title = plot.Title;
-            columns = plot.Columns;
-            rows = plot.Rows;
+            _value = plot;
+            _title = plot.Title;
+            _columns = plot.Columns;
+            _rows = plot.Rows;
+            _save = new RelayCommand(x =>
+            {
+                var window = x as SubPlotSettingsWindow;
+                _value.Title = _title;
+                _value.Rows = _rows;
+                _value.Columns = _columns;
+                _value.UpdateLayout();
+
+                if (window != null)
+                {
+                    window.Close();
+                }
+            });
         }
 
         #endregion
 
         #region Properties
 
-        public string Title
+        public String Title
         {
-            get
-            {
-                return title;
-            }
+            get { return _title; }
             set
             {
-                title = value;
+                _title = value;
                 RaisePropertyChanged();
             }
         }
 
-        public int Rows
+        public Int32 Rows
         {
-            get
-            {
-                return rows;
-            }
+            get { return _rows; }
             set
             {
-                rows = value;
+                _rows = value;
                 RaisePropertyChanged();
             }
         }
 
-        public int Columns
+        public Int32 Columns
         {
-            get
-            {
-                return columns;
-            }
+            get { return _columns; }
             set
             {
-                columns = value;
+                _columns = value;
                 RaisePropertyChanged();
             }
         }
 
         public ICommand SaveAndClose
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    var window = x as SubPlotSettingsWindow;
-                    value.Title = title;
-                    value.Rows = rows;
-                    value.Columns = columns;
-                    value.UpdateLayout();
-                    window.Close();
-                });
-            }
+            get { return _save; }
         }
 
         #endregion

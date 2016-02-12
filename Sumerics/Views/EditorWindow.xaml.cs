@@ -1,20 +1,10 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using MahApps.Metro.Controls;
+    using System;
+    using System.Threading.Tasks;
+    using System.Windows.Controls;
+
     /// <summary>
     /// Interaction logic for EditorWindow.xaml
     /// </summary>
@@ -23,23 +13,21 @@ namespace Sumerics
         public EditorWindow()
         {
             InitializeComponent();
-            Closing += OnWindowClosing;
+            Closing += (s, ev) =>
+            {
+                var evm = DataContext as EditorViewModel;
+
+                if (evm != null)
+                {
+                    ev.Cancel = evm.CloseAll();
+                }
+            };
         }
 
         public void OpenFile(String file)
         {
             var context = DataContext as EditorViewModel;
             context.OpenFile(file);
-        }
-
-        void OnWindowClosing(Object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            var evm = DataContext as EditorViewModel;
-
-            if (evm != null)
-            {
-                e.Cancel = evm.CloseAll();
-            }
         }
 
         async void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)

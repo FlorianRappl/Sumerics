@@ -11,22 +11,22 @@
 	{
 		#region Fields
 
-		Int32 index;
-		String title;
-		SolidColorBrush color;
-		PointSymbol symbol;
-		Boolean lines;
-		IPointSeries series;
+        readonly IPointSeries _series;
+		readonly Int32 _index;
+
+		String _title;
+		SolidColorBrush _color;
+		PointSymbol _symbol;
+		Boolean _lines;
 
 		#endregion
 
 		#region ctor
 
-		public SeriesElementViewModel(IPointSeries series, Int32 index, IContainer container)
-            : base(container)
+		public SeriesElementViewModel(IPointSeries series, Int32 index)
 		{
-			this.index = index;
-			this.series = series;
+			_index = index;
+			_series = series;
 			Title = series.Label;
 			Color = series.Color.BrushFromString();
 			Symbol = series.Symbol;
@@ -37,18 +37,19 @@
 
 		#region Properties
 
-		public string Title
+		public String Title
 		{
-			get
+			get { return _title; }
+			set 
 			{
-				return title;
-			}
-			set
-			{
-				if (string.IsNullOrEmpty(value))
-					title = "Data #" + index;
-				else
-					title = value;
+                if (String.IsNullOrEmpty(value))
+                {
+                    _title = "Data #" + _index;
+                }
+                else
+                {
+                    _title = value;
+                }
 
 				RaisePropertyChanged("Title");
 			}
@@ -56,49 +57,37 @@
 
 		public Brush Color
 		{
-			get
-			{
-				return color;
-			}
+			get { return _color; }
 			set
 			{
-				color = (SolidColorBrush)value;
+				_color = (SolidColorBrush)value;
 				RaisePropertyChanged("Color");
 			}
 		}
 
 		public PointSymbol Symbol
 		{
-			get
-			{
-				return symbol;
-			}
+			get { return _symbol; }
 			set
 			{
-				symbol = value;
+				_symbol = value;
 				RaisePropertyChanged("Symbol");
 			}
 		}
 
-		public bool Lines
+		public Boolean Lines
 		{
-			get
-			{
-				return lines;
-			}
+			get { return _lines; }
 			set
 			{
-				lines = value;
+				_lines = value;
 				RaisePropertyChanged("Lines");
 			}
 		}
 
 		public IEnumerable<PointSymbol> Symbols
 		{
-			get
-			{
-				return Enum.GetValues(typeof(PointSymbol)).Cast<PointSymbol>();
-			}
+			get { return Enum.GetValues(typeof(PointSymbol)).Cast<PointSymbol>(); }
 		}
 
 		#endregion
@@ -107,10 +96,10 @@
 
 		public void Save()
 		{
-			series.Label = title;
-			series.Lines = lines;
-			series.Symbol = symbol;
-			series.Color = color.ToHtml();
+			_series.Label = _title;
+			_series.Lines = _lines;
+			_series.Symbol = _symbol;
+			_series.Color = _color.ToHtml();
 		}
 
 		#endregion

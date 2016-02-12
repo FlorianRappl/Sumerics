@@ -53,6 +53,7 @@
     <Compile Include="IDialogManager.cs" />
     <Compile Include="IKernel.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="ISettings.cs" />
     <Compile Include="ITabManager.cs" />
     <Compile Include="IVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
