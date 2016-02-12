@@ -5,18 +5,18 @@
     using System.Reflection;
     using System.Text;
 
-    public class CommandFactory
+    public class CommandFactory : ICommandFactory
     {
         #region Fields
 
         readonly Dictionary<String, BaseCommand> _commands;
-        readonly IContainer _container;
+        readonly IComponents _container;
 
         #endregion
 
         #region ctor
 
-        public CommandFactory(IContainer container)
+        public CommandFactory(IComponents container)
         {
             _commands = new Dictionary<String, BaseCommand>();
             _container = container;
@@ -51,7 +51,7 @@
             }
         }
 
-        public void RegisterCommand(BaseCommand command)
+        internal void RegisterCommand(BaseCommand command)
         {
             _commands.Add(command.Name.ToLower(), command);
         }

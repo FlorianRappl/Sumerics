@@ -50,6 +50,8 @@
     <Compile Include="Commands\LoadCommand.cs" />
     <Compile Include="Commands\LsCommand.cs" />
     <Compile Include="Commands\MvCommand.cs" />
+    <Compile Include="ICommandFactory.cs" />
+    <Compile Include="IScriptCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\PwdCommand.cs" />
     <Compile Include="Commands\SaveCommand.cs" />

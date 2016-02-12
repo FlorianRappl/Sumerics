@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public abstract class BaseCommand
+    abstract class BaseCommand : IScriptCommand
 	{
 		#region Fields
 
@@ -73,7 +73,7 @@
 
 		#endregion
 
-		#region Execute
+		#region Methods
 
         public Boolean CanExecute(Int32 parameters)
         {
