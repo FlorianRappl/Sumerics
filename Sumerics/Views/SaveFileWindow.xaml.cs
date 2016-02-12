@@ -1,6 +1,8 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Models;
+    using Sumerics.ViewModels;
     using System;
     using System.Threading.Tasks;
     using System.Windows;
@@ -12,9 +14,9 @@
     /// </summary>
     public partial class SaveFileWindow : MetroWindow
     {
-        #region Files
+        #region Fields
 
-        readonly SaveFileViewModel _model;
+        readonly SaveFileViewModel _vm;
 
         #endregion
 
@@ -22,9 +24,9 @@
 
         public SaveFileWindow()
         {
-            _model = new SaveFileViewModel(Environment.CurrentDirectory);
+            _vm = new SaveFileViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = _model;
+            DataContext = _vm;
         }
 
         #endregion
@@ -36,7 +38,7 @@
         /// </summary>
         public Boolean Accepted
         {
-            get { return _model.Accepted; }
+            get { return _vm.Accepted; }
         }
 
         /// <summary>
@@ -44,8 +46,8 @@
         /// </summary>
         public String SelectedFile
         {
-            get { return _model.UserSelectedFile.FullName; }
-            set { _model.FileName = value; }
+            get { return _vm.UserSelectedFile.FullName; }
+            set { _vm.FileName = value; }
         }
 
         #endregion
@@ -54,33 +56,33 @@
 
         public void AddFilter(String name, String value)
         {
-            _model.AddFilter(name, value);
+            _vm.AddFilter(name, value);
         }
 
         public void RemoveFilter(String name)
         {
-            _model.RemoveFilter(name);
+            _vm.RemoveFilter(name);
         }
 
         #endregion
 
         #region Events
 
-        void ClearSelected(Object sender, RoutedEventArgs e)
+        async void ClearSelected(Object sender, RoutedEventArgs e)
         {
-            (sender as ListView).SelectedIndex = -1;
+            var view = sender as ListView;
 
-            if (sender != Current)
+            if (view != null)
             {
-                WaitAndFocus();
-            }
-        }
+                view.SelectedIndex = -1;
 
-        async void WaitAndFocus()
-        {
-            //This hack seems strange but unfortunately it is the way to go
-            await Task.Delay(10);
-            Current.Focus();
+                if (sender != Current)
+                {
+                    //This hack seems strange but unfortunately it is the way to go
+                    await Task.Delay(10);
+                    Current.Focus();
+                }
+            }
         }
 
         void TextBoxKeyPressed(Object sender, KeyEventArgs e)
@@ -89,16 +91,16 @@
 
             if (e.Key == Key.Enter)
             {
-                _model.FileName = tb.Text;
-                var path = _model.CurrentDirectory.FullName + "\\" + _model.FileName;
+                _vm.FileName = tb.Text;
+                var path = _vm.CurrentDirectory.FullName + "\\" + _vm.FileName;
 
                 if (System.IO.Directory.Exists(path))
                 {
-                    _model.CurrentDirectory = new FolderModel(path);
+                    _vm.CurrentDirectory = new FolderModel(path);
                 }
-                else if (_model.CanAccept)
+                else if (_vm.CanAccept)
                 {
-                    _model.Accept.Execute(this);
+                    _vm.Accept.Execute(this);
                 }
             }
             else if (e.Key == Key.Escape)
@@ -110,7 +112,7 @@
         void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            _model.CanAccept = !tb.Text.Equals(String.Empty) && _model.IsValid(tb.Text);
+            _vm.CanAccept = !tb.Text.Equals(String.Empty) && _vm.IsValid(tb.Text);
         }
 
         #endregion

@@ -1,7 +1,10 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Models;
+    using Sumerics.ViewModels;
     using System;
+    using System.IO;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -14,7 +17,7 @@
     {
         #region Fields
 
-        readonly SaveImageViewModel _model;
+        readonly SaveImageViewModel _vm;
 
         #endregion
 
@@ -22,9 +25,9 @@
 
         public SaveImageWindow()
         {
-            _model = new SaveImageViewModel(Environment.CurrentDirectory);
+            _vm = new SaveImageViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = _model;
+            DataContext = _vm;
         }
 
         #endregion
@@ -34,91 +37,77 @@
         /// <summary>
         /// Gets the status if the dialog has been accepted.
         /// </summary>
-        public bool Accepted
+        public Boolean Accepted
         {
-            get
-            {
-                return _model.Accepted;
-            }
+            get { return _vm.Accepted; }
         }
 
         /// <summary>
         /// Gets or sets the currently selected file.
         /// </summary>
-        public string SelectedFile
+        public String SelectedFile
         {
-            get
-            {
-                return _model.UserSelectedFile.FullName;
-            }
-            set
-            {
-                _model.FileName = value;
-            }
+            get { return _vm.UserSelectedFile.FullName; }
+            set { _vm.FileName = value; }
         }
 
         /// <summary>
         /// Gets or sets currently selected the image width.
         /// </summary>
-        public int ImageWidth
+        public Int32 ImageWidth
         {
-            get
-            {
-                return _model.ImageWidth;
-            }
-            set
-            {
-                _model.ImageWidth = value;
-            }
+            get { return _vm.ImageWidth; }
+            set { _vm.ImageWidth = value; }
         }
 
         /// <summary>
         /// Gets or sets the currently selected image height.
         /// </summary>
-        public int ImageHeight
+        public Int32 ImageHeight
         {
-            get
-            {
-                return _model.ImageHeight;
-            }
-            set
-            {
-                _model.ImageHeight = value;
-            }
+            get { return _vm.ImageHeight; }
+            set { _vm.ImageHeight = value; }
         }
 
         #endregion
 
         #region Events
 
-        void ClearSelected(object sender, RoutedEventArgs e)
+        async void ClearSelected(Object sender, RoutedEventArgs e)
         {
-            (sender as ListView).SelectedIndex = -1;
+            var view = sender as ListView;
+
+            if (view != null)
+            {
+                view.SelectedIndex = -1;
+
+                if (sender != Current)
+                {
+                    //This hack seems strange but unfortunately it is the way to go
+                    await Task.Delay(10);
+                    Current.Focus();
+                }
+            }
             
-            if (sender != Current)
-                WaitAndFocus();
         }
 
-        async void WaitAndFocus()
-        {
-            //This hack seems strange but unfortunately it is the way to go
-            await Task.Delay(10);
-            Current.Focus();
-        }
-
-        void TextBoxKeyPressed(object sender, KeyEventArgs e)
+        void TextBoxKeyPressed(Object sender, KeyEventArgs e)
         {
             var tb = sender as TextBox;
 
             if (e.Key == Key.Enter)
             {
-                _model.FileName = tb.Text;
-                var path = _model.CurrentDirectory.FullName + "\\" + _model.FileName;
+                _vm.FileName = tb.Text;
+                var path = _vm.CurrentDirectory.FullName + "\\" + _vm.FileName;
 
-                if (System.IO.Directory.Exists(path))
-                    _model.CurrentDirectory = new FolderModel(path);
-                else if (_model.CanAccept)
-                    _model.Accept.Execute(this);
+                if (Directory.Exists(path))
+                {
+                    _vm.CurrentDirectory = new FolderModel(path);
+                }
+                else if (_vm.CanAccept)
+                {
+                    _vm.Accept.Execute(this);
+                }
             }
             else if (e.Key == Key.Escape)
             {
@@ -126,10 +115,10 @@
             }
         }
 
-        void TextBoxChanged(object sender, TextChangedEventArgs e)
+        void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            _model.CanAccept = !tb.Text.Equals(string.Empty) && _model.IsValid(tb.Text);
+            _vm.CanAccept = !tb.Text.Equals(String.Empty) && _vm.IsValid(tb.Text);
         }
 
         #endregion

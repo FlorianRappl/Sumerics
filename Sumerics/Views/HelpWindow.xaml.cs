@@ -1,7 +1,8 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
     using Sumerics.Commands;
+    using Sumerics.ViewModels;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

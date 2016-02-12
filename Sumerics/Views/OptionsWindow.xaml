@@ -1,12 +1,15 @@
-﻿<Controls:MetroWindow x:Class="Sumerics.OptionsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:local="clr-namespace:Sumerics"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        ResizeMode="NoResize" Icon="../Icons/Sumerics.png"
-        WindowStartupLocation="CenterScreen"
-        x:Name="MyOptionsWindow" Title="Options"
-        Height="600" Width="700">
+﻿<Controls:MetroWindow x:Class="Sumerics.Views.OptionsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:local="clr-namespace:Sumerics"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      ResizeMode="NoResize" 
+                      Icon="../Icons/Sumerics.png"
+                      WindowStartupLocation="CenterScreen"
+                      x:Name="MyOptionsWindow" 
+                      Title="Options"
+                      Height="600"
+                      Width="700">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

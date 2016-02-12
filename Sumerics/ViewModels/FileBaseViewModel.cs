@@ -1,5 +1,6 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -10,22 +11,36 @@
     {
         #region Fields
 
-        protected FolderModel currentDirectory;
-        protected FileModel selectedFile;
+        protected FolderModel _currentDirectory;
+        protected FileModel _selectedFile;
 
-        Dictionary<String, String> filters;
-        String selectedFilter;
+        readonly ObservableCollection<FolderModel> _directories;
+        readonly ObservableCollection<FileModel> _files;
+        readonly ObservableCollection<String> _availableFilters;
+        readonly Dictionary<String, String> _filters;
+        readonly ICommand _change;
+
+        String _selectedFilter;
 
         #endregion
 
         #region ctor
 
-        public FileBaseViewModel(IContainer container)
-            : base(container)
+        public FileBaseViewModel()
         {
-            Files = new ObservableCollection<FileModel>();
-            filters = new Dictionary<String, String>();
-            Filters = new ObservableCollection<String>();
+            _directories = new ObservableCollection<FolderModel>();
+            _files = new ObservableCollection<FileModel>();
+            _filters = new Dictionary<String, String>();
+            _availableFilters = new ObservableCollection<String>();
+            _change = new RelayCommand(x =>
+            {
+                var y = x as FolderModel;
+
+                if (y != null)
+                {
+                    CurrentDirectory = y;
+                }
+            });
         }
 
         #endregion
@@ -36,14 +51,16 @@
         /// Gets the picked extension. If the extension is arbitrary (.*) then
         /// string.Empty is returned.
         /// </summary>
-        public string Extension
+        public String Extension
         {
             get
             {
-                var filter = Path.GetExtension(filters[selectedFilter]);
+                var filter = Path.GetExtension(_filters[_selectedFilter]);
 
                 if (filter == ".*")
-                    return string.Empty;
+                {
+                    return String.Empty;
+                }
 
                 return filter;
             }
@@ -54,18 +71,18 @@
         /// </summary>
         public FolderModel CurrentDirectory
         {
-            get { return currentDirectory; }
+            get { return _currentDirectory; }
             set
             {
-                if (value == null)
-                    return;
-
-                SetPathToWatch(value.FullName);
-                currentDirectory = value;
-                UpdateDirectoryHistory();
-                SelectedFile = null;
-                PopulateFiles();
-                AllChanged();
+                if (value != null)
+                {
+                    SetPathToWatch(value.FullName);
+                    _currentDirectory = value;
+                    UpdateDirectoryHistory();
+                    SelectedFile = null;
+                    PopulateFiles();
+                    AllChanged();
+                }
             }
         }
 
@@ -78,25 +95,24 @@
             set { CurrentDirectory = value; }
         }
 
-        public abstract FileModel SelectedFile { get; set; }
+        public abstract FileModel SelectedFile
+        { 
+            get; 
+            set; 
+        }
 
-        public abstract string FileName { get; set; }
+        public abstract String FileName 
+        { 
+            get;
+            set; 
+        }
 
         /// <summary>
         /// Changes the current directory.
         /// </summary>
         public ICommand ChangeDirectory
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    var y = x as FolderModel;
-
-                    if (y != null)
-                        CurrentDirectory = y;
-                });
-            }
+            get { return _change; }
         }
 
         /// <summary>
@@ -104,8 +120,7 @@
         /// </summary>
         public ObservableCollection<FolderModel> Directories
         {
-            get;
-            set;
+            get { return _directories; }
         }
 
         /// <summary>
@@ -113,28 +128,26 @@
         /// </summary>
         public ObservableCollection<FileModel> Files
         {
-            get;
-            set;
+            get { return _files; }
         }
 
         /// <summary>
         /// Gets or sets the list with file filters.
         /// </summary>
-        public ObservableCollection<string> Filters
+        public ObservableCollection<String> Filters
         {
-            get;
-            set;
+            get { return _availableFilters; }
         }
 
         /// <summary>
         /// Gets or sets the selected filter.
         /// </summary>
-        public string SelectedFilter
+        public String SelectedFilter
         {
-            get { return selectedFilter; }
+            get { return _selectedFilter; }
             set
             {
-                selectedFilter = value;
+                _selectedFilter = value;
                 PopulateFiles();
                 RaisePropertyChanged();
             }
@@ -147,7 +160,7 @@
         protected override void RaiseDirectoryChanged()
         {
             PopulateFiles();
-            SelectedFile = selectedFile;
+            SelectedFile = _selectedFile;
         }
 
         #endregion
@@ -162,9 +175,9 @@
         public void AddFilter(string name, string value)
         {
             Filters.Add(name);
-            filters.Add(name, value);
+            _filters.Add(name, value);
 
-            if (filters.Count == 1)
+            if (_filters.Count == 1)
                 SelectedFilter = name;
         }
 
@@ -175,9 +188,9 @@
         public void RemoveFilter(string name)
         {
             Filters.Remove(name);
-            filters.Remove(name);
+            _filters.Remove(name);
 
-            if (selectedFilter == name)
+            if (_selectedFilter == name)
                 SelectedFilter = Filters.Count > 0 ? Filters[0] : string.Empty;
         }
 
@@ -206,7 +219,7 @@
                 if (string.IsNullOrEmpty(SelectedFilter))
                     files = CurrentDirectory.Info.GetFiles();
                 else
-                    files = CurrentDirectory.Info.GetFiles(filters[selectedFilter]);
+                    files = CurrentDirectory.Info.GetFiles(_filters[_selectedFilter]);
             }
             catch { }
 
@@ -218,7 +231,7 @@
         {
 
             Directories.Clear();
-            var current = currentDirectory;
+            var current = _currentDirectory;
 
             do
             {

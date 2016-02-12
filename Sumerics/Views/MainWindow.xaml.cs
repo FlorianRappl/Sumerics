@@ -1,15 +1,15 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
     using Sumerics.Commands;
     using Sumerics.Controls;
     using Sumerics.Properties;
+    using Sumerics.ViewModels;
     using System;
     using System.Collections.Specialized;
-    using System.ComponentModel;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -88,7 +88,7 @@
             }
         }
 
-        void MainWindowClosing(Object sender, CancelEventArgs e)
+        void MainWindowClosing(Object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			var pers = Properties.Settings.Default;
 

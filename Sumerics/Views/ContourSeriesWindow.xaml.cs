@@ -1,6 +1,7 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.ViewModels;
     using YAMP;
 
 	/// <summary>

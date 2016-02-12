@@ -1,7 +1,8 @@
-﻿<Controls:MetroWindow x:Class="Sumerics.HelpWindow"
+﻿<Controls:MetroWindow x:Class="Sumerics.Views.HelpWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics"
+                      xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Help"
@@ -23,7 +24,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type local:HelpTileViewModel}">
+            <DataTemplate DataType="{x:Type vm:HelpTileViewModel}">
                 <Controls:Tile Title="{Binding Name}" 
                                Width="100"
                                Height="100">

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-
-namespace Sumerics
+﻿namespace Sumerics.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows.Media.Imaging;
+
     /// <summary>
     /// Represents the encapsulated information of a folder.
     /// </summary>
-    class FolderModel
+    sealed class FolderModel
     {
-        #region Members
+        #region Fields
 
-        BitmapImage icon;
+        readonly BitmapImage _icon;
 
         #endregion
 
@@ -25,23 +22,25 @@ namespace Sumerics
         {
             Info = new DirectoryInfo(drive.Name);
             IsDrive = true;
-            icon = Icons.HomeIcon;
+            _icon = Icons.HomeIcon;
         }
 
         public FolderModel(DirectoryInfo directory)
         {
             Info = directory;
             IsDrive = directory.Parent == null;
-            icon = IsDrive ? Icons.HomeIcon : Icons.FolderIcon;
+            _icon = IsDrive ? Icons.HomeIcon : Icons.FolderIcon;
         }
 
-        public FolderModel(string directory) : this(new DirectoryInfo(directory))
+        public FolderModel(String directory) : 
+            this(new DirectoryInfo(directory))
         {
         }
 
-        public FolderModel(Environment.SpecialFolder directory) : this(Environment.GetFolderPath(directory))
+        public FolderModel(Environment.SpecialFolder directory) : 
+            this(Environment.GetFolderPath(directory))
         {
-            icon = Icons.HeartIcon;
+            _icon = Icons.HeartIcon;
         }
 
         #endregion
@@ -51,32 +50,52 @@ namespace Sumerics
         /// <summary>
         /// Gets the name of the folder.
         /// </summary>
-        public string Name { get { return Info.Name; } }
+        public String Name 
+        { 
+            get { return Info.Name; } 
+        }
 
         /// <summary>
         /// Gets the path of the folder.
         /// </summary>
-        public string FullName { get { return Info.FullName; } }
+        public String FullName 
+        { 
+            get { return Info.FullName; } 
+        }
 
         /// <summary>
         /// Gets the information if the folder is a drive.
         /// </summary>
-        public bool IsDrive { get; protected set; }
+        public Boolean IsDrive 
+        { 
+            get; 
+            protected set; 
+        }
 
         /// <summary>
         /// Gets the underlying directory info object of the folder.
         /// </summary>
-        public DirectoryInfo Info { get; protected set; }
+        public DirectoryInfo Info 
+        { 
+            get; 
+            protected set; 
+        }
 
         /// <summary>
         /// Gets the parent directory of the folder.
         /// </summary>
-        public FolderModel Parent { get { return IsDrive ? null : new FolderModel(Info.Parent); } }
+        public FolderModel Parent 
+        { 
+            get { return IsDrive ? null : new FolderModel(Info.Parent); } 
+        }
 
         /// <summary>
         /// Gets the associated icon of the folder.
         /// </summary>
-        public BitmapImage Icon { get { return icon; } }
+        public BitmapImage Icon
+        { 
+            get { return _icon; } 
+        }
 
         #endregion
 
@@ -86,14 +105,16 @@ namespace Sumerics
         {
             get
             {
-                if(IsDrive)
-                    yield break;
+                if (!IsDrive)
+                {
+                    var parent = new FolderModel(Info.Parent);
+                    var directories = parent.Directories;
 
-                var parent = new FolderModel(Info.Parent);
-                var iterator = parent.Directories;
-
-                foreach (var item in iterator)
-                    yield return item;
+                    foreach (var directory in directories)
+                    {
+                        yield return directory;
+                    }
+                }
             }
         }
 
@@ -111,7 +132,9 @@ namespace Sumerics
                 { }
 
                 foreach (var directory in directories)
+                {
                     yield return new FolderModel(directory);
+                }
             }
         }
 
@@ -131,7 +154,9 @@ namespace Sumerics
                     { }
 
                     foreach (var drive in drives)
+                    {
                         yield return new FolderModel(drive);
+                    }
                 }
                 else
                 {
@@ -145,7 +170,9 @@ namespace Sumerics
                     { }
 
                     foreach (var directory in directories)
+                    {
                         yield return new FolderModel(directory);
+                    }
                 }
             }
         }
@@ -154,7 +181,7 @@ namespace Sumerics
 
         #region Methods
 
-        public override bool Equals(object obj)
+        public override Boolean Equals(Object obj)
         {
             if (obj is FolderModel)
             {
@@ -165,7 +192,7 @@ namespace Sumerics
             return false;
         }
 
-        public override int GetHashCode()
+        public override Int32 GetHashCode()
         {
             return FullName.GetHashCode();
         }
@@ -179,7 +206,9 @@ namespace Sumerics
             var drives = DriveInfo.GetDrives();
 
             foreach (var drive in drives)
+            {
                 yield return new FolderModel(drive);
+            }
         }
 
         #endregion

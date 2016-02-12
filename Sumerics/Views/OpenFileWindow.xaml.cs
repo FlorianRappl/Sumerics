@@ -1,6 +1,8 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Models;
+    using Sumerics.ViewModels;
     using System;
     using System.Threading.Tasks;
     using System.Windows;
@@ -12,19 +14,19 @@
     /// </summary>
     public partial class OpenFileWindow : MetroWindow
     {
-        #region Members
+        #region Fields
 
-        OpenFileViewModel model;
+        readonly OpenFileViewModel _vm;
 
         #endregion
 
         #region ctor
 
-        public OpenFileWindow(IContainer container)
+        public OpenFileWindow()
         {
-            model = new OpenFileViewModel(Environment.CurrentDirectory, container);
+            _vm = new OpenFileViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = model;
+            DataContext = _vm;
         }
 
         #endregion
@@ -35,12 +37,9 @@
         /// Gets a value if the dialog was accepted, i.e.
         /// some file got picked.
         /// </summary>
-        public bool Accepted
+        public Boolean Accepted
         {
-            get
-            {
-                return model.Accepted;
-            }
+            get { return _vm.Accepted; }
         }
 
         /// <summary>
@@ -48,14 +47,8 @@
         /// </summary>
         public string SelectedFile
         {
-            get
-            {
-                return model.SelectedFile.FullName;
-            }
-            set
-            {
-                model.SelectedFile = new FileModel(value);
-            }
+            get { return _vm.SelectedFile.FullName; }
+            set { _vm.SelectedFile = new FileModel(value); }
         }
 
         #endregion
@@ -67,52 +60,58 @@
         /// </summary>
         /// <param name="name">The description.</param>
         /// <param name="value">The value of the filter.</param>
-        public void AddFilter(string name, string value)
+        public void AddFilter(String name, String value)
         {
-            model.AddFilter(name, value);
+            _vm.AddFilter(name, value);
         }
 
         /// <summary>
         /// Removes a filter from the dialog.
         /// </summary>
         /// <param name="name">The description.</param>
-        public void RemoveFilter(string name)
+        public void RemoveFilter(String name)
         {
-            model.RemoveFilter(name);
+            _vm.RemoveFilter(name);
         }
 
         #endregion
 
         #region Events
 
-        void ClearSelected(object sender, RoutedEventArgs e)
+        async void ClearSelected(Object sender, RoutedEventArgs e)
         {
-            (sender as ListView).SelectedIndex = -1;
+            var view = sender as ListView;
 
-            if(sender != Current)
-                WaitAndFocus();
+            if (view != null)
+            {
+                view.SelectedIndex = -1;
+
+                if (sender != Current)
+                {
+                    //This hack seems strange but unfortunately it is the way to go
+                    await Task.Delay(10);
+                    Current.Focus();
+                }
+            }
         }
 
-        async void WaitAndFocus()
-        {
-            //This hack seems strange but unfortunately it is the way to go
-            await Task.Delay(10);
-            Current.Focus();
-        }
-
-        void TextBoxKeyPressed(object sender, KeyEventArgs e)
+        void TextBoxKeyPressed(Object sender, KeyEventArgs e)
         {
             var tb = sender as TextBox;
 
             if (e.Key == Key.Enter)
             {
-                model.FileName = tb.Text;
-                var path = model.CurrentDirectory.FullName + "\\" + model.FileName;
+                _vm.FileName = tb.Text;
+                var path = _vm.CurrentDirectory.FullName + "\\" + _vm.FileName;
 
                 if (System.IO.Directory.Exists(path))
-                    model.CurrentDirectory = new FolderModel(path);
-                else if (model.CanAccept)
-                    model.Accept.Execute(this);
+                {
+                    _vm.CurrentDirectory = new FolderModel(path);
+                }
+                else if (_vm.CanAccept)
+                {
+                    _vm.Accept.Execute(this);
+                }
             }
             else if (e.Key == Key.Escape)
             {
@@ -120,10 +119,10 @@
             }
         }
 
-        void TextBoxChanged(object sender, TextChangedEventArgs e)
+        void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            model.CanAccept = System.IO.File.Exists(model.CurrentDirectory.FullName + "\\" + tb.Text);
+            _vm.CanAccept = System.IO.File.Exists(_vm.CurrentDirectory.FullName + "\\" + tb.Text);
         }
 
         #endregion

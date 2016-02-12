@@ -1,10 +1,9 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using System;
-    using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
-    public abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : System.ComponentModel.INotifyPropertyChanged
     {
         readonly IContainer _container;
 
@@ -29,10 +28,10 @@
 
             if (handler != null)
             {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 }

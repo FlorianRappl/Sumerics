@@ -1,5 +1,6 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Views;
     using System;
     using System.Windows;
     using System.Windows.Threading;

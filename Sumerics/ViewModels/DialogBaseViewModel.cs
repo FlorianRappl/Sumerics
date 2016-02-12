@@ -1,5 +1,6 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
@@ -10,50 +11,56 @@
     {
         #region Fields
 
-        Boolean canAccept;
-        FileSystemWatcher watcher;
+        readonly ICommand _accept;
+        readonly FileSystemWatcher _watcher;
+        readonly ObservableCollection<FolderModel> _places;
+        Boolean _canAccept;
 
         #endregion
 
         #region ctor
 
-        public DialogBaseViewModel(IContainer container)
-            : base(container)
+        public DialogBaseViewModel()
         {
-            Places = new ObservableCollection<FolderModel>();
+            _places = new ObservableCollection<FolderModel>();
             PopulatePlaces();
 
-            watcher = new FileSystemWatcher();
-            watcher.IncludeSubdirectories = false;
-            watcher.Deleted += FileWatcherReport;
-            watcher.Created += FileWatcherReport;
-            watcher.Renamed += FileWatcherReport;
+            _watcher = new FileSystemWatcher();
+            _watcher.IncludeSubdirectories = false;
+            _watcher.Deleted += FileWatcherReport;
+            _watcher.Created += FileWatcherReport;
+            _watcher.Renamed += FileWatcherReport;
+
+            _accept = new RelayCommand(x => OnAccept(x as Window));
         }
 
         #endregion
 
         #region Properties
 
-        public abstract FolderModel SelectedPlace { get; set; }
+        public abstract FolderModel SelectedPlace
+        { 
+            get; 
+            set; 
+        }
 
         /// <summary>
         /// Gets or sets the list of available special places (fast access).
         /// </summary>
         public ObservableCollection<FolderModel> Places
         {
-            get;
-            set;
+            get { return _places; }
         }
 
         /// <summary>
         /// Gets or sets if the dialog can be accepted.
         /// </summary>
-        public bool CanAccept
+        public Boolean CanAccept
         {
-            get { return canAccept; }
+            get { return _canAccept; }
             set
             {
-                canAccept = value;
+                _canAccept = value;
                 RaisePropertyChanged();
             }
         }
@@ -63,19 +70,13 @@
         /// </summary>
         public ICommand Accept
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    OnAccept(x as Window);
-                });
-            }
+            get { return _accept; }
         }
 
         /// <summary>
         /// Gets or sets if the dialog has been accepted.
         /// </summary>
-        public bool Accepted
+        public Boolean Accepted
         {
             get;
             set;
@@ -89,14 +90,14 @@
         {
         }
 
-        protected void SetPathToWatch(string path)
+        protected void SetPathToWatch(String path)
         {
-            watcher.EnableRaisingEvents = false;
-            watcher.Path = path;
-            watcher.EnableRaisingEvents = true;
+            _watcher.EnableRaisingEvents = false;
+            _watcher.Path = path;
+            _watcher.EnableRaisingEvents = true;
         }
 
-        void FileWatcherReport(object sender, FileSystemEventArgs e)
+        void FileWatcherReport(Object sender, FileSystemEventArgs e)
         {
             App.Current.Dispatcher.Invoke(() => RaiseDirectoryChanged());
         }
@@ -110,7 +111,9 @@
             Accepted = true;
 
             if (window != null)
+            {
                 window.Close();
+            }
         }
 
         /// <summary>
@@ -123,7 +126,9 @@
             var drives = FolderModel.GetDrives();
 
             foreach (var drive in drives)
+            {
                 Places.Add(drive);
+            }
         }
 
         #endregion

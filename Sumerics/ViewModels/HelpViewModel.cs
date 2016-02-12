@@ -1,5 +1,6 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Views;
     using System;
     using System.Text.RegularExpressions;
     using System.Windows.Input;
@@ -10,9 +11,11 @@
     {
         #region Fields
 
-        HelpSection help;
-        BitmapImage icon;
-        Regex endOfSentence = new Regex(@"\.\s[A-Z]+", RegexOptions.Compiled);
+        static readonly Regex EndOfSentence = new Regex(@"\.\s[A-Z]+", RegexOptions.Compiled);
+
+        readonly HelpSection _help;
+        readonly BitmapImage _icon;
+        readonly ICommand _show;
 
         #endregion
 
@@ -21,8 +24,13 @@
         public HelpViewModel(HelpSection entry, IContainer container)
             : base(container)
 		{
-			help = entry;
-            icon = Icons.GetLowImage(entry.Topic);
+			_help = entry;
+            _icon = Icons.GetLowImage(entry.Topic);
+            _show = new RelayCommand(x =>
+            {
+                var hw = StaticHelpers.GetWindow<HelpWindow>(Container);
+                hw.Topic = _help;
+            });
 		}
 
         #endregion
@@ -31,23 +39,23 @@
 
         public String Name
         {
-            get { return help.Name; }
+            get { return _help.Name; }
         }
 
 		public String Description
 		{
-			get { return help.Description; }
+			get { return _help.Description; }
 		}
 
         public String ToolTip
         {
             get 
             {
-                var str = help.Description;
+                var str = _help.Description;
 
-                if (endOfSentence.IsMatch(str))
+                if (EndOfSentence.IsMatch(str))
                 {
-                    var index = endOfSentence.Match(str).Index;
+                    var index = EndOfSentence.Match(str).Index;
                     str = str.Substring(0, index + 1);
                 }
 
@@ -62,24 +70,17 @@
 
 		public HelpSection Help
         {
-            get { return help; }
+            get { return _help; }
         }
 
         public BitmapImage Icon
 		{
-			get { return icon; }
+			get { return _icon; }
 		}
 
         public ICommand ShowMore
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-					var hw = StaticHelpers.GetWindow<HelpWindow>(Container);
-                    hw.Topic = help;
-                });
-            }
+            get { return _show; }
         }
 
         #endregion

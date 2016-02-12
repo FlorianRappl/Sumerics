@@ -1,6 +1,7 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Models;
+    using Sumerics.Views;
     using System;
     using System.IO;
     using System.Security.Principal;
@@ -245,7 +246,7 @@
                 }
             }
 
-            var editor = StaticHelpers.GetWindow<EditorWindow>();
+            var editor = new EditorWindow(null, null);//TODO
             editor.OpenFile(file);
         }
 

@@ -1,18 +1,15 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
     using System;
-    using System.Collections.ObjectModel;
     using System.IO;
 
     sealed class OpenFileViewModel : FileBaseViewModel
     {
         #region ctor
 
-        public OpenFileViewModel(String startFileOrFolder, IContainer container)
-            : base(container)
+        public OpenFileViewModel(String startFileOrFolder)
         {
-            Directories = new ObservableCollection<FolderModel>();
-
             if (File.Exists(startFileOrFolder))
             {
                 SelectedFile = new FileModel(startFileOrFolder);
@@ -31,44 +28,50 @@
 
         #region Properties
 
-        public override string FileName
+        public override String FileName
         {
             get 
             {
-                if (SelectedFile == null) 
-                    return string.Empty; 
+                if (SelectedFile == null)
+                {
+                    return String.Empty;
+                }
 
                 return SelectedFile.Name; 
             }
             set
             {
                 if (Path.IsPathRooted(value))
+                {
                     SelectedFile = new FileModel(value);
+                }
                 else
+                {
                     SelectedFile = new FileModel(CurrentDirectory.FullName + "\\" + value);
+                }
             }
         }
 
         public override FileModel SelectedFile
         {
-            get { return selectedFile; }
+            get { return _selectedFile; }
             set
             {
                 CanAccept = false;
 
-                if (value == null)
-                    return;
-
-                if (value.IsDirectory)
+                if (value != null)
                 {
-                    CurrentDirectory = new FolderModel(value.FullName);
-                    return;
-                }
+                    if (value.IsDirectory)
+                    {
+                        CurrentDirectory = new FolderModel(value.FullName);
+                        return;
+                    }
 
-                CanAccept = value.IsValid;
-                selectedFile = value;
-                currentDirectory = selectedFile.Folder;
-                AllChanged();
+                    CanAccept = value.IsValid;
+                    _selectedFile = value;
+                    _currentDirectory = _selectedFile.Folder;
+                    AllChanged();
+                }
             }
         }
 

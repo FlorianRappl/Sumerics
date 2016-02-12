@@ -1,6 +1,7 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Views;
     using System;
     using System.Windows.Input;
     using System.Windows.Media.Imaging;

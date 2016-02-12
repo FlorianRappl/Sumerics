@@ -1,6 +1,7 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Controls;
+    using Sumerics.Views;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -37,7 +38,7 @@
             });
             _open = new RelayCommand(x =>
             {
-                var dialog = new OpenFileWindow(Container);
+                var dialog = new OpenFileWindow();
                 dialog.Title = "Open file ...";
                 dialog.AddFilter("All files (*.*)", "*.*");
                 dialog.AddFilter("YAMP Script (*.ys)", "*.ys");

@@ -1,5 +1,6 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -9,15 +10,14 @@
     {
         #region Fields
 
-        FolderModel selectedDirectory;
-        FolderModel selectedTopDirectory;
+        FolderModel _selectedDirectory;
+        FolderModel _selectedTopDirectory;
 
         #endregion
 
         #region ctor
 
-        public FolderBrowseViewModel(String startFolder, IContainer container)
-            : base(container)
+        public FolderBrowseViewModel(String startFolder)
         {
             CanAccept = true;
             CurrentDirectories = new ObservableCollection<FolderModel>();
@@ -52,7 +52,7 @@
 
         public FolderModel SelectedTopDirectory
         {
-            get { return selectedTopDirectory; }
+            get { return _selectedTopDirectory; }
             set { SelectedDirectory = value; }
         }
 
@@ -60,22 +60,22 @@
         {
             get
             { 
-                return selectedDirectory; 
+                return _selectedDirectory; 
             }
             set
             {
-                if (value == null)
-                    return;
+                if (value != null)
+                {
+                    SetPathToWatch(value.FullName);
+                    ChangeDirectory(value);
+                    _selectedDirectory = value;
+                    _selectedTopDirectory = value.Parent;
 
-                SetPathToWatch(value.FullName);
-                ChangeDirectory(value);
-                selectedDirectory = value;
-                selectedTopDirectory = value.Parent;
-
-                RaisePropertyChanged("SelectedPlace");
-                RaisePropertyChanged("SelectedDirectory");
-                RaisePropertyChanged("SelectedTopDirectory");
-                RaisePropertyChanged("SelectedSubDirectory");
+                    RaisePropertyChanged("SelectedPlace");
+                    RaisePropertyChanged("SelectedDirectory");
+                    RaisePropertyChanged("SelectedTopDirectory");
+                    RaisePropertyChanged("SelectedSubDirectory");
+                }
             }
         }
 
@@ -103,7 +103,7 @@
 
         protected override void RaiseDirectoryChanged()
         {
-            LoadDirectories(TopDirectories, selectedDirectory.TopDirectories);
+            LoadDirectories(TopDirectories, _selectedDirectory.TopDirectories);
         }
 
         void ChangeDirectory(FolderModel directory)
@@ -118,7 +118,9 @@
             list.Clear();
 
             foreach (var directory in directories)
+            {
                 list.Add(directory);
+            }
         }
 
         #endregion

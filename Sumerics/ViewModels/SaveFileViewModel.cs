@@ -1,7 +1,8 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
+    using Sumerics.Views;
     using System;
-    using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using System.Windows;
@@ -10,17 +11,15 @@
     {
         #region Fields
 
-        String fileName;
+        String _fileName;
 
         #endregion
 
         #region ctor
 
         public SaveFileViewModel(String startFileOrFolder)
-            : base(null)
         {
-            fileName = String.Empty;
-            Directories = new ObservableCollection<FolderModel>();
+            _fileName = String.Empty;
 
             if (Directory.Exists(startFileOrFolder))
             {
@@ -36,17 +35,17 @@
 
         #region Properties
 
-        public override string FileName
+        public override String FileName
         {
-            get { return fileName; }
+            get { return _fileName; }
             set
             {
-                var dir = currentDirectory;
+                var dir = _currentDirectory;
 
                 if (Path.IsPathRooted(value))
                 {
                     dir = new FolderModel(Path.GetDirectoryName(value));
-                    fileName = Path.GetFileName(value);
+                    _fileName = Path.GetFileName(value);
                 }
                 //else if(Directory.Exists(currentDirectory.FullName + "\\" + value))
                 //{
@@ -54,10 +53,12 @@
                 //    fileName = string.Empty;
                 //}
                 else
-                    fileName = value;
+                {
+                    _fileName = value;
+                }
 
-                CanAccept = IsValid(fileName);
-                selectedFile = null;
+                CanAccept = IsValid(_fileName);
+                _selectedFile = null;
                 CurrentDirectory = dir;
             }
         }
@@ -66,13 +67,15 @@
         {
             get
             {
-                var path = CurrentDirectory.FullName + "\\" + fileName;
+                var path = CurrentDirectory.FullName + "\\" + _fileName;
                 var ext = Extension;
 
-                if(!string.IsNullOrEmpty(ext))
+                if (!String.IsNullOrEmpty(ext))
                 {
-                    if (!Path.GetExtension(path).ToLower().Equals(ext.ToLower()))
+                    if (!Path.GetExtension(path).Equals(ext, StringComparison.InvariantCultureIgnoreCase))
+                    {
                         path += Extension;
+                    }
                 }
 
                 return new FileModel(path);
@@ -81,23 +84,23 @@
 
         public override FileModel SelectedFile
         {
-            get { return selectedFile ?? UserSelectedFile; }
+            get { return _selectedFile ?? UserSelectedFile; }
             set
             {
-                if (value == null)
-                    return;
-
-                if (value.IsDirectory)
+                if (value != null)
                 {
-                    CurrentDirectory = new FolderModel(value.FullName);
-                    return;
-                }
+                    if (value.IsDirectory)
+                    {
+                        CurrentDirectory = new FolderModel(value.FullName);
+                        return;
+                    }
 
-                fileName = Path.GetFileName(value.FullName);
-                selectedFile = value;
-                currentDirectory = selectedFile.Folder;
-                CanAccept = true;
-                AllChanged();
+                    _fileName = Path.GetFileName(value.FullName);
+                    _selectedFile = value;
+                    _currentDirectory = _selectedFile.Folder;
+                    CanAccept = true;
+                    AllChanged();
+                }
             }
         }
 
@@ -105,13 +108,15 @@
 
         #region Methods
 
-        public bool IsValid(string fileName)
+        public Boolean IsValid(String fileName)
         {
-            if (string.IsNullOrEmpty(fileName))
-                return false;
+            if (!String.IsNullOrEmpty(fileName))
+            {
+                var inv = Path.GetInvalidFileNameChars();
+                return !fileName.Intersect(inv).Any();
+            }
 
-            var inv = Path.GetInvalidFileNameChars();
-            return !fileName.Intersect(inv).Any();
+            return false;
         }
 
         protected override void OnAccept(Window window)
@@ -127,7 +132,9 @@
                 });
 
                 if (result == 1)
+                {
                     return;
+                }
             }
 
             base.OnAccept(window);

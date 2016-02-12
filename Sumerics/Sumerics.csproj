@@ -222,8 +222,8 @@
     </Compile>
     <Compile Include="ViewModels\DialogBaseViewModel.cs" />
     <Compile Include="ViewModels\FileBaseViewModel.cs" />
-    <Compile Include="ViewModels\FileModel.cs" />
-    <Compile Include="ViewModels\FolderModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\FolderModel.cs" />
     <Compile Include="ViewModels\OpenFileViewModel.cs" />
     <Compile Include="Views\OpenFileWindow.xaml.cs">
       <DependentUpon>OpenFileWindow.xaml</DependentUpon>
@@ -347,7 +347,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Codebase\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Codebase\RelayCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

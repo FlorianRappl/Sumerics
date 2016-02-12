@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using System;
     using System.Windows.Media.Imaging;
@@ -8,17 +8,16 @@
 	{
 		#region Fields
 
-		String type;
-        String shortInfo;
-		Value value;
-        BitmapImage icon;
+		String _type;
+        String _shortInfo;
+		Value _value;
+        BitmapImage _icon;
 
 		#endregion
 
 		#region ctor
 
-		public VariableViewModel(String name, Value value, IContainer container)
-            : base(container)
+		public VariableViewModel(String name, Value value)
         {
             Name = name;
             Value = value;
@@ -36,40 +35,40 @@
 
         public string Type
         {
-            get { return type; }
+            get { return _type; }
             set
             {
-                type = value;
+                _type = value;
                 RaisePropertyChanged();
             }
         }
 
         public BitmapImage Icon
         {
-            get { return icon; }
+            get { return _icon; }
             set 
             { 
-                icon = value; 
+                _icon = value; 
                 RaisePropertyChanged();
             }
         }
 
         public string ShortInfo
         {
-            get { return shortInfo; }
+            get { return _shortInfo; }
             set
             {
-                shortInfo = value;
+                _shortInfo = value;
                 RaisePropertyChanged();
             }
         }
 
         public Value Value
         {
-            get { return value; }
+            get { return _value; }
             set
             {
-                this.value = value;
+                this._value = value;
                 Type = value.Header;
                 Icon = Icons.GetVariableImage(value);
 

@@ -1,6 +1,8 @@
 ﻿namespace Sumerics
 {
     using Sumerics.Controls;
+    using Sumerics.ViewModels;
+    using Sumerics.Views;
     using System;
     using YAMP;
 

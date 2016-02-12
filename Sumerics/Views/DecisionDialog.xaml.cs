@@ -1,20 +1,10 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Sumerics
+﻿namespace Sumerics.Views
 {
+    using MahApps.Metro.Controls;
+    using System;
+    using System.Windows;
+    using System.Windows.Input;
+
     /// <summary>
     /// Interaction logic for DecisionDialog.xaml
     /// </summary>
@@ -26,19 +16,19 @@ namespace Sumerics
             Input.Focus();
         }
 
-        public int UserDecision
+        public Int32 UserDecision
         {
             get { return Input.SelectedIndex; }
             set { Input.SelectedIndex = value; }
         }
 
-        public string UserMessage
+        public String UserMessage
         {
             get { return Message.Text; }
             set { Message.Text = value; }
         }
 
-        public static int Show(string message, string[] decisions)
+        public static Int32 Show(String message, String[] decisions)
         {
             var inp = new DecisionDialog();
             inp.Message.Text = string.IsNullOrEmpty(message) ? "Your decision is required:" : message;
@@ -48,17 +38,21 @@ namespace Sumerics
             return inp.UserDecision;
         }
 
-        void CloseClick(object sender, RoutedEventArgs e)
+        void CloseClick(Object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        void TextBoxEnter(object sender, KeyEventArgs e)
+        void TextBoxEnter(Object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && e.KeyboardDevice.Modifiers == ModifierKeys.None)
+            {
                 CloseClick(sender, e);
+            }
             else if (e.Key == Key.Escape)
+            {
                 Close();
+            }
         }
     }
 }

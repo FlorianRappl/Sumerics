@@ -1,5 +1,6 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Views;
     using System;
     using System.Collections.Generic;
     using System.Windows;

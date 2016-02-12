@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Commands;
     using Sumerics.Controls;
@@ -120,7 +120,7 @@
 				{
                     if (variable.Key.Contains(variableFilter))
                     {
-                        var vm = new VariableViewModel(variable.Key, variable.Value, Container);
+                        var vm = new VariableViewModel(variable.Key, variable.Value);
                         Variables.Add(vm);
                     }
 				}
@@ -318,7 +318,7 @@
             {
                 if (e.Name.Contains(variableFilter))
                 {
-                    var vm = new VariableViewModel(e.Name, e.Value, Container);
+                    var vm = new VariableViewModel(e.Name, e.Value);
                     _variables.Add(vm);
                 }
 

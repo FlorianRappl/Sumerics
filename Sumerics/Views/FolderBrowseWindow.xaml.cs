@@ -1,6 +1,8 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Models;
+    using Sumerics.ViewModels;
     using System;
     using System.Threading.Tasks;
     using System.Windows;
@@ -11,19 +13,19 @@
 	/// </summary>
 	public partial class FolderBrowseWindow : MetroWindow
     {
-        #region Members
+        #region Fields
 
-        FolderBrowseViewModel model;
+        readonly FolderBrowseViewModel _vm;
 
         #endregion
 
         #region ctor
 
-        public FolderBrowseWindow(IContainer container)
+        public FolderBrowseWindow()
         {
-            model = new FolderBrowseViewModel(Environment.CurrentDirectory, container);
+            _vm = new FolderBrowseViewModel(Environment.CurrentDirectory);
 			InitializeComponent();
-            DataContext = model;
+            DataContext = _vm;
 		}
 
         #endregion
@@ -32,30 +34,30 @@
 
         public Boolean Accepted
         {
-            get { return model.Accepted; }
+            get { return _vm.Accepted; }
         }
 
         public String SelectedDirectory
         {
-            get { return model.SelectedDirectory.FullName; }
-            set { model.SelectedDirectory = new FolderModel(value); }
+            get { return _vm.SelectedDirectory.FullName; }
+            set { _vm.SelectedDirectory = new FolderModel(value); }
         }
 
         #endregion
 
         #region Events
 
-        void ClearSelected(object sender, RoutedEventArgs e)
+        async void ClearSelected(Object sender, RoutedEventArgs e)
         {
-            (sender as ListView).SelectedIndex = -1;
-            WaitAndFocus();
-        }
+            var view = sender as ListView;
 
-        async void WaitAndFocus()
-        {
-            //This hack seems strange but unfortunately it is the way to go
-            await Task.Delay(10);
-            Current.Focus();
+            if (view != null)
+            {
+                view.SelectedIndex = -1;
+                //This hack seems strange but unfortunately it is the way to go
+                await Task.Delay(10);
+                Current.Focus();
+            }
         }
 
         #endregion

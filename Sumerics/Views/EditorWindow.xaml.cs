@@ -1,6 +1,7 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.ViewModels;
     using System;
     using System.Threading.Tasks;
     using System.Windows.Controls;
@@ -10,24 +11,19 @@
     /// </summary>
     public partial class EditorWindow : MetroWindow
     {
-        public EditorWindow()
-        {
-            InitializeComponent();
-            Closing += (s, ev) =>
-            {
-                var evm = DataContext as EditorViewModel;
+        readonly EditorViewModel _vm;
 
-                if (evm != null)
-                {
-                    ev.Cancel = evm.CloseAll();
-                }
-            };
+        public EditorWindow(Kernel kernel, IConsole console)
+        {
+            _vm = new EditorViewModel(kernel, console);
+            InitializeComponent();
+            DataContext = _vm;
+            Closing += (s, ev) => ev.Cancel = _vm.CloseAll();
         }
 
         public void OpenFile(String file)
         {
-            var context = DataContext as EditorViewModel;
-            context.OpenFile(file);
+            _vm.OpenFile(file);
         }
 
         async void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)

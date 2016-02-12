@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.ViewModels
 {
     using System.Collections.ObjectModel;
     using System.Linq;
