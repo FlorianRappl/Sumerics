@@ -8,32 +8,30 @@
 	{
 		#region Fields
 
-		String description;
-		String title;
-		String company;
-		String version;
-		Boolean active;
-		BitmapImage icon;
-		Boolean custom;
-		String fileName;
+		String _description;
+		String _title;
+		String _company;
+		String _version;
+		Boolean _active;
+		BitmapImage _icon;
+		Boolean _custom;
+		String _fileName;
 
 		#endregion
 
 		#region ctor
 
-		public PluginViewModel(Assembly assembly, IContainer container)
-            : base(container)
+		public PluginViewModel(Assembly assembly)
 		{
-			custom = false;
-			active = true;
+			_custom = false;
+			_active = true;
 			InspectAssembly(assembly);
 		}
 
-        public PluginViewModel(Assembly assembly, String fileName, IContainer container)
-            : base(container)
+        public PluginViewModel(Assembly assembly, String fileName)
 		{
-			custom = true;
-			this.fileName = fileName;
+			_custom = true;
+			_fileName = fileName;
 			InspectAssembly(assembly);
 		}
 
@@ -43,60 +41,60 @@
 
 		public BitmapImage Icon
 		{
-			get { return icon; }
+			get { return _icon; }
 			set
 			{
-				icon = value;
+				_icon = value;
 				RaisePropertyChanged("Icon");
 			}
 		}
 
 		public string Description
 		{
-			get { return description; }
+			get { return _description; }
 			set
 			{
-				description = value;
+				_description = value;
 				RaisePropertyChanged("Description");
 			}
 		}
 
 		public string Title
 		{
-			get { return title; }
+			get { return _title; }
 			set
 			{
-				title = value;
+				_title = value;
 				RaisePropertyChanged("Title");
 			}
 		}
 
 		public string Company
 		{
-			get { return company; }
+			get { return _company; }
 			set
 			{
-				company = value;
+				_company = value;
 				RaisePropertyChanged("Company");
 			}
 		}
 
 		public string Version
 		{
-			get { return version; }
+			get { return _version; }
 			set
 			{
-				version = value;
+				_version = value;
 				RaisePropertyChanged("Version");
 			}
 		}
 
 		public bool Active
 		{
-			get { return active; }
+			get { return _active; }
 			set
 			{
-				active = value;
+				_active = value;
 				RaisePropertyChanged("Active");
 				ActiveChanged();
 			}
@@ -104,10 +102,10 @@
 
 		public bool Custom
 		{
-			get { return custom; }
+			get { return _custom; }
 			set
 			{
-				custom = value;
+				_custom = value;
 				RaisePropertyChanged("Custom");
 			}
 		}
@@ -118,26 +116,26 @@
 
 		void ActiveChanged()
 		{
-			if (custom && !string.IsNullOrEmpty(fileName))
+			if (_custom && !string.IsNullOrEmpty(_fileName))
 			{
 				var settings = Properties.Settings.Default;
 
 				if (settings.ActivePlugins == null)
 					settings.ActivePlugins = new System.Collections.Specialized.StringCollection();
 
-				if (active)
+				if (_active)
 				{
-					if (!settings.ActivePlugins.Contains(fileName))
+					if (!settings.ActivePlugins.Contains(_fileName))
 					{
-						settings.ActivePlugins.Add(fileName);
+						settings.ActivePlugins.Add(_fileName);
 						settings.Save();
 					}
 				}
 				else
 				{
-					if (settings.ActivePlugins.Contains(fileName))
+					if (settings.ActivePlugins.Contains(_fileName))
 					{
-						settings.ActivePlugins.Remove(fileName);
+						settings.ActivePlugins.Remove(_fileName);
 						settings.Save();
 					}
 				}
@@ -157,8 +155,8 @@
 				if (name.EndsWith("icon.png"))
 					SetIcon(assembly, name);
 
-			if (icon == null)
-				icon = new BitmapImage(new Uri(@"..\Icons\plugin.png", UriKind.Relative));
+			if (_icon == null)
+				_icon = new BitmapImage(new Uri(@"..\Icons\plugin.png", UriKind.Relative));
 		}
 
 		void SetIcon(Assembly assembly, string name)
@@ -167,10 +165,10 @@
 
 			if (stream != null)
 			{
-				icon = new BitmapImage();
-				icon.BeginInit();
-				icon.StreamSource = stream;
-				icon.EndInit();
+				_icon = new BitmapImage();
+				_icon.BeginInit();
+				_icon.StreamSource = stream;
+				_icon.EndInit();
 			}
 		}
 

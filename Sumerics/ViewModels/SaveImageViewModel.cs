@@ -6,15 +6,15 @@
     {
         #region Fields
 
-        Int32 imageWidth;
-        Int32 imageHeight;
+        Int32 _imageWidth;
+        Int32 _imageHeight;
 
         #endregion
 
         #region ctor
 
-        public SaveImageViewModel(String startFileOrFolder, IContainer container)
-            : base(startFileOrFolder, container)
+        public SaveImageViewModel(String startFileOrFolder)
+            : base(startFileOrFolder)
         {
             AddFilter("PNG File (*.png)", "*.png");
         }
@@ -28,8 +28,8 @@
         /// </summary>
         public int ImageHeight
         {
-            get { return imageHeight; }
-            set { imageHeight = value; RaisePropertyChanged(); }
+            get { return _imageHeight; }
+            set { _imageHeight = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -37,8 +37,8 @@
         /// </summary>
         public int ImageWidth
         {
-            get { return imageWidth; }
-            set { imageWidth = value; RaisePropertyChanged(); }
+            get { return _imageWidth; }
+            set { _imageWidth = value; RaisePropertyChanged(); }
         }
 
         #endregion

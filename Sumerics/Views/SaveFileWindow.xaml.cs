@@ -12,19 +12,19 @@
     /// </summary>
     public partial class SaveFileWindow : MetroWindow
     {
-        #region Members
+        #region Files
 
-        SaveFileViewModel model;
+        readonly SaveFileViewModel _model;
 
         #endregion
 
         #region ctor
 
-        public SaveFileWindow(IContainer container)
+        public SaveFileWindow()
         {
-            model = new SaveFileViewModel(Environment.CurrentDirectory, container);
+            _model = new SaveFileViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = model;
+            DataContext = _model;
         }
 
         #endregion
@@ -34,53 +34,46 @@
         /// <summary>
         /// Gets the status if the dialog has been accepted.
         /// </summary>
-        public bool Accepted
+        public Boolean Accepted
         {
-            get
-            {
-                return model.Accepted;
-            }
+            get { return _model.Accepted; }
         }
 
         /// <summary>
         /// Gets or sets the currently selected file.
         /// </summary>
-        public string SelectedFile
+        public String SelectedFile
         {
-            get
-            {
-                return model.UserSelectedFile.FullName;
-            }
-            set
-            {
-                model.FileName = value;
-            }
+            get { return _model.UserSelectedFile.FullName; }
+            set { _model.FileName = value; }
         }
 
         #endregion
 
         #region Methods
 
-        public void AddFilter(string name, string value)
+        public void AddFilter(String name, String value)
         {
-            model.AddFilter(name, value);
+            _model.AddFilter(name, value);
         }
 
-        public void RemoveFilter(string name)
+        public void RemoveFilter(String name)
         {
-            model.RemoveFilter(name);
+            _model.RemoveFilter(name);
         }
 
         #endregion
 
         #region Events
 
-        void ClearSelected(object sender, RoutedEventArgs e)
+        void ClearSelected(Object sender, RoutedEventArgs e)
         {
             (sender as ListView).SelectedIndex = -1;
 
             if (sender != Current)
+            {
                 WaitAndFocus();
+            }
         }
 
         async void WaitAndFocus()
@@ -90,19 +83,23 @@
             Current.Focus();
         }
 
-        void TextBoxKeyPressed(object sender, KeyEventArgs e)
+        void TextBoxKeyPressed(Object sender, KeyEventArgs e)
         {
             var tb = sender as TextBox;
 
             if (e.Key == Key.Enter)
             {
-                model.FileName = tb.Text;
-                var path = model.CurrentDirectory.FullName + "\\" + model.FileName;
+                _model.FileName = tb.Text;
+                var path = _model.CurrentDirectory.FullName + "\\" + _model.FileName;
 
                 if (System.IO.Directory.Exists(path))
-                    model.CurrentDirectory = new FolderModel(path);
-                else if (model.CanAccept)
-                    model.Accept.Execute(this);
+                {
+                    _model.CurrentDirectory = new FolderModel(path);
+                }
+                else if (_model.CanAccept)
+                {
+                    _model.Accept.Execute(this);
+                }
             }
             else if (e.Key == Key.Escape)
             {
@@ -110,10 +107,10 @@
             }
         }
 
-        void TextBoxChanged(object sender, TextChangedEventArgs e)
+        void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            model.CanAccept = !tb.Text.Equals(string.Empty) && model.IsValid(tb.Text);
+            _model.CanAccept = !tb.Text.Equals(String.Empty) && _model.IsValid(tb.Text);
         }
 
         #endregion

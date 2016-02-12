@@ -43,22 +43,26 @@
             MainTabs.SelectionChanged += CurrentTabChanged;
 
             var container = new Container();
-            var vm = new MainViewModel(container);
+            var logger = new FileLogger();
+            var kernel = new Kernel(logger);
+            var vm = new MainViewModel(container, kernel);
             var factory = new CommandFactory(container);
-            var application = CreateApplication(vm);
+            var application = CreateApplication(vm, kernel);
+            container.Register(logger);
+            container.Register(kernel);
             container.Register(container);
             container.Register(application);
+            container.Register(factory);
 
             factory.RegisterCommands();
             DataContext = vm;
             _container = container;
         }
 
-        IApplication CreateApplication(MainViewModel vm)
+        IApplication CreateApplication(MainViewModel vm, IKernel kernel)
         {
             var console = new ConsoleProxy(MyConsole);
             var visualizer = new VisualizerProxy(vm, MyLastPlot);
-            var kernel = new Kernel();
             var dialogs = new DialogManager(vm.Container);
             var tabs = new TabManager(MainTabs);
             return new SumericsApp(console, visualizer, kernel, dialogs, tabs);
@@ -136,6 +140,15 @@
             {
                 MyConsole.Input = query;
             }
+        }
+
+        #endregion
+
+        #region Properties
+
+        public IContainer Container
+        {
+            get { return _container; }
         }
 
         #endregion

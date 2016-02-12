@@ -13,6 +13,11 @@
             _container = container;
         }
 
+        public BaseViewModel()
+            : this(null)
+        {
+        }
+
         public IContainer Container
         {
             get { return _container; }

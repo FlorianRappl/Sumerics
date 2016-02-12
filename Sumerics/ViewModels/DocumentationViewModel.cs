@@ -9,25 +9,26 @@
 	{
 		#region Fields
 
-		static DocumentationViewModel instance;
+        readonly ObservableCollection<PanoramaGroup> _groups;
+        readonly Documentation _documentation;
 
 		#endregion
 
 		#region ctor
 
-		public DocumentationViewModel(IContainer container)
-            : base(container)
+        public DocumentationViewModel(HelpWindow window, Documentation documentation)
 		{
-			Groups = new ObservableCollection<PanoramaGroup>();
+            _groups = new ObservableCollection<PanoramaGroup>();
 
-            foreach (var topic in Core.Help.Topics)
+            foreach (var topic in _documentation.Topics)
             {
                 var pg = new PanoramaGroup(topic.Kind);
                 var content = new List<HelpTileViewModel>();
 
                 foreach (var item in topic)
                 {
-                    content.Add(new HelpTileViewModel(item, container));
+                    var vm = new HelpTileViewModel(window, item, documentation);
+                    content.Add(vm);
                 }
 
                 pg.SetSource(content);
@@ -44,13 +45,16 @@
         /// </summary>
 		public Documentation Document
 		{
-			get { return Core.Help; }
+            get { return _documentation; }
 		}
 
         /// <summary>
         /// Gets the various groups in the UI.
         /// </summary>
-		public ObservableCollection<PanoramaGroup> Groups { get; private set; }
+		public ObservableCollection<PanoramaGroup> Groups 
+        {
+            get { return _groups; }
+        }
 
 		#endregion
 	}

@@ -10,18 +10,26 @@
     {
         #region Fields
 
-        HelpEntry _entry;
-        BitmapImage _icon;
+        readonly HelpWindow _window;
+        readonly HelpEntry _entry;
+        readonly BitmapImage _icon;
+        readonly Documentation _documentation;
+        readonly ICommand _clicked;
 
         #endregion
 
         #region ctor
 
-        public HelpTileViewModel(HelpEntry entry, IContainer container)
-            : base(container)
+        public HelpTileViewModel(HelpWindow window, HelpEntry entry, Documentation documentation)
 		{
+            _window = window;
 			_entry = entry;
             _icon = Icons.GetHighImage(entry.Topic.Kind);
+            _documentation = documentation;
+            _clicked = new RelayCommand(x =>
+            {
+                _window.Topic = _documentation.Get(_entry.Name);
+            });
 		}
 
         #endregion
@@ -45,14 +53,7 @@
 
 		public ICommand TileClickedCommand
 		{
-			get 
-			{
-				return new RelayCommand(x =>
-				{
-					var window = StaticHelpers.GetWindow<HelpWindow>(Container);
-					window.Topic = Container.Get<DocumentationViewModel>().Document.Get(_entry.Name);
-				});
-			}
+			get { return _clicked; }
         }
 
         #endregion

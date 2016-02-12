@@ -7,7 +7,6 @@
     using System.Collections.ObjectModel;
     using System.Timers;
     using System.Windows.Input;
-    using System.Windows.Threading;
     using YAMP;
 
     /// <summary>
@@ -19,45 +18,43 @@
 
         readonly ICommand _openDialog;
         readonly ICommand _runQuery;
+        readonly Kernel _kernel;
+        readonly Timer _popupTimer;
+        readonly ObservableCollection<VariableViewModel> _variables;
+        readonly ObservableCollection<HelpViewModel> _functions;
+        readonly ObservableCollection<AutocompleteItem> _availableItems;
+        readonly ObservableCollection<NotificationViewModel> _notifications;
 
-        IPlotViewModel lastPlot;
-        VariableViewModel selectedVariable;
-        ObservableCollection<VariableViewModel> variables;
-        ObservableCollection<HelpViewModel> functions;
-		ObservableCollection<AutocompleteItem> availableItems;
-        ObservableCollection<NotificationViewModel> notifications;
+        IPlotViewModel _lastPlot;
+        VariableViewModel _selectedVariable;
 
         Boolean hasNotification;
         String input;
         String functionFilter;
         String variableFilter;
 
-        Timer popupTimer;
-
         #endregion
 
         #region ctor
 
-        public MainViewModel(IContainer container)
+        public MainViewModel(IContainer container, Kernel kernel)
             : base(container)
         {
-            popupTimer = new Timer();
-            popupTimer.Interval = 5000;
-            popupTimer.Elapsed += NotifyTimerElapsed;
+            _kernel = kernel;
+            _popupTimer = new Timer();
+            _popupTimer.Interval = 5000;
+            _popupTimer.Elapsed += NotifyTimerElapsed;
 
-            variables = new ObservableCollection<VariableViewModel>();
-            functions = new ObservableCollection<HelpViewModel>();
-			availableItems = new ObservableCollection<AutocompleteItem>();
-            notifications = new ObservableCollection<NotificationViewModel>();
+            _variables = new ObservableCollection<VariableViewModel>();
+            _functions = new ObservableCollection<HelpViewModel>();
+			_availableItems = new ObservableCollection<AutocompleteItem>();
+            _notifications = new ObservableCollection<NotificationViewModel>();
 
-            Core.Load();
-
-            Core.PlotCreated += PlotCreated;
-            Core.VariableChanged += VariableChanged;
-            Core.VariableCreated += VariableCreated;
-            Core.VariableRemoved += VariableRemoved;
-            Core.NotificationReceived += NotificationReceived;
-            Core.UserInputRequired += UserInputRequired;
+            _kernel.Context.OnLastPlotChanged += PlotCreated;
+            _kernel.Context.OnVariableChanged += VariableChanged;
+            _kernel.Context.OnVariableCreated += VariableCreated;
+            _kernel.Context.OnVariableRemoved += VariableRemoved;
+            _kernel.Context.OnNotificationReceived += NotificationReceived;
 
 			FunctionFilter = String.Empty;
 			VariableFilter = String.Empty;
@@ -81,7 +78,7 @@
                     query = newQuery;
                 }
 
-                Core.RunAsync(qrvm, query);
+                kernel.RunAsync(qrvm, query).FireAndForget();
             });
         }
 
@@ -112,7 +109,7 @@
             { 
                 functionFilter = value;
                 Functions.Clear();
-				var sections = Core.Help.Sections;
+				var sections = _kernel.Help.Sections;
 
                 foreach (var section in sections)
                 {
@@ -136,7 +133,7 @@
 			{
 				variableFilter = value;
 				Variables.Clear();
-				var variables = Core.Context.AllVariables;
+				var variables = _kernel.Context.AllVariables;
 
 				foreach (var variable in variables)
 				{
@@ -156,7 +153,7 @@
         /// </summary>
 		public List<PluginViewModel> Plugins
 		{
-			get { return Core.Plugins; }
+			get { return _kernel.Plugins; }
 		}
 
         /// <summary>
@@ -164,12 +161,7 @@
         /// </summary>
         public ObservableCollection<NotificationViewModel> Notifications
         {
-            get { return notifications; }
-            set
-            {
-                notifications = value;
-                RaisePropertyChanged();
-            }
+            get { return _notifications; }
         }
 
         /// <summary>
@@ -177,12 +169,7 @@
         /// </summary>
 		public ObservableCollection<AutocompleteItem> AvailableItems
 		{
-			get { return availableItems; }
-			set
-			{
-				availableItems = value;
-				RaisePropertyChanged();
-			}
+			get { return _availableItems; }
 		}
 
         /// <summary>
@@ -190,12 +177,7 @@
         /// </summary>
 		public ObservableCollection<VariableViewModel> Variables
 		{
-			get { return variables; }
-			set
-			{
-				variables = value;
-				RaisePropertyChanged();
-			}
+			get { return _variables; }
 		}
 
         /// <summary>
@@ -203,12 +185,7 @@
         /// </summary>
         public ObservableCollection<HelpViewModel> Functions
         {
-            get { return functions; }
-            set
-            {
-                functions = value;
-                RaisePropertyChanged();
-            }
+            get { return _functions; }
         }
 
         /// <summary>
@@ -242,16 +219,16 @@
         /// </summary>
         public VariableViewModel SelectedVariable
         {
-            get { return selectedVariable; }
+            get { return _selectedVariable; }
             set
             {
-                selectedVariable = value;
+                _selectedVariable = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged("SelectedValue");
 
                 if (value != null && value.Value is PlotValue)
                 {
-                    Core.Context.ChangeLastPlotTo((PlotValue)value.Value);
+                    _kernel.Context.ChangeLastPlotTo((PlotValue)value.Value);
                 }
             }
         }
@@ -261,10 +238,10 @@
         /// </summary>
         public IPlotViewModel LastPlot
         {
-            get { return lastPlot; }
+            get { return _lastPlot; }
             set
             {
-                lastPlot = value;
+                _lastPlot = value;
                 RaisePropertyChanged();
             }
         }
@@ -305,26 +282,26 @@
 
         void FillLists()
 		{
-            foreach (var k in Core.Parser.Keywords)
+            foreach (var k in _kernel.Parser.Keywords)
             {
                 var item = new AutocompleteItem(k, "The " + k + " keyword.", Icons.KeywordIcon);
                 EditorViewModel.BasicItems.Add(item);
-                availableItems.Add(item);
+                _availableItems.Add(item);
             }
 
-			foreach (var f in Core.Help.Sections)
+			foreach (var f in _kernel.Help.Sections)
 			{
                 if (f.Topic.Equals("Constant"))
                 {
                     var item = new AutocompleteItem(f.Name, f.Description, Icons.ConstantIcon);
                     EditorViewModel.BasicItems.Add(item);
-                    availableItems.Add(item);
+                    _availableItems.Add(item);
                 }
                 else
                 {
                     var item = new AutocompleteItem(f.Name, f.Description, Icons.FunctionIcon);
                     EditorViewModel.BasicItems.Add(item);
-                    availableItems.Add(item);
+                    _availableItems.Add(item);
                 }
 			}
 		}
@@ -333,86 +310,96 @@
 
         #region Event-Handling
 
-        void NotifyTimerElapsed(Object sender, System.Timers.ElapsedEventArgs e)
+        void NotifyTimerElapsed(Object sender, ElapsedEventArgs e)
         {
-            popupTimer.Stop();
-            Dispatcher.CurrentDispatcher.Invoke(() => HasNotification = false);
+            _popupTimer.Stop();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                HasNotification = false;
+            });
         }
 
         void VariableChanged(Object sender, VariableEventArgs e)
         {
-            for (var i = 0; i < variables.Count; i++)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                if (variables[i].Name.Equals(e.Name))
+                for (var i = 0; i < _variables.Count; i++)
                 {
-					variables[i].Value = e.Value;
-
-                    if (SelectedVariable != null && e.Name == SelectedVariable.Name)
+                    if (_variables[i].Name.Equals(e.Name))
                     {
-                        SelectedVariable = variables[i];
-                    }
+                        _variables[i].Value = e.Value;
 
-                    break;
+                        if (SelectedVariable != null && e.Name == SelectedVariable.Name)
+                        {
+                            SelectedVariable = _variables[i];
+                        }
+
+                        break;
+                    }
                 }
-            }
+            });
         }
 
         void VariableCreated(Object sender, VariableEventArgs e)
         {
-            if (e.Name.Contains(variableFilter))
+            App.Current.Dispatcher.Invoke(() =>
             {
-                var vm = new VariableViewModel(e.Name, e.Value, Container);
-                variables.Add(vm);
-            }
+                if (e.Name.Contains(variableFilter))
+                {
+                    var vm = new VariableViewModel(e.Name, e.Value, Container);
+                    _variables.Add(vm);
+                }
 
-            availableItems.Add(new AutocompleteItem(e.Name, "Variable", Icons.VariableIcon));
+                _availableItems.Add(new AutocompleteItem(e.Name, "Variable", Icons.VariableIcon));
+            });
         }
 
         void VariableRemoved(Object sender, VariableEventArgs e)
         {
-            for (var i = 0; i < variables.Count; i++)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                if (variables[i].Name.Equals(e.Name))
+                for (var i = 0; i < _variables.Count; i++)
                 {
-                    variables.RemoveAt(i);
-                    break;
+                    if (_variables[i].Name.Equals(e.Name))
+                    {
+                        _variables.RemoveAt(i);
+                        break;
+                    }
                 }
-            }
 
-            if (SelectedVariable != null && e.Name == SelectedVariable.Name)
-            {
-                SelectedVariable = null;
-            }
-
-            for (var k = 0; k < availableItems.Count; k++)
-            {
-                if (availableItems[k].Text == e.Name)
+                if (SelectedVariable != null && e.Name == SelectedVariable.Name)
                 {
-                    availableItems.RemoveAt(k);
-                    break;
+                    SelectedVariable = null;
                 }
-            }
+
+                for (var k = 0; k < _availableItems.Count; k++)
+                {
+                    if (_availableItems[k].Text == e.Name)
+                    {
+                        _availableItems.RemoveAt(k);
+                        break;
+                    }
+                }
+            });
         }
 
         void PlotCreated(Object sender, PlotEventArgs e)
         {
-            LastPlot = new PlotViewModel(e.Value, Container);
-        }
-
-        void UserInputRequired(Object sender, UserInputEventArgs e)
-        {
-            var input = new InputDialog();
-            input.UserMessage = e.Message;
-            input.Closed += (s, ev) => { e.Continue(input.UserInput); };
-            input.Show();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                LastPlot = new PlotViewModel(e.Value, Container);
+            });
         }
 
         void NotificationReceived(Object sender, NotificationEventArgs e)
         {
-            notifications.Insert(0, new NotificationViewModel(e, Container));
-            HasNotification = true;
-            popupTimer.Stop();
-            popupTimer.Start();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                _notifications.Insert(0, new NotificationViewModel(e, Container));
+                HasNotification = true;
+                _popupTimer.Stop();
+                _popupTimer.Start();
+            });
         }
 
         #endregion

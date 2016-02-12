@@ -12,7 +12,7 @@
     /// </summary>
     public partial class AboutWindow : MetroWindow
     {
-        #region Members
+        #region Fields
 
         int longitude;
         int latitude;
@@ -32,11 +32,8 @@
             Version.Text = GetVersion(infos);
             Copyright.Text = GetCopyright(infos);
 
-            if (Core.IsWindows8)
-            {
-                Loaded += WindowLoaded;
-                Closed += WindowClosed;
-            }
+            Loaded += WindowLoaded;
+            Closed += WindowClosed;
             
             SetPosition();
         }

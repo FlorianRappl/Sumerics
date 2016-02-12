@@ -67,10 +67,7 @@
 
         public BitmapImage Icon
 		{
-			get
-			{
-				return icon;
-			}
+			get { return icon; }
 		}
 
         public ICommand ShowMore

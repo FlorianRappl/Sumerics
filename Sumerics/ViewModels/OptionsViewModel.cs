@@ -1,23 +1,20 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Models;
     using System;
     using System.IO;
+    using System.Security.Principal;
     using System.Windows.Input;
 
 	sealed class OptionsViewModel : BaseViewModel
 	{
 		#region Fields
 
-		Boolean liveSensorData;
-		Int32 consoleFontSize;
-		Int32 liveSensorHistory;
-		Boolean autoSaveHistory;
-		Boolean autoEvaluate;
-		Boolean accelerometer;
-		Boolean gyrometer;
-		Boolean inclinometer;
-		Boolean compass;
-		Boolean light;
+        readonly OptionsModel _options;
+        readonly ICommand _save;
+        readonly ICommand _viewErrorLog;
+        readonly ICommand _viewLocalScript;
+        readonly ICommand _viewGlobalScript;
 
 		#endregion
 
@@ -26,153 +23,154 @@
 		public OptionsViewModel(IContainer container)
             : base(container)
 		{
-			var settings = Properties.Settings.Default;
-			liveSensorData = settings.LivePlotActive;
-			consoleFontSize = settings.ConsoleFontSize;
-			liveSensorHistory = settings.LivePlotHistory;
-			autoSaveHistory = settings.AutoSaveHistory;
-			autoEvaluate = settings.AutoEvaluateMIP;
-			accelerometer = settings.Accelerometer;
-			compass = settings.Compass;
-			gyrometer = settings.Gyrometer;
-			inclinometer = settings.Inclinometer;
-			light = settings.Light;
+            _options = new OptionsModel(Properties.Settings.Default);
+            _save = new RelayCommand(x =>
+            {
+                var window = x as OptionsWindow;
+                _options.Save(Properties.Settings.Default);
+
+                if (window != null)
+                {
+                    window.Close();
+                }
+
+                App.Window.LoadSettings();
+            });
+            _viewErrorLog = new RelayCommand(x =>
+            {
+                LoadEditor(Kernel.ErrorLog);
+            });
+            _viewLocalScript = new RelayCommand(x =>
+            {
+                LoadEditor(Kernel.LocalScript);
+            });
+            _viewGlobalScript = new RelayCommand(x =>
+            {
+                LoadEditor(Kernel.GlobalScript);
+            });
 		}
 
 		#endregion
 
 		#region Properties
 
-        public bool CanViewGlobalScript
+        public Boolean CanViewGlobalScript
         {
             get
             {
-                bool isAdmin;
+                var isAdmin = false;
 
                 try
                 {
                     //get the currently logged in user
-                    var user = System.Security.Principal.WindowsIdentity.GetCurrent();
-                    var principal = new System.Security.Principal.WindowsPrincipal(user);
-                    isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+                    var user = WindowsIdentity.GetCurrent();
+                    var principal = new WindowsPrincipal(user);
+                    isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
                 }
-                catch (Exception)
+                catch
                 {
-                    isAdmin = false;
                 }
 
                 return isAdmin;
             }
         }
 
-		public bool LiveSensorData
+        public Boolean LiveSensorData
 		{
-			get { return liveSensorData; }
+			get { return _options.LiveSensorData; }
 			set
 			{
-				liveSensorData = value;
+                _options.LiveSensorData = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool Accelerometer
+        public Boolean Accelerometer
 		{
-			get { return accelerometer; }
+            get { return _options.Accelerometer; }
 			set
 			{
-				accelerometer = value;
+                _options.Accelerometer = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool Gyrometer
+        public Boolean Gyrometer
 		{
-			get { return gyrometer; }
+            get { return _options.Gyrometer; }
 			set
 			{
-				gyrometer = value;
+                _options.Gyrometer = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool Inclinometer
+        public Boolean Inclinometer
 		{
-			get { return inclinometer; }
+            get { return _options.Inclinometer; }
 			set
 			{
-				inclinometer = value;
+                _options.Inclinometer = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool Compass
+        public Boolean Compass
 		{
-			get { return compass; }
+            get { return _options.Compass; }
 			set
 			{
-				compass = value;
+                _options.Compass = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool Light
+		public Boolean Light
 		{
-			get { return light; }
+            get { return _options.Light; }
 			set
 			{
-				light = value;
+                _options.Light = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool AutoSaveHistory
+		public Boolean AutoSaveHistory
 		{
-			get { return autoSaveHistory; }
+            get { return _options.AutoSaveHistory; }
 			set
 			{
-				autoSaveHistory = value;
+                _options.AutoSaveHistory = value;
 				RaisePropertyChanged();
 			}
 		}
 
-		public int LiveSensorHistory
+		public Int32 LiveSensorHistory
 		{
-			get { return liveSensorHistory; }
+            get { return _options.LiveSensorHistory; }
 			set
 			{
-				if (value < 5)
-					liveSensorHistory = 5;
-				else if (value > 300)
-					liveSensorHistory = 300;
-				else
-					liveSensorHistory = value;
-
+                _options.LiveSensorHistory = Math.Max(Math.Min(value, 300), 5);
 				RaisePropertyChanged();
 			}
 		}
 
-		public int ConsoleFontSize
+		public Int32 ConsoleFontSize
 		{
-			get { return consoleFontSize;  }
+			get { return _options.ConsoleFontSize;  }
 			set
 			{
-				if (value < 10)
-					consoleFontSize = 10;
-				else if (value > 32)
-					consoleFontSize = 32;
-				else
-					consoleFontSize = value;
-
+                _options.ConsoleFontSize = Math.Max(Math.Min(value, 32), 10);
 				RaisePropertyChanged();
 			}
 		}
 
-		public bool AutoEvaluate
+		public Boolean AutoEvaluate
 		{
-			get { return autoEvaluate; }
+			get { return _options.AutoEvaluate; }
 			set
 			{
-				autoEvaluate = value;
+                _options.AutoEvaluate = value;
 				RaisePropertyChanged();
 			}
 		}
@@ -183,62 +181,22 @@
 
         public ICommand SaveAndClose
 		{
-			get
-			{
-				return new RelayCommand(x =>
-				{
-					var window = x as OptionsWindow;
-
-					var settings = Properties.Settings.Default;
-					settings.ConsoleFontSize = ConsoleFontSize;
-					settings.LivePlotActive = LiveSensorData;
-					settings.LivePlotHistory = LiveSensorHistory;
-					settings.AutoSaveHistory = AutoSaveHistory;
-					settings.AutoEvaluateMIP = AutoEvaluate;
-					settings.Accelerometer = accelerometer;
-					settings.Compass = compass;
-					settings.Gyrometer = gyrometer;
-					settings.Inclinometer = inclinometer;
-					settings.Light = light;
-					settings.Save();
-
-					window.Close();
-					App.Window.LoadSettings();
-				});
-			}
+			get { return _save; }
 		}
 
         public ICommand ViewErrorLog
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    LoadEditor(Core.ErrorLog);
-                });
-            }
+            get { return _viewErrorLog; }
         }
 
         public ICommand ViewLocalScript
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    LoadEditor(Core.LocalScript);
-                });
-            }
+            get { return _viewLocalScript; }
         }
 
         public ICommand ViewGlobalScript
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    LoadEditor(Core.GlobalScript);
-                });
-            }
+            get { return _viewGlobalScript; }
         }
 
 		#endregion
@@ -249,7 +207,7 @@
         {
             if (!File.Exists(file))
             {
-                var dir = System.IO.Path.GetDirectoryName(file);
+                var dir = Path.GetDirectoryName(file);
 
                 try
                 {

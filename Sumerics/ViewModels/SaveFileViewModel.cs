@@ -16,8 +16,8 @@
 
         #region ctor
 
-        public SaveFileViewModel(String startFileOrFolder, IContainer container)
-            : base(container)
+        public SaveFileViewModel(String startFileOrFolder)
+            : base(null)
         {
             fileName = String.Empty;
             Directories = new ObservableCollection<FolderModel>();

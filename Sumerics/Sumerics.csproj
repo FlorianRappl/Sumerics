@@ -170,10 +170,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Codebase\FileLogger.cs" />
     <Compile Include="Codebase\Kernel.cs" />
     <Compile Include="Codebase\TabManager.cs" />
     <Compile Include="Codebase\VisualizerProxy.cs" />
     <Compile Include="Codebase\DialogManager.cs" />
+    <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="SumericsApp.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -241,7 +243,6 @@
     <Compile Include="Views\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Core.cs" />
     <Compile Include="Views\OptionsWindow.xaml.cs">
       <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>

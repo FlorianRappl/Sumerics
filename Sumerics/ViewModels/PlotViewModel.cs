@@ -36,7 +36,8 @@
 
         public void OpenConsole()
         {
-            new ConsoleEnterWindow().ShowDialog();
+            var window = new ConsoleEnterWindow();
+            window.ShowDialog();
         }
 
         public void OpenPlotSettings()
@@ -97,7 +98,7 @@
 
         public void SavePlot(SumericsPlot frame)
         {
-            var dialog = new SaveImageWindow(Container);
+            var dialog = new SaveImageWindow();
             dialog.ImageWidth = 640;
             dialog.ImageHeight = 480;
             dialog.Title = "Save plot as ...";
@@ -112,8 +113,9 @@
             if (dialog.Accepted)
             {
                 frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
-                OutputDialog.Show("File created", String.Format("The plot has been successfully saved in the file {0}.",
-                    Path.GetFileName(dialog.SelectedFile)));
+                var filename = Path.GetFileName(dialog.SelectedFile);
+                var info = String.Format("The plot has been successfully saved in the file {0}.", filename);
+                OutputDialog.Show("File created", info);
             }
         }
 

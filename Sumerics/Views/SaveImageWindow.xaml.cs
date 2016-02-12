@@ -12,19 +12,19 @@
     /// </summary>
     public partial class SaveImageWindow : MetroWindow
     {
-        #region Members
+        #region Fields
 
-        SaveImageViewModel model;
+        readonly SaveImageViewModel _model;
 
         #endregion
 
         #region ctor
 
-        public SaveImageWindow(IContainer container)
+        public SaveImageWindow()
         {
-            model = new SaveImageViewModel(Environment.CurrentDirectory, container);
+            _model = new SaveImageViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = model;
+            DataContext = _model;
         }
 
         #endregion
@@ -38,7 +38,7 @@
         {
             get
             {
-                return model.Accepted;
+                return _model.Accepted;
             }
         }
 
@@ -49,11 +49,11 @@
         {
             get
             {
-                return model.UserSelectedFile.FullName;
+                return _model.UserSelectedFile.FullName;
             }
             set
             {
-                model.FileName = value;
+                _model.FileName = value;
             }
         }
 
@@ -64,11 +64,11 @@
         {
             get
             {
-                return model.ImageWidth;
+                return _model.ImageWidth;
             }
             set
             {
-                model.ImageWidth = value;
+                _model.ImageWidth = value;
             }
         }
 
@@ -79,11 +79,11 @@
         {
             get
             {
-                return model.ImageHeight;
+                return _model.ImageHeight;
             }
             set
             {
-                model.ImageHeight = value;
+                _model.ImageHeight = value;
             }
         }
 
@@ -112,13 +112,13 @@
 
             if (e.Key == Key.Enter)
             {
-                model.FileName = tb.Text;
-                var path = model.CurrentDirectory.FullName + "\\" + model.FileName;
+                _model.FileName = tb.Text;
+                var path = _model.CurrentDirectory.FullName + "\\" + _model.FileName;
 
                 if (System.IO.Directory.Exists(path))
-                    model.CurrentDirectory = new FolderModel(path);
-                else if (model.CanAccept)
-                    model.Accept.Execute(this);
+                    _model.CurrentDirectory = new FolderModel(path);
+                else if (_model.CanAccept)
+                    _model.Accept.Execute(this);
             }
             else if (e.Key == Key.Escape)
             {
@@ -129,7 +129,7 @@
         void TextBoxChanged(object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            model.CanAccept = !tb.Text.Equals(string.Empty) && model.IsValid(tb.Text);
+            _model.CanAccept = !tb.Text.Equals(string.Empty) && _model.IsValid(tb.Text);
         }
 
         #endregion

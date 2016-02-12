@@ -14,27 +14,27 @@
     {
         #region Fields
 
-        String path;
-        Boolean awaiting;
-        Boolean changed;
-        EditorViewModel parent;
-        EditorControl ed;
-        String originalText;
-        QueryResultViewModel currentExecution;
-
-        ParseContext debugContext;
+        String _path;
+        Boolean _awaiting;
+        Boolean _changed;
+        EditorViewModel _parent;
+        EditorControl _ed;
+        String _originalText;
+        QueryResultViewModel _currentExecution;
+        Parser _parser;
+        ParseContext _debugContext;
 
         #endregion
 
         #region ctor
 
-        public EditorFileViewModel(EditorViewModel parent, IContainer container)
-            : base(container)
+        public EditorFileViewModel(EditorViewModel parent, Parser parser)
         {
+            _parser = parser;
             QueryResultViewModel.RunningQueriesChanged += OnRunningQueriesChanged;
-            debugContext = new ParseContext(Core.Context);
+            _debugContext = new ParseContext(_parser.Context);
 
-            this.parent = parent;
+            _parent = parent;
             Items = new ObservableCollection<AutocompleteItem>();
             VariableItems = new List<AutocompleteItem>();
 
@@ -46,18 +46,18 @@
             InitEditor();
         }
 
-        public EditorFileViewModel(EditorViewModel parent, String path, IContainer container)
-            : this(parent, container)
+        public EditorFileViewModel(EditorViewModel parent, Parser parser, String path)
+            : this(parent, parser)
         {
-            this.path = path;
+            _path = path;
             ReadText();
         }
 
         void InitEditor()
         {
             var ed = new EditorControl(this);
-            ed.OnCreateNewFile += (s, e) => parent.Create.Execute(null);
-            ed.OnOpenAnotherFile += (s, e) => parent.Open.Execute(null);
+            ed.OnCreateNewFile += (s, e) => _parent.Create.Execute(null);
+            ed.OnOpenAnotherFile += (s, e) => _parent.Open.Execute(null);
             Control = ed;
         }
 
@@ -79,7 +79,7 @@
 
         public void SaveAs()
         {
-            var dialog = new SaveFileWindow(Container);
+            var dialog = new SaveFileWindow();
             dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
             dialog.AddFilter("Textfile (*.txt)", "*.txt");
             dialog.ShowDialog();
@@ -117,22 +117,22 @@
             }
 
             QueryResultViewModel.RunningQueriesChanged -= OnRunningQueriesChanged;
-            parent.Remove(this);
+            _parent.Remove(this);
         }
 
         public void Compile()
         {
             Clean();
-            var p = Core.Parser.Parse(Text.Replace("\r\n", "\n"));
+            var p = _parser.Parse(Text.Replace("\r\n", "\n"));
 
             if (p.Parser.HasErrors)
             {
                 foreach (var error in p.Parser.Errors)
                 {
-                    ed.SetError(error.Line, error.Column, error.Length, error.Message);
+                    _ed.SetError(error.Line, error.Column, error.Length, error.Message);
                 }
 
-                ed.Refresh();
+                _ed.Refresh();
             }
 
             AddVariableSymbols(p.Parser.CollectedSymbols);
@@ -140,11 +140,11 @@
 
         public void Execute()
         {
-            if (currentExecution == null || currentExecution.Running)
+            if (_currentExecution == null || _currentExecution.Running)
             {
-                awaiting = true;
+                _awaiting = true;
                 App.Window.RunQuery(Text, "Evaluating " + FileName);
-                awaiting = false;
+                _awaiting = false;
             }
         }
 
@@ -154,15 +154,15 @@
 
         void OnRunningQueriesChanged(object sender, EventArgs e)
         {
-            if (awaiting)
-                currentExecution = sender as QueryResultViewModel;
-            else if (currentExecution == sender)
-                currentExecution = null;
+            if (_awaiting)
+                _currentExecution = sender as QueryResultViewModel;
+            else if (_currentExecution == sender)
+                _currentExecution = null;
         }
 
         public void Clean()
         {
-            ed.ClearErrors();
+            _ed.ClearErrors();
 
             for (var i = 0; i < VariableItems.Count; i++)
                 Items.Remove(VariableItems[i]);
@@ -200,45 +200,45 @@
         {
             get
             {
-                return ed;
+                return _ed;
             }
             set
             {
-                ed = value;
+                _ed = value;
                 RaisePropertyChanged();
             }
         }
 
         public bool IsSaveAs
         {
-            get { return string.IsNullOrEmpty(path); }
+            get { return string.IsNullOrEmpty(_path); }
         }
 
         public string FilePath
         {
-            get { return path; }
+            get { return _path; }
         }
 
         public bool Changed
         {
-            get { return changed; }
+            get { return _changed; }
             set
             {
                 if (value)
                 {
-                    if (originalText == ed.Text)
+                    if (_originalText == _ed.Text)
                         value = false;
                 }
 
-                changed = value;
+                _changed = value;
                 RaisePropertyChanged();
             }
         }
 
         public string Text
         {
-            get { return ed.Text; }
-            set { ed.Text = value; originalText = value; }
+            get { return _ed.Text; }
+            set { _ed.Text = value; _originalText = value; }
         }
 
         public string FileName
@@ -248,7 +248,7 @@
                 if (IsSaveAs)
                     return "untitled";
 
-                return Path.GetFileName(path); 
+                return Path.GetFileName(_path); 
             }
         }
 
@@ -265,7 +265,7 @@
         {
             try
             {
-                Text = File.ReadAllText(path);
+                Text = File.ReadAllText(_path);
                 Changed = false;
             }
             catch (Exception ex)
@@ -278,7 +278,7 @@
         {
             try
             {
-                File.WriteAllText(path, Text);
+                File.WriteAllText(_path, Text);
                 Changed = false;
             }
             catch (Exception ex)
@@ -293,7 +293,7 @@
             {
                 File.WriteAllText(path, Text);
                 Changed = false;
-                this.path = path;
+                this._path = path;
                 RaisePropertyChanged("FilePath");
                 RaisePropertyChanged("FileName");
             }

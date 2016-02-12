@@ -26,21 +26,23 @@ namespace Sumerics
             Closing += OnWindowClosing;
         }
 
-        public void OpenFile(string file)
+        public void OpenFile(String file)
         {
             var context = DataContext as EditorViewModel;
             context.OpenFile(file);
         }
 
-        void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        void OnWindowClosing(Object sender, System.ComponentModel.CancelEventArgs e)
         {
             var evm = DataContext as EditorViewModel;
 
             if (evm != null)
+            {
                 e.Cancel = evm.CloseAll();
+            }
         }
 
-        async void SelectedTabChanged(object sender, SelectionChangedEventArgs e)
+        async void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)
         {
             var tabs = sender as TabControl;
 

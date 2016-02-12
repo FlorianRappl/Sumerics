@@ -16,7 +16,11 @@
 
         void HandleUnhandledException(Object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Core.LogError(e.Exception);
+            foreach (var logger in Window.Container.All<ILogger>())
+            {
+                logger.Error(e.Exception);
+            }
+
             OutputDialog.Show("Exception occurred", e.Exception.Message);
             e.Handled = true;
         }

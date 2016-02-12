@@ -13,17 +13,39 @@
     {
         #region Fields
 
+        readonly ICommand _create;
+        readonly ICommand _open;
+        readonly Kernel _kernel;
         EditorFileViewModel selectedFile;
 
         #endregion
 
         #region ctor
 
-        public EditorViewModel(IContainer container)
-            : base(container)
+        public EditorViewModel(Kernel kernel)
         {
+            _kernel = kernel;
             Files = new ObservableCollection<EditorFileViewModel>();
-            Files.Add(new EditorFileViewModel(this, container));
+            Files.Add(new EditorFileViewModel(this, kernel.Parser));
+            _create = new RelayCommand(x =>
+            {
+                var newfile = new EditorFileViewModel(this, kernel.Parser);
+                Files.Add(newfile);
+                SelectedFile = newfile;
+            });
+            _open = new RelayCommand(x =>
+            {
+                var dialog = new OpenFileWindow(Container);
+                dialog.Title = "Open file ...";
+                dialog.AddFilter("All files (*.*)", "*.*");
+                dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
+                dialog.ShowDialog();
+
+                if (dialog.Accepted)
+                {
+                    OpenFile(dialog.SelectedFile);
+                }
+            });
         }
 
         #endregion
@@ -71,7 +93,7 @@
                 }
             }
 
-            var tab = new EditorFileViewModel(this, file, Container);
+            var tab = new EditorFileViewModel(this, _kernel.Parser, file);
             Files.Add(tab);
             SelectedFile = tab;
         }
@@ -136,35 +158,12 @@
 
         public ICommand Create
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    var newfile = new EditorFileViewModel(this, Container);
-                    Files.Add(newfile);
-                    SelectedFile = newfile;
-                });
-            }
+            get { return _create; }
         }
 
         public ICommand Open
         {
-            get
-            {
-                return new RelayCommand(x =>
-                {
-                    var dialog = new OpenFileWindow(Container);
-                    dialog.Title = "Open file ...";
-                    dialog.AddFilter("All files (*.*)", "*.*");
-                    dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
-                    dialog.ShowDialog();
-
-                    if (dialog.Accepted)
-                    {
-                        OpenFile(dialog.SelectedFile);
-                    }
-                });
-            }
+            get { return _open; }
         }
 
         #endregion

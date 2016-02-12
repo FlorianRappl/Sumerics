@@ -97,7 +97,7 @@
 
             if (dialog.Accepted)
             {
-                Core.LoadWorkspaceAsync(dialog.SelectedFile);
+                _container.Get<IKernel>().LoadWorkspaceAsync(dialog.SelectedFile);
             }
 
             return null;
@@ -112,7 +112,7 @@
 
             if (dialog.Accepted)
             {
-                Core.SaveWorkspaceAsync(dialog.SelectedFile);
+                _container.Get<IKernel>().SaveWorkspaceAsync(dialog.SelectedFile);
             }
 
             return null;
