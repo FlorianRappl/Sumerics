@@ -7,7 +7,7 @@
     <ProjectGuid>{1109E5EF-0473-46D7-9FF9-B686107EA5B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sumerics.Common</RootNamespace>
+    <RootNamespace>Sumerics</RootNamespace>
     <AssemblyName>Common</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container.cs" />
+    <Compile Include="Components.cs" />
     <Compile Include="ContainerExtensions.cs" />
     <Compile Include="Dialog.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IConsole.cs" />
-    <Compile Include="IContainer.cs" />
+    <Compile Include="IComponents.cs" />
     <Compile Include="IDialogManager.cs" />
     <Compile Include="IKernel.cs" />
     <Compile Include="ILogger.cs" />

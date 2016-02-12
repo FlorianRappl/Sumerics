@@ -2,20 +2,18 @@
 {
     sealed class SumericsApp : IApplication
     {
-        readonly IConsole _console;
-        readonly IVisualizer _visualizer;
-        readonly IKernel _kernel;
-        readonly IDialogManager _dialogs;
-        readonly ITabManager _tabs;
-        readonly ISettings _settings;
+        readonly Components _components;
 
-        public SumericsApp(IConsole console, IVisualizer visualizer, IKernel kernel, IDialogManager dialogs, ITabManager tabs, ISettings settings)
+        public SumericsApp()
         {
-            _console = console;
-            _visualizer = visualizer;
-            _kernel = kernel;
-            _dialogs = dialogs;
-            _tabs = tabs;
+            _components = new Components();
+            _components.Register<IApplication>(this);
+        }
+
+        public SumericsApp With<T>(T instance)
+        {
+            _components.Register<T>(instance);
+            return this;
         }
 
         public void Shutdown()
@@ -25,32 +23,37 @@
 
         public IConsole Console
         {
-            get { return _console; }
+            get { return _components.Get<IConsole>(); }
         }
 
         public IVisualizer Visualizer
         {
-            get { return _visualizer; }
+            get { return _components.Get<IVisualizer>(); }
         }
 
         public IKernel Kernel
         {
-            get { return _kernel; }
+            get { return _components.Get<IKernel>(); }
         }
 
         public ITabManager Tabs
         {
-            get { return _tabs; }
+            get { return _components.Get<ITabManager>(); }
         }
 
         public IDialogManager Dialog
         {
-            get { return _dialogs; }
+            get { return _components.Get<IDialogManager>(); }
         }
 
         public ISettings Settings
         {
-            get { return _settings; }
+            get { return _components.Get<ISettings>(); }
+        }
+
+        public IComponents Components
+        {
+            get { return _components; }
         }
     }
 }

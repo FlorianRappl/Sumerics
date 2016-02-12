@@ -4,11 +4,11 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Container : IContainer
+    public sealed class Components : IComponents
     {
         readonly ServiceContainer _block;
 
-        public Container()
+        public Components()
         {
             _block = new ServiceContainer();
         }

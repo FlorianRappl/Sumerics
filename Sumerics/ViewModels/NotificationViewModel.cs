@@ -4,7 +4,7 @@
     using System.Windows.Media.Imaging;
     using YAMP;
 
-    sealed class NotificationViewModel : BaseViewModel
+    public sealed class NotificationViewModel : BaseViewModel
     {
         public NotificationViewModel(NotificationEventArgs e)
         {

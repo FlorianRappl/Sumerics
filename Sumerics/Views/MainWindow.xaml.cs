@@ -1,19 +1,15 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
-    using Sumerics.Commands;
     using Sumerics.Controls;
-    using Sumerics.Properties;
     using Sumerics.ViewModels;
     using System;
     using System.Collections.Specialized;
+    using System.Linq;
     using System.Diagnostics;
     using System.Threading.Tasks;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using Sumerics.Proxies;
-    using Sumerics.Managers;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -22,9 +18,7 @@
     {
         #region Fields
 
-        readonly IContainer _container;
         readonly MainViewModel _vm;
-        readonly SettingsProxy _settings;
 
 		Boolean _sensorRunning;
 		Boolean _initial;
@@ -33,42 +27,21 @@
 
         #region ctor
 
-        public MainWindow(IContainer container, Kernel kernel)
+        public MainWindow(MainViewModel vm)
 		{
 			_initial = true;
 
             InitializeComponent();
             AllowDrop = true;
 
-			LoadSettings();
-
 			Loaded += MainWindowLoaded;
 			Closing += MainWindowClosing;
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
 
-            _vm = new MainViewModel(container, kernel);
-            _settings = new SettingsProxy(Settings.Default);
-            _settings.Changed += (s, ev) => LoadSettings();
-            _container = container;
+            vm.Container.All<ISettings>().ForEach(settings => settings.Changed += (s, ev) => LoadSettings());
 
-            DataContext = _vm;
-        }
-
-        public CommandFactory CreateCommands()
-        {
-            var factory = new CommandFactory(_container);
-            factory.RegisterCommands();
-            return factory;
-        }
-
-        public IApplication CreateApplication(IKernel kernel)
-        {
-            var console = new ConsoleProxy(MyConsole);
-            var visualizer = new VisualizerProxy(_vm, MyLastPlot);
-            var dialogs = new DialogManager(_container);
-            var tabs = new TabManager(MainTabs);
-            return new SumericsApp(console, visualizer, kernel, dialogs, tabs, _settings);
+            DataContext = _vm = vm;
         }
 
         #endregion
@@ -113,6 +86,7 @@
 
         void MainWindowLoaded(Object sender, RoutedEventArgs e)
 		{
+            LoadSettings();
 			var pers = Properties.Settings.Default;
 
 			if (pers != null && pers.History != null)
@@ -147,15 +121,6 @@
 
         #endregion
 
-        #region Properties
-
-        public IContainer Container
-        {
-            get { return _container; }
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -163,7 +128,9 @@
         /// </summary>
 		void LoadSettings()
 		{
-            if (_settings == null)
+            var settings = _vm.Container.Get<ISettings>();
+
+            if (settings == null)
             {
                 //Set(AccelerometerPlot, true, 30);
                 //Set(GyrometerPlot, true, 30);
@@ -179,7 +146,7 @@
             //Set(InclinometerPlot, settings.Inclinometer, settings.LivePlotHistory);
             //Set(LightPlot, settings.Light, settings.LivePlotHistory);
             //Set(CompassPlot, settings.Compass, settings.LivePlotHistory);
-            MyConsole.ConsoleFontSize = _settings.ConsoleFontSize;
+            MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
 
             //if (Core.IsWindows8)
             //{
@@ -258,12 +225,12 @@
 
 		void OptionsClick(Object sender, RoutedEventArgs e)
 		{
-            _container.Get<IApplication>().Dialog.Open(Dialog.Options);
+            _vm.Container.Get<IApplication>().Dialog.Open(Dialog.Options);
 		}
 
         void AboutClick(Object sender, RoutedEventArgs e)
         {
-            _container.Get<IApplication>().Dialog.Open(Dialog.About);
+            _vm.Container.Get<IApplication>().Dialog.Open(Dialog.About);
 		}
 
         #endregion

@@ -9,14 +9,14 @@
     {
         #region Fields
 
-        readonly IContainer _container;
+        readonly IComponents _container;
         readonly Dictionary<Dialog, Func<Window>> _handlers;
 
         #endregion
 
         #region ctor
 
-        public DialogManager(IContainer container)
+        public DialogManager(IComponents container)
         {
             _container = container;
             _handlers = new Dictionary<Dialog, Func<Window>>();

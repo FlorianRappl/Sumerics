@@ -5,7 +5,7 @@
 
 	public static class StaticHelpers
 	{
-		public static T GetWindow<T>(IContainer container) 
+		public static T GetWindow<T>(IComponents container) 
             where T : Window
 		{
 			foreach (Window window in App.Current.Windows)

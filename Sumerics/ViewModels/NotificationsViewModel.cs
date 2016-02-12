@@ -5,7 +5,7 @@
     using System.Timers;
     using YAMP;
 
-    sealed class NotificationsViewModel : BaseViewModel
+    public sealed class NotificationsViewModel : BaseViewModel
     {
         readonly ObservableCollection<NotificationViewModel> _messages;
         readonly Timer _popupTimer;

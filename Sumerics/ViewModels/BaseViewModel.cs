@@ -5,9 +5,9 @@
 
     public abstract class BaseViewModel : System.ComponentModel.INotifyPropertyChanged
     {
-        readonly IContainer _container;
+        readonly IComponents _container;
 
-        public BaseViewModel(IContainer container)
+        public BaseViewModel(IComponents container)
         {
             _container = container;
         }
@@ -17,7 +17,7 @@
         {
         }
 
-        public IContainer Container
+        public IComponents Container
         {
             get { return _container; }
         }

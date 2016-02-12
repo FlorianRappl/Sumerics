@@ -11,7 +11,7 @@
     /// <summary>
     /// This is the main view model - the central point!
     /// </summary>
-    sealed class MainViewModel : BaseViewModel
+    public sealed class MainViewModel : BaseViewModel
     {
         #region Fields
 
@@ -34,7 +34,7 @@
 
         #region ctor
 
-        public MainViewModel(IContainer container, Kernel kernel)
+        public MainViewModel(IComponents container, Kernel kernel)
             : base(container)
         {
             _kernel = kernel;
@@ -65,7 +65,7 @@
             {
                 var qrvm = x as QueryResultViewModel;
                 var query = qrvm.Query;
-                var newQuery = Container.Get<CommandFactory>().TryCommand(query);
+                var newQuery = Container.Get<ICommandFactory>().TryCommand(query);
 
                 if (newQuery != null)
                 {

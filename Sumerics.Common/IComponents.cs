@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IContainer
+    public interface IComponents
     {
         Object Get(Type type);
 

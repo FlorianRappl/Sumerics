@@ -15,5 +15,7 @@
         IDialogManager Dialog { get; }
 
         ISettings Settings { get; }
+
+        IComponents Components { get; }
     }
 }

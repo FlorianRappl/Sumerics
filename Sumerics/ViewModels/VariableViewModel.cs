@@ -4,7 +4,7 @@
     using System.Windows.Media.Imaging;
     using YAMP;
 
-    sealed class VariableViewModel : BaseViewModel
+    public sealed class VariableViewModel : BaseViewModel
 	{
 		#region Fields
 
@@ -27,13 +27,13 @@
 
 		#region Properties
 
-		public string Name
+		public String Name
         {
             get;
             private set;
         }
 
-        public string Type
+        public String Type
         {
             get { return _type; }
             set
@@ -53,7 +53,7 @@
             }
         }
 
-        public string ShortInfo
+        public String ShortInfo
         {
             get { return _shortInfo; }
             set
@@ -81,37 +81,37 @@
 					case "Matrix":
 						{
 							var m = value as MatrixValue;
-							ShortInfo = string.Format("[{0}, {1}]", m.DimensionY, m.DimensionX);
+                            ShortInfo = String.Format("[{0}, {1}]", m.DimensionY, m.DimensionX);
 						}
 						break;
 					case "String":
 						{
 							var s = value as StringValue;
-							ShortInfo = string.Format("[{0}, 1]", s.Length);
+                            ShortInfo = String.Format("[{0}, 1]", s.Length);
 						}
 						break;
 					case "Arguments":
 						{
 							var a = value as ArgumentsValue;
-							ShortInfo = string.Format("[{0}, 1]", a.Length);
+                            ShortInfo = String.Format("[{0}, 1]", a.Length);
 						}
 						break;
 					case "PolarPlot":
 						{
 							var p = value as PolarPlotValue;
-							ShortInfo = string.Format("[α: {0}]", p.Count);
+                            ShortInfo = String.Format("[α: {0}]", p.Count);
 						}
 						break;
 					case "Plot2D":
 						{
 							var p = value as Plot2DValue;
-							ShortInfo = string.Format("[2D: {0}]", p.Count);
+                            ShortInfo = String.Format("[2D: {0}]", p.Count);
 						}
 						break;
 					case "Plot3D":
 						{
 							var p3 = value as Plot3DValue;
-							ShortInfo = string.Format("[3D: {0}", p3.Count);
+							ShortInfo = String.Format("[3D: {0}", p3.Count);
 						}
 						break;
 				}

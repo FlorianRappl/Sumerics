@@ -6,18 +6,18 @@
 
     public static class ContainerExtensions
     {
-        public static T Get<T>(this IContainer container)
+        public static T Get<T>(this IComponents container)
             where T : class
         {
             return container.Get(typeof(T)) as T;
         }
 
-        public static IEnumerable<T> All<T>(this IContainer container)
+        public static IEnumerable<T> All<T>(this IComponents container)
         {
             return container.All(typeof(T)).OfType<T>();
         }
 
-        public static Object Create(this IContainer container, Type type)
+        public static Object Create(this IComponents container, Type type)
         {
             var ctors = type.GetConstructors();
 
@@ -43,7 +43,7 @@
             return null;
         }
 
-        public static T Create<T>(this IContainer container)
+        public static T Create<T>(this IComponents container)
             where T : class
         {
             return container.Create(typeof(T)) as T;

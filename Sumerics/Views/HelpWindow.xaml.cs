@@ -34,7 +34,7 @@
 
 		#region ctor
 
-		public HelpWindow(IContainer container)
+		public HelpWindow(IComponents container)
         {
 			_results = new ObservableCollection<HelpSection>();
             _commands = container.Get<CommandFactory>();

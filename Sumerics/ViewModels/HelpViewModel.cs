@@ -7,7 +7,7 @@
     using System.Windows.Media.Imaging;
     using YAMP.Help;
 
-    sealed class HelpViewModel : BaseViewModel
+    public sealed class HelpViewModel : BaseViewModel
     {
         #region Fields
 
@@ -21,7 +21,7 @@
 
         #region ctor
 
-        public HelpViewModel(HelpSection entry, IContainer container)
+        public HelpViewModel(HelpSection entry, IComponents container)
             : base(container)
 		{
 			_help = entry;
