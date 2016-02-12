@@ -46,6 +46,7 @@
     <Compile Include="Container.cs" />
     <Compile Include="ContainerExtensions.cs" />
     <Compile Include="Dialog.cs" />
+    <Compile Include="GeneralExtensions.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IConsole.cs" />
     <Compile Include="IContainer.cs" />

@@ -156,25 +156,6 @@
         #region Methods
 
         /// <summary>
-        /// Runs a query with the given query string.
-        /// </summary>
-        /// <param name="query">The query string to evaluate.</param>
-		public void RunQuery(String query)
-		{
-			MyConsole.InsertAndRun(query);
-		}
-
-        /// <summary>
-        /// Runs a query with the given query string and console message.
-        /// </summary>
-        /// <param name="query">The query string to evaluate.</param>
-        /// <param name="message">The message to display as a comment.</param>
-        public void RunQuery(String query, String message)
-        {
-            MyConsole.InsertAndRun(query, message);
-        }
-
-        /// <summary>
         /// (Re-)Loads the settings.
         /// </summary>
 		public void LoadSettings()

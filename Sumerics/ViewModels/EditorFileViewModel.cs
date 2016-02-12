@@ -14,15 +14,16 @@
     {
         #region Fields
 
+        readonly Parser _parser;
+        readonly ParseContext _debugContext;
+        readonly EditorViewModel _parent;
+
         String _path;
         Boolean _awaiting;
         Boolean _changed;
-        EditorViewModel _parent;
         EditorControl _ed;
         String _originalText;
         QueryResultViewModel _currentExecution;
-        Parser _parser;
-        ParseContext _debugContext;
 
         #endregion
 
@@ -143,7 +144,7 @@
             if (_currentExecution == null || _currentExecution.Running)
             {
                 _awaiting = true;
-                App.Window.RunQuery(Text, "Evaluating " + FileName);
+                _parent.Console.Execute(Text, "Evaluating " + FileName);
                 _awaiting = false;
             }
         }
@@ -209,17 +210,17 @@
             }
         }
 
-        public bool IsSaveAs
+        public Boolean IsSaveAs
         {
-            get { return string.IsNullOrEmpty(_path); }
+            get { return String.IsNullOrEmpty(_path); }
         }
 
-        public string FilePath
+        public String FilePath
         {
             get { return _path; }
         }
 
-        public bool Changed
+        public Boolean Changed
         {
             get { return _changed; }
             set
@@ -227,7 +228,9 @@
                 if (value)
                 {
                     if (_originalText == _ed.Text)
+                    {
                         value = false;
+                    }
                 }
 
                 _changed = value;
@@ -235,18 +238,20 @@
             }
         }
 
-        public string Text
+        public String Text
         {
             get { return _ed.Text; }
             set { _ed.Text = value; _originalText = value; }
         }
 
-        public string FileName
+        public String FileName
         {
             get 
             {
                 if (IsSaveAs)
+                {
                     return "untitled";
+                }
 
                 return Path.GetFileName(_path); 
             }
@@ -256,7 +261,7 @@
 
         #region Methods
 
-        public string TransformMathML(string query)
+        public string TransformMathML(String query)
         {
             return MathMLParser.Parse(query);
         }
@@ -287,13 +292,13 @@
             }
         }
 
-        void SaveText(string path)
+        void SaveText(String path)
         {
             try
             {
                 File.WriteAllText(path, Text);
                 Changed = false;
-                this._path = path;
+                _path = path;
                 RaisePropertyChanged("FilePath");
                 RaisePropertyChanged("FileName");
             }

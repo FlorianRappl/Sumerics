@@ -36,7 +36,7 @@
 
         public void OpenConsole()
         {
-            var window = new ConsoleEnterWindow();
+            var window = Container.Create<ConsoleEnterWindow>();
             window.ShowDialog();
         }
 

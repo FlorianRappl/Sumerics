@@ -1,6 +1,7 @@
 ﻿namespace Sumerics
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows.Media.Imaging;
     using YAMP;
 
@@ -23,7 +24,6 @@
         static readonly BitmapImage _imgLogicLd = new BitmapImage(new Uri(@"..\Resources\logic.png", UriKind.Relative));
         static readonly BitmapImage _imgRandomLd = new BitmapImage(new Uri(@"..\Resources\random.png", UriKind.Relative));
         static readonly BitmapImage _imgUiLd = new BitmapImage(new Uri(@"..\Resources\ui.png", UriKind.Relative));
-
         static readonly BitmapImage _imgConversionHd = new BitmapImage(new Uri(@"..\Resources\conversion_hd.png", UriKind.Relative));
         static readonly BitmapImage _imgConstantHd = new BitmapImage(new Uri(@"..\Resources\constant_hd.png", UriKind.Relative));
         static readonly BitmapImage _imgFunctionHd = new BitmapImage(new Uri(@"..\Resources\function_hd.png", UriKind.Relative));
@@ -36,25 +36,37 @@
         static readonly BitmapImage _imgRandomHd = new BitmapImage(new Uri(@"..\Resources\random_hd.png", UriKind.Relative));
         static readonly BitmapImage _imgUiHd = new BitmapImage(new Uri(@"..\Resources\ui_hd.png", UriKind.Relative));
 
-        static readonly BitmapImage _imgScalar = new BitmapImage(new Uri(@"..\Resources\scalar.png", UriKind.Relative));
-        static readonly BitmapImage _imgMatrix = new BitmapImage(new Uri(@"..\Resources\matrix.png", UriKind.Relative));
-        static readonly BitmapImage _imgString = new BitmapImage(new Uri(@"..\Resources\string.png", UriKind.Relative));
-        static readonly BitmapImage _imgUnknown = new BitmapImage(new Uri(@"..\Resources\unknown.png", UriKind.Relative));
+        static readonly Dictionary<String, ImageEntry> _images = new Dictionary<String, ImageEntry>
+        {
+            { "Sensor", new ImageEntry { Low = _imgSensorLd, High = _imgSensorHd } },
+            { "System", new ImageEntry { Low = _imgSystemLd, High = _imgSystemHd } },
+            { "Plot", new ImageEntry { Low = _imgPlotLd, High = _imgPlotHd } },
+            { "Constant", new ImageEntry { Low = _imgConstantLd, High = _imgConstantHd } },
+            { "Random", new ImageEntry { Low = _imgRandomLd, High = _imgRandomHd } },
+            { "Statistic", new ImageEntry { Low = _imgStatisticLd, High = _imgStatisticHd } },
+            { "Trigonometric", new ImageEntry { Low = _imgTrigLd, High = _imgTrigHd } },
+            { "Logic", new ImageEntry { Low = _imgLogicLd, High = _imgLogicHd } },
+            { "UI", new ImageEntry { Low = _imgUiLd, High = _imgUiHd } },
+            { "Conversion", new ImageEntry { Low = _imgConversionLd, High = _imgConversionHd } }
+        };
 
-        static readonly BitmapImage _imgMessage = new BitmapImage(new Uri(@"..\Icons\message.png", UriKind.Relative));
-        static readonly BitmapImage _imgInformation = new BitmapImage(new Uri(@"..\Icons\information.png", UriKind.Relative));
-        static readonly BitmapImage _imgSuccess = new BitmapImage(new Uri(@"..\Icons\success.png", UriKind.Relative));
-        static readonly BitmapImage _imgFailure = new BitmapImage(new Uri(@"..\Icons\failure.png", UriKind.Relative));
+        static readonly Dictionary<NotificationType, BitmapImage> _notifications = new Dictionary<NotificationType, BitmapImage>
+        {
+            { NotificationType.Failure, new BitmapImage(new Uri(@"..\Icons\failure.png", UriKind.Relative)) },
+            { NotificationType.Information, new BitmapImage(new Uri(@"..\Icons\information.png", UriKind.Relative)) },
+            { NotificationType.Message, new BitmapImage(new Uri(@"..\Icons\message.png", UriKind.Relative)) },
+            { NotificationType.Success, new BitmapImage(new Uri(@"..\Icons\success.png", UriKind.Relative)) }
+        };
 
-        static readonly BitmapImage _imgFolderIcon = new BitmapImage(new Uri(@"Icons\folder.png", UriKind.Relative));
-        static readonly BitmapImage _imgFileIcon = new BitmapImage(new Uri(@"Icons\file.png", UriKind.Relative));
-        static readonly BitmapImage _imgHomeIcon = new BitmapImage(new Uri(@"Icons\home.png", UriKind.Relative));
-        static readonly BitmapImage _imgHeartIcon = new BitmapImage(new Uri(@"Icons\heart.png", UriKind.Relative));
-
-        static readonly BitmapImage _imgKeywordAc = new BitmapImage(new Uri(@"..\Resources\keyword_ac.png", UriKind.Relative));
-        static readonly BitmapImage _imgVariableAc = new BitmapImage(new Uri(@"..\Resources\variable_ac.png", UriKind.Relative));
-        static readonly BitmapImage _imgFunctionAc = new BitmapImage(new Uri(@"..\Resources\function_ac.png", UriKind.Relative));
-        static readonly BitmapImage _imgConstantAc = new BitmapImage(new Uri(@"..\Resources\constant_ac.png", UriKind.Relative));
+        static readonly Dictionary<Type, BitmapImage> _variables = new Dictionary<Type, BitmapImage>
+        {
+            { typeof(PlotValue), new BitmapImage(new Uri(@"..\Resources\plot.png", UriKind.Relative)) },
+            { typeof(MatrixValue), new BitmapImage(new Uri(@"..\Resources\matrix.png", UriKind.Relative)) },
+            { typeof(ScalarValue), new BitmapImage(new Uri(@"..\Resources\scalar.png", UriKind.Relative)) },
+            { typeof(StringValue), new BitmapImage(new Uri(@"..\Resources\string.png", UriKind.Relative)) },
+            { typeof(FunctionValue), new BitmapImage(new Uri(@"..\Resources\function.png", UriKind.Relative)) },
+            { typeof(Value), new BitmapImage(new Uri(@"..\Resources\unknown.png", UriKind.Relative)) }
+        };
 
         #endregion
 
@@ -62,136 +74,82 @@
 
         public static BitmapImage GetLowImage(String category)
         {
-            switch (category)
+            var entry = default(ImageEntry);
+
+            if (_images.TryGetValue(category, out entry))
             {
-                case "Sensor":
-                    return _imgSensorLd;
-                case "System":
-                    return _imgSystemLd;
-                case "Plot":
-                    return _imgPlotLd;
-                case "Constant":
-                    return _imgConstantLd;
-                case "Random":
-                    return _imgRandomLd;
-                case "Statistic":
-                    return _imgStatisticLd;
-                case "Trigonometric":
-                    return _imgTrigLd;
-                case "Logic":
-                    return _imgLogicLd;
-                case "UI":
-                    return _imgUiLd;
-                case "Conversion":
-                    return _imgConversionLd;
-                default:
-                    return _imgFunctionLd;
+                return entry.Low;
             }
+
+            return _imgFunctionLd;
         }
 
         public static BitmapImage GetHighImage(String category)
         {
-            switch (category)
+            var entry = default(ImageEntry);
+
+            if (_images.TryGetValue(category, out entry))
             {
-                case "Sensor":
-                    return _imgSensorHd;
-                case "System":
-                    return _imgSystemHd;
-                case "Plot":
-                    return _imgPlotHd;
-                case "Constant":
-                    return _imgConstantHd;
-                case "Random":
-                    return _imgRandomHd;
-                case "Statistic":
-                    return _imgStatisticHd;
-                case "Trigonometric":
-                    return _imgTrigHd;
-                case "Logic":
-                    return _imgLogicHd;
-                case "UI":
-                    return _imgUiHd;
-                case "Conversion":
-                    return _imgConversionHd;
-                default:
-                    return _imgFunctionHd;
+                return entry.High;
             }
+
+            return _imgFunctionHd;
         }
 
         public static BitmapImage GetVariableImage(Value value)
         {
-            if (value is PlotValue)
-                return _imgPlotLd;
-            else if (value is MatrixValue)
-                return _imgMatrix;
-            else if (value is ScalarValue)
-                return _imgScalar;
-            else if (value is StringValue)
-                return _imgString;
-            else if (value is FunctionValue)
-                return _imgFunctionLd;
+            var type = value.GetType();
+            var closestMatch = default(BitmapImage);
 
-            return _imgUnknown;
+            foreach (var pair in _variables)
+            {
+                if (type == pair.Key)
+                {
+                    return pair.Value;
+                }
+                else if (type.IsSubclassOf(pair.Key))
+                {
+                    closestMatch = pair.Value;
+                }
+            }
+
+            return closestMatch;
         }
 
         public static BitmapImage GetMessageImage(NotificationType type)
         {
-            switch (type)
-            {
-                case NotificationType.Failure:
-                    return _imgFailure;
-                case NotificationType.Information:
-                    return _imgInformation;
-                case NotificationType.Success:
-                    return _imgSuccess;
-                default:
-                    return _imgMessage;
-            }
+            return _notifications[type];
         }
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// Gets the icon for a file.
-        /// </summary>
-        public static BitmapImage FileIcon { get { return _imgFileIcon; } }
+        public static readonly BitmapImage FolderIcon = new BitmapImage(new Uri(@"Icons\folder.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the image for the home.
-        /// </summary>
-        public static BitmapImage HomeIcon { get { return _imgHomeIcon; } }
+        public static readonly BitmapImage FileIcon = new BitmapImage(new Uri(@"Icons\file.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the image for a folder.
-        /// </summary>
-        public static BitmapImage FolderIcon { get { return _imgFolderIcon; } }
+        public static readonly BitmapImage HomeIcon = new BitmapImage(new Uri(@"Icons\home.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the image for a heart (favorite).
-        /// </summary>
-        public static BitmapImage HeartIcon { get { return _imgHeartIcon; } }
+        public static readonly BitmapImage HeartIcon = new BitmapImage(new Uri(@"Icons\heart.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the autocomplete icon for a keyword.
-        /// </summary>
-        public static BitmapImage KeywordIcon { get { return _imgKeywordAc; } }
+        public static readonly BitmapImage KeywordIcon = new BitmapImage(new Uri(@"..\Resources\keyword_ac.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the autocomplete icon for a variable.
-        /// </summary>
-        public static BitmapImage VariableIcon { get { return _imgVariableAc; } }
+        public static readonly BitmapImage VariableIcon = new BitmapImage(new Uri(@"..\Resources\variable_ac.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the autocomplete icon for a constant.
-        /// </summary>
-        public static BitmapImage ConstantIcon { get { return _imgConstantAc; } }
+        public static readonly BitmapImage FunctionIcon = new BitmapImage(new Uri(@"..\Resources\function_ac.png", UriKind.Relative));
 
-        /// <summary>
-        /// Gets the autocomplete icon for a function.
-        /// </summary>
-        public static BitmapImage FunctionIcon { get { return _imgFunctionAc; } }
+        public static readonly BitmapImage ConstantIcon = new BitmapImage(new Uri(@"..\Resources\constant_ac.png", UriKind.Relative));
+
+        #endregion
+
+        #region Struct
+
+        struct ImageEntry
+        {
+            public BitmapImage Low;
+            public BitmapImage High;
+        }
 
         #endregion
     }

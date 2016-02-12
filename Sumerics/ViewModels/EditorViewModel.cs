@@ -13,6 +13,7 @@
     {
         #region Fields
 
+        readonly IConsole _console;
         readonly ICommand _create;
         readonly ICommand _open;
         readonly Kernel _kernel;
@@ -22,9 +23,10 @@
 
         #region ctor
 
-        public EditorViewModel(Kernel kernel)
+        public EditorViewModel(Kernel kernel, IConsole console)
         {
             _kernel = kernel;
+            _console = console;
             Files = new ObservableCollection<EditorFileViewModel>();
             Files.Add(new EditorFileViewModel(this, kernel.Parser));
             _create = new RelayCommand(x =>
@@ -51,6 +53,11 @@
         #endregion
 
         #region Properties
+
+        public IConsole Console
+        {
+            get { return _console; }
+        }
 
         public ObservableCollection<EditorFileViewModel> Files
         {
