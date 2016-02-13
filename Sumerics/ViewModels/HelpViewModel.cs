@@ -1,6 +1,5 @@
 ﻿namespace Sumerics.ViewModels
 {
-    using Sumerics.Views;
     using System;
     using System.Text.RegularExpressions;
     using System.Windows.Input;
@@ -21,16 +20,11 @@
 
         #region ctor
 
-        public HelpViewModel(HelpSection entry, IComponents container)
-            : base(container)
+        public HelpViewModel(HelpSection entry, IDialogManager dialogs)
 		{
 			_help = entry;
             _icon = Icons.GetLowImage(entry.Topic);
-            _show = new RelayCommand(x =>
-            {
-                var hw = StaticHelpers.GetWindow<HelpWindow>(Container);
-                hw.Topic = _help;
-            });
+            _show = new RelayCommand(x => dialogs.Open(Dialog.Help, _help));
 		}
 
         #endregion

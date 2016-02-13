@@ -99,7 +99,8 @@
                 {
                     if (section.Name.Contains(functionFilter))
                     {
-                        Functions.Add(new HelpViewModel(section, Container));
+                        var dialogs = Container.Get<IDialogManager>();
+                        Functions.Add(new HelpViewModel(section, dialogs));
                     }
                 }
 
