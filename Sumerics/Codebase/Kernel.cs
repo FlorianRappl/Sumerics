@@ -1,7 +1,6 @@
 ﻿namespace Sumerics
 {
     using Sumerics.ViewModels;
-    using Sumerics.Views;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -38,16 +37,6 @@
 
             LoadPlugins();
             _documentation = Documentation.Create(Context);
-
-            _parser.UserInputRequired += (sender, e) =>
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    var input = new InputDialog { UserMessage = e.Message };
-                    input.Closed += (s, ev) => e.Continue(input.UserInput);
-                    input.Show();
-                });
-            };
 
             Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 

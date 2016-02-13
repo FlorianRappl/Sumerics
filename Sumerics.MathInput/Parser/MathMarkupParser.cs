@@ -1,11 +1,11 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.MathInput.Parser
 {
     using System;
     using System.Collections.Generic;
     using System.Text;
     using System.Xml.Linq;
 
-    public sealed class MathMLParser
+    public sealed class MathMarkupParser
     {
         #region Fields
 
@@ -16,13 +16,7 @@
 
         #region ctor
 
-        public static String Parse(String xml)
-        {
-            var parser = new MathMLParser(xml);
-            return parser.Execute();
-        }
-
-        MathMLParser(String xml)
+        public MathMarkupParser(String xml)
         {
             _query = new StringBuilder();
             _xdoc = XDocument.Parse(xml);
@@ -32,7 +26,7 @@
 
         #region Parse
 
-        String Execute()
+        public String Execute()
         {
             Parse(_xdoc.Root.Elements());
             return _query.ToString();

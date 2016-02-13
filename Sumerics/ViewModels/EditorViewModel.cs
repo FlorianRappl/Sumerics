@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Controls;
+    using Sumerics.MathInput;
     using Sumerics.Views;
     using System;
     using System.Collections.Generic;
@@ -10,26 +11,29 @@
     /// <summary>
     /// ViewModel for the editor in general.
     /// </summary>
-    sealed class EditorViewModel : BaseViewModel
+    public sealed class EditorViewModel : BaseViewModel
     {
         #region Fields
 
+        readonly Kernel _kernel;
         readonly IConsole _console;
+        readonly IMathInput _service;
         readonly ICommand _create;
         readonly ICommand _open;
-        readonly Kernel _kernel;
+        readonly ObservableCollection<EditorFileViewModel> _files;
         EditorFileViewModel selectedFile;
 
         #endregion
 
         #region ctor
 
-        public EditorViewModel(Kernel kernel, IConsole console)
+        public EditorViewModel(Kernel kernel, IConsole console, IMathInput service)
         {
             _kernel = kernel;
             _console = console;
-            Files = new ObservableCollection<EditorFileViewModel>();
-            Files.Add(new EditorFileViewModel(this, kernel.Parser));
+            _service = service;
+            _files = new ObservableCollection<EditorFileViewModel>();
+            _files.Add(new EditorFileViewModel(this, kernel.Parser));
             _create = new RelayCommand(x =>
             {
                 var newfile = new EditorFileViewModel(this, kernel.Parser);
@@ -60,10 +64,14 @@
             get { return _console; }
         }
 
+        public IMathInput Service
+        {
+            get { return _service; }
+        }
+
         public ObservableCollection<EditorFileViewModel> Files
         {
-            get;
-            set;
+            get { return _files; }
         }
 
         public static readonly List<AutocompleteItem> BasicItems = new List<AutocompleteItem>();

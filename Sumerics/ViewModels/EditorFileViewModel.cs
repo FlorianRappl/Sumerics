@@ -11,13 +11,15 @@
     /// <summary>
     /// ViewModel for one tab in the editor, i.e. one file.
     /// </summary>
-    sealed class EditorFileViewModel : BaseViewModel, IScriptFileModel
+    public sealed class EditorFileViewModel : BaseViewModel, IScriptFileModel
     {
         #region Fields
 
         readonly Parser _parser;
         readonly ParseContext _debugContext;
         readonly EditorViewModel _parent;
+        readonly List<AutocompleteItem> _variableItems;
+        readonly ObservableCollection<AutocompleteItem> _items;
 
         String _path;
         Boolean _awaiting;
@@ -37,8 +39,8 @@
             _debugContext = new ParseContext(_parser.Context);
 
             _parent = parent;
-            Items = new ObservableCollection<AutocompleteItem>();
-            VariableItems = new List<AutocompleteItem>();
+            _items = new ObservableCollection<AutocompleteItem>();
+            _variableItems = new List<AutocompleteItem>();
 
             foreach (var item in EditorViewModel.BasicItems)
             {
@@ -188,22 +190,17 @@
 
         public List<AutocompleteItem> VariableItems
         {
-            get;
-            set;
+            get { return _variableItems; }
         }
 
         public ObservableCollection<AutocompleteItem> Items
         {
-            get;
-            private set;
+            get { return _items; }
         }
 
         public EditorControl Control
         {
-            get
-            {
-                return _ed;
-            }
+            get { return _ed; }
             set
             {
                 _ed = value;
@@ -226,12 +223,9 @@
             get { return _changed; }
             set
             {
-                if (value)
+                if (value && _originalText == _ed.Text)
                 {
-                    if (_originalText == _ed.Text)
-                    {
-                        value = false;
-                    }
+                    value = false;
                 }
 
                 _changed = value;
@@ -262,9 +256,9 @@
 
         #region Methods
 
-        public string TransformMathML(String query)
+        public String TransformMathML(String query)
         {
-            return MathMLParser.Parse(query);
+            return _parent.Service.ConvertToYamp(query);
         }
 
         void ReadText()

@@ -2,11 +2,12 @@
 {
     using MahApps.Metro.Controls;
     using Sumerics.Controls;
+    using Sumerics.MathInput;
     using Sumerics.ViewModels;
     using System;
     using System.Collections.Specialized;
-    using System.Linq;
     using System.Diagnostics;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -105,17 +106,23 @@
 
         void MathInputReceived(Object sender, String result)
         {
-            Debug.WriteLine(result);
-            var query = MathMLParser.Parse(result);
-            Debug.WriteLine(query);
+            var service = _vm.Container.Get<IMathInput>();
 
-            if (Properties.Settings.Default != null && Properties.Settings.Default.AutoEvaluateMIP)
+            if (service != null)
             {
-                MyConsole.InsertAndRun(query);
-            }
-            else
-            {
-                MyConsole.Input = query;
+                var settings = _vm.Container.Get<ISettings>();
+                Debug.WriteLine(result);
+                var query = service.ConvertToYamp(result);
+                Debug.WriteLine(query);
+
+                if (settings != null && settings.AutoEvaluate)
+                {
+                    MyConsole.InsertAndRun(query);
+                }
+                else
+                {
+                    MyConsole.Input = query;
+                }
             }
         }
 

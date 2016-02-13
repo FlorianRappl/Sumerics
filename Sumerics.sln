@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Common", "Sumerics
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Api", "Sumerics.Api\Sumerics.Api.csproj", "{701B551E-FE50-4333-A35F-86978B4175EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.MathInput", "Sumerics.MathInput\Sumerics.MathInput.csproj", "{42F72D64-3415-4424-A8C4-9FB906E889CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppUp|Any CPU = AppUp|Any CPU
@@ -192,6 +194,18 @@ Global
 		{701B551E-FE50-4333-A35F-86978B4175EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{701B551E-FE50-4333-A35F-86978B4175EB}.Release|x64.ActiveCfg = Release|Any CPU
 		{701B551E-FE50-4333-A35F-86978B4175EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.AppUp|Any CPU.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.AppUp|Any CPU.Build.0 = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.AppUp|x64.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.AppUp|x86.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|x64.ActiveCfg = Release|Any CPU
+		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

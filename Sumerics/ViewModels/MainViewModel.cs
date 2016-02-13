@@ -2,6 +2,8 @@
 {
     using Sumerics.Commands;
     using Sumerics.Controls;
+    using Sumerics.MathInput;
+    using Sumerics.Views;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -49,6 +51,7 @@
             _kernel.Context.OnVariableCreated += VariableCreated;
             _kernel.Context.OnVariableRemoved += VariableRemoved;
             _kernel.Context.OnNotificationReceived += _notifications.Received;
+            _kernel.Context.OnUserInputRequired += UserInput;
 
 			FunctionFilter = String.Empty;
 			VariableFilter = String.Empty;
@@ -352,6 +355,17 @@
                         break;
                     }
                 }
+            });
+        }
+
+        void UserInput(Object sender, UserInputEventArgs e)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var service = Container.Get<IMathInput>();
+                var input = new InputDialog(service) { UserMessage = e.Message };
+                input.Closed += (s, ev) => e.Continue(input.UserInput);
+                input.Show();
             });
         }
 

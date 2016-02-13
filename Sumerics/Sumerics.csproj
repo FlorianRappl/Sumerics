@@ -190,7 +190,6 @@
     <Compile Include="Proxies\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />
-    <Compile Include="Codebase\MathMLParser.cs" />
     <Compile Include="Codebase\StaticHelpers.cs" />
     <Compile Include="Views\ConsoleEnterWindow.xaml.cs">
       <DependentUpon>ConsoleEnterWindow.xaml</DependentUpon>
@@ -421,6 +420,10 @@
     <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
       <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
       <Name>Sumerics.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.MathInput\Sumerics.MathInput.csproj">
+      <Project>{42f72d64-3415-4424-a8c4-9fb906e889cc}</Project>
+      <Name>Sumerics.MathInput</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sumerics.Scripts\Sumerics.Scripts.csproj">
       <Project>{be7752ef-094a-4ae3-836f-4e8689d51c2f}</Project>

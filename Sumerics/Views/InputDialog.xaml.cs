@@ -2,7 +2,9 @@
 {
     using MahApps.Metro.Controls;
     using Sumerics.Controls;
+    using Sumerics.MathInput;
     using System;
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Input;
 
@@ -13,18 +15,29 @@
     {
         #region Fields
 
-        String input;
-        MathInputPanelWrapper mipw;
+        readonly MathInputPanelWrapper _panel;
+        readonly IMathInput _service;
 
         #endregion
 
         #region ctor
 
-        public InputDialog()
+        public InputDialog(IMathInput service)
         {
-            input = String.Empty;
             InitializeComponent();
-            SetupMathInput();
+            UserInput = String.Empty;
+            _panel = new MathInputPanelWrapper("Draw input");
+            _service = service;
+
+            if (_panel.IsAvailable)
+            {
+                _panel.OnInsertPressed += QueryInsertPressed;
+            }
+            else
+            {
+                DrawInput.Visibility = System.Windows.Visibility.Collapsed;
+            }
+
             Input.Focus();
             Closing += IsClosing;
         }
@@ -33,13 +46,13 @@
 
         #region Properties
 
-        public string UserInput
+        public String UserInput
         {
-            get { return input; }
-            set { input = value; }
+            get;
+            set;
         }
 
-        public string UserMessage
+        public String UserMessage
         {
             get { return Message.Text; }
             set { Message.Text = value; }
@@ -49,47 +62,36 @@
 
         #region Methods
 
-        void SetupMathInput()
+        void QueryInsertPressed(Object sender, String query)
         {
-            mipw = new MathInputPanelWrapper("Draw input");
-
-            if (mipw.IsAvailable)
-                mipw.OnInsertPressed += QueryInsertPressed;
-            else
-                DrawInput.Visibility = System.Windows.Visibility.Collapsed;
+            Input.Text = _service.ConvertToYamp(query);
         }
 
-        void QueryInsertPressed(object sender, string query)
+        public static String Show(IMathInput service, String message)
         {
-            Input.Text = MathMLParser.Parse(query);
-        }
-
-        public static string Show(string message)
-        {
-            var inp = new InputDialog();
-            inp.Message.Text = string.IsNullOrEmpty(message) ? "Your input has been requested:" : message;
+            var inp = new InputDialog(service);
+            inp.UserMessage = String.IsNullOrEmpty(message) ? "Your input has been requested:" : message;
             inp.ShowDialog();
             return inp.UserInput;
         }
 
-        void CloseClick(object sender, RoutedEventArgs e)
+        void CloseClick(Object sender, RoutedEventArgs e)
         {
-            input = Input.Text;
+            UserInput = Input.Text;
             Close();
         }
 
-        void DrawClick(object sender, RoutedEventArgs e)
+        void DrawClick(Object sender, RoutedEventArgs e)
         {
-            mipw.Open();
+            _panel.Open();
         }
 
-        void IsClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        void IsClosing(Object sender, CancelEventArgs e)
         {
-            mipw.Close();
-            mipw = null;
+            _panel.Close();
         }
 
-        void TextBoxEnter(object sender, KeyEventArgs e)
+        void TextBoxEnter(Object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && e.KeyboardDevice.Modifiers == ModifierKeys.None)
             {
@@ -97,7 +99,9 @@
                 e.Handled = true;
             }
             else if (e.Key == Key.Escape)
+            {
                 Close();
+            }
         }
 
         #endregion

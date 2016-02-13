@@ -13,11 +13,10 @@
     {
         readonly EditorViewModel _vm;
 
-        public EditorWindow(Kernel kernel, IConsole console)
+        public EditorWindow(EditorViewModel vm)
         {
-            _vm = new EditorViewModel(kernel, console);
             InitializeComponent();
-            DataContext = _vm;
+            DataContext = _vm = vm;
             Closing += (s, ev) => ev.Cancel = _vm.CloseAll();
         }
 

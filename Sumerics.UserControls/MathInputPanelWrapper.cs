@@ -1,28 +1,24 @@
-﻿using micautLib;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using micautLib;
+    using System;
+    using System.Diagnostics;
+
     public class MathInputPanelWrapper
     {
-        MathInputControl mip;
+        readonly MathInputControl _panel;
 
-        public event EventHandler<string> OnInsertPressed;
+        public event EventHandler<String> OnInsertPressed;
 
-        public MathInputPanelWrapper(string caption = "Draw expression")
+        public MathInputPanelWrapper(String caption = "Draw expression")
         {
             try
             {
-                mip = new MathInputControl();
-                mip.SetCaptionText(caption);
-                mip.EnableExtendedButtons(true);
-                mip.Insert += InsertMathInputPanel;
-                mip.Close += Close;
+                _panel = new MathInputControl();
+                _panel.SetCaptionText(caption);
+                _panel.EnableExtendedButtons(true);
+                _panel.Insert += InsertMathInputPanel;
+                _panel.Close += Close;
                 IsAvailable = true;
             }
             catch(Exception ex)
@@ -33,7 +29,7 @@ namespace Sumerics.Controls
             }
         }
 
-        public bool IsAvailable
+        public Boolean IsAvailable
         {
             get;
             private set;
@@ -41,22 +37,28 @@ namespace Sumerics.Controls
 
         public void Open()
         {
-            if(IsAvailable)
-                mip.Show();
+            if (IsAvailable)
+            {
+                _panel.Show();
+            }
         }
 
         public void Close()
         {
-            if(IsAvailable)
-                mip.Hide();
+            if (IsAvailable)
+            {
+                _panel.Hide();
+            }
         }
 
-        void InsertMathInputPanel(string query)
+        void InsertMathInputPanel(String query)
         {
-            mip.Clear();
+            _panel.Clear();
 
             if (OnInsertPressed != null)
+            {
                 OnInsertPressed(this, query);
+            }
         }
     }
 }

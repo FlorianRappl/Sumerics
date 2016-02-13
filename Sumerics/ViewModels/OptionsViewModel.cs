@@ -21,7 +21,7 @@
 
 		#region ctor
 
-		public OptionsViewModel(ISettings settings)
+		public OptionsViewModel(ISettings settings, Action<String> loadEditor)
 		{
             _options = new OptionsModel
             {
@@ -56,18 +56,9 @@
                     window.Close();
                 }
             });
-            _viewErrorLog = new RelayCommand(x =>
-            {
-                LoadEditor(Kernel.ErrorLog);
-            });
-            _viewLocalScript = new RelayCommand(x =>
-            {
-                LoadEditor(Kernel.LocalScript);
-            });
-            _viewGlobalScript = new RelayCommand(x =>
-            {
-                LoadEditor(Kernel.GlobalScript);
-            });
+            _viewErrorLog = new RelayCommand(x => loadEditor(Kernel.ErrorLog));
+            _viewLocalScript = new RelayCommand(x => loadEditor(Kernel.LocalScript));
+            _viewGlobalScript = new RelayCommand(x => loadEditor(Kernel.GlobalScript));
 		}
 
 		#endregion
@@ -220,36 +211,5 @@
         }
 
 		#endregion
-
-        #region Methods
-
-        void LoadEditor(String file)
-        {
-            if (!File.Exists(file))
-            {
-                var dir = Path.GetDirectoryName(file);
-
-                try
-                {
-                    if (!Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-
-                    File.Create(file).Close();
-                }
-                catch
-                {
-                    OutputDialog.Show("Unexpected error",
-                        "The file " + file + " does not exist and could not be created. Usually this is due to unsufficients privileges. Try running Sumerics in admin mode or create the file on your own to get rid of this exception.");
-                    return;
-                }
-            }
-
-            var editor = new EditorWindow(null, null);//TODO
-            editor.OpenFile(file);
-        }
-
-        #endregion
     }
 }
