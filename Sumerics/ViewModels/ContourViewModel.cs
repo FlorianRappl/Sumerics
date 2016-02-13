@@ -7,7 +7,7 @@
     using System.Windows.Input;
     using YAMP;
 
-	sealed class ContourViewModel : BaseViewModel
+	public sealed class ContourViewModel : BaseViewModel
 	{
 		#region Fields
 

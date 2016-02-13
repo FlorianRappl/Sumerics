@@ -6,9 +6,13 @@
     using System.Collections.ObjectModel;
     using System.IO;
 
-    sealed class FolderBrowseViewModel : DialogBaseViewModel
+    public sealed class FolderBrowseViewModel : DialogBaseViewModel
     {
         #region Fields
+
+        readonly ObservableCollection<FolderModel> _currentDirectories;
+        readonly ObservableCollection<FolderModel> _subDirectories;
+        readonly ObservableCollection<FolderModel> _topDirectories;
 
         FolderModel _selectedDirectory;
         FolderModel _selectedTopDirectory;
@@ -20,9 +24,9 @@
         public FolderBrowseViewModel(String startFolder)
         {
             CanAccept = true;
-            CurrentDirectories = new ObservableCollection<FolderModel>();
-            SubDirectories = new ObservableCollection<FolderModel>();
-            TopDirectories = new ObservableCollection<FolderModel>();
+            _currentDirectories = new ObservableCollection<FolderModel>();
+            _subDirectories = new ObservableCollection<FolderModel>();
+            _topDirectories = new ObservableCollection<FolderModel>();
 
             if (Directory.Exists(startFolder))
             {
@@ -81,20 +85,17 @@
 
         public ObservableCollection<FolderModel> CurrentDirectories
         {
-            get;
-            set;
+            get { return _currentDirectories; }
         }
 
         public ObservableCollection<FolderModel> SubDirectories
         {
-            get;
-            set;
+            get { return _subDirectories; }
         }
 
         public ObservableCollection<FolderModel> TopDirectories
         {
-            get;
-            set;
+            get { return _topDirectories; }
         }
 
         #endregion

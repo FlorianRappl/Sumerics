@@ -46,12 +46,14 @@
         {
             if (_plot is XYPlotValue)
             {
-                var window = new PlotSettingsWindow((XYPlotValue)_plot);
+                var vm = new PlotSettingsViewModel((XYPlotValue)_plot);
+                var window = new PlotSettingsWindow(vm);
                 window.ShowDialog();
             }
             else if (_plot is SubPlotValue)
             {
-                var window = new SubPlotSettingsWindow((SubPlotValue)_plot);
+                var vm = new SubPlotSettingsViewModel((SubPlotValue)_plot);
+                var window = new SubPlotSettingsWindow(vm);
                 window.ShowDialog();
             }
         }
@@ -60,17 +62,20 @@
         {
             if (_plot is ContourPlotValue)
             {
-                var window = new ContourSeriesWindow((ContourPlotValue)_plot);
+                var vm = new ContourViewModel((ContourPlotValue)_plot);
+                var window = new ContourSeriesWindow(vm);
                 window.ShowDialog();
             }
             else if (_plot is HeatmapPlotValue)
             {
-                var window = new HeatSeriesWindow((HeatmapPlotValue)_plot);
+                var vm = new HeatmapViewModel((HeatmapPlotValue)_plot);
+                var window = new HeatSeriesWindow(vm);
                 window.ShowDialog();
             }
             else if (_plot is XYPlotValue)
             {
-                var window = new PlotSeriesWindow((XYPlotValue)_plot);
+                var vm = new SeriesViewModel((XYPlotValue)_plot);
+                var window = new PlotSeriesWindow(vm);
                 window.ShowDialog();
             }
         }
@@ -87,7 +92,8 @@
 
         public void SavePlot(SumericsPlot frame)
         {
-            var dialog = new SaveImageWindow();
+            var vm = new SaveImageViewModel(Environment.CurrentDirectory);
+            var dialog = new SaveImageWindow(vm);
             dialog.ImageWidth = 640;
             dialog.ImageHeight = 480;
             dialog.Title = "Save plot as ...";

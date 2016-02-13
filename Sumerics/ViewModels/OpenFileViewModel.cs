@@ -4,7 +4,7 @@
     using System;
     using System.IO;
 
-    sealed class OpenFileViewModel : FileBaseViewModel
+    public sealed class OpenFileViewModel : FileBaseViewModel
     {
         #region ctor
 

@@ -42,7 +42,8 @@
             });
             _open = new RelayCommand(x =>
             {
-                var dialog = new OpenFileWindow();
+                var vm = new OpenFileViewModel(Environment.CurrentDirectory);
+                var dialog = new OpenFileWindow(vm);
                 dialog.Title = "Open file ...";
                 dialog.AddFilter("All files (*.*)", "*.*");
                 dialog.AddFilter("YAMP Script (*.ys)", "*.ys");

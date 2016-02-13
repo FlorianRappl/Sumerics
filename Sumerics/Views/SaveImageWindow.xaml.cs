@@ -23,11 +23,10 @@
 
         #region ctor
 
-        public SaveImageWindow()
+        public SaveImageWindow(SaveImageViewModel vm)
         {
-            _vm = new SaveImageViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = _vm;
+            DataContext = _vm = vm;
         }
 
         #endregion

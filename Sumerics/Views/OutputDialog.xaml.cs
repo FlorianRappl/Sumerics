@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using System;
     using System.Windows;
 
     /// <summary>
@@ -13,12 +14,12 @@
             InitializeComponent();
         }
 
-        void CloseClick(object sender, RoutedEventArgs e)
+        void CloseClick(Object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        public static void Show(string title, string message)
+        public static void Show(String title, String message)
         {
             var outp = new OutputDialog();
             outp.Title = title;

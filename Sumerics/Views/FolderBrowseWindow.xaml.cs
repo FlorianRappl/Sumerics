@@ -21,11 +21,10 @@
 
         #region ctor
 
-        public FolderBrowseWindow()
+        public FolderBrowseWindow(FolderBrowseViewModel vm)
         {
-            _vm = new FolderBrowseViewModel(Environment.CurrentDirectory);
 			InitializeComponent();
-            DataContext = _vm;
+            DataContext = _vm = vm;
 		}
 
         #endregion

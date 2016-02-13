@@ -22,11 +22,10 @@
 
         #region ctor
 
-        public SaveFileWindow()
+        public SaveFileWindow(SaveFileViewModel vm)
         {
-            _vm = new SaveFileViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = _vm;
+            DataContext = _vm = vm;
         }
 
         #endregion

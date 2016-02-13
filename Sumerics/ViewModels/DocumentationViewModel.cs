@@ -6,7 +6,7 @@
     using System.Collections.ObjectModel;
     using YAMP.Help;
 
-	sealed class DocumentationViewModel : BaseViewModel
+	public sealed class DocumentationViewModel : BaseViewModel
 	{
 		#region Fields
 

@@ -7,7 +7,7 @@
     using System.Windows;
     using System.Windows.Input;
 
-    abstract class DialogBaseViewModel : BaseViewModel
+    public abstract class DialogBaseViewModel : BaseViewModel
     {
         #region Fields
 

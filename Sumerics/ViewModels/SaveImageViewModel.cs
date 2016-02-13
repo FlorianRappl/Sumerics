@@ -2,7 +2,7 @@
 {
     using System;
 
-    sealed class SaveImageViewModel : SaveFileViewModel
+    public sealed class SaveImageViewModel : SaveFileViewModel
     {
         #region Fields
 

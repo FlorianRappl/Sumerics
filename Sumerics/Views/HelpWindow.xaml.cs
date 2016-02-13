@@ -23,24 +23,24 @@
 	{
 		#region Fields
 
-        readonly CommandFactory _commands;
+        readonly ICommandFactory _commands;
         readonly ObservableCollection<HelpSection> _results;
 
 		HelpSection _topic;
 
-        const String UA = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
+        static readonly String UserAgent = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
 
 		#endregion
 
 		#region ctor
 
-		public HelpWindow(IComponents container)
+		public HelpWindow(DocumentationViewModel vm, ICommandFactory commands)
         {
 			_results = new ObservableCollection<HelpSection>();
-            _commands = container.Get<CommandFactory>();
+            _commands = commands;
 			InitializeComponent();
 			SearchResults.ItemsSource = _results;
-            DataContext = container.Get<DocumentationViewModel>();
+            DataContext = vm;
             Browser.Navigated += Browser_Navigated;
         }
 

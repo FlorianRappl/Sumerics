@@ -7,7 +7,7 @@
     using System.Windows.Input;
     using YAMP;
 
-	sealed class HeatmapViewModel : BaseViewModel
+	public sealed class HeatmapViewModel : BaseViewModel
 	{
 		#region Fields
 

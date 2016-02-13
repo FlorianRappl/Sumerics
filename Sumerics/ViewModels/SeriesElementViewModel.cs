@@ -7,7 +7,7 @@
     using System.Windows.Media;
     using YAMP;
 
-	sealed class SeriesElementViewModel : BaseViewModel
+	public sealed class SeriesElementViewModel : BaseViewModel
 	{
 		#region Fields
 

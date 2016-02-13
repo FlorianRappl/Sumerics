@@ -6,7 +6,7 @@
     /// <summary>
     /// The file model.
     /// </summary>
-    sealed class FileModel
+    public sealed class FileModel
     {
         #region ctor
 

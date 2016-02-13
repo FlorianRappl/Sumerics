@@ -27,5 +27,10 @@
         {
             return _block.GetAllInstances(type);
         }
+
+        public Object Create(Type type)
+        {
+            return _block.Create(type);
+        }
     }
 }

@@ -5,7 +5,7 @@
     using System.Windows.Input;
     using YAMP;
 
-    sealed class SubPlotSettingsViewModel : BaseViewModel
+    public sealed class SubPlotSettingsViewModel : BaseViewModel
     {
         #region Fields
 

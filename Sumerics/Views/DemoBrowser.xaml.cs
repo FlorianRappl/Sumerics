@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using System;
     using System.Windows.Input;
     using System.Windows.Navigation;
 
@@ -14,12 +15,12 @@
 			InitializeComponent();
 		}
 
-		void CloseCommandHandler(object sender, ExecutedRoutedEventArgs e)
+		void CloseCommandHandler(Object sender, ExecutedRoutedEventArgs e)
 		{
 			Close();
 		}
 
-		private void ContentLoaded(object sender, NavigationEventArgs e)
+		void ContentLoaded(Object sender, NavigationEventArgs e)
 		{
 			Loading.Visibility = System.Windows.Visibility.Hidden;
 			Browser.Visibility = System.Windows.Visibility.Visible;

@@ -9,7 +9,7 @@
     using System.Windows.Media;
     using YAMP;
 
-	sealed class PlotSettingsViewModel : BaseViewModel
+	public sealed class PlotSettingsViewModel : BaseViewModel
 	{
 		#region Fields
 

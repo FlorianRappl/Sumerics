@@ -31,7 +31,7 @@
         public static Int32 Show(String message, String[] decisions)
         {
             var inp = new DecisionDialog();
-            inp.Message.Text = string.IsNullOrEmpty(message) ? "Your decision is required:" : message;
+            inp.Message.Text = String.IsNullOrEmpty(message) ? "Your decision is required:" : message;
             inp.Input.ItemsSource = decisions != null && decisions.Length > 0 ? decisions : new [] { "The only choice." };
             inp.Input.SelectedIndex = 0;
             inp.ShowDialog();

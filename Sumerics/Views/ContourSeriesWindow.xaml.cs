@@ -2,17 +2,16 @@
 {
     using MahApps.Metro.Controls;
     using Sumerics.ViewModels;
-    using YAMP;
 
-	/// <summary>
+    /// <summary>
 	/// Interaction logic for PlotSeriesWindow.xaml
 	/// </summary>
 	public partial class ContourSeriesWindow : MetroWindow
 	{
-		public ContourSeriesWindow(ContourPlotValue value)
+        public ContourSeriesWindow(ContourViewModel vm)
 		{
             InitializeComponent();
-            DataContext = new ContourViewModel(value);
+            DataContext = vm;
 		}
 	}
 }

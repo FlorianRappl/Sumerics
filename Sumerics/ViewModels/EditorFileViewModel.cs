@@ -83,7 +83,8 @@
 
         public void SaveAs()
         {
-            var dialog = new SaveFileWindow();
+            var vm = new SaveFileViewModel(Environment.CurrentDirectory);
+            var dialog = new SaveFileWindow(vm);
             dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
             dialog.AddFilter("Textfile (*.txt)", "*.txt");
             dialog.ShowDialog();

@@ -22,11 +22,10 @@
 
         #region ctor
 
-        public OpenFileWindow()
+        public OpenFileWindow(OpenFileViewModel vm)
         {
-            _vm = new OpenFileViewModel(Environment.CurrentDirectory);
             InitializeComponent();
-            DataContext = _vm;
+            DataContext = _vm = vm;
         }
 
         #endregion

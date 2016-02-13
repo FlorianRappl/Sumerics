@@ -2,17 +2,16 @@
 {
     using MahApps.Metro.Controls;
     using Sumerics.ViewModels;
-    using YAMP;
 
-	/// <summary>
+    /// <summary>
 	/// Interaction logic for PlotSettingsWindow.xaml
 	/// </summary>
 	public partial class SubPlotSettingsWindow : MetroWindow
 	{
-        public SubPlotSettingsWindow(SubPlotValue value)
+        public SubPlotSettingsWindow(SubPlotSettingsViewModel vm)
 		{
             InitializeComponent();
-            DataContext = new SubPlotSettingsViewModel(value);
+            DataContext = vm;
 		}
 	}
 }

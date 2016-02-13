@@ -7,7 +7,7 @@
     using System.IO;
     using System.Windows.Input;
 
-    abstract class FileBaseViewModel : DialogBaseViewModel
+    public abstract class FileBaseViewModel : DialogBaseViewModel
     {
         #region Fields
 

@@ -6,7 +6,7 @@
     using System.Windows.Input;
     using YAMP;
 
-	sealed class SeriesViewModel : BaseViewModel
+	public sealed class SeriesViewModel : BaseViewModel
 	{
 		#region Fields
 

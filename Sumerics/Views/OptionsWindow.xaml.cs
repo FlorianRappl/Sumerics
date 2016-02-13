@@ -11,11 +11,12 @@
 	/// </summary>
 	public partial class OptionsWindow : MetroWindow
 	{
-		public OptionsWindow(IApplication app)
+        public OptionsWindow(OptionsViewModel vm)
 		{
             InitializeComponent();
-            var callback = CreateEditorCallback(app);
-            DataContext = new OptionsViewModel(app.Settings, callback);
+            //var callback = CreateEditorCallback(app);
+            //new OptionsViewModel(app.Settings, callback)
+            DataContext = vm;
 		}
 
         static Action<String> CreateEditorCallback(IApplication app)

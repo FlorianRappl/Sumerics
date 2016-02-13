@@ -7,7 +7,7 @@
     using System.Security.Principal;
     using System.Windows.Input;
 
-	sealed class OptionsViewModel : BaseViewModel
+	public sealed class OptionsViewModel : BaseViewModel
 	{
 		#region Fields
 

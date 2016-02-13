@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Windows;
 
-    class SaveFileViewModel : FileBaseViewModel
+    public class SaveFileViewModel : FileBaseViewModel
     {
         #region Fields
 

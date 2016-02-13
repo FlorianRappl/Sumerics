@@ -8,7 +8,7 @@
     /// <summary>
     /// Represents the encapsulated information of a folder.
     /// </summary>
-    sealed class FolderModel
+    public sealed class FolderModel
     {
         #region Fields
 
