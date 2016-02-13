@@ -1,15 +1,28 @@
-﻿namespace Sumerics.Managers
+﻿namespace Sumerics.Proxies
 {
+    using Sumerics.Views;
     using System;
     using System.Windows.Controls;
 
-    sealed class TabManager : ITabManager
+    sealed class TabProxy : ITabs
     {
-        readonly TabControl _control;
+        TabControl _control;
 
-        public TabManager(TabControl control)
+        public TabControl Tabs
         {
-            _control = control;
+            get { return _control ?? (_control = GetTabs()); }
+        }
+
+        static TabControl GetTabs()
+        {
+            var window = App.Current.MainWindow as MainWindow;
+
+            if (window != null)
+            {
+                return window.MainTabs;
+            }
+
+            return null;
         }
 
         public Int32 SelectedIndex

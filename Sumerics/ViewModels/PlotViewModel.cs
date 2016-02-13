@@ -10,16 +10,18 @@
     {
         #region Fields
 
-        readonly IApplication _app;
+        readonly IVisualizer _visualizer;
         readonly PlotValue _plot;
+        readonly IConsole _console;
 
         #endregion
 
         #region ctor
 
-        public PlotViewModel(PlotValue plot, IApplication app)
+        public PlotViewModel(PlotValue plot, IVisualizer visualizer, IConsole console)
         {
-            _app = app;
+            _visualizer = visualizer;
+            _console = console;
             _plot = plot;
         }
 
@@ -38,7 +40,7 @@
 
         public void OpenConsole()
         {
-            var window = new ConsoleEnterWindow(_app.Console);
+            var window = new ConsoleEnterWindow(_console);
             window.ShowDialog();
         }
 
@@ -82,12 +84,12 @@
 
         public void UndockPlot()
         {
-            _app.Visualizer.Undock(Plot);
+            _visualizer.Undock(Plot);
         }
 
         public void DockPlot()
         {
-            _app.Visualizer.Dock(Plot);
+            _visualizer.Dock(Plot);
         }
 
         public void SavePlot(SumericsPlot frame)

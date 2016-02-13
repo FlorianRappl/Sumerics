@@ -1,16 +1,16 @@
 ﻿namespace Sumerics.Managers
 {
-    using Sumerics.Views;
+    using Sumerics.Dialogs;
     using System;
     using System.Collections.Generic;
-    using System.Windows;
+    using System.Linq;
+    using System.Reflection;
 
     sealed class DialogManager : IDialogManager
     {
         #region Fields
 
-        readonly IComponents _container;
-        readonly Dictionary<Dialog, Func<Window>> _handlers;
+        readonly Dictionary<Dialog, IDialogHandler> _handlers;
 
         #endregion
 
@@ -18,122 +18,46 @@
 
         public DialogManager(IComponents container)
         {
-            _container = container;
-            _handlers = new Dictionary<Dialog, Func<Window>>();
+            _handlers = new Dictionary<Dialog, IDialogHandler>();
 
-            _handlers.Add(Dialog.About, Obtain<AboutWindow>);
-            _handlers.Add(Dialog.Demos, Obtain<DemoBrowser>);
-            _handlers.Add(Dialog.Directory, ObtainFolderBrowser);
-            _handlers.Add(Dialog.Editor, Obtain<EditorWindow>);
-            _handlers.Add(Dialog.Help, Obtain<HelpWindow>);
-            _handlers.Add(Dialog.LoadWorkspace, ObtainLoadWorkspace);
-            _handlers.Add(Dialog.Options, Obtain<OptionsWindow>);
-            _handlers.Add(Dialog.SaveWorkspace, ObtainSaveWorkspace);
+            Assembly.GetExecutingAssembly().DefinedTypes.ForEach(type =>
+            {
+                var attribute = type.GetCustomAttribute<DialogTypeAttribute>();
+
+                if (attribute != null && type.ImplementedInterfaces.Contains(typeof(IDialogHandler)))
+                {
+                    var handler = container.Create(type) as IDialogHandler;
+
+                    if (handler != null)
+                    {
+                        _handlers.Add(attribute.Type, handler);
+                    }
+                }
+            });
         }
 
         #endregion
 
         #region Methods
 
-        public void Open(Dialog value)
+        public void Open(Dialog value, params Object[] parameters)
         {
-            var handler = default(Func<Window>);
+            var handler = default(IDialogHandler);
 
             if (_handlers.TryGetValue(value, out handler))
             {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    var window = handler();
-
-                    if (window != null)
-                    {
-                        window.Show();
-                    }
-                });
+                App.Current.Dispatcher.Invoke(() => handler.Open(parameters));
             }
         }
 
         public void Close(Dialog value)
         {
-            var handler = default(Func<Window>);
+            var handler = default(IDialogHandler);
 
             if (_handlers.TryGetValue(value, out handler))
             {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    var window = handler();
-
-                    if (window != null)
-                    {
-                        window.Close();
-                    }
-                });
+                App.Current.Dispatcher.Invoke(() => handler.Close());
             }
-        }
-
-        #endregion
-
-        #region Helpers
-
-        Window ObtainFolderBrowser()
-        {
-            var dialog = Obtain<FolderBrowseWindow>();
-            dialog.ShowDialog();
-
-            if (dialog.Accepted)
-            {
-                Environment.CurrentDirectory = dialog.SelectedDirectory;
-            }
-
-            return null;
-        }
-
-        Window ObtainLoadWorkspace()
-        {
-            var dialog = Obtain<OpenFileWindow>();
-            dialog.Title = "Open workspace ...";
-            dialog.AddFilter("All files (*.*)", "*.*");
-            dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
-            dialog.ShowDialog();
-
-            if (dialog.Accepted)
-            {
-                _container.Get<IKernel>().LoadWorkspaceAsync(dialog.SelectedFile);
-            }
-
-            return null;
-        }
-
-        Window ObtainSaveWorkspace()
-        {
-            var dialog = Obtain<SaveFileWindow>();
-            dialog.Title = "Save workspace as ...";
-            dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
-            dialog.ShowDialog();
-
-            if (dialog.Accepted)
-            {
-                _container.Get<IKernel>().SaveWorkspaceAsync(dialog.SelectedFile);
-            }
-
-            return null;
-        }
-
-        T Obtain<T>()
-            where T : Window
-        {
-			foreach (var window in App.Current.Windows)
-			{
-                var dialog = window as T;
-
-				if (dialog != null)
-				{
-					dialog.Activate();
-					return dialog;
-				}
-			}
-
-			return _container.Create<T>();
         }
 
         #endregion

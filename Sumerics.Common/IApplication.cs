@@ -4,7 +4,7 @@
     {
         void Shutdown();
 
-        ITabManager Tabs { get; }
+        ITabs Tabs { get; }
 
         IConsole Console { get; }
 

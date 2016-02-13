@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Proxies
 {
     using Sumerics.Controls;
+    using Sumerics.Dialogs;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
@@ -8,33 +9,29 @@
 
     sealed class VisualizerProxy : IVisualizer
     {
-        readonly MainViewModel _viewModel;
-        readonly PlotControl _plotter;
+        readonly IConsole _console;
+        PlotControl _plotter;
 
-        public VisualizerProxy(MainViewModel viewModel, PlotControl plotter)
+        public VisualizerProxy(IConsole console)
         {
-            _viewModel = viewModel;
-            _plotter = plotter;
+            _console = console;
+        }
+
+        public PlotControl Plotter
+        {
+            get { return _plotter ?? (_plotter = GetPlotter()); }
         }
 
         public void Dock()
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                var win = default(PlotWindow);
+                var window = DialogExtensions.Get<PlotWindow>();
 
-                foreach (var window in App.Current.Windows)
+                if (window != null)
                 {
-                    if (window is PlotWindow)
-                    {
-                        win = (PlotWindow)window;
-                    }
-                }
-
-                if (win != null)
-                {
-                    _viewModel.LastPlot = win.PlotModel;
-                    win.Close();
+                    SetPlot(window.PlotModel);
+                    window.Close();
                 }
             });
         }
@@ -43,18 +40,12 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                foreach (var window in App.Current.Windows)
-                {
-                    if (window is PlotWindow)
-                    {
-                        var win = (PlotWindow)window;
+                var window = DialogExtensions.Get<PlotWindow>();
 
-                        if (Object.ReferenceEquals(win.PlotModel.Plot, context))
-                        {
-                            _viewModel.LastPlot = win.PlotModel;
-                            win.Close();
-                        }
-                    }
+                if (window != null && Object.ReferenceEquals(window.PlotModel.Plot, context))
+                {
+                    SetPlot(window.PlotModel);
+                    window.Close();
                 }
             });
         }
@@ -63,7 +54,7 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                _plotter.Undock();
+                Plotter.Undock();
             });
         }
 
@@ -71,17 +62,45 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                if (_plotter.Data == null || !Object.ReferenceEquals(_plotter.Data.Plot, context))
+                var plotter = Plotter;
+
+                if (plotter.Data == null || !Object.ReferenceEquals(plotter.Data.Plot, context))
                 {
-                    var app = _viewModel.Container.Get<IApplication>();
-                    var model = new PlotViewModel(context as PlotValue, app);
+                    var model = new PlotViewModel((PlotValue)context, this, _console);
                     model.UndockPlot();
                 }
                 else
                 {
-                    _plotter.Undock();
+                    plotter.Undock();
                 }
             });
+        }
+
+        static void SetPlot(IPlotViewModel value)
+        {
+            var window = App.Current.MainWindow as MainWindow;
+
+            if (window != null)
+            {
+                var vm = window.DataContext as MainViewModel;
+
+                if (vm != null)
+                {
+                    vm.LastPlot = value;
+                }
+            }
+        }
+
+        static PlotControl GetPlotter()
+        {
+            var window = App.Current.MainWindow as MainWindow;
+
+            if (window != null)
+            {
+                return window.MyLastPlot;
+            }
+
+            return null;
         }
     }
 }

@@ -5,7 +5,7 @@
     using System.Reflection;
     using System.Text;
 
-    public class CommandFactory : ICommandFactory
+    sealed class CommandFactory : ICommandFactory
     {
         #region Fields
 

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Input;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using YAMP;
+
     public interface IPlotViewModel
     {
         void UndockPlot();

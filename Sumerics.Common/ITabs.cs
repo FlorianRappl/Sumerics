@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface ITabManager
+    public interface ITabs
     {
         Int32 SelectedIndex { get; }
 

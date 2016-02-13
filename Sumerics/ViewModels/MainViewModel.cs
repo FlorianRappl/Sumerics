@@ -36,10 +36,10 @@
 
         #region ctor
 
-        public MainViewModel(IComponents container, Kernel kernel)
+        public MainViewModel(IComponents container, IKernel kernel)
             : base(container)
         {
-            _kernel = kernel;
+            _kernel = kernel as Kernel;
 
             _variables = new ObservableCollection<VariableViewModel>();
             _functions = new ObservableCollection<HelpViewModel>();
@@ -75,7 +75,7 @@
                     query = newQuery;
                 }
 
-                kernel.RunAsync(qrvm, query).FireAndForget();
+                _kernel.RunAsync(qrvm, query).FireAndForget();
             });
         }
 
@@ -373,8 +373,9 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                var app = Container.Get<IApplication>();
-                LastPlot = new PlotViewModel(e.Value, app);
+                var visualizer = Container.Get<IVisualizer>();
+                var console = Container.Get<IConsole>();
+                LastPlot = new PlotViewModel(e.Value, visualizer, console);
             });
         }
 

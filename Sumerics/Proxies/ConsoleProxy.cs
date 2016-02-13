@@ -1,30 +1,43 @@
 ﻿namespace Sumerics.Proxies
 {
     using Sumerics.Controls;
+    using Sumerics.Views;
     using System;
 
     sealed class ConsoleProxy : IConsole
     {
-        readonly ConsoleControl _console;
+        ConsoleControl _console;
 
-        public ConsoleProxy(ConsoleControl console)
+        public ConsoleControl Console
         {
-            _console = console;
+            get { return _console ?? (_console = GetConsole()); }
+        }
+
+        static ConsoleControl GetConsole()
+        {
+            var window = App.Current.MainWindow as MainWindow;
+
+            if (window != null)
+            {
+                return window.MyConsole;
+            }
+
+            return null;
         }
 
         public void Clear()
         {
-            _console.Reset();
+            Console.Reset();
         }
 
         public void Execute(String query)
         {
-            _console.InsertAndRun(query);
+            Console.InsertAndRun(query);
         }
 
         public void Execute(String query, String message)
         {
-            _console.InsertAndRun(query, message);
+            Console.InsertAndRun(query, message);
         }
     }
 }

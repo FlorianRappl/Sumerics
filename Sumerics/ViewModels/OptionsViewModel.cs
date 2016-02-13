@@ -3,7 +3,6 @@
     using Sumerics.Models;
     using Sumerics.Views;
     using System;
-    using System.IO;
     using System.Security.Principal;
     using System.Windows.Input;
 
@@ -21,7 +20,7 @@
 
 		#region ctor
 
-		public OptionsViewModel(ISettings settings, Action<String> loadEditor)
+		public OptionsViewModel(ISettings settings, IDialogManager dialogs)
 		{
             _options = new OptionsModel
             {
@@ -56,9 +55,9 @@
                     window.Close();
                 }
             });
-            _viewErrorLog = new RelayCommand(x => loadEditor(Kernel.ErrorLog));
-            _viewLocalScript = new RelayCommand(x => loadEditor(Kernel.LocalScript));
-            _viewGlobalScript = new RelayCommand(x => loadEditor(Kernel.GlobalScript));
+            _viewErrorLog = new RelayCommand(x => dialogs.Open(Dialog.Editor, Kernel.ErrorLog));
+            _viewLocalScript = new RelayCommand(x => dialogs.Open(Dialog.Editor, Kernel.LocalScript));
+            _viewGlobalScript = new RelayCommand(x => dialogs.Open(Dialog.Editor, Kernel.GlobalScript));
 		}
 
 		#endregion

@@ -1,9 +1,5 @@
 ﻿namespace Sumerics
 {
-    using Sumerics.Commands;
-    using Sumerics.Managers;
-    using Sumerics.Properties;
-    using Sumerics.Proxies;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
@@ -25,28 +21,9 @@
 
         void Application_Startup(Object sender, StartupEventArgs e)
         {
-            var logger = new FileLogger();
-            var kernel = new Kernel(logger);
-            var settings = new SettingsProxy(Settings.Default);
-            var vm = new MainViewModel(_app.Components, kernel);
+            _app.RegisterAssemblies();
+            var vm = new MainViewModel(_app.Components, _app.Kernel);
             var window = new MainWindow(vm);
-            var console = new ConsoleProxy(window.MyConsole);
-            var visualizer = new VisualizerProxy(vm, window.MyLastPlot);
-            var dialogs = new DialogManager(_app.Components);
-            var tabs = new TabManager(window.MainTabs);
-            var commands = new CommandFactory(_app.Components);
-
-            _app.With<ILogger>(logger)
-                .With<IKernel>(kernel)
-                .With<IConsole>(console)
-                .With<IVisualizer>(visualizer)
-                .With<IDialogManager>(dialogs)
-                .With<ITabManager>(tabs)
-                .With<ICommandFactory>(commands)
-                .With<ISettings>(settings);
-
-            commands.RegisterCommands();
-
             window.Show();
         }
 

@@ -40,9 +40,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMathInput.cs" />
+    <Compile Include="MathInputModule.cs" />
     <Compile Include="MathInputService.cs" />
     <Compile Include="Parser\MathMarkupParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
+      <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
+      <Name>Sumerics.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

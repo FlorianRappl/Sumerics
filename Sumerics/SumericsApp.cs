@@ -1,5 +1,10 @@
 ﻿namespace Sumerics
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     sealed class SumericsApp : IApplication
     {
         readonly Components _components;
@@ -10,10 +15,39 @@
             _components.Register<IApplication>(this);
         }
 
-        public SumericsApp With<T>(T instance)
+        public void RegisterAssemblies()
         {
-            _components.Register<T>(instance);
-            return this;
+            var current = Assembly.GetExecutingAssembly();
+            var assemblies = current.GetReferencedAssemblies();
+            RegisterAssembly(current);
+            RegisterAssemblies(assemblies);
+        }
+
+        public void RegisterAssemblies(IEnumerable<AssemblyName> assemblies)
+        {
+            foreach (var assemblyName in assemblies)
+            {
+                var assembly = Assembly.Load(assemblyName);
+                RegisterAssembly(assembly);
+            }
+        }
+
+        public void RegisterAssembly(Assembly assembly)
+        {
+            var types = assembly.DefinedTypes;
+
+            foreach (var type in types)
+            {
+                if (type.ImplementedInterfaces.Contains(typeof(IModule)))
+                {
+                    var instance = type.GetConstructor(Type.EmptyTypes).Invoke(null) as IModule;
+
+                    if (instance != null)
+                    {
+                        instance.RegisterComponents(_components);
+                    }
+                }
+            }
         }
 
         public void Shutdown()
@@ -36,9 +70,9 @@
             get { return _components.Get<IKernel>(); }
         }
 
-        public ITabManager Tabs
+        public ITabs Tabs
         {
-            get { return _components.Get<ITabManager>(); }
+            get { return _components.Get<ITabs>(); }
         }
 
         public IDialogManager Dialog
