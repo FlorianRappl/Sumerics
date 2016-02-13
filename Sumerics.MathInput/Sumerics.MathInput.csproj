@@ -42,7 +42,17 @@
     <Compile Include="IMathInput.cs" />
     <Compile Include="MathInputModule.cs" />
     <Compile Include="MathInputService.cs" />
+    <Compile Include="Parser\ColumnParseElement.cs" />
+    <Compile Include="Parser\FencedParseElement.cs" />
+    <Compile Include="Parser\FractionParseElement.cs" />
+    <Compile Include="Parser\GroupParseElement.cs" />
+    <Compile Include="Parser\IParseElement.cs" />
     <Compile Include="Parser\MathMarkupParser.cs" />
+    <Compile Include="Parser\PowParseElement.cs" />
+    <Compile Include="Parser\RowParseElement.cs" />
+    <Compile Include="Parser\SqrtParseElement.cs" />
+    <Compile Include="Parser\TableParseElement.cs" />
+    <Compile Include="Parser\ValueParseElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
