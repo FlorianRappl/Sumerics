@@ -2,6 +2,7 @@
 {
     using Sumerics.Properties;
     using System;
+    using System.Collections.Specialized;
 
     sealed class SettingsProxy : ISettings
     {
@@ -33,6 +34,7 @@
             Gyrometer = settings.Gyrometer;
             Inclinometer = settings.Inclinometer;
             Light = settings.Light;
+            History = settings.History ?? new StringCollection();
         }
 
         #endregion
@@ -59,6 +61,8 @@
 
         public Boolean Light { get; set; }
 
+        public StringCollection History { get; private set; }
+
         #endregion
 
         #region Methods
@@ -75,6 +79,7 @@
             _settings.Gyrometer = Gyrometer;
             _settings.Inclinometer = Inclinometer;
             _settings.Light = Light;
+            _settings.History = History;
             _settings.Save();
 
             if (Changed != null)

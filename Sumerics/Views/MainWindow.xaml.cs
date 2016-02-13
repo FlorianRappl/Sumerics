@@ -1,11 +1,10 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
-    using Sumerics.Controls;
+    using Sumerics.Managers;
     using Sumerics.MathInput;
     using Sumerics.ViewModels;
     using System;
-    using System.Collections.Specialized;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,9 +19,7 @@
         #region Fields
 
         readonly MainViewModel _vm;
-
-		Boolean _sensorRunning;
-		Boolean _initial;
+        readonly SensorManager _sensors;
 
         #endregion
 
@@ -30,8 +27,6 @@
 
         public MainWindow(MainViewModel vm)
 		{
-			_initial = true;
-
             InitializeComponent();
             AllowDrop = true;
 
@@ -39,6 +34,8 @@
 			Closing += MainWindowClosing;
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
+
+            _sensors = new SensorManager();
 
             vm.Container.All<ISettings>().ForEach(settings => settings.Changed += (s, ev) => LoadSettings());
 
@@ -66,35 +63,34 @@
 
         void MainWindowClosing(Object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			var pers = Properties.Settings.Default;
+            var settings = _vm.Container.Get<ISettings>();
 
-			if (pers != null && pers.AutoSaveHistory)
+            if (settings != null && settings.AutoSaveHistory)
 			{
 				var history = MyConsole.CommandHistory.ToArray();
-				pers.History = new StringCollection();
+                settings.History.Clear();
 
 				foreach (var cmd in history)
 				{
                     if (!String.IsNullOrEmpty(cmd))
                     {
-                        pers.History.Add(cmd);
+                        settings.History.Add(cmd);
                     }
 				}
 
-				pers.Save();
+                settings.Save();
 			}
 		}
 
         void MainWindowLoaded(Object sender, RoutedEventArgs e)
 		{
-            LoadSettings();
-			var pers = Properties.Settings.Default;
+            var settings = LoadSettings();
 
-			if (pers != null && pers.History != null)
+            if (settings != null && settings.History != null)
 			{
 				var index = 0;
 
-				foreach (var cmd in pers.History)
+                foreach (var cmd in settings.History)
 				{
 					MyConsole.CommandHistory.Insert(index, cmd);
 					index++;
@@ -133,102 +129,55 @@
         /// <summary>
         /// (Re-)Loads the settings.
         /// </summary>
-		void LoadSettings()
+		ISettings LoadSettings()
 		{
             var settings = _vm.Container.Get<ISettings>();
 
+            _sensors.Install(AccelerometerPlot, SensorGrid);
+            _sensors.Install(GyrometerPlot, SensorGrid);
+            _sensors.Install(InclinometerPlot, SensorGrid);
+            _sensors.Install(LightPlot, SensorGrid);
+            _sensors.Install(CompassPlot, SensorGrid);
+
             if (settings == null)
             {
-                //Set(AccelerometerPlot, true, 30);
-                //Set(GyrometerPlot, true, 30);
-                //Set(InclinometerPlot, true, 30);
-                //Set(LightPlot, true, 30);
-                //Set(CompassPlot, true, 30);
+                _sensors.Set(AccelerometerPlot, true, 30);
+                _sensors.Set(GyrometerPlot, true, 30);
+                _sensors.Set(InclinometerPlot, true, 30);
+                _sensors.Set(LightPlot, true, 30);
+                _sensors.Set(CompassPlot, true, 30);
                 MyConsole.ConsoleFontSize = 16f;
-                return;
+            }
+            else
+            {
+                _sensors.Set(AccelerometerPlot, settings.Accelerometer, settings.LiveSensorHistory);
+                _sensors.Set(GyrometerPlot, settings.Gyrometer, settings.LiveSensorHistory);
+                _sensors.Set(InclinometerPlot, settings.Inclinometer, settings.LiveSensorHistory);
+                _sensors.Set(LightPlot, settings.Light, settings.LiveSensorHistory);
+                _sensors.Set(CompassPlot, settings.Compass, settings.LiveSensorHistory);
+                MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
+
+                //if (Core.IsWindows8)
+                //{
+                //    SensorsTab.Visibility = System.Windows.Visibility.Visible;
+
+                //    if (settings.LivePlotActive && !sensorRunning)
+                //    {
+                //        PerformMeasurement().FireAndForget();
+                //    }
+                //    else if (!settings.LivePlotActive && sensorRunning)
+                //    {
+                //        sensorRunning = false;
+                //    }
+                //}
+                //else
+                //{
+                //    SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
+                //}
             }
 
-            //Set(AccelerometerPlot, settings.Accelerometer, settings.LivePlotHistory);
-            //Set(GyrometerPlot, settings.Gyrometer, settings.LivePlotHistory);
-            //Set(InclinometerPlot, settings.Inclinometer, settings.LivePlotHistory);
-            //Set(LightPlot, settings.Light, settings.LivePlotHistory);
-            //Set(CompassPlot, settings.Compass, settings.LivePlotHistory);
-            MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
-
-            //if (Core.IsWindows8)
-            //{
-            //    SensorsTab.Visibility = System.Windows.Visibility.Visible;
-
-            //    if (settings.LivePlotActive && !sensorRunning)
-            //    {
-            //        PerformMeasurement().FireAndForget();
-            //    }
-            //    else if (!settings.LivePlotActive && sensorRunning)
-            //    {
-            //        sensorRunning = false;
-            //    }
-            //}
-            //else
-            //{
-            //    SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
-            //}
-
-			_initial = false;
+            return settings;
 		}
-
-		void Set(SensorPlot plot, Boolean show, Int32 length)
-		{
-            //plot.Length = length;
-            //plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-            //SensorGrid.RowDefinitions[Grid.GetRow(plot)].Height = show ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-            //plot.Maximized = false;
-
-            //if (initial)
-            //{
-            //    plot.PreviewMouseDown += (s, e) =>
-            //    {
-            //        var row = Grid.GetRow(plot);
-
-            //        for (var i = 0; i < SensorGrid.RowDefinitions.Count; i++)
-            //        {
-            //            if (i == row)
-            //                continue;
-
-            //            var sensor = SensorGrid.Children[i] as SensorPlot;
-
-            //            if (sensor == null)
-            //                return;
-
-            //            if (sensor.Visibility == System.Windows.Visibility.Visible)
-            //                SensorGrid.RowDefinitions[i].Height = plot.Maximized ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-            //        }
-
-            //        plot.Maximized = !plot.Maximized;
-            //    };
-            //}
-		}
-
-        async Task PerformMeasurement()
-        {
-            //sensorRunning = true;
-
-            //while (sensorRunning)
-            //{
-            //    var acc = AccFunction.Acceleration;
-            //    var gyro = GyroFunction.AngularVelocity;
-            //    var inc = IncFunction.Inclination;
-            //    var light = LightFunction.Light;
-            //    var comp = CompFunction.HeadingMagneticNorth;
-
-            //    AccelerometerPlot.AddValues(acc[0], acc[1], acc[2]);
-            //    GyrometerPlot.AddValues(gyro[0], gyro[1], gyro[2]);
-            //    InclinometerPlot.AddValues(inc[0], inc[1], inc[2]);
-            //    LightPlot.AddValues(light);
-            //    CompassPlot.AddValues(comp);
-
-            //    await Task.Delay(1000);
-            //}
-        }
 
 		void OptionsClick(Object sender, RoutedEventArgs e)
 		{

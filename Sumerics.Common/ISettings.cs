@@ -1,6 +1,7 @@
 ﻿namespace Sumerics
 {
     using System;
+    using System.Collections.Specialized;
 
     public interface ISettings
     {
@@ -23,6 +24,8 @@
         Boolean Compass { get; set; }
 
         Boolean Light { get; set; }
+
+        StringCollection History { get; }
 
         void Save();
 

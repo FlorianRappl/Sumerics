@@ -184,6 +184,7 @@
     <Compile Include="Dialogs\LoadWorkspaceHandler.cs" />
     <Compile Include="Dialogs\OptionsDialogHandler.cs" />
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
+    <Compile Include="Managers\SensorManager.cs" />
     <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="Proxies\TabProxy.cs" />
