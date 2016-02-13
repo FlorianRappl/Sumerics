@@ -1,46 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
-    public class MathMLParser
-    {
-        #region Members
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Xml.Linq;
 
-        XDocument xdoc;
-        StringBuilder query;
+    public sealed class MathMLParser
+    {
+        #region Fields
+
+        readonly XDocument _xdoc;
+        readonly StringBuilder _query;
 
         #endregion
 
         #region ctor
 
-        public static string Parse(string xml)
+        public static String Parse(String xml)
         {
             var parser = new MathMLParser(xml);
             return parser.Execute();
         }
 
-        private MathMLParser(string xml)
+        MathMLParser(String xml)
         {
-            query = new StringBuilder();
-            xdoc = XDocument.Parse(xml);
+            _query = new StringBuilder();
+            _xdoc = XDocument.Parse(xml);
         }
 
         #endregion
 
         #region Parse
 
-        public string Execute()
+        String Execute()
         {
-            Parse(xdoc.Root.Elements());
-            return query.ToString();
+            Parse(_xdoc.Root.Elements());
+            return _query.ToString();
         }
 
-        private void Parse(IEnumerable<XElement> nodes)
+        void Parse(IEnumerable<XElement> nodes)
         {
             foreach (var node in nodes)
             {
@@ -48,14 +46,16 @@ namespace Sumerics
             }
         }
 
-        private void Parse(IEnumerable<XElement> nodes, string separator)
+        void Parse(IEnumerable<XElement> nodes, String separator)
         {
             var i = 0;
 
             foreach (var node in nodes)
             {
                 if (i > 0)
-                    query.Append(separator);
+                {
+                    _query.Append(separator);
+                }
 
                 Parse(node);
                 i++;
@@ -67,9 +67,9 @@ namespace Sumerics
             switch (node.Name.LocalName)
             {
                 case "mtable":
-                    query.Append("[");
+                    _query.Append("[");
                     Parse(node.Elements(), ";");
-                    query.Append("]");
+                    _query.Append("]");
                     break;
                 case "mtr":
                     Parse(node.Elements(), ",");
@@ -79,50 +79,54 @@ namespace Sumerics
                     break;
                 case "mfrac":
                     Parse(node.FirstNode as XElement);
-                    query.Append("/");
+                    _query.Append("/");
                     Parse(node.LastNode as XElement);
                     break;
                 case "mn":
-                    goto case "mo";
                 case "mi":
-                    goto case "mo";
                 case "mo":
                     if (StandardValue(node.Value))
-                        query.Append(node.Value);
+                    {
+                        _query.Append(node.Value);
+                    }
                     else
-                        query.Append(SpecialValue(node.Value));
+                    {
+                        _query.Append(SpecialValue(node.Value));
+                    }
                     break;
                 case "mrow":
-                    query.Append("(");
+                    _query.Append("(");
                     Parse(node.Elements());
-                    query.Append(")");
+                    _query.Append(")");
                     break;
                 case "mfenced":
-                    query.Append(node.Attribute("open").Value);
+                    _query.Append(node.Attribute("open").Value);
                     Parse(node.Elements());
-                    query.Append(node.Attribute("close").Value);
+                    _query.Append(node.Attribute("close").Value);
                     break;
                 case "msqrt":
-                    query.Append("sqrt(");
+                    _query.Append("sqrt(");
                     Parse(node.Elements());
-                    query.Append(")");
+                    _query.Append(")");
                     break;
                 case "msup":
                     Parse(node.FirstNode as XElement);
-                    string last = (node.LastNode as XElement).Value;
+                    var last = (node.LastNode as XElement).Value;
+
                     if (last == "†" || last == "'")
                     {
-                        query.Append("'");
+                        _query.Append("'");
                     }
                     else if (last == "⊤" || last == "+")
                     {
-                        query.Append(".'");
+                        _query.Append(".'");
                     }
                     else
                     {
-                        query.Append("^");
+                        _query.Append("^");
                         Parse(node.LastNode as XElement);
                     }
+
                     break;
                 default:
                     Parse(node.Elements());
@@ -130,23 +134,19 @@ namespace Sumerics
             }
         }
 
-        bool StandardValue(string value)
+        Boolean StandardValue(String value)
         {
-            if (value.Length > 1)
-                return true;
-            if (value[0] < 256)
-                return true;
-            return false;
+            return value.Length > 1 || value[0] < 256;
         }
 
-        string SpecialValue(string value)
+        String SpecialValue(String value)
         {
             switch (value)
             {
                 case "∑":
                     return "sum";
-                //case "∏":
-                //    return "product";
+                case "∏":
+                    return "product";
                 case "π":
                     return "pi";
                 case "ⅇ":
@@ -218,7 +218,6 @@ namespace Sumerics
                 case "⋅":
                     return "*";
                 case "→":
-                    goto case "⇒";
                 case "⇒":
                     return "=>";
                 default:
@@ -227,6 +226,5 @@ namespace Sumerics
         }
 
         #endregion
-
     }
 }

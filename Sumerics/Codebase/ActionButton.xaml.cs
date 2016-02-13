@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+
     /// <summary>
     /// Interaction logic for ActionButton.xaml
     /// </summary>
@@ -45,15 +35,15 @@ namespace Sumerics
 
         #region Properties
 
-        public string Text
+        public String Text
         {
-            get { return (string)GetValue(TextProperty); }
+            get { return (String)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
-        public object CommandParameter
+        public Object CommandParameter
         {
-            get { return (object)GetValue(CommandParameterProperty); }
+            get { return (Object)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
 
@@ -82,13 +72,15 @@ namespace Sumerics
         static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var that = (ActionButton)d;
-            that.TBlock.Text = (string)e.NewValue;
+            that.TBlock.Text = (String)e.NewValue;
         }
 
-        void TextBlockMouseDown(object sender, MouseButtonEventArgs e)
+        void TextBlockMouseDown(Object sender, MouseButtonEventArgs e)
         {
             if (Command != null)
+            {
                 Command.Execute(CommandParameter);
+            }
         }
 
         #endregion

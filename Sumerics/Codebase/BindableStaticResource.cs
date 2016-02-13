@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+
 	public class BindableStaticResource : StaticResourceExtension
 	{
-		static readonly DependencyProperty DummyProperty;
+        static readonly DependencyProperty DummyProperty = DependencyProperty.RegisterAttached(
+            "Dummy", typeof(Object), typeof(DependencyObject), new UIPropertyMetadata(null));
 
-		static BindableStaticResource()
-		{
-			DummyProperty = DependencyProperty.RegisterAttached("Dummy", typeof(Object), typeof(DependencyObject), new UIPropertyMetadata(null));
-		}
-
-		public Binding MyBinding { get; set; }
+		public Binding MyBinding 
+        { 
+            get; 
+            set; 
+        }
 
 		public BindableStaticResource()
 		{
@@ -29,14 +25,15 @@ namespace Sumerics
 			MyBinding = binding;
 		}
 
-		public override object ProvideValue(IServiceProvider serviceProvider)
+		public override Object ProvideValue(IServiceProvider serviceProvider)
 		{
-			var target = (IProvideValueTarget)serviceProvider.GetService(typeof(IProvideValueTarget));
+            var type = typeof(IProvideValueTarget);
+			var target = (IProvideValueTarget)serviceProvider.GetService(type);
 			var targetObject = (FrameworkElement)target.TargetObject;
 			MyBinding.Source = targetObject.DataContext;
-			var DummyDO = new DependencyObject();
-			BindingOperations.SetBinding(DummyDO, DummyProperty, MyBinding);
-			ResourceKey = DummyDO.GetValue(DummyProperty);
+			var dummy = new DependencyObject();
+			BindingOperations.SetBinding(dummy, DummyProperty, MyBinding);
+			ResourceKey = dummy.GetValue(DummyProperty);
 			return base.ProvideValue(serviceProvider);
 		}
 	}

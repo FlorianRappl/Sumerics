@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace Sumerics
+﻿namespace Sumerics
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Input;
+
     public class RelayCommand : ICommand
     {
         #region Fields
@@ -37,7 +33,7 @@ namespace Sumerics
         #region ICommand Members
 
         [DebuggerStepThrough]
-        public bool CanExecute(object parameter)
+        public Boolean CanExecute(Object parameter)
         {
             return _canExecute == null ? true : _canExecute(parameter);
         }
@@ -48,7 +44,7 @@ namespace Sumerics
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public void Execute(object parameter)
+        public void Execute(Object parameter)
         {
             _execute(parameter);
         }
