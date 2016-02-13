@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using System;
+    using System.Globalization;
+    using System.Windows.Data;
+
 	public class CountConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
 		{
-			return (int)value > 1;
+			return (Int32)value > 1;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
 		{
 			return null;
 		}

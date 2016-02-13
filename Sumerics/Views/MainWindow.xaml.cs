@@ -232,12 +232,12 @@
 
 		void OptionsClick(Object sender, RoutedEventArgs e)
 		{
-            _vm.Container.Get<IApplication>().Dialog.Open(Dialog.Options);
+            _vm.Container.Get<IDialogManager>().Open(Dialog.Options);
 		}
 
         void AboutClick(Object sender, RoutedEventArgs e)
         {
-            _vm.Container.Get<IApplication>().Dialog.Open(Dialog.About);
+            _vm.Container.Get<IDialogManager>().Open(Dialog.About);
 		}
 
         #endregion

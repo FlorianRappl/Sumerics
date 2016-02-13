@@ -1,37 +1,27 @@
-﻿using FastColoredTextBoxNS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Forms.Integration;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using FastColoredTextBoxNS;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Integration;
+
     /// <summary>
     /// Interaction logic for AutocompletePopup.xaml
     /// </summary>
     public partial class AutocompletePopup : Popup
     {
-        #region Members
+        #region Fields
 
-		ObservableCollection<AutocompleteItem> visibleItems;
-        ObservableCollection<AutocompleteItem> availableItems;
-        FastColoredTextBox tb;
-        Timer timer;
+		readonly ObservableCollection<AutocompleteItem> _visibleItems;
+        readonly ObservableCollection<AutocompleteItem> _availableItems;
+        readonly FastColoredTextBox _tb;
+        readonly Timer _timer;
 
         #endregion
 
@@ -39,70 +29,82 @@ namespace Sumerics.Controls
 
         AutocompletePopup(FastColoredTextBox textBox, WindowsFormsHost host)
         {
-            timer = new Timer();
-            timer.Tick += tick;
+            _timer = new Timer();
+            _timer.Tick += tick;
             InitializeComponent();
             PlacementTarget = host;
             CustomPopupPlacementCallback = placePopup;
 
-            tb = textBox;
-            tb.KeyDown += new KeyEventHandler(keyDown);
-            tb.SelectionChanged += new EventHandler(selectionChanged);
-            tb.KeyPressed += new KeyPressEventHandler(keyPressed);
-            tb.LostFocus += tb_LostFocus;
+            _tb = textBox;
+            _tb.KeyDown += new KeyEventHandler(keyDown);
+            _tb.SelectionChanged += new EventHandler(selectionChanged);
+            _tb.KeyPressed += new KeyPressEventHandler(keyPressed);
+            _tb.LostFocus += tb_LostFocus;
 
-            visibleItems = new ObservableCollection<AutocompleteItem>();
+            _visibleItems = new ObservableCollection<AutocompleteItem>();
             AppearInterval = 500;
             SearchPattern = @"[\w\.]";
             MinFragmentLength = 1;
-            timer.Start();
+            _timer.Start();
 
             var binding = new System.Windows.Data.Binding();
-            binding.Source = visibleItems;
+            binding.Source = _visibleItems;
             Liste.SetBinding(System.Windows.Controls.ListBox.ItemsSourceProperty, binding);
         }
 
         public AutocompletePopup(ConsoleControl console) : this(console.Console, console.Host)
         {
-            availableItems = console.AutoCompleteItems;
+            _availableItems = console.AutoCompleteItems;
         }
 
         public AutocompletePopup(EditorControl editor) : this(editor.Editor, editor.Host)
         {
-            availableItems = editor.Model.Items;
+            _availableItems = editor.Model.Items;
         }
 
         #endregion
 
         #region Properties
 
-        public Range Fragment { get; internal set; }
+        public Range Fragment
+        {
+            get;
+            internal set;
+        }
 
         /// <summary>
         /// Regex pattern for serach fragment around caret
         /// </summary>
-        public string SearchPattern { get; set; }
+        public String SearchPattern
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Minimum fragment length for popup
         /// </summary>
-        public int MinFragmentLength { get; set; }
+        public Int32 MinFragmentLength
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Interval of menu appear (ms)
         /// </summary>
-        public int AppearInterval
+        public Int32 AppearInterval
         {
-            get { return timer.Interval; }
-            set { timer.Interval = value; }
+            get { return _timer.Interval; }
+            set { _timer.Interval = value; }
         }
 
         /// <summary>
         /// Gets the number of visible items.
         /// </summary>
-        public int Count
+        public Int32 Count
         {
-            get { return visibleItems.Count; }
+            get { return _visibleItems.Count; }
         }
 
         /// <summary>
@@ -110,55 +112,68 @@ namespace Sumerics.Controls
         /// </summary>
         public ObservableCollection<AutocompleteItem> AvailableItems
         {
-            get { return availableItems; }
-            set { availableItems = value; }
+            get { return _availableItems; }
         }
 
         #endregion
 
         #region Methods
 
-        void keyPressed(object sender, KeyPressEventArgs e)
+        void keyPressed(Object sender, KeyPressEventArgs e)
         {
             if (IsOpen)
+            {
                 DoAutocomplete(false);
+            }
             else
-                ResetTimer(timer);
+            {
+                ResetTimer(_timer);
+            }
         }
 
-        void selectionChanged(object sender, EventArgs e)
+        void selectionChanged(Object sender, EventArgs e)
         {
             if (IsOpen)
             {
                 var needClose = false;
 
-                if (!tb.Selection.IsEmpty)
-                    needClose = true;
-                else if (!Fragment.Contains(tb.Selection.Start))
+                if (!_tb.Selection.IsEmpty)
                 {
-                    if (tb.Selection.Start.iLine == Fragment.End.iLine && tb.Selection.Start.iChar == Fragment.End.iChar + 1)
+                    needClose = true;
+                }
+                else if (!Fragment.Contains(_tb.Selection.Start))
+                {
+                    if (_tb.Selection.Start.iLine == Fragment.End.iLine && _tb.Selection.Start.iChar == Fragment.End.iChar + 1)
                     {
                         //user press key at end of fragment
-                        var c = tb.Selection.CharBeforeStart;
+                        var c = _tb.Selection.CharBeforeStart;
 
                         if (!Regex.IsMatch(c.ToString(), SearchPattern))
+                        {
                             needClose = true;
+                        }
                     }
                     else
+                    {
                         needClose = true;
+                    }
                 }
 
                 if (needClose)
+                {
                     Close();
+                }
             }
         }
 
-        void keyDown(object sender, KeyEventArgs e)
+        void keyDown(Object sender, KeyEventArgs e)
         {
             if (IsOpen)
             {
                 if (ProcessKey(e.KeyData, e.Modifiers))
+                {
                     e.Handled = true;
+                }
             }
             else if (e.Modifiers == Keys.Control && (e.KeyData & Keys.Space) == Keys.Space)
             {
@@ -167,9 +182,9 @@ namespace Sumerics.Controls
             }
         }
 
-        void tick(object sender, EventArgs e)
+        void tick(Object sender, EventArgs e)
         {
-            timer.Stop();
+            _timer.Stop();
             DoAutocomplete(false);
         }
 
@@ -179,12 +194,9 @@ namespace Sumerics.Controls
             timer.Start();
         }
 
-        bool ProcessKey(Keys keyData, Keys keyModifiers)
+        Boolean ProcessKey(Keys keyData, Keys keyModifiers)
         {
-            if (!IsOpen)
-                return false;
-
-            if (keyModifiers == Keys.None)
+            if (IsOpen && keyModifiers == Keys.None)
             {
                 switch (keyData)
                 {
@@ -220,49 +232,57 @@ namespace Sumerics.Controls
             return false;
         }
 
-        void DoAutocomplete(bool forced = false)
+        void DoAutocomplete(Boolean forced = false)
 		{
             var selectedItem = Liste.SelectedItem;
-            visibleItems.Clear();
+            _visibleItems.Clear();
 
             //get fragment around caret
-            var fragment = tb.Selection.GetFragment(SearchPattern);
+            var fragment = _tb.Selection.GetFragment(SearchPattern);
             var text = fragment.Text;
 
             //calc screen point for popup menu
-            var point = tb.PlaceToPoint(fragment.End);
-            point.Offset(2, tb.CharHeight);
+            var point = _tb.PlaceToPoint(fragment.End);
+            point.Offset(2, _tb.CharHeight);
             
-            if (forced || (text.Length >= MinFragmentLength && tb.Selection.IsEmpty))
+            if (forced || (text.Length >= MinFragmentLength && _tb.Selection.IsEmpty))
             {
                 Fragment = fragment;
 
                 //build popup menu
-                var query = availableItems
+                var query = _availableItems
                     .Where(m => m.Compare(text) != CompareResult.Hidden)
                     .OrderBy(m => m.Text);
 
                 foreach (var item in query)
-                    visibleItems.Add(item);
+                {
+                    _visibleItems.Add(item);
+                }
 
-                if (visibleItems.Contains(selectedItem))
+                if (_visibleItems.Contains(selectedItem))
+                {
                     Liste.SelectedItem = selectedItem;
-                else if (visibleItems.Count != 0 && (text.Length > 3 || visibleItems.Count == 1))
-                    Liste.SelectedItem = visibleItems[0];
+                }
+                else if (_visibleItems.Count != 0 && (text.Length > 3 || _visibleItems.Count == 1))
+                {
+                    Liste.SelectedItem = _visibleItems[0];
+                }
 			}
 
             //show popup menu
-			if (Count > 0)
-				Show(point);
-			else
-				Close();
+            if (Count > 0)
+            {
+                Show(point);
+            }
+            else
+            {
+                Close();
+            }
         }
 
         void DoAutocomplete(AutocompleteItem item, Range fragment)
         {
             var newText = item.GetTextForReplace();
-
-            //replace text of fragment
             var tb = fragment.tb;
 
             if (tb.Selection.ColumnSelectionMode)
@@ -289,25 +309,25 @@ namespace Sumerics.Controls
             IsOpen = false;
         }
 
-        void tb_LostFocus(object sender, EventArgs e)
+        void tb_LostFocus(Object sender, EventArgs e)
         {
             Close();
         }
 
-        public void SelectNext(int shift)
+        public void SelectNext(Int32 shift)
         {
-            if(visibleItems.Count == 0)
-                return;
-
-			Liste.SelectedIndex = (Liste.SelectedIndex + shift + visibleItems.Count) % visibleItems.Count;
-            Liste.ScrollIntoView(Liste.SelectedItem);
+            if (_visibleItems.Count != 0)
+            {
+                Liste.SelectedIndex = (Liste.SelectedIndex + shift + _visibleItems.Count) % _visibleItems.Count;
+                Liste.ScrollIntoView(Liste.SelectedItem);
+            }
         }
 
         /// <summary>
         /// Shows popup menu immediately
         /// </summary>
         /// <param name="forced">If True - MinFragmentLength will be ignored</param>
-        public void Show(bool forced)
+        public void Show(Boolean forced)
         {
 			DoAutocomplete(forced);
         }
@@ -325,7 +345,7 @@ namespace Sumerics.Controls
             return new CustomPopupPlacement[] { placement };
         }
 
-        bool OnSelectingWithEnter()
+        Boolean OnSelectingWithEnter()
 		{
 			if (Liste.SelectedItem == null)
 			{
@@ -341,45 +361,35 @@ namespace Sumerics.Controls
 
         public virtual void OnSelecting()
         {
-            if (Liste.SelectedItem == null)
-                return;
-
-            try
+            if (Liste.SelectedItem != null)
             {
                 var item = (AutocompleteItem)Liste.SelectedItem;
                 DoAutocomplete(item, Fragment);
                 Close();
-                
-                var args2 = new SelectedEventArgs
-                {
-                    Item = item,
-                    Tb = Fragment.tb
-                };
-                
-                item.OnSelected(this, args2);
+
+                var args = new SelectedEventArgs(item, Fragment.tb);
+                item.OnSelected(this, args);
             }
-            finally
-            { }
 		}
 
-		void OnItemTouched(object sender, System.Windows.Input.TouchEventArgs e)
+        void OnItemTouched(Object sender, System.Windows.Input.TouchEventArgs e)
 		{
             Liste.SelectionChanged += Liste_SelectionChanged;
 		}
 
-        void Liste_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void Liste_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
             Liste.SelectionChanged -= Liste_SelectionChanged;
             OnSelecting();
             PlacementTarget.Focus();
-            tb.Focus();
+            _tb.Focus();
         }
 
-		void OnItemClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        void OnItemClicked(Object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			OnSelecting();
             PlacementTarget.Focus();
-			tb.Focus();
+			_tb.Focus();
 		}
 
         #endregion

@@ -63,7 +63,7 @@
         public FileInfo Info 
         { 
             get;
-            protected set; 
+            private set; 
         }
 
         /// <summary>

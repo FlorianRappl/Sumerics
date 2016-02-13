@@ -15,13 +15,13 @@
     /// </summary>
     public partial class ConsoleControl : UserControl
     {
-        #region Members
+        #region Fields
 
-        ICommand command;
-        string[] currentHistory;
-		int historyIndex;
-		AutocompletePopup autoComplete;
-        MathInputControl mip;
+        ICommand _command;
+        String[] _currentHistory;
+		Int32 _historyIndex;
+		AutocompletePopup _autoComplete;
+        MathInputControl _mip;
 
         #endregion
 
@@ -85,7 +85,7 @@
         {
             var control = (d as ConsoleControl);
             var value = e.NewValue as ICommand;
-            control.command = value;
+            control._command = value;
         }
 
         static void OnInputChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -98,7 +98,15 @@
         static void OnAutoCompleteItemsChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var basis = (ConsoleControl)d;
-            basis.autoComplete.AvailableItems = (ObservableCollection<AutocompleteItem>)e.NewValue;
+            var newList = (ObservableCollection<AutocompleteItem>)e.NewValue;
+            var oldList = basis._autoComplete.AvailableItems;
+            
+            oldList.Clear();
+
+            foreach (var entry in newList)
+            {
+                oldList.Add(entry);
+            }
         }		
 
         #endregion
@@ -111,7 +119,7 @@
             InputPanel.PlaceFocus = SetFocus;
             InputPanel.Insert = InsertText;
             InputPanel.Delete = Backspace;
-            currentHistory = new string[0];
+            _currentHistory = new string[0];
 			CommandHistory.Add(string.Empty);
 
 			Console.OnQueryEntered += OnQueryEntered;
@@ -140,7 +148,7 @@
 
 		void InitializeComplete()
 		{
-			autoComplete = new AutocompletePopup(this);
+			_autoComplete = new AutocompletePopup(this);
 		}
 
         #endregion
@@ -151,11 +159,11 @@
         {
             try
             {
-                mip = new MathInputControl();
-                mip.SetCaptionText("Draw query");
-                mip.EnableExtendedButtons(true);
-                mip.Insert += InsertMathInputPanel;
-                mip.Close += CloseMathInputPanel;
+                _mip = new MathInputControl();
+                _mip.SetCaptionText("Draw query");
+                _mip.EnableExtendedButtons(true);
+                _mip.Insert += InsertMathInputPanel;
+                _mip.Close += CloseMathInputPanel;
                 MathInputButton.Click += OpenMathInputPanel;
             }
             catch (Exception ex)
@@ -168,17 +176,17 @@
 
         void OpenMathInputPanel(object sender, EventArgs ev)
         {
-            mip.Show();
+            _mip.Show();
         }
 
         void CloseMathInputPanel()
         {
-            mip.Hide();
+            _mip.Hide();
         }
 
         void InsertMathInputPanel(string query)
         {
-            mip.Clear();
+            _mip.Clear();
 
             if (MathInputReceived != null)
                 MathInputReceived(this, query);
@@ -224,15 +232,15 @@
             set { SetValue(CommandProperty, value); }
         }
 
-        public string Input
+        public String Input
         {
-            get { return GetValue(InputProperty) as string; }
+            get { return GetValue(InputProperty) as String; }
             set { SetValue(InputProperty, value); }
         }
 
-        public ObservableCollection<string> CommandHistory
+        public ObservableCollection<String> CommandHistory
         {
-            get { return GetValue(CommandHistoryProperty) as ObservableCollection<string>; }
+            get { return GetValue(CommandHistoryProperty) as ObservableCollection<String>; }
             set { SetValue(CommandHistoryProperty, value); }
         }
 
@@ -240,12 +248,9 @@
 
 		#region Methods
 
-		protected override bool HasEffectiveKeyboardFocus
+		protected override Boolean HasEffectiveKeyboardFocus
 		{
-			get
-			{
-				return Console.Focused;
-			}
+			get { return Console.Focused; }
 		}
 
         void Backspace()
@@ -253,7 +258,9 @@
             Console.ResetSelectionToPrompt();
 
             if (Console.Selection.IsEmpty)
+            {
                 Console.Selection.GoLeft(true);
+            }
 
             Console.ClearSelected();
         }
@@ -288,7 +295,9 @@
         void StopButtonClick(Object sender, RoutedEventArgs e)
         {
             foreach (var query in QueryResultViewModel.RunningQueries)
+            {
                 query.Cancel();
+            }
         }
 
         void ExpandButtonClick(Object sender, RoutedEventArgs e)
@@ -301,32 +310,36 @@
             Console.CollapseAllFoldingBlocks();
         }
 
-        void InputPanelClick(object sender, RoutedEventArgs e)
+        void InputPanelClick(Object sender, RoutedEventArgs e)
         {
             InputPanel.Toggle();
         }
 
-		void AutocompleteClick(object sender, RoutedEventArgs e)
+        void AutocompleteClick(Object sender, RoutedEventArgs e)
 		{
-			autoComplete.Show(true);
+			_autoComplete.Show(true);
             Console.Focus();
 		}
 
-        void HistoryClick(object sender, RoutedEventArgs e)
+        void HistoryClick(Object sender, RoutedEventArgs e)
         {
             if (CommandHistoryList.Visibility == Visibility.Collapsed)
+            {
                 CommandHistoryList.Visibility = Visibility.Visible;
+            }
             else
+            {
                 CommandHistoryList.Visibility = Visibility.Collapsed;
+            }
         }
 
-        void EvaluateClick(object sender, RoutedEventArgs e)
+        void EvaluateClick(Object sender, RoutedEventArgs e)
         {
             Console.RunQuery();
             Console.Focus();
         }
 
-		public void InsertAndRun(string query)
+		public void InsertAndRun(String query)
 		{
 			var current = Console.Query;
 			Console.Query = query;
@@ -334,7 +347,7 @@
 			Console.Query = current;
 		}
 
-        public void InsertAndRun(string query, string message)
+        public void InsertAndRun(String query, String message)
         {
             var current = Console.Query;
             Console.Query = "/* " + message + " */";
@@ -342,12 +355,12 @@
             Console.Query = current;
         }
 
-		public void InsertText(string text)
+        public void InsertText(String text)
 		{
 			Console.InsertText(text);
 		}
 
-		void CommandHistoryClick(object sender, RoutedEventArgs e)
+		void CommandHistoryClick(Object sender, RoutedEventArgs e)
 		{
 			var cmd = (TextBlock)(((Button)e.Source).Content);
 			Console.Query = cmd.Text;
@@ -365,46 +378,50 @@
 
         void SavePersonalHistory()
 		{
-			currentHistory[historyIndex] = Console.Query;
+			_currentHistory[_historyIndex] = Console.Query;
 		}
 
-		void OnHistoryUp(object sender, EventArgs e)
+		void OnHistoryUp(Object sender, EventArgs e)
 		{
-			if (historyIndex > 0)
+			if (_historyIndex > 0)
 			{
 				SavePersonalHistory();
-				historyIndex -= 1;
-				Console.Query = currentHistory[historyIndex];
+				_historyIndex -= 1;
+				Console.Query = _currentHistory[_historyIndex];
 			}
 		}
 
-		void OnHistoryDown(object sender, EventArgs e)
+		void OnHistoryDown(Object sender, EventArgs e)
 		{
-			if (historyIndex + 1 < currentHistory.Length)
+			if (_historyIndex + 1 < _currentHistory.Length)
 			{
 				SavePersonalHistory();
-				historyIndex += 1;
-				Console.Query = currentHistory[historyIndex];
+				_historyIndex += 1;
+				Console.Query = _currentHistory[_historyIndex];
 			}
 		}
 
-		void OnQueryEntered(object sender, FastColoredTextBoxNS.QueryEventArgs e)
+		void OnQueryEntered(Object sender, FastColoredTextBoxNS.QueryEventArgs e)
 		{
 			var query = new QueryResultViewModel(e.Query, e.Region);
 
             if (e.IsHistoryEntry)
             {
                 if (CommandHistory.Count > 1 && CommandHistory[CommandHistory.Count - 2] == e.Query)
+                {
                     CommandHistory.RemoveAt(CommandHistory.Count - 2);
+                }
 
                 CommandHistory[CommandHistory.Count - 1] = e.Query;
-                historyIndex = CommandHistory.Count;
-                CommandHistory.Add(string.Empty);
-                currentHistory = CommandHistory.ToArray();
+                _historyIndex = CommandHistory.Count;
+                CommandHistory.Add(String.Empty);
+                _currentHistory = CommandHistory.ToArray();
             }
 
-			if (command != null && command.CanExecute(query))
-				command.Execute(query);
+            if (_command != null && _command.CanExecute(query))
+            {
+                _command.Execute(query);
+            }
 		}
 
 		#endregion

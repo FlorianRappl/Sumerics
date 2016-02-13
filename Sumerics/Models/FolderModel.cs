@@ -69,7 +69,7 @@
         public Boolean IsDrive 
         { 
             get; 
-            protected set; 
+            private set; 
         }
 
         /// <summary>
@@ -77,8 +77,8 @@
         /// </summary>
         public DirectoryInfo Info 
         { 
-            get; 
-            protected set; 
+            get;
+            private set; 
         }
 
         /// <summary>

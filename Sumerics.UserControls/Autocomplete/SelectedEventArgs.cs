@@ -1,15 +1,26 @@
-﻿using FastColoredTextBoxNS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
-    public class SelectedEventArgs : EventArgs
+    using FastColoredTextBoxNS;
+    using System;
+
+    public sealed class SelectedEventArgs : EventArgs
     {
-        public AutocompleteItem Item { get; internal set; }
-        public FastColoredTextBox Tb { get; set; }
+        public SelectedEventArgs(AutocompleteItem item, FastColoredTextBox tb)
+        {
+            Item = item;
+            Tb = tb;
+        }
+
+        public AutocompleteItem Item 
+        { 
+            get; 
+            private set; 
+        }
+
+        public FastColoredTextBox Tb 
+        { 
+            get; 
+            private set; 
+        }
     }
 }

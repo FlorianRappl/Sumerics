@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YAMP;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using System;
+    using System.Collections.ObjectModel;
+
     public interface IScriptFileModel
     {
-        string Text { get; set; }
+        String Text { get; set; }
 
-        bool Changed { get; set; }
+        Boolean Changed { get; set; }
 
         void Compile();
 
@@ -24,7 +19,7 @@ namespace Sumerics.Controls
 
         void Execute();
 
-        string TransformMathML(string query);
+        String TransformMathML(String query);
 
         ObservableCollection<AutocompleteItem> Items { get; }
     }

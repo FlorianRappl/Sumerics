@@ -141,7 +141,6 @@
     <Compile Include="Autocomplete\AutocompleteItem.cs" />
     <Compile Include="Autocomplete\CompareResult.cs" />
     <Compile Include="Autocomplete\SelectedEventArgs.cs" />
-    <Compile Include="Autocomplete\SelectingEventArgs.cs" />
     <Compile Include="Autocomplete\SnippetAutocompleteItem.cs" />
     <Compile Include="CountConverter.cs" />
     <Compile Include="ConsoleControl.xaml.cs">

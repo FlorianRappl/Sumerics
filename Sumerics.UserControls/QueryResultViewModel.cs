@@ -12,15 +12,15 @@
     {
         #region Fields
 
-        Value result;
-        Exception exception;
-		Boolean running;
+        Value _result;
+        Exception _exception;
+		Boolean _running;
 
 		#endregion
 
 		#region ctor
 
-		public QueryResultViewModel(string query, OutputRegion region)
+		public QueryResultViewModel(String query, OutputRegion region)
 		{
 			Region = region;
 			Query = query;
@@ -57,10 +57,10 @@
 
         public Value Value
         {
-            get { return result; }
+            get { return _result; }
             set
             {
-                result = value;
+                _result = value;
                 Running = false;
                 RaisePropertyChanged();
             }
@@ -68,10 +68,10 @@
 
         public Exception Error
         {
-            get { return exception; }
+            get { return _exception; }
             set
             {
-                exception = value;
+                _exception = value;
                 Running = false;
                 RaisePropertyChanged();
             }
@@ -79,12 +79,12 @@
 
         public Boolean Running
         {
-            get { return running; }
+            get { return _running; }
             set
             {
-                running = value;
+                _running = value;
 
-                if (running)
+                if (_running)
                 {
                     if (!runningQueries.Contains(this))
                     {

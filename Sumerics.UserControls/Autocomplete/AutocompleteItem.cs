@@ -1,56 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
-    /// <summary>
-    /// Item of autocomplete menu
-    /// </summary>
+    using System;
+    using System.Windows.Media.Imaging;
+
     public class AutocompleteItem
     {
         #region ctor
 
-        public AutocompleteItem() : this(string.Empty)
+        public AutocompleteItem() : 
+            this(String.Empty)
         {
         }
 
-        public AutocompleteItem(string text)
+        public AutocompleteItem(String text)
 		{
             Text = text;
         }
 
-        public AutocompleteItem(string text, string toolTip)
+        public AutocompleteItem(String text, String toolTip)
             : this(text)
         {
             ToolTip = toolTip;
         }
 
-        public AutocompleteItem(string text, string toolTip, BitmapImage icon)
+        public AutocompleteItem(String text, String toolTip, BitmapImage icon)
         {
             Text = text;
             ToolTip = toolTip;
             Icon = icon;
         }
 
-        /// <summary>
-        /// Text for tooltip.
-        /// </summary>
-        /// <remarks>Return null for disable tooltip for this item</remarks>
-		public virtual string ToolTip
-		{
-			get;
-			set;
-		}
-
         #endregion
 
-		#region Properties
+        #region Properties
 
-		public string Text { get; set; }
+        public String ToolTip
+        {
+            get;
+            set;
+        }
+
+		public String Text 
+        { 
+            get;
+            set; 
+        }
 
         public BitmapImage Icon
         {
@@ -62,37 +56,28 @@ namespace Sumerics.Controls
 
         #region Methods
 
-        /// <summary>
-        /// Returns text for inserting into Textbox
-        /// </summary>
-        public virtual string GetTextForReplace()
+        public virtual String GetTextForReplace()
         {
             return Text;
         }
 
-        /// <summary>
-        /// Compares fragment text with this item
-        /// </summary>
-        public virtual CompareResult Compare(string fragmentText)
+        public virtual CompareResult Compare(String fragmentText)
         {
+
             if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase))
+            {
                 return CompareResult.VisibleAndSelected;
+            }
 
             return CompareResult.Hidden;
         }
 
-        /// <summary>
-        /// Returns text for display into popup menu
-        /// </summary>
-        public override string ToString()
+        public override String ToString()
         {
             return Text;
         }
 
-        /// <summary>
-        /// This method is called after item inserted into text
-        /// </summary>
-        public virtual void OnSelected(object sender, SelectedEventArgs e)
+        public virtual void OnSelected(Object sender, SelectedEventArgs e)
         {
         }
 

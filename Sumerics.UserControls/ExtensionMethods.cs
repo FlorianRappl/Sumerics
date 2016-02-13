@@ -1,125 +1,125 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using OxyPlot;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using OxyPlot;
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Windows.Input;
+    using System.Windows.Media;
+
     public static class ExtensionMethods
     {
-        public static bool IsCtrl(this KeyEventArgs keyEvent, Key value)
+        static readonly Regex hexColorRegex = new Regex(@"^\#[0-9A-Fa-f]{6}");
+        static readonly Regex rgbColorRegex = new Regex(@"^rgb\(\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*\)");
+
+        public static Boolean IsCtrl(this KeyEventArgs keyEvent, Key value)
         {
             return keyEvent.KeyboardDevice.Modifiers == ModifierKeys.Control
                 && keyEvent.Key == value;
         }
 
-        public static bool IsModified(this KeyEventArgs keyEvent, Key value)
+        public static Boolean IsModified(this KeyEventArgs keyEvent, Key value)
         {
             return keyEvent.KeyboardDevice.Modifiers != ModifierKeys.None
                 && keyEvent.Key == value;
         }
 
-        public static bool IsCtrlShift(this KeyEventArgs keyEvent, Key value)
+        public static Boolean IsCtrlShift(this KeyEventArgs keyEvent, Key value)
         {
             return keyEvent.KeyboardDevice.Modifiers == ModifierKeys.Control
                 && keyEvent.KeyboardDevice.Modifiers == ModifierKeys.Shift
                 && keyEvent.Key == value;
         }
 
-        public static bool Is(this KeyEventArgs keyEvent, Key value)
+        public static Boolean Is(this KeyEventArgs keyEvent, Key value)
         {
             return keyEvent.KeyboardDevice.Modifiers == ModifierKeys.None && keyEvent.Key == value;
         }
 
-        public static byte ToHexColor(this string str, int start)
+        public static Byte ToHexColor(this String str, Int32 start)
         {
             var sub = str.Substring(start, 2);
-            return byte.Parse(sub, NumberStyles.HexNumber);
+            return Byte.Parse(sub, NumberStyles.HexNumber);
         }
 
-        public static Color FromHexToColor(this string str)
+        public static Color FromHexToColor(this String str)
         {
             return Color.FromRgb(str.ToHexColor(1), str.ToHexColor(3), str.ToHexColor(5));
         }
 
-        public static byte ToRgbColor(this string str)
+        public static Byte ToRgbColor(this String str)
         {
-            var sub = Math.Min(int.Parse(str), 255);
+            var sub = Math.Min(Int32.Parse(str), 255);
             return Convert.ToByte(sub);
         }
 
-        public static Color FromRgbToColor(this string str)
+        public static Color FromRgbToColor(this String str)
         {
             var numbers = "0123456789".ToCharArray();
-            int start = 4;
-            int currentIndex = 0;
-            var colors = new byte[3];
+            var start = 4;
+            var currentIndex = 0;
+            var colors = new Byte[3];
             str = str.Replace(" ", "");
            
-            for (var i = 5; i < str.Length; i++)
+            for (var i = 5; i < str.Length && currentIndex != 3; i++)
             {
-                if(!numbers.Contains(str[i]))
+                if (!numbers.Contains(str[i]))
                 {
                     var color = str.Substring(start, i - start);
                     colors[currentIndex] = color.ToRgbColor();
                     currentIndex++;
                     start = i + 1;
                 }
-
-                if(currentIndex == 3)
-                    break;
             }
 
             return Color.FromRgb(colors[0], colors[1], colors[2]);
 		}
 
-		public static OxyColor OxyColorFromString(this string color)
+		public static OxyColor OxyColorFromString(this String color)
 		{
 			var c = ColorFromString(color);
 			return OxyColor.FromArgb(c.A, c.R, c.G, c.B);
 		}
 
-		public static Brush BrushFromString(this string color)
+		public static Brush BrushFromString(this String color)
 		{
 			return new SolidColorBrush(ColorFromString(color));
 		}
 
-		public static Color ColorFromString(this string color)
+		public static Color ColorFromString(this String color)
 		{
-			if (hexColorRegex.IsMatch(color))
-				return color.FromHexToColor();
+            if (hexColorRegex.IsMatch(color))
+            {
+                return color.FromHexToColor();
+            }
 
-			if (rgbColorRegex.IsMatch(color))
-				return color.FromRgbToColor();
+            if (rgbColorRegex.IsMatch(color))
+            {
+                return color.FromRgbToColor();
+            }
 
 			var props = typeof(Colors).GetProperties();
 
 			foreach (var prop in props)
 			{
-				if (prop.Name.Equals(color, StringComparison.InvariantCultureIgnoreCase))
-					return (Color)prop.GetValue(null, null);
+                if (prop.Name.Equals(color, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return (Color)prop.GetValue(null, null);
+                }
 			}
 
 			return Colors.Black;
 		}
 
-		public static string ToHtml(this Color color)
+		public static String ToHtml(this Color color)
 		{
 			return "#" + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
 		}
 
-		public static string ToHtml(this SolidColorBrush brush)
+		public static String ToHtml(this SolidColorBrush brush)
 		{
 			return brush.Color.ToHtml();
 		}
-
-		static readonly Regex hexColorRegex = new Regex(@"^\#[0-9A-Fa-f]{6}");
-		static readonly Regex rgbColorRegex = new Regex(@"^rgb\(\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*,\s*[0-9]{1,3}\s*\)");
     }
 }
