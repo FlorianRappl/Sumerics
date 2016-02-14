@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+    using System.Drawing;
+
     public class OutputRegion
     {
-        #region Members
+        #region Fields
 
-        string _text;
-        FastColoredTextBox _container;
+        readonly FastColoredTextBox _container;
+        String _text;
 
         #endregion
 
         #region ctor
 
-        internal OutputRegion(FastColoredTextBox container, int startLine)
+        internal OutputRegion(FastColoredTextBox container, Int32 startLine)
         {
             Style = new TextStyle(Brushes.LightGray, Brushes.Transparent, FontStyle.Regular);
             _container = container;
@@ -29,19 +26,19 @@ namespace FastColoredTextBoxNS
 
         #region Properties
 
-        public bool Fold 
+        public Boolean Fold 
         {
             get; 
             set; 
         }
 
-        public int StartLine 
+        public Int32 StartLine 
         {
             get; 
             private set; 
         }
 
-        public int Lines
+        public Int32 Lines
         {
             get;
             internal set; 
@@ -53,21 +50,15 @@ namespace FastColoredTextBoxNS
             set; 
         }
 
-		public int CurrentChars
+        public Int32 CurrentChars
 		{
-			get 
-            {
-                return _container.Width / _container.CharWidth; 
-            }
+			get { return _container.Width / _container.CharWidth; }
 		}
 
-        public string Text
+        public String Text
         {
-            get
-            {
-                return _text;
-            }
-            set
+            get { return _text; }
+            set 
             {
                 _text = value;
                 _container.OnOutputChanged(this);

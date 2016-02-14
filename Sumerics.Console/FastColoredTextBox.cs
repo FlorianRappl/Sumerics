@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Drawing.Drawing2D;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Forms;
-using System.Windows.Forms.Design;
-using Microsoft.Win32;
-using Timer = System.Windows.Forms.Timer;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Drawing.Design;
+    using System.Drawing.Drawing2D;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Threading;
+    using System.Windows.Forms;
+    using System.Windows.Forms.Design;
+    using Timer = System.Windows.Forms.Timer;
+
     /// <summary>
     /// Fast colored textbox
     /// </summary>
@@ -36,7 +35,7 @@ namespace FastColoredTextBoxNS
 
         #endregion
 
-        #region Members
+        #region Fields
 
         internal readonly List<LineInfo> lineInfos;
 
@@ -45,67 +44,66 @@ namespace FastColoredTextBoxNS
         readonly Timer timer3 = new Timer();
 
         readonly List<VisualMarker> visibleMarkers;
-        internal bool allowInsertRemoveLines;
-        Dictionary<int, int> foldingPairs;
+        internal Boolean allowInsertRemoveLines;
+        Dictionary<Int32, Int32> foldingPairs;
 
         Range selection;
-        int charHeight;
+        Int32 charHeight;
         Color currentLineColor;
-        bool caretVisible;
+        Boolean caretVisible;
         Range delayedTextChangedRange;
-        string descriptionFile;
-        int endFoldingLine = -1;
+        String descriptionFile;
+        Int32 endFoldingLine = -1;
         Color foldingIndicatorColor;
-        bool handledChar;
-        bool highlightFoldingIndicator;
+        Boolean handledChar;
+        Boolean highlightFoldingIndicator;
         Color indentBackColor;
         Color paddingBackColor;
-        bool isChanged;
+        Boolean isChanged;
         Keys lastModifiers;
         Point lastMouseCoord;
         DateTime lastNavigatedDateTime;
         Range leftBracketPosition;
         Range leftBracketPosition2;
-        int leftPadding;
-        int lineInterval;
+        Int32 leftPadding;
+        Int32 lineInterval;
         Color lineNumberColor;
-        uint lineNumberStartValue;
+        UInt32 lineNumberStartValue;
         TextSource lines;
         IntPtr m_hImc;
-        bool mouseIsDrag;
-        bool isLineSelect;
-        int lineSelectFrom;
-        bool multiline;
-        bool needRecalc;
-        bool needRiseSelectionChangedDelayed;
-        bool needRiseTextChangedDelayed;
-        bool needRiseVisibleRangeChangedDelayed;
-        int preferredLineWidth;
+        Boolean mouseIsDrag;
+        Boolean isLineSelect;
+        Int32 lineSelectFrom;
+        Boolean multiline;
+        Boolean needRecalc;
+        Boolean needRiseSelectionChangedDelayed;
+        Boolean needRiseTextChangedDelayed;
+        Boolean needRiseVisibleRangeChangedDelayed;
+        Int32 preferredLineWidth;
         Range rightBracketPosition;
         Range rightBracketPosition2;
-        bool scrollBars;
+        Boolean scrollBars;
         Color serviceLinesColor;
-        bool showLineNumbers;
-        bool showFoldingLines;
-        bool needRecalcFoldingLines;
+        Boolean showLineNumbers;
+        Boolean showFoldingLines;
+        Boolean needRecalcFoldingLines;
         FastColoredTextBox sourceTextBox;
-        int startFoldingLine = -1;
-        int updating;
+        Int32 startFoldingLine = -1;
+        Int32 updating;
         Range updatingRange;
-        bool wordWrap;
-        int wordWrapLinesCount;
-        int maxLineLength = 0;
+        Boolean wordWrap;
+        Int32 wordWrapLinesCount;
+        Int32 maxLineLength = 0;
         WordWrapMode wordWrapMode;
         Color selectionColor;
         Brush backBrush;
-        bool isReplaceMode = false;
+        Boolean isReplaceMode = false;
         Cursor defaultCursor;
-
-        int promptLines;
-        string prompt;
-        bool consoleMode;
+        Int32 promptLines;
+        String prompt;
+        Boolean consoleMode;
 		List<OutputRegion> regions;
-		bool isreset = false;
+        Boolean isreset = false;
 
         #endregion
 

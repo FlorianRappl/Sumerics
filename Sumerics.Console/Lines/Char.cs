@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
     /// <summary>
     /// Char and style
@@ -11,6 +9,7 @@ namespace FastColoredTextBoxNS
         /// Unicode character
         /// </summary>
         public char c;
+
         /// <summary>
         /// Style bit mask
         /// </summary>

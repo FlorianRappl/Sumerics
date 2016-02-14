@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections;
-using System.Drawing;
-using System.IO;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// This class contains the source text (chars and styles).
     /// It stores a text lines, the manager of commands, undo/redo stack, styles.
@@ -15,9 +15,9 @@ namespace FastColoredTextBoxNS
     {
         readonly protected List<Line> lines = new List<Line>();
 
-        LinesAccessor linesAccessor;
-        int lastLineUniqueId;
-        FastColoredTextBox currentTB;
+        LinesAccessor _linesAccessor;
+        Int32 _lastLineUniqueId;
+        FastColoredTextBox _currentTB;
 
         internal CommandManager Manager { get; private set; }
 
@@ -61,18 +61,20 @@ namespace FastColoredTextBoxNS
         /// Current focused FastColoredTextBox
         /// </summary>
         public FastColoredTextBox CurrentTB {
-            get { return currentTB; }
+            get { return _currentTB; }
             set
             {
-                currentTB = value;
+                _currentTB = value;
                 OnCurrentTBChanged(); 
             }
         }
 
         public virtual void ClearIsChanged()
         {
-            foreach(var line in lines)
+            foreach (var line in lines)
+            {
                 line.IsChanged = false;
+            }
         }
 
         public virtual Line CreateLine()
@@ -83,7 +85,9 @@ namespace FastColoredTextBoxNS
         private void OnCurrentTBChanged()
         {
             if (CurrentTBChanged != null)
+            {
                 CurrentTBChanged(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -94,8 +98,8 @@ namespace FastColoredTextBoxNS
 
         public TextSource(FastColoredTextBox currentTB)
         {
-            this.CurrentTB = currentTB;
-            linesAccessor = new LinesAccessor(this);
+            CurrentTB = currentTB;
+            _linesAccessor = new LinesAccessor(this);
             Manager = new CommandManager(this);
             InitDefaultStyle();
         }
@@ -117,7 +121,7 @@ namespace FastColoredTextBoxNS
             }
         }
 
-        public virtual bool IsLineLoaded(int iLine)
+        public virtual Boolean IsLineLoaded(Int32 iLine)
         {
             return lines[iLine] != null;
         }
@@ -125,12 +129,9 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Text lines
         /// </summary>
-        public IList<string> Lines
+        public IList<String> Lines
         {
-            get
-            {
-                return linesAccessor;
-            }
+            get { return _linesAccessor; }
         }
 
         public IEnumerator<Line> GetEnumerator()
@@ -138,58 +139,59 @@ namespace FastColoredTextBoxNS
             return lines.GetEnumerator();
         }
 
-        IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return (lines as IEnumerator);
+            return lines as IEnumerator;
         }
 
-        public int BinarySearch(Line item, IComparer<Line> comparer)
+        public Int32 BinarySearch(Line item, IComparer<Line> comparer)
         {
             return lines.BinarySearch(item, comparer);
         }
 
-        public int GenerateUniqueLineId()
+        public Int32 GenerateUniqueLineId()
         {
-            return lastLineUniqueId++;
+            return _lastLineUniqueId++;
         }
 
-        public virtual void InsertLine(int index, Line line)
+        public virtual void InsertLine(Int32 index, Line line)
         {
             lines.Insert(index, line);
             OnLineInserted(index);
         }
 
-        public void OnLineInserted(int index)
+        public void OnLineInserted(Int32 index)
         {
             OnLineInserted(index, 1);
         }
 
-        public void OnLineInserted(int index, int count)
+        public void OnLineInserted(Int32 index, Int32 count)
         {
             if (LineInserted != null)
+            {
                 LineInserted(this, new LineInsertedEventArgs(index, count));
+            }
         }
 
-        public virtual void RemoveLine(int index)
+        public virtual void RemoveLine(Int32 index)
         {
             RemoveLine(index, 1);
         }
 
-        public bool IsNeedBuildRemovedLineIds
+        public Boolean IsNeedBuildRemovedLineIds
         {
             get { return LineRemoved != null; }
         }
 
-        public virtual void RemoveLine(int index, int count)
+        public virtual void RemoveLine(Int32 index, Int32 count)
         {
-            var removedLineIds = new List<int>();
+            var removedLineIds = new List<Int32>();
 
-            if (count > 0)
+            if (count > 0 && IsNeedBuildRemovedLineIds)
             {
-                if (IsNeedBuildRemovedLineIds)
+                for (var i = 0; i < count; i++)
                 {
-                    for (int i = 0; i < count; i++)
-                        removedLineIds.Add(this[index + i].UniqueId);
+                    removedLineIds.Add(this[index + i].UniqueId);
                 }
             }
             
@@ -197,44 +199,45 @@ namespace FastColoredTextBoxNS
             OnLineRemoved(index, count, removedLineIds);
         }
 
-        public void OnLineRemoved(int index, int count, List<int> removedLineIds)
+        public void OnLineRemoved(Int32 index, Int32 count, List<Int32> removedLineIds)
         {
-            if (count > 0)
+            if (count > 0 && LineRemoved != null)
             {
-                if (LineRemoved != null)
-                    LineRemoved(this, new LineRemovedEventArgs(index, count, removedLineIds));
+                LineRemoved(this, new LineRemovedEventArgs(index, count, removedLineIds));
             }
         }
 
-        public void OnTextChanged(int fromLine, int toLine)
+        public void OnTextChanged(Int32 fromLine, Int32 toLine)
         {
             if (TextChanged != null)
-                TextChanged(this, new TextChangedEventArgs(Math.Min(fromLine, toLine), Math.Max(fromLine, toLine) ));
+            {
+                TextChanged(this, new TextChangedEventArgs(Math.Min(fromLine, toLine), Math.Max(fromLine, toLine)));
+            }
         }
 
         public class TextChangedEventArgs : EventArgs
         {
-            public int iFromLine;
-            public int iToLine;
+            public Int32 iFromLine;
+            public Int32 iToLine;
 
-            public TextChangedEventArgs(int iFromLine, int iToLine)
+            public TextChangedEventArgs(Int32 iFromLine, Int32 iToLine)
             {
                 this.iFromLine = iFromLine;
                 this.iToLine = iToLine;
             }
         }
 
-        public virtual int IndexOf(Line item)
+        public virtual Int32 IndexOf(Line item)
         {
             return lines.IndexOf(item);
         }
 
-        public virtual void Insert(int index, Line item)
+        public virtual void Insert(Int32 index, Line item)
         {
             InsertLine(index, item);
         }
 
-        public virtual void RemoveAt(int index)
+        public virtual void RemoveAt(Int32 index)
         {
             RemoveLine(index);
         }
@@ -249,12 +252,12 @@ namespace FastColoredTextBoxNS
             RemoveLine(0, Count);
         }
 
-        public virtual bool Contains(Line item)
+        public virtual Boolean Contains(Line item)
         {
             return lines.Contains(item);
         }
 
-        public virtual void CopyTo(Line[] array, int arrayIndex)
+        public virtual void CopyTo(Line[] array, Int32 arrayIndex)
         {
             lines.CopyTo(array, arrayIndex);
         }
@@ -262,41 +265,46 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Lines count
         /// </summary>
-        public virtual int Count
+        public virtual Int32 Count
         {
             get { return lines.Count; }
         }
 
-        public virtual bool IsReadOnly
+        public virtual Boolean IsReadOnly
         {
             get { return false; }
         }
 
-        public virtual bool Remove(Line item)
+        public virtual Boolean Remove(Line item)
         {
-            int i = IndexOf(item);
+            var i = IndexOf(item);
+
             if (i >= 0)
             {
                 RemoveLine(i);
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         internal void NeedRecalc(TextChangedEventArgs args)
         {
             if (RecalcNeeded != null)
+            {
                 RecalcNeeded(this, args);
+            }
         }
 
         internal void OnTextChanging()
         {
-            string temp = null;
+            var temp = default(String);
             OnTextChanging(ref temp);
         }
 
-        internal void OnTextChanging(ref string text)
+        internal void OnTextChanging(ref String text)
         {
             if (TextChanging != null)
             {
@@ -305,35 +313,39 @@ namespace FastColoredTextBoxNS
                 text = args.InsertingText;
 
                 if (args.Cancel)
-                    text = string.Empty;
+                {
+                    text = String.Empty;
+                }
             };
         }
 
-        public virtual int GetLineLength(int i)
+        public virtual Int32 GetLineLength(Int32 i)
         {
             return lines[i].Count;
         }
 
-        public virtual bool LineHasFoldingStartMarker(int iLine)
+        public virtual Boolean LineHasFoldingStartMarker(Int32 iLine)
         {
-            return !string.IsNullOrEmpty(lines[iLine].FoldingStartMarker);
+            return !String.IsNullOrEmpty(lines[iLine].FoldingStartMarker);
         }
 
-        public virtual bool LineHasFoldingEndMarker(int iLine)
+        public virtual Boolean LineHasFoldingEndMarker(Int32 iLine)
         {
-            return !string.IsNullOrEmpty(lines[iLine].FoldingEndMarker);
+            return !String.IsNullOrEmpty(lines[iLine].FoldingEndMarker);
         }
 
         public virtual void Dispose()
         {
         }
 
-        public virtual void SaveToFile(string fileName, Encoding enc)
+        public virtual void SaveToFile(String fileName, Encoding enc)
         {
             using (var sw = new StreamWriter(fileName, false, enc))
             {
-                for (int i = 0; i < Count - 1;i++ )
+                for (var i = 0; i < Count - 1; i++)
+                {
                     sw.WriteLine(lines[i].Text);
+                }
 
                 sw.Write(lines[Count-1].Text);
             }

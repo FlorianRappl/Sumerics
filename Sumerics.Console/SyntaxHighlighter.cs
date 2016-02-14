@@ -1,12 +1,9 @@
-﻿using System.Drawing;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.Xml;
-using System.IO;
-using System;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+    using System.Drawing;
+    using System.Text.RegularExpressions;
+
     public class SyntaxHighlighter: IDisposable
     {
         //styles
@@ -37,19 +34,13 @@ namespace FastColoredTextBoxNS
             get { return RegexOptions.None; }
         }
 
-        public bool AutoFoldBlocks
+        public Boolean AutoFoldBlocks
         {
             get;
             set;
         }
 
-        //private void HTMLAutoIndentNeeded(object sender, AutoIndentEventArgs args)
-        //{
-        //    var tb = sender as FastColoredTextBox;
-        //    tb.CalcAutoIndentShiftByCodeFolding(sender, args);
-        //}
-
-        public virtual void AutoIndentNeeded(object sender, AutoIndentEventArgs args)
+        public virtual void AutoIndentNeeded(Object sender, AutoIndentEventArgs args)
         {
             if(AutoFoldBlocks)
             {

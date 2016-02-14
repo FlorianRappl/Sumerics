@@ -81,6 +81,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Descriptors\FCTBDescriptionProvider.cs" />
+    <Compile Include="Descriptors\FCTBTypeDescriptor.cs" />
+    <Compile Include="Descriptors\FooTextChangedDescriptor.cs" />
     <Compile Include="Events\AutoIndentEventArgs.cs" />
     <Compile Include="Events\ToolTipNeededEventArgs.cs" />
     <Compile Include="Images.Designer.cs">
@@ -98,6 +101,11 @@
     <Compile Include="Events\LineInsertedEventArgs.cs" />
     <Compile Include="Events\LineRemovedEventArgs.cs" />
     <Compile Include="Lines\LinesAccessor.cs" />
+    <Compile Include="Markers\CollapseFoldingMarker.cs" />
+    <Compile Include="Markers\ExpandFoldingMarker.cs" />
+    <Compile Include="Markers\FoldedAreaMarker.cs" />
+    <Compile Include="Markers\StyleVisualMarker.cs" />
+    <Compile Include="Markers\VisualMarkerEventArgs.cs" />
     <Compile Include="OutputRegion.cs" />
     <Compile Include="Events\PaintLineEventArgs.cs" />
     <Compile Include="Events\QueryEventArgs.cs" />
@@ -126,9 +134,8 @@
     <Compile Include="Events\TextChangedEventArgs.cs" />
     <Compile Include="Events\TextChangingEventArgs.cs" />
     <Compile Include="TextSource.cs" />
-    <Compile Include="TypeDescriptor.cs" />
     <Compile Include="VisibleState.cs" />
-    <Compile Include="VisualMarker.cs" />
+    <Compile Include="Markers\VisualMarker.cs" />
     <Compile Include="WordWrapMode.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +148,7 @@
       <LastGenOutput>Images.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
