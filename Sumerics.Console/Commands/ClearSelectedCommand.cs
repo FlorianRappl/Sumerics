@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+
     /// <summary>
     /// Clear selected text
     /// </summary>
     internal class ClearSelectedCommand : UndoableCommand
     {
-        string deletedText;
+        String _deletedText;
 
         /// <summary>
         /// Construstor
@@ -27,7 +25,7 @@ namespace FastColoredTextBoxNS
         {
             ts.CurrentTB.Selection.Start = new Place(sel.FromX, Math.Min(sel.Start.iLine, sel.End.iLine));
             ts.OnTextChanging();
-            InsertTextCommand.InsertText(deletedText, ts);
+            InsertTextCommand.InsertText(_deletedText, ts);
             ts.OnTextChanged(sel.Start.iLine, sel.End.iLine);
             ts.CurrentTB.Selection.Start = sel.Start;
             ts.CurrentTB.Selection.End = sel.End;
@@ -39,13 +37,15 @@ namespace FastColoredTextBoxNS
         public override void Execute()
         {
             var tb = ts.CurrentTB;
-
-            string temp = null;
+            var temp = default(String);
             ts.OnTextChanging(ref temp);
-            if (temp == "")
-                throw new ArgumentOutOfRangeException();
 
-            deletedText = tb.Selection.Text;
+            if (temp == "")
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            _deletedText = tb.Selection.Text;
             ClearSelected(ts);
             lastSel = new RangeInfo(tb.Selection);
             ts.OnTextChanged(lastSel.Start.iLine, lastSel.Start.iLine);
@@ -54,28 +54,30 @@ namespace FastColoredTextBoxNS
         internal static void ClearSelected(TextSource ts)
         {
             var tb = ts.CurrentTB;
+            var start = tb.Selection.Start;
+            var end = tb.Selection.End;
+            var fromLine = Math.Min(end.iLine, start.iLine);
+            var toLine = Math.Max(end.iLine, start.iLine);
+            var fromChar = tb.Selection.FromX;
+            var toChar = tb.Selection.ToX;
 
-            Place start = tb.Selection.Start;
-            Place end = tb.Selection.End;
-            int fromLine = Math.Min(end.iLine, start.iLine);
-            int toLine = Math.Max(end.iLine, start.iLine);
-            int fromChar = tb.Selection.FromX;
-            int toChar = tb.Selection.ToX;
-            if (fromLine < 0) return;
-            //
-            if (fromLine == toLine)
-                ts[fromLine].RemoveRange(fromChar, toChar - fromChar);
-            else
+            if (fromLine >= 0)
             {
-                ts[fromLine].RemoveRange(fromChar, ts[fromLine].Count - fromChar);
-                ts[toLine].RemoveRange(0, toChar);
-                ts.RemoveLine(fromLine + 1, toLine - fromLine - 1);
-                InsertCharCommand.MergeLines(fromLine, ts);
+                if (fromLine == toLine)
+                {
+                    ts[fromLine].RemoveRange(fromChar, toChar - fromChar);
+                }
+                else
+                {
+                    ts[fromLine].RemoveRange(fromChar, ts[fromLine].Count - fromChar);
+                    ts[toLine].RemoveRange(0, toChar);
+                    ts.RemoveLine(fromLine + 1, toLine - fromLine - 1);
+                    InsertCharCommand.MergeLines(fromLine, ts);
+                }
+
+                tb.Selection.Start = new Place(fromChar, fromLine);
+                ts.NeedRecalc(new TextSource.TextChangedEventArgs(fromLine, toLine));
             }
-            //
-            tb.Selection.Start = new Place(fromChar, fromLine);
-            //
-            ts.NeedRecalc(new TextSource.TextChangedEventArgs(fromLine, toLine));
         }
 
         public override UndoableCommand Clone()

@@ -85,6 +85,7 @@
     <Compile Include="Descriptors\FCTBTypeDescriptor.cs" />
     <Compile Include="Descriptors\FooTextChangedDescriptor.cs" />
     <Compile Include="Events\AutoIndentEventArgs.cs" />
+    <Compile Include="Events\RegionChangedEventArgs.cs" />
     <Compile Include="Events\ToolTipNeededEventArgs.cs" />
     <Compile Include="Images.Designer.cs">
       <AutoGen>True</AutoGen>

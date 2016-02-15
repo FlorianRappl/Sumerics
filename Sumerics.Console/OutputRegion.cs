@@ -7,17 +7,21 @@
     {
         #region Fields
 
-        readonly FastColoredTextBox _container;
         String _text;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<RegionChangedEventArgs> TextChanged;
 
         #endregion
 
         #region ctor
 
-        internal OutputRegion(FastColoredTextBox container, Int32 startLine)
+        internal OutputRegion(Int32 startLine)
         {
             Style = new TextStyle(Brushes.LightGray, Brushes.Transparent, FontStyle.Regular);
-            _container = container;
             StartLine = startLine;
             Lines = 0;
         }
@@ -50,18 +54,22 @@
             set; 
         }
 
-        public Int32 CurrentChars
-		{
-			get { return _container.Width / _container.CharWidth; }
-		}
-
         public String Text
         {
             get { return _text; }
             set 
             {
-                _text = value;
-                _container.OnOutputChanged(this);
+                if (!_text.Equals(value))
+                {
+                    var old = _text;
+                    _text = value;
+
+                    if (TextChanged != null)
+                    {
+                        var ev = new RegionChangedEventArgs(old, value);
+                        TextChanged(this, ev);
+                    }
+                }
             }
         }
 

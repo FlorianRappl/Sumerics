@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+
     /// <summary>
     /// TextChanged event argument
     /// </summary>

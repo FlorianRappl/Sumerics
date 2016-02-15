@@ -3335,6 +3335,12 @@
             isreset = true;
             SelectAll();
             lines.Manager.ExecuteCommand(new ClearSelectedCommand(TextSource));
+
+            foreach (var region in regions)
+            {
+                region.TextChanged -= RegionTextChanged;
+            }
+
             regions.Clear();
             lines.Manager.ClearHistory();
         }
@@ -3381,70 +3387,70 @@
 
             if (OnQueryEntered != null)
             {
-                var region = new OutputRegion(this, InputLineCount);
+                var region = new OutputRegion(InputLineCount);
+                region.TextChanged += RegionTextChanged;
                 regions.Add(region);
                 var args = new QueryEventArgs(query, region, historyEntry);
                 OnQueryEntered(this, args);
             }
         }
 
-        internal void OnOutputChanged(OutputRegion source)
+        void RegionTextChanged(Object sender, RegionChangedEventArgs e)
         {
-            if (regions.Contains(source))
+            var source = (OutputRegion)sender;
+            var text = e.NewText;
+            var index = TransformInputLineToLine(source.StartLine);
+            var count = 0;
+            var start = Selection.Start;
+            var end = Selection.End;
+            lines.RemoveLine(index, source.Lines);
+
+            if (!String.IsNullOrEmpty(text))
             {
-                var index = TransformInputLineToLine(source.StartLine);
-                var count = 0;
-                var start = Selection.Start;
-                var end = Selection.End;
-                lines.RemoveLine(index, source.Lines);
+                var line = lines.CreateLine();
+                var j = 0;
+                lines.Insert(index, line);
+                count = 1;
 
-                if (!String.IsNullOrEmpty(source.Text))
+                for (var i = 0; i < text.Length; i++)
                 {
-                    var line = lines.CreateLine();
-                    var j = 0;
-                    lines.Insert(index, line);
-                    count = 1;
-
-                    for (var i = 0; i < source.Text.Length; i++)
+                    if (text[i] == '\n')
                     {
-                        if (source.Text[i] == '\n')
-                        {
-                            line = lines.CreateLine();
-                            lines.Insert(index + count, line);
-                            count++;
-                            j = 0;
-                        }
-                        else
-                        {
-                            line.Insert(j, new Char(source.Text[i]));
-                            j++;
-                        }
+                        line = lines.CreateLine();
+                        lines.Insert(index + count, line);
+                        count++;
+                        j = 0;
                     }
-
-                    if (source.Fold)
+                    else
                     {
-                        this[index].FoldingStartMarker = "m" + 0;
-                        this[index + count - 1].FoldingEndMarker = "m" + 0;
+                        line.Insert(j, new Char(text[i]));
+                        j++;
                     }
                 }
 
-                var offset = index + source.Lines;
-                var delta = count - source.Lines;
-
-                if (start.iLine >= offset)
+                if (source.Fold)
                 {
-                    Selection.Start = new Place(start.iChar, start.iLine + delta);
+                    this[index].FoldingStartMarker = "m" + 0;
+                    this[index + count - 1].FoldingEndMarker = "m" + 0;
                 }
-
-                if (end.iLine >= offset)
-                {
-                    Selection.End = new Place(end.iChar, end.iLine + delta);
-                }
-
-                source.Lines = count;
-                RecalcWordWrap(0, lines.Count - 1);
-                DoCaretVisible();
             }
+
+            var offset = index + source.Lines;
+            var delta = count - source.Lines;
+
+            if (start.iLine >= offset)
+            {
+                Selection.Start = new Place(start.iChar, start.iLine + delta);
+            }
+
+            if (end.iLine >= offset)
+            {
+                Selection.End = new Place(end.iChar, end.iLine + delta);
+            }
+
+            source.Lines = count;
+            RecalcWordWrap(0, lines.Count - 1);
+            DoCaretVisible();
         }
 
         int TransformInputLineToLine(Int32 inputLine)
@@ -4357,6 +4363,7 @@
         #endregion
 
         #region Public Text Helpers
+
         /// <summary>
         /// Begins AutoUndo block.
         /// All changes of text between BeginAutoUndo() and EndAutoUndo() will be canceled in one operation Undo.
@@ -4378,39 +4385,41 @@
         /// <summary>
         /// Collapse text block
         /// </summary>
-        public void CollapseBlock(int fromLine, int toLine)
+        public void CollapseBlock(Int32 fromLine, Int32 toLine)
         {
-            int from = Math.Min(fromLine, toLine);
-            int to = Math.Max(fromLine, toLine);
+            var from = Math.Min(fromLine, toLine);
+            var to = Math.Max(fromLine, toLine);
 
-            if (from == to)
-                return;
-
-            //find first non empty line
-            for (; from <= to; from++)
+            if (from != to)
             {
-                if (GetLineText(from).Trim().Length > 0)
+                //find first non empty line
+                for (; from <= to; from++)
                 {
-                    for (int i = from + 1; i <= to; i++)
-                        SetVisibleState(i, VisibleState.Hidden);
+                    if (GetLineText(from).Trim().Length > 0)
+                    {
+                        for (var i = from + 1; i <= to; i++)
+                            SetVisibleState(i, VisibleState.Hidden);
 
-                    SetVisibleState(from, VisibleState.StartOfHiddenBlock);
-                    Invalidate();
-                    break;
+                        SetVisibleState(from, VisibleState.StartOfHiddenBlock);
+                        Invalidate();
+                        break;
+                    }
                 }
+
+                //Move caret outside
+                from = Math.Min(fromLine, toLine);
+                to = Math.Max(fromLine, toLine);
+                var newLine = FindNextVisibleLine(to);
+
+                if (newLine == to)
+                {
+                    newLine = FindPrevVisibleLine(from);
+                }
+
+                //Selection.Start = new Place(0, newLine);
+                needRecalc = true;
+                Invalidate();
             }
-
-            //Move caret outside
-            from = Math.Min(fromLine, toLine);
-            to = Math.Max(fromLine, toLine);
-            int newLine = FindNextVisibleLine(to);
-
-            if (newLine == to)
-                newLine = FindPrevVisibleLine(from);
-
-            //Selection.Start = new Place(0, newLine);
-            needRecalc = true;
-            Invalidate();
         }
 
         /// <summary>
@@ -4418,31 +4427,34 @@
         /// </summary>
         public void IncreaseIndent()
         {
-            if (Selection.IsEmpty)
-                return;
-
-            ResetSelectionToPrompt();
-            Range old = Selection.Clone();
-            int from = Math.Min(Selection.Start.iLine, Selection.End.iLine);
-            int to = Math.Max(Selection.Start.iLine, Selection.End.iLine);
-            BeginUpdate();
-            Selection.BeginUpdate();
-            lines.Manager.BeginAutoUndoCommands();
-
-            for (int i = from; i <= to; i++)
+            if (!Selection.IsEmpty)
             {
-                if (lines[i].Count == 0) continue;
-                Selection.Start = new Place(0, i);
-                lines.Manager.ExecuteCommand(new InsertTextCommand(TextSource, new String(' ', TabLength)));
-            }
+                ResetSelectionToPrompt();
+                var old = Selection.Clone();
+                var from = Math.Min(Selection.Start.iLine, Selection.End.iLine);
+                var to = Math.Max(Selection.Start.iLine, Selection.End.iLine);
+                BeginUpdate();
+                Selection.BeginUpdate();
+                lines.Manager.BeginAutoUndoCommands();
 
-            lines.Manager.EndAutoUndoCommands();
-            Selection.Start = new Place(0, from);
-            Selection.End = new Place(lines[to].Count, to);
-            needRecalc = true;
-            Selection.EndUpdate();
-            EndUpdate();
-            Invalidate();
+                for (var i = from; i <= to; i++)
+                {
+                    if (lines[i].Count != 0)
+                    {
+                        Selection.Start = new Place(0, i);
+                        var cmd = new InsertTextCommand(TextSource, new String(' ', TabLength));
+                        lines.Manager.ExecuteCommand(cmd);
+                    }
+                }
+
+                lines.Manager.EndAutoUndoCommands();
+                Selection.Start = new Place(0, from);
+                Selection.End = new Place(lines[to].Count, to);
+                needRecalc = true;
+                Selection.EndUpdate();
+                EndUpdate();
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -4450,27 +4462,33 @@
         /// </summary>
         public void DecreaseIndent()
         {
-            if (Selection.IsEmpty)
-                return;
-            Range old = Selection.Clone();
-            int from = Math.Min(Selection.Start.iLine, Selection.End.iLine);
-            int to = Math.Max(Selection.Start.iLine, Selection.End.iLine);
-            BeginUpdate();
-            Selection.BeginUpdate();
-            lines.Manager.BeginAutoUndoCommands();
-            for (int i = from; i <= to; i++)
+            if (!Selection.IsEmpty)
             {
-                Selection.Start = new Place(0, i);
-                Selection.End = new Place(Math.Min(lines[i].Count, TabLength), i);
-                if (Selection.Text.Trim() == "")
-                    ClearSelected();
+                var old = Selection.Clone();
+                var from = Math.Min(Selection.Start.iLine, Selection.End.iLine);
+                var to = Math.Max(Selection.Start.iLine, Selection.End.iLine);
+                BeginUpdate();
+                Selection.BeginUpdate();
+                lines.Manager.BeginAutoUndoCommands();
+
+                for (var i = from; i <= to; i++)
+                {
+                    Selection.Start = new Place(0, i);
+                    Selection.End = new Place(Math.Min(lines[i].Count, TabLength), i);
+
+                    if (Selection.Text.Trim() == "")
+                    {
+                        ClearSelected();
+                    }
+                }
+
+                lines.Manager.EndAutoUndoCommands();
+                Selection.Start = new Place(0, from);
+                Selection.End = new Place(lines[to].Count, to);
+                needRecalc = true;
+                EndUpdate();
+                Selection.EndUpdate();
             }
-            lines.Manager.EndAutoUndoCommands();
-            Selection.Start = new Place(0, from);
-            Selection.End = new Place(lines[to].Count, to);
-            needRecalc = true;
-            EndUpdate();
-            Selection.EndUpdate();
         }
 
         /// <summary>
@@ -4478,25 +4496,26 @@
         /// </summary>
         public void DoAutoIndent()
         {
-            if (Selection.ColumnSelectionMode)
-                return;
-            Range r = Selection.Clone();
-            r.Normalize();
-            //
-            BeginUpdate();
-            Selection.BeginUpdate();
-            lines.Manager.BeginAutoUndoCommands();
-            //
-            for (int i = r.Start.iLine; i <= r.End.iLine; i++)
-                DoAutoIndent(i);
-            //
-            lines.Manager.EndAutoUndoCommands();
-            Selection.Start = r.Start;
-            Selection.End = r.End;
-            Selection.Expand();
-            //
-            Selection.EndUpdate();
-            EndUpdate();
+            if (!Selection.ColumnSelectionMode)
+            {
+                var r = Selection.Clone();
+                r.Normalize();
+                BeginUpdate();
+                Selection.BeginUpdate();
+                lines.Manager.BeginAutoUndoCommands();
+                
+                for (int i = r.Start.iLine; i <= r.End.iLine; i++)
+                {
+                    DoAutoIndent(i);
+                }
+
+                lines.Manager.EndAutoUndoCommands();
+                Selection.Start = r.Start;
+                Selection.End = r.End;
+                Selection.Expand();
+                Selection.EndUpdate();
+                EndUpdate();
+            }
         }
 
         /// <summary>
@@ -4504,25 +4523,34 @@
         /// </summary>
         /// <param name="iLine">Line index</param>
         /// <returns>Text</returns>
-        public string GetLineText(int iLine)
+        public String GetLineText(Int32 iLine)
         {
             if (iLine < 0 || iLine >= lines.Count)
+            {
                 throw new ArgumentOutOfRangeException("Line index out of range");
+            }
+
             var sb = new StringBuilder(lines[iLine].Count);
-            foreach (Char c in lines[iLine])
+
+            foreach (var c in lines[iLine])
+            {
                 sb.Append(c.c);
+            }
+
             return sb.ToString();
         }
 
         /// <summary>
         /// Search lines by regex pattern
         /// </summary>
-        public List<int> FindLines(string searchPattern, RegexOptions options)
+        public List<Int32> FindLines(String searchPattern, RegexOptions options)
         {
-            List<int> iLines = new List<int>();
+            var iLines = new List<Int32>();
 
             foreach (var r in Range.GetRangesByLines(searchPattern, options))
+            {
                 iLines.Add(r.Start.iLine);
+            }
 
             return iLines;
         }
@@ -4530,7 +4558,7 @@
         /// <summary>
         /// Removes given lines
         /// </summary>
-        public void RemoveLines(List<int> iLines)
+        public void RemoveLines(List<Int32> iLines)
         {
             TextSource.Manager.ExecuteCommand(new RemoveLinesCommand(TextSource, iLines));
 
@@ -5192,22 +5220,25 @@
                 //draw line background
                 if (lineInfo.VisibleState == VisibleState.Visible && line.BackgroundBrush != null)
                 {
-                    e.Graphics.FillRectangle(line.BackgroundBrush,
-                        new Rectangle(leftTextIndent, y, textWidth, textHeight));
+                    var rect = new Rectangle(leftTextIndent, y, textWidth, textHeight);
+                    e.Graphics.FillRectangle(line.BackgroundBrush, rect);
                 }
 
                 //draw current line background
 
                 if (iLine == Selection.Start.iLine && Selection.IsEmpty)
-                    e.Graphics.FillRectangle(currentLineBrush, new Rectangle(leftTextIndent, y, ClientSize.Width, textHeight));
+                {
+                    var rect = new Rectangle(leftTextIndent, y, ClientSize.Width, textHeight);
+                    e.Graphics.FillRectangle(currentLineBrush, rect);
+                }
 
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //OnPaint event
                 if (lineInfo.VisibleState == VisibleState.Visible)
                 {
-                    OnPaintLine(new PaintLineEventArgs(iLine,
-                        new Rectangle(LeftIndent, y, ClientSize.Width, textHeight), e.Graphics, e.ClipRectangle));
+                    var rect = new Rectangle(LeftIndent, y, ClientSize.Width, textHeight);
+                    OnPaintLine(new PaintLineEventArgs(iLine, rect, e.Graphics, e.ClipRectangle));
                 }
 
                 //draw line number
@@ -5215,9 +5246,9 @@
                 {
                     using (var lineNumberBrush = new SolidBrush(LineNumberColor))
                     {
+                        var rect = new RectangleF(-10, y, LeftIndent - minLeftIndent - 2 + 10, CharHeight);
                         e.Graphics.DrawString((iLine + lineNumberStartValue).ToString(), Font, lineNumberBrush,
-                            new RectangleF(-10, y, LeftIndent - minLeftIndent - 2 + 10, CharHeight),
-                            new StringFormat(StringFormatFlags.DirectionRightToLeft));
+                            rect, new StringFormat(StringFormatFlags.DirectionRightToLeft));
                     }
                 }
 
@@ -5227,9 +5258,9 @@
                 if (lineInfo.VisibleState == VisibleState.StartOfHiddenBlock)
                     _visibleMarkers.Add(new ExpandFoldingMarker(iLine, r1));
 
-                if (!string.IsNullOrEmpty(line.FoldingStartMarker) &&
+                if (!String.IsNullOrEmpty(line.FoldingStartMarker) &&
                     lineInfo.VisibleState == VisibleState.Visible &&
-                    string.IsNullOrEmpty(line.FoldingEndMarker))
+                    String.IsNullOrEmpty(line.FoldingEndMarker))
                 {
                     _visibleMarkers.Add(new CollapseFoldingMarker(iLine, r1));
                 }
