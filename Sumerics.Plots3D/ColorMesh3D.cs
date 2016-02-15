@@ -1,37 +1,32 @@
-﻿using System;
-using System.Windows.Media.Media3D;
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
+    using System;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     public class ColorMesh3D: Mesh3D
     {
-        private System.Windows.Media.Color [] m_colors;             // color information of each vertex
+        Color[] _colors;
 
-        // override the set vertex number, since we include the color information for each vertex
-        public override void SetVertexNo(int nSize)
+        public override void SetVertexNo(Int32 nSize)
         {
-            m_points = new Point3D[nSize];
-            m_colors = new System.Windows.Media.Color[nSize];
+            _points = new Point3D[nSize];
+            _colors = new Color[nSize];
         }
 
-        // get color information of each vertex
-        public override System.Windows.Media.Color GetColor(int nV)
+        public override Color GetColor(Int32 nV)
         {
-            return m_colors[nV];
+            return _colors[nV];
         }
 
-        // set color information of each vertex
-        public void SetColor(int nV, Byte r, Byte g, Byte b)
+        public void SetColor(Int32 nV, Byte r, Byte g, Byte b)
         {
-            m_colors[nV] = System.Windows.Media.Color.FromRgb(r, g, b);
+            _colors[nV] = Color.FromRgb(r, g, b);
         }
 
-        public void SetColor(int nV, System.Windows.Media.Color color)
+        public void SetColor(Int32 nV, Color color)
         {
-            m_colors[nV] = color;
+            _colors[nV] = color;
         }
-
     }
-
-
 }

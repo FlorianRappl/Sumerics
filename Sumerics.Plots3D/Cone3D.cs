@@ -1,55 +1,53 @@
 ﻿namespace WPFChart3D
 {
+    using System;
+
     public class Cone3D : Mesh3D
     {
-        // first 3 parameter are cone size, last parameter is cone resolution (smoothness)
-        public Cone3D(double a, double b, double h, int nRes)
+        Int32 _nRes;
+
+        public Cone3D(Double a, Double b, Double h, Int32 nRes)
         {
-            SetMesh(nRes);    
+            SetMesh(nRes);
             SetData(a, b, h);
         }
 
-        // set mesh stracture, (triangle connection)
-        void SetMesh(int nRes)
+        void SetMesh(Int32 nRes)
         {
-            int nVertNo = nRes + 2;
-            int nTriNo = 2 * nRes;
+            var nVertNo = nRes + 2;
+            var nTriNo = 2 * nRes;
             SetSize(nVertNo, nTriNo);
-            for (int i = 0; i < nRes - 1; i++)
+
+            for (var i = 0; i < nRes - 1; i++)
             {
                 SetTriangle(i, i, i + 1, nRes + 1);
                 SetTriangle(nRes + i, i + 1, i, nRes);
             }
+
             SetTriangle(nRes - 1, nRes - 1, 0, nRes + 1);
             SetTriangle(2 * nRes - 1, 0, nRes - 1, nRes);
-
-            m_nRes = nRes;
+            _nRes = nRes;
         }
 
-        // set cone vertices  
-        // a: cone bottom ellipse long axis
-        // b: cone bottom ellipse short axis
-        // h: cone height
-        void SetData(double a, double b, double h)
+        void SetData(Double a, Double b, Double h)
         {
-            double aXYStep = 2.0f * 3.1415926f / ((double)m_nRes);
-            for (int i = 0; i < m_nRes; i++)
+            var aXYStep = 2.0f * 3.1415926f / ((Double)_nRes);
+
+            for (var i = 0; i < _nRes; i++)
             {
-                double aXY = ((double)i) * aXYStep;
-                SetPoint(i, a*System.Math.Cos(aXY), b*System.Math.Sin(aXY), 0);
+                var aXY = i * aXYStep;
+                SetPoint(i, a * Math.Cos(aXY), b * Math.Sin(aXY), 0);
             }
-            SetPoint(m_nRes, 0, 0, 0);
-            SetPoint(m_nRes + 1, 0, 0, h);	
 
-            m_xMin = -a;
-            m_xMax = a;
-            m_yMin = -b;
-            m_yMax = b;
-            m_zMin = 0;
-            m_zMax = h;
+            SetPoint(_nRes, 0, 0, 0);
+            SetPoint(_nRes + 1, 0, 0, h);
+
+            XMin = -a;
+            XMax = a;
+            YMin = -b;
+            YMax = b;
+            ZMin = 0;
+            ZMax = h;
         }
-
-        private int m_nRes;        // resolution of the cone
-
     }
 }

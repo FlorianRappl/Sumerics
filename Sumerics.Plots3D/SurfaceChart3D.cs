@@ -1,55 +1,43 @@
-﻿using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
-    class SurfaceChart3D: Chart3D
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
+    class SurfaceChart3D : Chart3D
     {
-        // selection
         public override void Select(ViewportRect rect, TransformMatrix matrix, Viewport3D viewport3d)
         {
-            int nDotNo = GetDataNo();
+            var nDotNo = GetDataNo();
 
-            if (nDotNo == 0)
-                return;
-
-            var xMin = rect.XMin();
-            var xMax = rect.XMax();
-            var yMin = rect.YMin();
-            var yMax = rect.YMax();
-
-            for (int i = 0; i < nDotNo; i++)
+            if (nDotNo != 0)
             {
-                var pt = matrix.VertexToViewportPt(new Point3D(m_vertices[i].x, m_vertices[i].y, m_vertices[i].z), viewport3d);
+                var xMin = rect.MinX();
+                var xMax = rect.MaxX();
+                var yMin = rect.MinY();
+                var yMax = rect.MaxY();
 
-                if ((pt.X > xMin) && (pt.X < xMax) && (pt.Y > yMin) && (pt.Y < yMax))
-                    m_vertices[i].selected = true;
-                else
-                    m_vertices[i].selected = false;
+                for (var i = 0; i < nDotNo; i++)
+                {
+                    var pt = matrix.VertexToViewportPt(new Point3D(_vertices[i].X, _vertices[i].Y, _vertices[i].Z), viewport3d);
+                    _vertices[i].IsSelected = (pt.X > xMin) && (pt.X < xMax) && (pt.Y > yMin) && (pt.Y < yMax);
+                }
             }
         }
 
-        // highlight the selection
         public override void HighlightSelection(MeshGeometry3D meshGeometry, Color selectColor)
         {
-            int nDotNo = GetDataNo();
+            var nDotNo = GetDataNo();
 
-            if (nDotNo == 0)
-                return;
-
-            Point mapPt;
-
-            for (int i = 0; i < nDotNo; i++)
+            if (nDotNo != 0)
             {
-                if (m_vertices[i].selected)
-                    mapPt = TextureMapping.GetMappingPosition(selectColor, true);
-                else
-                    mapPt = TextureMapping.GetMappingPosition(m_vertices[i].color, true);
-
-                int nMin = m_vertices[i].nMinI;
-                meshGeometry.TextureCoordinates[nMin] = mapPt;
+                for (var i = 0; i < nDotNo; i++)
+                {
+                    var color = _vertices[i].IsSelected ? selectColor : _vertices[i].Color;
+                    var mapPt = TextureMapping.GetMappingPosition(color, true);
+                    var nMin = _vertices[i].MinI;
+                    meshGeometry.TextureCoordinates[nMin] = mapPt;
+                }
             }
         }
     }

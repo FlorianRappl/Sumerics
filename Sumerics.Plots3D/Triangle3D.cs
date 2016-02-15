@@ -1,12 +1,16 @@
 ﻿namespace WPFChart3D
 {
+    using System;
+
     public class Triangle3D
     {
-        public Triangle3D(int m0, int m1, int m2)
+        public Triangle3D(Int32 m0, Int32 m1, Int32 m2)
         {
-            n0 = m0; n1 = m1; n2 = m2;
+            N0 = m0; N1 = m1; N2 = m2;
         }
 
-        public int n0, n1, n2;                      // vertex indice of the triangle
+        public Int32 N0;
+        public Int32 N1;
+        public Int32 N2;
     }
 }

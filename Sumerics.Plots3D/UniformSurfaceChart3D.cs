@@ -1,101 +1,99 @@
-﻿using System.Collections;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
-using System.Collections.Generic;
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
-    class UniformSurfaceChart3D: SurfaceChart3D
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
+    sealed class UniformSurfaceChart3D : SurfaceChart3D
     {
-        // the grid number on each axis
-        int m_nGridXNo;
-        int m_nGridYNo;
+        Int32 _nGridXNo;
+        Int32 _nGridYNo;
 
-        public void SetPoint(int i, int j, float x, float y, float z)
+        public void SetPoint(Int32 i, Int32 j, Single x, Single y, Single z)
         {
-            int nI = j * m_nGridXNo + i;
-            m_vertices[nI].x = x;
-            m_vertices[nI].y = y;
-            m_vertices[nI].z = z;
+            var nI = j * _nGridXNo + i;
+            _vertices[nI].X = x;
+            _vertices[nI].Y = y;
+            _vertices[nI].Z = z;
         }
 
-        public void SetZ(int i, int j, float z)
+        public void SetZ(Int32 i, Int32 j, Single z)
         {
-            m_vertices[j*m_nGridXNo + i].z = z;
+            _vertices[j * _nGridXNo + i].Z = z;
         }
 
-        public void SetColor(int i, int j, Color color)
+        public void SetColor(Int32 i, Int32 j, Color color)
         {
-            int nI = j * m_nGridXNo + i;
-            m_vertices[nI].color = color;
+            var nI = j * _nGridXNo + i;
+            _vertices[nI].Color = color;
         }
 
-        public void SetGrid(int xNo, int yNo)
+        public void SetGrid(Int32 xNo, Int32 yNo)
         {
-            m_nGridXNo = xNo;
-            m_nGridYNo = yNo;
+            _nGridXNo = xNo;
+            _nGridYNo = yNo;
         }
 
-        public void SetGrid(int xNo, int yNo, float xMin, float xMax, float yMin, float yMax)
+        public void SetGrid(Int32 xNo, Int32 yNo, Single xMin, Single xMax, Single yMin, Single yMax)
         {
             SetDataNo(xNo * yNo);
-            m_nGridXNo = xNo;
-            m_nGridYNo = yNo;
-            m_xMin = xMin;
-            m_xMax = xMax;
-            m_yMin = yMin;
-            m_yMax = yMax;
-            var dx = (m_xMax - m_xMin) / (xNo - 1f);
-            var dy = (m_yMax - m_yMin) / (yNo - 1f);
+            _nGridXNo = xNo;
+            _nGridYNo = yNo;
+            _xMin = xMin;
+            _xMax = xMax;
+            _yMin = yMin;
+            _yMax = yMax;
+            var dx = (_xMax - _xMin) / (xNo - 1f);
+            var dy = (_yMax - _yMin) / (yNo - 1f);
 
-            for (int i = 0; i < xNo; i++)
+            for (var i = 0; i < xNo; i++)
             {
-                for (int j = 0; j < yNo; j++)
+                for (var j = 0; j < yNo; j++)
                 {
-                    var xV = m_xMin + dx * i;
-                    var yV = m_yMin + dy * j;
-                    m_vertices[j * xNo + i] = new Vertex3D();
+                    var xV = _xMin + dx * i;
+                    var yV = _yMin + dy * j;
+                    _vertices[j * xNo + i] = new Vertex3D();
                     SetPoint(i, j, xV, yV, 0);
                 }
             }
-         
+
         }
 
-        // convert the uniform surface chart to a array of Mesh3D (only one element)
-		public List<Mesh3D> GetMeshes()
+        public List<Mesh3D> GetMeshes()
         {
             var meshes = new List<Mesh3D>();
             var surfaceMesh = new ColorMesh3D();
 
-            surfaceMesh.SetSize(m_nGridXNo * m_nGridYNo, 2 * (m_nGridXNo - 1) * (m_nGridYNo - 1));
+            surfaceMesh.SetSize(_nGridXNo * _nGridYNo, 2 * (_nGridXNo - 1) * (_nGridYNo - 1));
 
-            for (int i = 0; i < m_nGridXNo; i++)
+            for (var i = 0; i < _nGridXNo; i++)
             {
-                for (int j = 0; j < m_nGridYNo; j++)
+                for (var j = 0; j < _nGridYNo; j++)
                 {
-                    var nI = j * m_nGridXNo + i;
-                    var vert = m_vertices[nI];
-                    m_vertices[nI].nMinI = nI;
-                    surfaceMesh.SetPoint(nI, new Point3D(vert.x, vert.y, vert.z));
-                    surfaceMesh.SetColor(nI, vert.color);
+                    var nI = j * _nGridXNo + i;
+                    var vert = _vertices[nI];
+                    _vertices[nI].MinI = nI;
+                    surfaceMesh.SetPoint(nI, new Point3D(vert.X, vert.Y, vert.Z));
+                    surfaceMesh.SetColor(nI, vert.Color);
                 }
             }
 
             // set triangle
-            int nT = 0;
-            var nx = m_nGridXNo - 1;
-            var ny = m_nGridYNo - 1;
+            var nT = 0;
+            var nx = _nGridXNo - 1;
+            var ny = _nGridYNo - 1;
 
-            for (int i = 0; i < nx; i++)
+            for (var i = 0; i < nx; i++)
             {
-                for (int j = 0; j < ny; j++)
+                for (var j = 0; j < ny; j++)
                 {
-                    int i1 = i + 1;
-                    int j1 = j + 1;
-                    int n00 = j * m_nGridXNo + i;
-                    int n10 = j * m_nGridXNo + i1;
-                    int n01 = j1 * m_nGridXNo + i;
-                    int n11 = j1 * m_nGridXNo + i1;
+                    var i1 = i + 1;
+                    var j1 = j + 1;
+                    var n00 = j * _nGridXNo + i;
+                    var n10 = j * _nGridXNo + i1;
+                    var n01 = j1 * _nGridXNo + i;
+                    var n11 = j1 * _nGridXNo + i1;
 
                     surfaceMesh.SetTriangle(nT++, n00, n10, n01);
                     surfaceMesh.SetTriangle(nT++, n01, n10, n11);

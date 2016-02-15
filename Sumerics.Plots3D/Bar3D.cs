@@ -1,26 +1,24 @@
-﻿//			0______________1
-//		   /|	          /|
-//        3 ____________2  |
-//        | 4  ---------|- 5
-//        |/            | /
-//        7 ___________ 6 
-
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
+    //			0______________1
+    //		   /|	          /|
+    //        3 ____________2  |
+    //        | 4  ---------|- 5
+    //        |/            | /
+    //        7 ___________ 6 
+    using System;
+
     public class Bar3D: Mesh3D
     {
-        public Bar3D(double x0, double y0, double z0, double W, double L, double H)
+        public Bar3D(Double x0, Double y0, Double z0, Double W, Double L, Double H)
         {
             SetMesh();
             SetData(x0, y0, z0, W, L, H);
         }
 
-        // set the mesh structure (triangle connection)
         public void SetMesh()
         {
             SetSize(8, 12);
- 
             SetTriangle(0, 0, 2, 1);
             SetTriangle(1, 0, 3, 2);
             SetTriangle(2, 1, 2, 5);
@@ -33,12 +31,9 @@ namespace WPFChart3D
             SetTriangle(9, 4, 5, 6);
             SetTriangle(10, 0, 5, 4);
             SetTriangle(11, 0, 1, 5);
- 
         }
 
-        // set the spatial location of 8 vertices
-        // first 3 parameters are the bar center, the last 3 parameters are the bar size at each axis
-        public void SetData(double x0, double y0, double z0, double W, double L, double H)
+        public void SetData(Double x0, Double y0, Double z0, Double W, Double L, Double H)
         {
             SetPoint(0, x0 - W / 2, y0 + L / 2, z0 + H / 2);
             SetPoint(1, x0 + W / 2, y0 + L / 2, z0 + H / 2);
@@ -50,14 +45,12 @@ namespace WPFChart3D
             SetPoint(6, x0 + W / 2, y0 - L / 2, z0 - H / 2);
             SetPoint(7, x0 - W / 2, y0 - L / 2, z0 - H / 2);
 
-            m_xMin = x0 - W / 2;
-            m_xMax = x0 + W / 2;
-            m_yMin = y0 - L / 2;
-            m_yMax = y0 + L / 2;
-            m_zMin = z0 - H / 2;
-            m_zMax = z0 + H / 2;
+            XMin = x0 - W / 2;
+            XMax = x0 + W / 2;
+            YMin = y0 - L / 2;
+            YMax = y0 + L / 2;
+            ZMin = z0 - H / 2;
+            ZMax = z0 + H / 2;
         }
-
-
     }
 }

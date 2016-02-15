@@ -1,22 +1,13 @@
-﻿using _3DTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
+    using _3DTools;
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     /// <summary>
     /// Interaction logic for Plot3D.xaml
     /// </summary>
@@ -24,30 +15,30 @@ namespace WPFChart3D
     {
         #region Constants
 
-        static readonly double SQRT_TWO = Math.Sqrt(2);
+        static readonly Double SQRT_TWO = Math.Sqrt(2);
 
         #endregion
 
-        #region Members
+        #region Fields
 
-        TransformMatrix m_transformMatrix;
-        Chart3D m_3dChart;
-        ViewportRect m_selectRect;
-        ScreenSpaceLines3D wireframes;
-        ScreenSpaceLines3D axis;
-        Model3D model3d;
+        TransformMatrix _transformMatrix;
+        Chart3D _3dChart;
+        ViewportRect _selectRect;
+        ScreenSpaceLines3D _wireframes;
+        ScreenSpaceLines3D _axis;
+        Model3D _model3d;
 
         ScaleTransform3D _scale;
         AxisAngleRotation3D _rotate;
         Vector3D _previousPosition3D;
-        Point origin;
+        Point _origin;
 
-        double xMin;
-        double xMax;
-        double yMin;
-        double yMax;
-        double zMin;
-        double zMax;
+        Double _xMin;
+        Double _xMax;
+        Double _yMin;
+        Double _yMax;
+        Double _zMin;
+        Double _zMax;
 
         #endregion
 
@@ -55,21 +46,21 @@ namespace WPFChart3D
 
         public Plot3D()
         {
-            wireframes = new ScreenSpaceLines3D();
-            wireframes.Color = Colors.SteelBlue;
+            _wireframes = new ScreenSpaceLines3D();
+            _wireframes.Color = Colors.SteelBlue;
 
-            axis = new ScreenSpaceLines3D();
-            axis.Color = Colors.Black;
-            axis.Thickness = 0.5;
+            _axis = new ScreenSpaceLines3D();
+            _axis.Color = Colors.Black;
+            _axis.Thickness = 0.5;
 
-            model3d = new Model3D();
-            m_transformMatrix = new TransformMatrix();
-            m_selectRect = new ViewportRect();
+            _model3d = new Model3D();
+            _transformMatrix = new TransformMatrix();
+            _selectRect = new ViewportRect();
 
             InitializeComponent();
             ObtainTransforms();
-            mainViewport.Children.Add(wireframes);
-            mainViewport.Children.Add(axis);
+            mainViewport.Children.Add(_wireframes);
+            mainViewport.Children.Add(_axis);
 
             trackBall.IsManipulationEnabled = true;
             trackBall.ManipulationDelta += TouchDelta;
@@ -98,8 +89,8 @@ namespace WPFChart3D
 
         void TouchStarted(object sender, ManipulationStartedEventArgs e)
         {
-            origin = e.ManipulationOrigin;
-            _previousPosition3D = ProjectToTrackball(mainViewport.ActualWidth, mainViewport.ActualHeight, origin);
+            _origin = e.ManipulationOrigin;
+            _previousPosition3D = ProjectToTrackball(mainViewport.ActualWidth, mainViewport.ActualHeight, _origin);
         }
 
         void TouchDelta(object sender, ManipulationDeltaEventArgs e)
@@ -120,37 +111,37 @@ namespace WPFChart3D
 
         public double WireframeThickness
         {
-            get { return wireframes.Thickness; }
-            set { wireframes.Thickness = value; }
+            get { return _wireframes.Thickness; }
+            set { _wireframes.Thickness = value; }
         }
 
         public Color WireframeColor
         {
-            get { return wireframes.Color; }
-            set { wireframes.Color = value; }
+            get { return _wireframes.Color; }
+            set { _wireframes.Color = value; }
         }
 
         public bool ShowAxis
         {
-            get { return axis.Points.Count > 0; }
+            get { return _axis.Points.Count > 0; }
             set
             {
-                axis.Points.Clear();
+                _axis.Points.Clear();
 
                 if (value)
                 {
                     var geo = new GeometryModel3D();
                     var cube = new MeshGeometry3D();
 
-                    var p1 = new Point3D(xMin, yMin, zMin);
-                    var p2 = new Point3D(xMax, yMin, zMin);
-                    var p5 = new Point3D(xMax, yMax, zMin);
-                    var p3 = new Point3D(xMin, yMax, zMin);
+                    var p1 = new Point3D(_xMin, _yMin, _zMin);
+                    var p2 = new Point3D(_xMax, _yMin, _zMin);
+                    var p5 = new Point3D(_xMax, _yMax, _zMin);
+                    var p3 = new Point3D(_xMin, _yMax, _zMin);
 
-                    var p4 = new Point3D(xMin, yMin, zMax);
-                    var p6 = new Point3D(xMax, yMin, zMax);
-                    var p8 = new Point3D(xMin, yMax, zMax);
-                    var p7 = new Point3D(xMax, yMax, zMax);
+                    var p4 = new Point3D(_xMin, _yMin, _zMax);
+                    var p6 = new Point3D(_xMax, _yMin, _zMax);
+                    var p8 = new Point3D(_xMin, _yMax, _zMax);
+                    var p7 = new Point3D(_xMax, _yMax, _zMax);
 
                     cube.Positions.Add(p1);//0 - 0 0 0
                     cube.Positions.Add(p2);//1 - 1 0 0
@@ -162,24 +153,24 @@ namespace WPFChart3D
                     cube.Positions.Add(p8);//6 - 0 1 1
                     cube.Positions.Add(p7);//7 - 1 1 1
 
-                    var zh = (zMax - zMin) * 0.5;
-                    var xh = (xMax - xMin) * 0.5;
-                    var yh = (yMax - yMin) * 0.5;
+                    var zh = (_zMax - _zMin) * 0.5;
+                    var xh = (_xMax - _xMin) * 0.5;
+                    var yh = (_yMax - _yMin) * 0.5;
 
-                    var pc1 = new Point3D(xMin, yMin, zh);
-                    var pc2 = new Point3D(xMax, yMin, zh);
-                    var pc5 = new Point3D(xMax, yMax, zh);
-                    var pc3 = new Point3D(xMin, yMax, zh);
+                    var pc1 = new Point3D(_xMin, _yMin, zh);
+                    var pc2 = new Point3D(_xMax, _yMin, zh);
+                    var pc5 = new Point3D(_xMax, _yMax, zh);
+                    var pc3 = new Point3D(_xMin, _yMax, zh);
 
-                    var pc4 = new Point3D(xh, yMin, zMax);
-                    var pc6 = new Point3D(xMax, yh, zMax);
-                    var pc8 = new Point3D(xMin, yh, zMax);
-                    var pc7 = new Point3D(xh, yMax, zMax);
+                    var pc4 = new Point3D(xh, _yMin, _zMax);
+                    var pc6 = new Point3D(_xMax, yh, _zMax);
+                    var pc8 = new Point3D(_xMin, yh, _zMax);
+                    var pc7 = new Point3D(xh, _yMax, _zMax);
 
-                    var pc9 = new Point3D(xh, yMin, zMin);
-                    var pc10 = new Point3D(xMax, yh, zMin);
-                    var pc11 = new Point3D(xMin, yh, zMin);
-                    var pc12 = new Point3D(xh, yMax, zMin);
+                    var pc9 = new Point3D(xh, _yMin, _zMin);
+                    var pc10 = new Point3D(_xMax, yh, _zMin);
+                    var pc11 = new Point3D(_xMin, yh, _zMin);
+                    var pc12 = new Point3D(xh, _yMax, _zMin);
 
                     cube.Positions.Add(pc1);//8
                     cube.Positions.Add(pc2);//9
@@ -245,8 +236,8 @@ namespace WPFChart3D
                     cube.TriangleIndices.Add(19);
            
                     geo.Geometry = cube;
-                    axis.MakeWireframe(geo);
-                    axis.Transform = new MatrixTransform3D(m_transformMatrix.m_totalMatrix);
+                    _axis.MakeWireframe(geo);
+                    _axis.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
                 }
             }
         }
@@ -270,48 +261,48 @@ namespace WPFChart3D
         public void CreateSurface(int nx, int ny)
         {
             var surface = new UniformSurfaceChart3D();
-            m_3dChart = surface;
-            m_3dChart.SetDataNo(nx * ny);
+            _3dChart = surface;
+            _3dChart.SetDataNo(nx * ny);
             surface.SetGrid(nx, ny);
         }
 
         public void SetVertex(int i, float x, float y, float z)
         {
             var v = new Vertex3D();
-            v.x = x;
-            v.y = y;
-            v.z = z;
-            m_3dChart[i] = v;
+            v.X = x;
+            v.Y = y;
+            v.Z = z;
+            _3dChart[i] = v;
         }
 
         public void SetView(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax)
         {
-            m_3dChart.SetDataRange(xmin, xmax, ymin, ymax, zmin, zmax);
+            _3dChart.SetDataRange(xmin, xmax, ymin, ymax, zmin, zmax);
         }
 
         public void SetColors(float zmin, float zmax)
         {
-            int nv = m_3dChart.GetDataNo();
+            int nv = _3dChart.GetDataNo();
 
             for (int i = 0; i < nv; i++)
             {
-                var vert = m_3dChart[i];
-                var h = (vert.z - zmin) / (zmax - zmin);
+                var vert = _3dChart[i];
+                var h = (vert.Z - zmin) / (zmax - zmin);
                 var color = TextureMapping.PseudoColor(h);
-                m_3dChart[i].color = color;
+                _3dChart[i].Color = color;
             }
         }
 
         public void SetColors(float zmin, float zmax, Color[] colors)
         {
-            int nv = m_3dChart.GetDataNo();
+            int nv = _3dChart.GetDataNo();
 
             for (int i = 0; i < nv; i++)
             {
-                var vert = m_3dChart[i];
-                var h = (vert.z - zmin) / (zmax - zmin);
+                var vert = _3dChart[i];
+                var h = (vert.Z - zmin) / (zmax - zmin);
                 var index = (int)Math.Min(Math.Floor(h * colors.Length), colors.Length - 1);
-                m_3dChart[i].color = colors[index];
+                _3dChart[i].Color = colors[index];
             }
         }
 
@@ -322,17 +313,17 @@ namespace WPFChart3D
 
         public void Publish()
         {
-            var meshs = ((UniformSurfaceChart3D)m_3dChart).GetMeshes();
+            var meshs = ((UniformSurfaceChart3D)_3dChart).GetMeshes();
 
             var backMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Gray));
-            model3d.UpdateModel(meshs, backMaterial);
+            _model3d.UpdateModel(meshs, backMaterial);
 
-            var xMin = m_3dChart.XMin();
-            var xMax = m_3dChart.XMax();
-            var yMin = m_3dChart.YMin();
-            var yMax = m_3dChart.YMax();
-            var zMin = m_3dChart.ZMin();
-            var zMax = m_3dChart.ZMax();
+            var xMin = _3dChart.XMin();
+            var xMax = _3dChart.XMax();
+            var yMin = _3dChart.YMin();
+            var yMax = _3dChart.YMax();
+            var zMin = _3dChart.ZMin();
+            var zMax = _3dChart.ZMax();
 
             Project(xMin, xMax, yMin, yMax, zMin, zMax);
             TransformChart();
@@ -344,7 +335,7 @@ namespace WPFChart3D
             var p2 = new Point3D(x2, y2, z2);
             var p3 = new Point3D(x3, y3, z3);
 
-            AddWireframeVertex(wireframes, p1, p2, p3);
+            AddWireframeVertex(_wireframes, p1, p2, p3);
         }
 
         void AddWireframeVertex(ScreenSpaceLines3D space, Point3D p1, Point3D p2, Point3D p3)
@@ -359,44 +350,44 @@ namespace WPFChart3D
 
         public void AddWireframeVertex(double x, double y, double z)
         {
-            wireframes.Points.Add(new Point3D(x, y, z));
+            _wireframes.Points.Add(new Point3D(x, y, z));
         }
 
         void Project(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
         {
-            this.xMin = xmin;
-            this.xMax = xmax;
-            this.yMin = ymin;
-            this.yMax = ymax;
-            this.zMin = zmin;
-            this.zMax = zmax;
+            this._xMin = xmin;
+            this._xMax = xmax;
+            this._yMin = ymin;
+            this._yMax = ymax;
+            this._zMin = zmin;
+            this._zMax = zmax;
 
-            m_transformMatrix.CalculateProjectionMatrix(xMin, xMax, yMin, yMax, zMin, zMax, 0.5);
+            _transformMatrix.CalculateProjectionMatrix(_xMin, _xMax, _yMin, _yMax, _zMin, _zMax, 0.5);
         }
 
         public void SetTransformWireframe(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
         {
             Project(xmin, xmax, ymin, ymax, zmin, zmax);
-            wireframes.Transform = new MatrixTransform3D(m_transformMatrix.m_totalMatrix);
+            _wireframes.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
         }
 
         public void SetWireframe(bool status)
         {
             if (status)
-                wireframes.MakeWireframe(model3d.Content);
+                _wireframes.MakeWireframe(_model3d.Content);
             else
-                wireframes.Points.Clear();
+                _wireframes.Points.Clear();
         }
 
         public void SetSurface(bool status)
         {
             if (status)
             {
-                if (!mainViewport.Children.Contains(model3d))
-                    mainViewport.Children.Add(model3d);
+                if (!mainViewport.Children.Contains(_model3d))
+                    mainViewport.Children.Add(_model3d);
             }
             else
-                mainViewport.Children.Remove(model3d);
+                mainViewport.Children.Remove(_model3d);
         }
 
         #endregion
@@ -410,39 +401,39 @@ namespace WPFChart3D
             int nYNo = nGridNo;
 
             // 1. set the surface grid
-            m_3dChart = new UniformSurfaceChart3D();
-            ((UniformSurfaceChart3D)m_3dChart).SetGrid(nXNo, nYNo, -100, 100, -100, 100);
+            _3dChart = new UniformSurfaceChart3D();
+            ((UniformSurfaceChart3D)_3dChart).SetGrid(nXNo, nYNo, -100, 100, -100, 100);
 
             // 2. set surface chart z value
-            var xC = m_3dChart.XCenter();
-            var yC = m_3dChart.YCenter();
-            var nVertNo = m_3dChart.GetDataNo();
+            var xC = _3dChart.XCenter();
+            var yC = _3dChart.YCenter();
+            var nVertNo = _3dChart.GetDataNo();
             var zV = 0f;
 
             for (int i = 0; i < nVertNo; i++)
             {
-                var vert = m_3dChart[i];
-                var r = 0.15 * Math.Sqrt((vert.x - xC) * (vert.x - xC) + (vert.y - yC) * (vert.y - yC));
+                var vert = _3dChart[i];
+                var r = 0.15 * Math.Sqrt((vert.X - xC) * (vert.X - xC) + (vert.Y - yC) * (vert.Y - yC));
                 zV = r < 1e-10 ? 1f : (float)(Math.Sin(r) / r);
-                m_3dChart[i].z = zV;
+                _3dChart[i].Z = zV;
             }
 
-            m_3dChart.GetDataRange();
+            _3dChart.GetDataRange();
 
             // 3. set the surface chart color according to z vaule
-            double zMin = m_3dChart.ZMin();
-            double zMax = m_3dChart.ZMax();
+            double zMin = _3dChart.ZMin();
+            double zMax = _3dChart.ZMax();
 
             for (int i = 0; i < nVertNo; i++)
             {
-                var vert = m_3dChart[i];
-                var h = (vert.z - zMin) / (zMax - zMin);
+                var vert = _3dChart[i];
+                var h = (vert.Z - zMin) / (zMax - zMin);
                 var color = WPFChart3D.TextureMapping.PseudoColor(h);
-                m_3dChart[i].color = color;
+                _3dChart[i].Color = color;
             }
 
             // 4. Get the Mesh3D array from surface chart
-            var meshs = ((UniformSurfaceChart3D)m_3dChart).GetMeshes();
+            var meshs = ((UniformSurfaceChart3D)_3dChart).GetMeshes();
 
             // 5. Set the model display of surface chart
             var model3d = new Model3D();
@@ -450,7 +441,7 @@ namespace WPFChart3D
             model3d.UpdateModel(meshs, backMaterial);
 
             //Project
-            m_transformMatrix.CalculateProjectionMatrix(m_3dChart.XMin(), m_3dChart.XMax(), m_3dChart.YMin(), m_3dChart.YMax(), zMin, zMax, 0.5);
+            _transformMatrix.CalculateProjectionMatrix(_3dChart.XMin(), _3dChart.XMax(), _3dChart.YMin(), _3dChart.YMax(), zMin, zMax, 0.5);
             TransformChart();
         }
 
@@ -487,8 +478,8 @@ namespace WPFChart3D
 
         void Rotate(Vector translation)
         {
-            origin += translation;
-            var pos = ProjectToTrackball(mainViewport.ActualWidth, mainViewport.ActualHeight, origin);
+            _origin += translation;
+            var pos = ProjectToTrackball(mainViewport.ActualWidth, mainViewport.ActualHeight, _origin);
             var axis = Vector3D.CrossProduct(_previousPosition3D, pos);
 
             if (axis.Length == 0)
@@ -535,15 +526,15 @@ namespace WPFChart3D
         // this function is used to rotate, drag and zoom the 3d chart
         void TransformChart()
         {
-            if (model3d.Content == null)
+            if (_model3d.Content == null)
                 return;
 
-            var group = model3d.Content.Transform as Transform3DGroup;
+            var group = _model3d.Content.Transform as Transform3DGroup;
 
             if (group != null)
             {
                 group.Children.Clear();
-                group.Children.Add(new MatrixTransform3D(m_transformMatrix.m_totalMatrix));
+                group.Children.Add(new MatrixTransform3D(_transformMatrix.TotalMatrix));
             }
         }
 

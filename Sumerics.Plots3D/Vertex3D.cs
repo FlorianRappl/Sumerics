@@ -1,12 +1,15 @@
-﻿using System.Windows.Media;
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
-    class Vertex3D
+    using System;
+    using System.Windows.Media;
+
+    sealed class Vertex3D
     {
-        public Color color;                         // color of the dot
-        public float x, y, z;                       // location of the dot
-        public int nMinI;                           // link to the viewport positions array index
-        public bool selected = false;               // is this dot selected by user
+        public Color Color;
+        public Single X;
+        public Single Y;
+        public Single Z;
+        public Int32 MinI;
+        public Boolean IsSelected = false;
     }
 }

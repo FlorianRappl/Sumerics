@@ -1,26 +1,15 @@
-﻿// image size is 64x64
-// every pixel is one color
-// 
-// for rgb color, each channel has 16 color value
-// change blue color first, 16 blue color take 1/4 row
-// 16x16 blue & green color take 4 rows
-// every 4 rows has same red color
-// 
-// psedo color, is used to encode the z value
-// 
-
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
-using System.Windows;
-
-
-namespace WPFChart3D
+﻿namespace WPFChart3D
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using System.Windows.Media.Media3D;
+
     public class TextureMapping
     {
-        public DiffuseMaterial m_material;
-        private bool m_bPseudoColor = false;
+        public DiffuseMaterial Material;
+        Boolean _bPseudoColor = false;
 
         public TextureMapping()
         {
@@ -29,69 +18,28 @@ namespace WPFChart3D
 
         public void SetRGBMaping()
         {
-             WriteableBitmap writeableBitmap = new WriteableBitmap(64, 64, 96, 96, PixelFormats.Bgr24, null);
-             writeableBitmap.Lock();
-
-             unsafe
-             {
-                 // Get a pointer to the back buffer.
-                 byte* pStart = (byte*)(void*)writeableBitmap.BackBuffer;
-                 int nL = writeableBitmap.BackBufferStride;
-
-                 for (int r = 0; r < 16; r++)
-                 {
-                     for (int g = 0; g < 16; g++)
-                     {
-                         for (int b = 0; b < 16; b++)
-                         {
-                             int nX = (g % 4) * 16 + b;                            
-                             int nY = r*4 + (int)(g/4);
-
-                              *(pStart + nY * nL + nX * 3 + 0) = (byte)(b * 17);
-                             *(pStart + nY * nL + nX * 3 + 1) = (byte)(g * 17);
-                             *(pStart + nY * nL + nX * 3 + 2) = (byte)(r * 17);
-                         }
-                     }
-                 }
-
-             }
-             writeableBitmap.AddDirtyRect(new Int32Rect(0, 0, 64, 64));
-
-             // Release the back buffer and make it available for display.
-             writeableBitmap.Unlock();
-
-             ImageBrush imageBrush = new ImageBrush(writeableBitmap);
-             //ImageBrush imageBrush = new ImageBrush(imSrc);
-             imageBrush.ViewportUnits = BrushMappingMode.Absolute;
-             m_material = new DiffuseMaterial();
-             m_material.Brush = imageBrush;
-
-             m_bPseudoColor = false;
-        }
-
-        public void SetPseudoMaping()
-        {
-            WriteableBitmap writeableBitmap = new WriteableBitmap(64, 64, 96, 96, PixelFormats.Bgr24, null);
+            var writeableBitmap = new WriteableBitmap(64, 64, 96, 96, PixelFormats.Bgr24, null);
             writeableBitmap.Lock();
 
             unsafe
             {
                 // Get a pointer to the back buffer.
-                byte* pStart = (byte*)(void*)writeableBitmap.BackBuffer;
-                int nL = writeableBitmap.BackBufferStride;
+                var pStart = (byte*)(void*)writeableBitmap.BackBuffer;
+                var nL = writeableBitmap.BackBufferStride;
 
-                for (int nY = 0; nY < 64; nY++)
+                for (var r = 0; r < 16; r++)
                 {
-                    for (int nX = 0; nX < 64; nX++)
+                    for (var g = 0; g < 16; g++)
                     {
-                        int nI = nY*64 + nX;
-                        double k = ((double)nI)/4095;
+                        for (var b = 0; b < 16; b++)
+                        {
+                            var nX = (g % 4) * 16 + b;
+                            var nY = r * 4 + (Int32)(g / 4);
 
-                        Color color = PseudoColor(k);
-                        
-                        *(pStart + nY * nL + nX * 3 + 0) = (byte)(color.B);
-                        *(pStart + nY * nL + nX * 3 + 1) = (byte)(color.G);
-                        *(pStart + nY * nL + nX * 3 + 2) = (byte)(color.R);
+                            *(pStart + nY * nL + nX * 3 + 0) = (Byte)(b * 17);
+                            *(pStart + nY * nL + nX * 3 + 1) = (Byte)(g * 17);
+                            *(pStart + nY * nL + nX * 3 + 2) = (Byte)(r * 17);
+                        }
                     }
                 }
 
@@ -104,35 +52,75 @@ namespace WPFChart3D
             ImageBrush imageBrush = new ImageBrush(writeableBitmap);
             //ImageBrush imageBrush = new ImageBrush(imSrc);
             imageBrush.ViewportUnits = BrushMappingMode.Absolute;
-            m_material = new DiffuseMaterial();
-            m_material.Brush = imageBrush;
+            Material = new DiffuseMaterial();
+            Material.Brush = imageBrush;
 
-            m_bPseudoColor = true;
+            _bPseudoColor = false;
+        }
+
+        public void SetPseudoMaping()
+        {
+            WriteableBitmap writeableBitmap = new WriteableBitmap(64, 64, 96, 96, PixelFormats.Bgr24, null);
+            writeableBitmap.Lock();
+
+            unsafe
+            {
+                // Get a pointer to the back buffer.
+                var pStart = (byte*)(void*)writeableBitmap.BackBuffer;
+                var nL = writeableBitmap.BackBufferStride;
+
+                for (var nY = 0; nY < 64; nY++)
+                {
+                    for (var nX = 0; nX < 64; nX++)
+                    {
+                        var nI = nY * 64 + nX;
+                        var k = nI / 4095.0;
+
+                        Color color = PseudoColor(k);
+
+                        *(pStart + nY * nL + nX * 3 + 0) = (Byte)(color.B);
+                        *(pStart + nY * nL + nX * 3 + 1) = (Byte)(color.G);
+                        *(pStart + nY * nL + nX * 3 + 2) = (Byte)(color.R);
+                    }
+                }
+            }
+
+            writeableBitmap.AddDirtyRect(new Int32Rect(0, 0, 64, 64));
+
+            // Release the back buffer and make it available for display.
+            writeableBitmap.Unlock();
+
+            var imageBrush = new ImageBrush(writeableBitmap);
+            imageBrush.ViewportUnits = BrushMappingMode.Absolute;
+            Material = new DiffuseMaterial();
+            Material.Brush = imageBrush;
+            _bPseudoColor = true;
         }
 
         public Point GetMappingPosition(Color color)
         {
-            return GetMappingPosition(color, m_bPseudoColor);
+            return GetMappingPosition(color, _bPseudoColor);
         }
 
-        public static Point GetMappingPosition(Color color, bool bPseudoColor)
+        public static Point GetMappingPosition(Color color, Boolean bPseudoColor)
         {
-            if(bPseudoColor)
+            if (bPseudoColor)
             {
-                double r = ((double)color.R)/255;
-                double g = ((double)color.G)/255;
-                double b = ((double)color.B)/255;
+                var r = color.R / 255.0;
+                var g = color.G / 255.0;
+                var b = color.B / 255.0;
 
-                double k = 0;
-                if ((b>=g)&&(b>r))
+                var k = 0.0;
+
+                if ((b >= g) && (b > r))
                 {
                     k = 0.25 * g;
                 }
-                else if((g>b)&&(b>=r))
+                else if ((g > b) && (b >= r))
                 {
-                    k = 0.25 + 0.25 *(1- b);
+                    k = 0.25 + 0.25 * (1 - b);
                 }
-                else if((g>=r)&&(r>b))
+                else if ((g >= r) && (r > b))
                 {
                     k = 0.5 + 0.25 * r;
                 }
@@ -140,40 +128,35 @@ namespace WPFChart3D
                 {
                     k = 0.75 + 0.25 * (1 - g);
                 }
-                int nI = (int)(k * 4095);
-                if (nI < 0) nI = 0;
-                if (nI > 4095) nI = 4095;
 
-                int nY = nI / 64;
-                int nX = nI % 64;
-
-                double x1 = (double)nX;
-                double y1 = (double)nY;
-                return new Point(x1/64, y1/64);
+                var nI = Math.Max(Math.Min((Int32)(k * 4095), 4095), 0);
+                var nY = nI / 64;
+                var nX = nI % 64;
+                var x1 = (Double)nX;
+                var y1 = (Double)nY;
+                return new Point(x1 / 64, y1 / 64);
             }
             else
             {
-                int nR = (color.R ) / 17;
-                int nG = (color.G) / 17;
-                int nB = (color.B) / 17;
-
-                int nX = (nG % 4) * 16 + nB;
-                int nY = nR * 4 + (int)(nG / 4);
-
-                double x1 = (double)nX;
-                double y1 = (double)nY;
-                return new Point(x1/63, y1/63);
+                var nR = (color.R) / 17;
+                var nG = (color.G) / 17;
+                var nB = (color.B) / 17;
+                var nX = (nG % 4) * 16 + nB;
+                var nY = nR * 4 + nG / 4;
+                var x1 = (Double)nX;
+                var y1 = (Double)nY;
+                return new Point(x1 / 63, y1 / 63);
             }
         }
 
-        // color according to the z value
-        static public Color PseudoColor(double k)
+        static public Color PseudoColor(Double k)
         {
-            if (k < 0) k = 0;
-            if (k > 1) k = 1;
+            k = Math.Max(Math.Min(k, 1), 0);
 
-            double r, g, b;
-            r = b = g = 0;
+            var r = 0.0;
+            var g = 0.0;
+            var b = 0.0;
+
             if (k < 0.25)
             {
                 r = 0;
@@ -184,11 +167,11 @@ namespace WPFChart3D
             {
                 r = 0;
                 g = 1;
-                b = 1 - 4 * (k-0.25);
+                b = 1 - 4 * (k - 0.25);
             }
             else if (k < 0.75)
             {
-                r = 4*(k-0.5);
+                r = 4 * (k - 0.5);
                 g = 1;
                 b = 0;
             }
@@ -199,9 +182,9 @@ namespace WPFChart3D
                 b = 0;
             }
 
-            byte R = (byte)(r * 255 + 0.0);
-            byte G = (byte)(g * 255 + 0.0);
-            byte B = (byte)(b * 255 + 0.0);
+            var R = (Byte)(r * 255 + 0.0);
+            var G = (Byte)(g * 255 + 0.0);
+            var B = (Byte)(b * 255 + 0.0);
 
             return Color.FromRgb(R, G, B);
         }
