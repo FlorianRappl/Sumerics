@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
+    using System;
+
     public class QueryEventArgs : EventArgs
     {
         public OutputRegion Region { get; private set; }
 
-        public string Query { get; private set; }
+        public String Query { get; private set; }
 
-        public bool IsHistoryEntry { get; private set; }
+        public Boolean IsHistoryEntry { get; private set; }
 
-        public QueryEventArgs(string query, OutputRegion region, bool historyEntry = true)
+        public QueryEventArgs(String query, OutputRegion region, Boolean historyEntry = true)
         {
             Region = region;
             Query = query;

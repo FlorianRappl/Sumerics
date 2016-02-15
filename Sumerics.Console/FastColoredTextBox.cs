@@ -38,14 +38,14 @@
         #region Fields
 
         internal readonly List<LineInfo> lineInfos;
-
-        readonly Timer timer = new Timer();
-        readonly Timer timer2 = new Timer();
-        readonly Timer timer3 = new Timer();
-
-        readonly List<VisualMarker> visibleMarkers;
         internal Boolean allowInsertRemoveLines;
-        Dictionary<Int32, Int32> foldingPairs;
+
+        readonly Timer _timer1 = new Timer();
+        readonly Timer _timer2 = new Timer();
+        readonly Timer _timer3 = new Timer();
+
+        readonly List<VisualMarker> _visibleMarkers;
+        readonly Dictionary<Int32, Int32> _foldingPairs;
 
         Range selection;
         Int32 charHeight;
@@ -102,7 +102,7 @@
         Int32 promptLines;
         String prompt;
         Boolean consoleMode;
-		List<OutputRegion> regions;
+        List<OutputRegion> regions;
         Boolean isreset = false;
 
         #endregion
@@ -279,8 +279,8 @@
 
             //Initializations
             allowInsertRemoveLines = true;
-            foldingPairs = new Dictionary<int, int>();
-            visibleMarkers = new List<VisualMarker>();
+            _foldingPairs = new Dictionary<Int32, Int32>();
+            _visibleMarkers = new List<VisualMarker>();
             lineInfos = new List<LineInfo>();
 
             //type provider
@@ -295,9 +295,9 @@
             Font = new Font("Consolas", 12.0f, FontStyle.Regular, GraphicsUnit.Point);
 
             //create one line
-			InitTextSource(CreateTextSource());
-			lines.InsertLine(0, lines.CreateLine());
-			selection = new Range(this) { Start = new Place(0, 0) };
+            InitTextSource(CreateTextSource());
+            lines.InsertLine(0, lines.CreateLine());
+            selection = new Range(this) { Start = new Place(0, 0) };
             InsertPrompt();
             ToolTip = new ToolTip();
 
@@ -351,9 +351,9 @@
             WordWrap = true;
             base.AutoScroll = true;
 
-            timer.Tick += timer_Tick;
-            timer2.Tick += timer2_Tick;
-            timer3.Tick += timer3_Tick;
+            _timer1.Tick += timer1_Tick;
+            _timer2.Tick += timer2_Tick;
+            _timer3.Tick += timer3_Tick;
         }
 
         #endregion
@@ -368,8 +368,8 @@
         [Description("Delay(ms) of ToolTip.")]
         public int ToolTipDelay
         {
-            get { return timer3.Interval; }
-            set { timer3.Interval = value; }
+            get { return _timer3.Interval; }
+            set { _timer3.Interval = value; }
         }
 
         /// <summary>
@@ -501,7 +501,7 @@
         /// <summary>
         /// Background color for current line
         /// </summary>
-        [DefaultValue(typeof (Color), "Transparent")]
+        [DefaultValue(typeof(Color), "Transparent")]
         [Description("Background color for current line. Set to Color.Transparent to hide current line highlighting")]
         public Color CurrentLineColor
         {
@@ -635,7 +635,7 @@
         /// <summary>
         /// Color of line numbers.
         /// </summary>
-        [DefaultValue(typeof (Color), "Teal")]
+        [DefaultValue(typeof(Color), "Teal")]
         [Description("Color of line numbers.")]
         public Color LineNumberColor
         {
@@ -650,7 +650,7 @@
         /// <summary>
         /// Start value of first line number.
         /// </summary>
-        [DefaultValue(typeof (uint), "1")]
+        [DefaultValue(typeof(uint), "1")]
         [Description("Start value of first line number.")]
         public uint LineNumberStartValue
         {
@@ -666,7 +666,7 @@
         /// <summary>
         /// Background color of indent area
         /// </summary>
-        [DefaultValue(typeof (Color), "White")]
+        [DefaultValue(typeof(Color), "White")]
         [Description("Background color of indent area")]
         public Color IndentBackColor
         {
@@ -681,7 +681,7 @@
         /// <summary>
         /// Background color of padding area
         /// </summary>
-        [DefaultValue(typeof (Color), "Transparent")]
+        [DefaultValue(typeof(Color), "Transparent")]
         [Description("Background color of padding area")]
         public Color PaddingBackColor
         {
@@ -698,7 +698,7 @@
         /// </summary>
         [DefaultValue(typeof(Color), "100;180;180;180")]
         [Description("Color of disabled component")]
-        public Color DisabledColor { get;set;}
+        public Color DisabledColor { get; set; }
 
         /// <summary>
         /// Color of caret
@@ -710,7 +710,7 @@
         /// <summary>
         /// Color of service lines (folding lines, borders of blocks etc.)
         /// </summary>
-        [DefaultValue(typeof (Color), "Silver")]
+        [DefaultValue(typeof(Color), "Silver")]
         [Description("Color of service lines (folding lines, borders of blocks etc.)")]
         public Color ServiceLinesColor
         {
@@ -728,10 +728,11 @@
         [Browsable(true)]
         [Description("Paddings of text area.")]
         public Padding Paddings { get; set; }
-        
+
         //hide parent padding
         [Browsable(false)]
-        public new Padding Padding { 
+        public new Padding Padding
+        {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
@@ -747,7 +748,7 @@
         /// <summary>
         /// Color of folding area indicator
         /// </summary>
-        [DefaultValue(typeof (Color), "Green")]
+        [DefaultValue(typeof(Color), "Green")]
         [Description("Color of folding area indicator.")]
         public Color FoldingIndicatorColor
         {
@@ -907,7 +908,7 @@
         /// <remarks>When a user enters text, a component of rebuilding the highlight (because the text is changed).
         /// This property specifies exactly which section of the text will be re-highlighted.
         /// This can be useful to highlight multi-line comments, for example.</remarks>
-        [DefaultValue(typeof (HighlightingRangeType), "ChangedRange")]
+        [DefaultValue(typeof(HighlightingRangeType), "ChangedRange")]
         [Description("This property specifies which part of the text will be highlighted as you type.")]
         public HighlightingRangeType HighlightingRangeType { get; set; }
 
@@ -955,8 +956,8 @@
         [Description("Minimal delay(ms) for delayed events (except TextChangedDelayed).")]
         public int DelayedEventsInterval
         {
-            get { return timer.Interval; }
-            set { timer.Interval = value; }
+            get { return _timer1.Interval; }
+            set { _timer1.Interval = value; }
         }
 
         /// <summary>
@@ -967,8 +968,8 @@
         [Description("Minimal delay(ms) for TextChangedDelayed event.")]
         public int DelayedTextChangedInterval
         {
-            get { return timer2.Interval; }
-            set { timer2.Interval = value; }
+            get { return _timer2.Interval; }
+            set { _timer2.Interval = value; }
         }
 
         /// <summary>
@@ -984,7 +985,7 @@
         /// </summary>
         [Browsable(true)]
         [DefaultValue(null)]
-        [Editor(typeof (FileNameEditor), typeof (UITypeEditor))]
+        [Editor(typeof(FileNameEditor), typeof(UITypeEditor))]
         [Description(
             "XML file with description of syntax highlighting. This property works only with Language == Language.Custom."
             )]
@@ -1149,7 +1150,7 @@
         /// Background color.
         /// It is used if BackBrush is null.
         /// </summary>
-        [DefaultValue(typeof (Color), "White")]
+        [DefaultValue(typeof(Color), "White")]
         [Description("Background color.")]
         public override Color BackColor
         {
@@ -1165,7 +1166,8 @@
         public Brush BackBrush
         {
             get { return backBrush; }
-            set { 
+            set
+            {
                 backBrush = value;
                 Invalidate();
             }
@@ -1199,7 +1201,7 @@
             get { return multiline; }
             set
             {
-                if (multiline == value) 
+                if (multiline == value)
                     return;
 
                 multiline = value;
@@ -1235,12 +1237,12 @@
             get { return wordWrap; }
             set
             {
-                if (wordWrap == value) 
+                if (wordWrap == value)
                     return;
 
                 wordWrap = value;
 
-                if(wordWrap)
+                if (wordWrap)
                     Selection.ColumnSelectionMode = false;
 
                 RecalcWordWrap(0, LinesCount - 1);
@@ -1252,7 +1254,7 @@
         /// WordWrap mode.
         /// </summary>
         [Browsable(true)]
-        [DefaultValue(typeof (WordWrapMode), "WordWrapControlWidth")]
+        [DefaultValue(typeof(WordWrapMode), "WordWrapControlWidth")]
         [Description("WordWrap mode.")]
         public WordWrapMode WordWrapMode
         {
@@ -1289,7 +1291,7 @@
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override bool AutoScroll
+        public override Boolean AutoScroll
         {
             get { return base.AutoScroll; }
             set { ; }
@@ -1329,7 +1331,7 @@
         [Localizable(true)]
         [Editor(
             "System.ComponentModel.Design.MultilineStringEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-            , typeof (UITypeEditor))]
+            , typeof(UITypeEditor))]
         [SettingsBindable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [Description("Text of the control.")]
@@ -1430,7 +1432,7 @@
         /// Font
         /// </summary>
         /// <remarks>Use only monospaced font</remarks>
-        [DefaultValue(typeof (Font), "Courier New, 9.75")]
+        [DefaultValue(typeof(Font), "Courier New, 9.75")]
         public override Font Font
         {
             get { return base.Font; }
@@ -1446,8 +1448,8 @@
 
                 //clac size
                 SizeF size = GetCharSize(base.Font, 'M');
-                CharWidth = (int) Math.Round(size.Width*1f /*0.85*/) - 1 /*0*/;
-                CharHeight = lineInterval + (int) Math.Round(size.Height*1f /*0.9*/) - 1 /*0*/;
+                CharWidth = (int)Math.Round(size.Width * 1f /*0.85*/) - 1 /*0*/;
+                CharHeight = lineInterval + (int)Math.Round(size.Height * 1f /*0.9*/) - 1 /*0*/;
                 //
                 NeedRecalc();
                 Invalidate();
@@ -1529,7 +1531,7 @@
 
         int LeftIndentLine
         {
-            get { return LeftIndent - minLeftIndent/2 - 3; }
+            get { return LeftIndent - minLeftIndent / 2 - 3; }
         }
 
         /// <summary>
@@ -1547,7 +1549,7 @@
 
         private void CancelToolTip()
         {
-            timer3.Stop();
+            _timer3.Stop();
 
             if (ToolTip != null)
                 ToolTip.Hide(this);
@@ -1555,7 +1557,7 @@
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            timer3.Stop();
+            _timer3.Stop();
             OnToolTip();
         }
 
@@ -1716,14 +1718,14 @@
                 return;
             }
 
-			if (marker is FoldedAreaMarker)
-			{
-				ExpandFoldedBlock((marker as FoldedAreaMarker).iLine);
-				Invalidate();
-				return;
-			}
-			
-			/*
+            if (marker is FoldedAreaMarker)
+            {
+                ExpandFoldedBlock((marker as FoldedAreaMarker).iLine);
+                Invalidate();
+                return;
+            }
+
+            /*
             if (marker is FoldedAreaMarker)
             {
                 //select folded block
@@ -1740,7 +1742,7 @@
             }*/
         }
 
-		/*
+        /*
         protected virtual void OnMarkerDoubleClick(VisualMarker marker)
         {
             if (marker is FoldedAreaMarker)
@@ -1786,7 +1788,7 @@
                 HighlightFoldings();
             //
             needRiseSelectionChangedDelayed = true;
-            ResetTimer(timer);
+            ResetTimer(_timer1);
 
             if (SelectionChanged != null)
                 SelectionChanged(this, new EventArgs());
@@ -1879,7 +1881,7 @@
             {
                 //restart tooltip timer
                 CancelToolTip();
-                timer3.Start();
+                _timer3.Start();
             }
 
             lastMouseCoord = e.Location;
@@ -2011,7 +2013,7 @@
             needRecalcFoldingLines = true;
 
             needRiseVisibleRangeChangedDelayed = true;
-            ResetTimer(timer);
+            ResetTimer(_timer1);
 
             if (VisibleRangeChanged != null)
                 VisibleRangeChanged(this, new EventArgs());
@@ -2032,7 +2034,7 @@
         protected virtual void OnCharSizeChanged()
         {
             VerticalScroll.SmallChange = charHeight;
-            VerticalScroll.LargeChange = 10*charHeight;
+            VerticalScroll.LargeChange = 10 * charHeight;
             HorizontalScroll.SmallChange = CharWidth;
         }
 
@@ -2084,7 +2086,7 @@
                 delayedTextChangedRange = delayedTextChangedRange.GetUnionWith(args.ChangedRange);
 
             needRiseTextChangedDelayed = true;
-            ResetTimer(timer2);
+            ResetTimer(_timer2);
             //
             OnSyntaxHighlight(args);
             //
@@ -2246,13 +2248,13 @@
         {
             VisibleState newState = VisibleState.Visible;
 
-            if (e.Index >=0 && e.Index < lineInfos.Count && lineInfos[e.Index].VisibleState == VisibleState.Hidden)
+            if (e.Index >= 0 && e.Index < lineInfos.Count && lineInfos[e.Index].VisibleState == VisibleState.Hidden)
                 newState = VisibleState.Hidden;
 
             var temp = new List<LineInfo>(e.Count);
 
             for (int i = 0; i < e.Count; i++)
-                temp.Add(new LineInfo(-1) { VisibleState = newState});
+                temp.Add(new LineInfo(-1) { VisibleState = newState });
 
             lineInfos.InsertRange(e.Index, temp);
             OnLineInserted(e.Index, e.Count);
@@ -2335,32 +2337,32 @@
             m_hImc = ImmGetContext(Handle);
         }
 
-        void timer2_Tick(object sender, EventArgs e)
+        void timer2_Tick(Object sender, EventArgs e)
         {
-            timer2.Enabled = false;
+            _timer2.Enabled = false;
 
             if (needRiseTextChangedDelayed)
             {
                 needRiseTextChangedDelayed = false;
 
-                if (delayedTextChangedRange == null)
-                    return;
-
-                delayedTextChangedRange = Range.GetIntersectionWith(delayedTextChangedRange);
-                delayedTextChangedRange.Expand();
-                OnTextChangedDelayed(delayedTextChangedRange);
-                delayedTextChangedRange = null;
+                if (delayedTextChangedRange != null)
+                {
+                    delayedTextChangedRange = Range.GetIntersectionWith(delayedTextChangedRange);
+                    delayedTextChangedRange.Expand();
+                    OnTextChangedDelayed(delayedTextChangedRange);
+                    delayedTextChangedRange = null;
+                }
             }
         }
 
         public void AddVisualMarker(VisualMarker marker)
         {
-            visibleMarkers.Add(marker);
+            _visibleMarkers.Add(marker);
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        void timer1_Tick(Object sender, EventArgs e)
         {
-            timer.Enabled = false;
+            _timer1.Enabled = false;
 
             if (needRiseSelectionChangedDelayed)
             {
@@ -2378,7 +2380,9 @@
         public virtual void OnTextChangedDelayed(Range changedRange)
         {
             if (TextChangedDelayed != null)
+            {
                 TextChangedDelayed(this, new TextChangedEventArgs(changedRange));
+            }
         }
 
         public virtual void OnSelectionChangedDelayed()
@@ -2388,10 +2392,14 @@
             ClearBracketsPositions();
 
             if (LeftBracket != '\x0' && RightBracket != '\x0')
+            {
                 HighlightBrackets(LeftBracket, RightBracket, ref leftBracketPosition, ref rightBracketPosition);
+            }
 
             if (LeftBracket2 != '\x0' && RightBracket2 != '\x0')
+            {
                 HighlightBrackets(LeftBracket2, RightBracket2, ref leftBracketPosition2, ref rightBracketPosition2);
+            }
 
             //remember last visit time
             if (Selection.IsEmpty && Selection.Start.iLine < LinesCount)
@@ -2404,20 +2412,27 @@
             }
 
             if (SelectionChangedDelayed != null)
-                SelectionChangedDelayed(this, new EventArgs());
+            {
+                SelectionChangedDelayed(this, EventArgs.Empty);
+            }
         }
 
         public virtual void OnVisibleRangeChangedDelayed()
         {
             if (VisibleRangeChangedDelayed != null)
-                VisibleRangeChangedDelayed(this, new EventArgs());
+            {
+                VisibleRangeChangedDelayed(this, EventArgs.Empty);
+            }
         }
 
         void ResetTimer(Timer timer)
         {
             timer.Stop();
+
             if (IsHandleCreated)
+            {
                 timer.Start();
+            }
         }
 
         #endregion
@@ -2430,7 +2445,7 @@
         /// <returns>Layer index of this style</returns>
         public int AddStyle(Style style)
         {
-            if (style == null) 
+            if (style == null)
                 return -1;
 
             int i = GetStyleIndex(style);
@@ -2581,7 +2596,7 @@
         {
             var text = string.Empty;
 
-            var thread = new Thread(() => 
+            var thread = new Thread(() =>
             {
                 if (Clipboard.ContainsData("ConsoleContent"))
                     text = Clipboard.GetData("ConsoleContent").ToString();
@@ -2622,31 +2637,31 @@
             DoCaretVisible();
         }
 
-		void GoHome(bool shift)
-		{
-			Selection.BeginUpdate();
+        void GoHome(bool shift)
+        {
+            Selection.BeginUpdate();
 
-			try
-			{
-				int iLine = Selection.Start.iLine;
-				int spaces = this[iLine].StartSpacesCount;
+            try
+            {
+                int iLine = Selection.Start.iLine;
+                int spaces = this[iLine].StartSpacesCount;
 
-				if (!consoleMode || Selection.Start.iLine < LinesCount - promptLines)
-					Selection.GoHome(shift);
-				else
-				{
-					Selection.GoHome(shift);
+                if (!consoleMode || Selection.Start.iLine < LinesCount - promptLines)
+                    Selection.GoHome(shift);
+                else
+                {
+                    Selection.GoHome(shift);
 
-					if(Selection.Start.iLine == LinesCount - promptLines)
-						for (int i = 0; i < prompt.Length; i++)
-							Selection.GoRight(shift);
-				}
-			}
-			finally
-			{
-				Selection.EndUpdate();
-			}
-		}
+                    if (Selection.Start.iLine == LinesCount - promptLines)
+                        for (int i = 0; i < prompt.Length; i++)
+                            Selection.GoRight(shift);
+                }
+            }
+            finally
+            {
+                Selection.EndUpdate();
+            }
+        }
 
         /// <summary>
         /// Move caret to first position
@@ -2828,7 +2843,7 @@
             {
                 lines.Manager.EndAutoUndoCommands();
             }
-            
+
             Invalidate();
         }
 
@@ -3067,9 +3082,9 @@
             if (!needRecalc)
                 return;
 
-            #if DEBUG
+#if DEBUG
             var sw = Stopwatch.StartNew();
-            #endif
+#endif
 
             //calc min left indent
             needRecalc = false;
@@ -3097,10 +3112,10 @@
             CalcMinAutosizeWidth(out minWidth, ref maxLineLength);
             AutoScrollMinSize = new Size(minWidth, wordWrapLinesCount * CharHeight + Paddings.Top + Paddings.Bottom);
 
-            #if DEBUG
+#if DEBUG
             sw.Stop();
             Debug.WriteLine("Recalc: " + sw.ElapsedMilliseconds);
-            #endif
+#endif
         }
 
         protected virtual void RecalcFoldingLines()
@@ -3113,7 +3128,7 @@
             if (!ShowFoldingLines)
                 return;
 
-            foldingPairs.Clear();
+            _foldingPairs.Clear();
             var range = VisibleRange;
             var startLine = Math.Max(range.Start.iLine - maxLinesForFolding, 0);
             var endLine = Math.Min(range.End.iLine + maxLinesForFolding, Math.Max(range.End.iLine, LinesCount - 1));
@@ -3137,7 +3152,7 @@
                     while (stack.Count > 0)
                     {
                         var iStartLine = stack.Pop();
-                        foldingPairs[iStartLine] = i;
+                        _foldingPairs[iStartLine] = i;
 
                         if (m == lines[iStartLine].FoldingStartMarker)
                             break;
@@ -3146,7 +3161,7 @@
             }
 
             while (stack.Count > 0)
-                foldingPairs[stack.Pop()] = endLine + 1;
+                _foldingPairs[stack.Pop()] = endLine + 1;
         }
 
         void CalcMinAutosizeWidth(out int minWidth, ref int maxLineLength)
@@ -3235,7 +3250,7 @@
             switch (WordWrapMode)
             {
                 case WordWrapMode.WordWrapControlWidth:
-                    maxCharsPerLine = (ClientSize.Width - LeftIndent - Paddings.Left - Paddings.Right)/CharWidth;
+                    maxCharsPerLine = (ClientSize.Width - LeftIndent - Paddings.Left - Paddings.Right) / CharWidth;
                     break;
 
                 case WordWrapMode.CharWrapControlWidth:
@@ -3278,16 +3293,20 @@
         void RaiseHistoryUp()
         {
             if (OnHistoryUp != null)
+            {
                 OnHistoryUp(this, EventArgs.Empty);
+            }
         }
 
         void RaiseHistoryDown()
         {
             if (OnHistoryDown != null)
+            {
                 OnHistoryDown(this, EventArgs.Empty);
+            }
         }
 
-        public string Query
+        public String Query
         {
             get
             {
@@ -3295,28 +3314,30 @@
                 sb.Append(Lines[LinesCount - promptLines].Substring(prompt.Length));
 
                 for (var i = 1; i < promptLines; i++)
+                {
                     sb.AppendLine().Append(Lines[i + LinesCount - promptLines]);
+                }
 
                 return sb.ToString();
             }
             set
             {
-				Selection.Start = new Place(prompt.Length, LinesCount - promptLines);
-				Selection.End = new Place(Lines[LinesCount - 1].Length, LinesCount - 1);
-				InsertText(value);
+                Selection.Start = new Place(prompt.Length, LinesCount - promptLines);
+                Selection.End = new Place(Lines[LinesCount - 1].Length, LinesCount - 1);
+                InsertText(value);
                 lines.Manager.ClearHistory();
                 MoveSelectionToEnd();
             }
         }
 
-		public void Reset()
-		{
-			isreset = true;
-			SelectAll();
-			lines.Manager.ExecuteCommand(new ClearSelectedCommand(TextSource));
-			regions.Clear();
-			lines.Manager.ClearHistory();
-		}
+        public void Reset()
+        {
+            isreset = true;
+            SelectAll();
+            lines.Manager.ExecuteCommand(new ClearSelectedCommand(TextSource));
+            regions.Clear();
+            lines.Manager.ClearHistory();
+        }
 
         public void RunQuery()
         {
@@ -3325,28 +3346,36 @@
             promptLines = 1;
 
             if (!isreset)
+            {
                 AppendText("\n");
+            }
             else
+            {
                 isreset = false;
+            }
 
             InsertPrompt();
         }
 
-        public void RunQuery(string query)
+        public void RunQuery(String query)
         {
             handledChar = true;
             RaiseOnQueryEntered(query, false);
             promptLines = 1;
 
             if (!isreset)
+            {
                 AppendText("\n");
+            }
             else
+            {
                 isreset = false;
+            }
 
             InsertPrompt();
         }
 
-        void RaiseOnQueryEntered(string query, bool historyEntry = true)
+        void RaiseOnQueryEntered(String query, Boolean historyEntry = true)
         {
             Debug.WriteLine(query);
 
@@ -3361,94 +3390,111 @@
 
         internal void OnOutputChanged(OutputRegion source)
         {
-			if (regions.Contains(source))
-			{
+            if (regions.Contains(source))
+            {
                 var index = TransformInputLineToLine(source.StartLine);
                 var count = 0;
                 var start = Selection.Start;
                 var end = Selection.End;
-				lines.RemoveLine(index, source.Lines);
+                lines.RemoveLine(index, source.Lines);
 
-				if (!string.IsNullOrEmpty(source.Text))
-				{
-					var line = lines.CreateLine();
-					lines.Insert(index, line);
-					count = 1;
+                if (!String.IsNullOrEmpty(source.Text))
+                {
+                    var line = lines.CreateLine();
+                    var j = 0;
+                    lines.Insert(index, line);
+                    count = 1;
 
-					for (int i = 0, j = 0; i < source.Text.Length; i++)
-					{
-						if (source.Text[i] == '\n')
-						{
-							line = lines.CreateLine();
-							lines.Insert(index + count, line);
-							count++;
-							j = 0;
-						}
-						else
-						{
-							line.Insert(j, new Char(source.Text[i]));
-							j++;
-						}
-					}
+                    for (var i = 0; i < source.Text.Length; i++)
+                    {
+                        if (source.Text[i] == '\n')
+                        {
+                            line = lines.CreateLine();
+                            lines.Insert(index + count, line);
+                            count++;
+                            j = 0;
+                        }
+                        else
+                        {
+                            line.Insert(j, new Char(source.Text[i]));
+                            j++;
+                        }
+                    }
 
                     if (source.Fold)
                     {
                         this[index].FoldingStartMarker = "m" + 0;
                         this[index + count - 1].FoldingEndMarker = "m" + 0;
                     }
-				}
+                }
 
                 var offset = index + source.Lines;
                 var delta = count - source.Lines;
 
                 if (start.iLine >= offset)
+                {
                     Selection.Start = new Place(start.iChar, start.iLine + delta);
+                }
 
                 if (end.iLine >= offset)
+                {
                     Selection.End = new Place(end.iChar, end.iLine + delta);
+                }
 
-				source.Lines = count;
-				RecalcWordWrap(0, lines.Count - 1);
-				DoCaretVisible();
-			}
+                source.Lines = count;
+                RecalcWordWrap(0, lines.Count - 1);
+                DoCaretVisible();
+            }
         }
 
-        int TransformInputLineToLine(int inputLine)
+        int TransformInputLineToLine(Int32 inputLine)
         {
             var index = inputLine;
 
             foreach (var region in regions)
+            {
                 if (region.StartLine < inputLine)
+                {
                     index += region.Lines;
+                }
+            }
 
             return index;
         }
 
-        OutputRegion GetOutputRegion(int line)
+        OutputRegion GetOutputRegion(Int32 line)
         {
             var offset = 0;
 
             foreach (var region in regions)
             {
                 if (region.StartLine + offset + region.Lines <= line)
+                {
                     offset += region.Lines;
+                }
                 else if (region.StartLine + offset <= line)
+                {
                     return region;
+                }
                 else
+                {
                     return null;
+                }
             }
 
             return null;
         }
 
-        public int InputLineCount
+        public Int32 InputLineCount
         {
             get
             {
                 var count = LinesCount;
 
                 foreach (var region in regions)
+                {
                     count -= region.Lines;
+                }
 
                 return count;
             }
@@ -3456,16 +3502,20 @@
 
         public void ResetSelectionToPrompt()
         {
-            if (!consoleMode)
-                return;
+            if (consoleMode)
+            {
+                var lines = LinesCount - promptLines;
 
-			var lines = LinesCount - promptLines;
+                if (Selection.Start.iLine < lines || (Selection.Start.iLine == lines && Selection.Start.iChar < prompt.Length))
+                {
+                    Selection.Start = new Place(prompt.Length, lines);
+                }
 
-            if (Selection.Start.iLine < lines || (Selection.Start.iLine == lines && Selection.Start.iChar < prompt.Length))
-				Selection.Start = new Place(prompt.Length, lines);
-
-			if (Selection.End.iLine < lines || (Selection.End.iLine == lines && Selection.End.iChar < prompt.Length))
-				Selection.End = new Place(prompt.Length, lines);
+                if (Selection.End.iLine < lines || (Selection.End.iLine == lines && Selection.End.iChar < prompt.Length))
+                {
+                    Selection.End = new Place(prompt.Length, lines);
+                }
+            }
         }
 
         void InsertPrompt()
@@ -3501,7 +3551,7 @@
             Recalc();
             Point car = PlaceToPoint(Selection.Start);
             car.Offset(-CharWidth, 0);
-            DoVisibleRectangle(new Rectangle(car, new Size(2*CharWidth, 2*CharHeight)));
+            DoVisibleRectangle(new Rectangle(car, new Size(2 * CharWidth, 2 * CharHeight)));
         }
 
         /// <summary>
@@ -3529,11 +3579,11 @@
             Recalc();
             DoVisibleRectangle(new Rectangle(PlaceToPoint(new Place(0, Selection.End.iLine)),
                                              new Size(2 * CharWidth, 2 * CharHeight)));
-            
+
             Point car = PlaceToPoint(Selection.Start);
             Point car2 = PlaceToPoint(Selection.End);
             car.Offset(-CharWidth, -ClientSize.Height / 2);
-            DoVisibleRectangle(new Rectangle(car,new Size(Math.Abs(car2.X - car.X),ClientSize.Height)));//Math.Abs(car2.Y-car.Y) + 2 * CharHeight
+            DoVisibleRectangle(new Rectangle(car, new Size(Math.Abs(car2.X - car.X), ClientSize.Height)));//Math.Abs(car2.Y-car.Y) + 2 * CharHeight
 
             Invalidate();
         }
@@ -3545,7 +3595,7 @@
         {
             range = range.Clone();
             range.Normalize();
-            range.End = new Place(range.End.iChar, Math.Min(range.End.iLine, range.Start.iLine + ClientSize.Height/CharHeight));
+            range.End = new Place(range.End.iChar, Math.Min(range.End.iLine, range.Start.iLine + ClientSize.Height / CharHeight));
 
             if (lineInfos[range.End.iLine].VisibleState != VisibleState.Visible)
                 ExpandBlock(range.End.iLine);
@@ -3554,7 +3604,7 @@
                 ExpandBlock(range.Start.iLine);
 
             Recalc();
-            DoVisibleRectangle(new Rectangle(PlaceToPoint(new Place(0, range.Start.iLine)), new Size(2 * CharWidth, ( 1 + range.End.iLine - range.Start.iLine)*CharHeight)));
+            DoVisibleRectangle(new Rectangle(PlaceToPoint(new Place(0, range.Start.iLine)), new Size(2 * CharWidth, (1 + range.End.iLine - range.Start.iLine) * CharHeight)));
 
             Invalidate();
         }
@@ -3563,18 +3613,26 @@
 
         #region Keys
 
-        protected override bool IsInputKey(Keys keyData)
+        protected override Boolean IsInputKey(Keys keyData)
         {
             if (keyData == Keys.Tab && !AcceptsTab)
+            {
                 return false;
+            }
+
             if (keyData == Keys.Enter && !AcceptsReturn)
+            {
                 return false;
+            }
 
             if ((keyData & Keys.Alt) == Keys.None)
             {
-                Keys keys = keyData & Keys.KeyCode;
+                var keys = keyData & Keys.KeyCode;
+
                 if (keys == Keys.Return)
+                {
                     return true;
+                }
             }
 
             if ((keyData & Keys.Alt) != Keys.Alt)
@@ -3605,10 +3663,12 @@
         public void OnKeyPressing(KeyPressEventArgs args)
         {
             if (KeyPressing != null)
+            {
                 KeyPressing(this, args);
+            }
         }
 
-        bool OnKeyPressing(char c)
+        Boolean OnKeyPressing(char c)
         {
             var args = new KeyPressEventArgs(c);
             OnKeyPressing(args);
@@ -3620,100 +3680,113 @@
             var args = new KeyPressEventArgs(c);
 
             if (KeyPressed != null)
+            {
                 KeyPressed(this, args);
+            }
         }
 
-        protected override bool ProcessMnemonic(char charCode)
+        protected override Boolean ProcessMnemonic(char charCode)
         {
-            if (Focused)
-                return ProcessKeyPress(charCode) || base.ProcessMnemonic(charCode);
-            else
-                return false;
+            return Focused && (ProcessKeyPress(charCode) || base.ProcessMnemonic(charCode));
         }
 
         bool ProcessKeyPress(char c)
         {
-            if (handledChar)
-                return true;
-
-            if (c == ' ')
-                return true;
-
-            if (c == '\b' && (lastModifiers & Keys.Alt) != 0)
-                return true;
-
-            if (char.IsControl(c) && c != '\r' && c != '\t')
-                return false;
-
-            if (ReadOnly || !Enabled)
-                return false;
-
-
-            if (lastModifiers != Keys.None &&
-                lastModifiers != Keys.Shift &&
-                lastModifiers != (Keys.Control | Keys.Alt) && //ALT+CTRL is special chars (AltGr)
-                lastModifiers != (Keys.Shift | Keys.Control | Keys.Alt) && //SHIFT + ALT + CTRL is special chars (AltGr)
-                (lastModifiers != (Keys.Alt) || char.IsLetterOrDigit(c)) //may be ALT+LetterOrDigit is mnemonic code
-                )
-                return false; //do not process Ctrl+? and Alt+? keys
-
-            char sourceC = c;
-
-            if (OnKeyPressing(sourceC)) //KeyPress event processed key
-                return true;
-
-            if (c == '\r' && !AcceptsReturn)
-                return false;
-
-            //tab?
-            if (c == '\t')
+            if (!handledChar)
             {
-                if (!AcceptsTab)
-                    return false;
-
-                if (Selection.Start.iLine == Selection.End.iLine)
+                if (c == ' ' || (c == '\b' && (lastModifiers & Keys.Alt) != 0))
                 {
-                    ClearSelected();
-                    //insert tab as spaces
-                    int spaces = TabLength - (Selection.Start.iChar % TabLength);
-                    //replace mode? select forward chars
+                    return true;
+                }
+                else if ((char.IsControl(c) && c != '\r' && c != '\t') || ReadOnly || !Enabled)
+                {
+                    return false;
+                }
+
+                if (lastModifiers != Keys.None &&
+                    lastModifiers != Keys.Shift &&
+                    lastModifiers != (Keys.Control | Keys.Alt) && //ALT+CTRL is special chars (AltGr)
+                    lastModifiers != (Keys.Shift | Keys.Control | Keys.Alt) && //SHIFT + ALT + CTRL is special chars (AltGr)
+                    (lastModifiers != (Keys.Alt) || char.IsLetterOrDigit(c)) //may be ALT+LetterOrDigit is mnemonic code
+                    )
+                {
+                    return false;
+                }
+
+                var sourceC = c;
+
+                if (OnKeyPressing(sourceC)) //KeyPress event processed key
+                {
+                    return true;
+                }
+
+                if (c == '\r' && !AcceptsReturn)
+                {
+                    return false;
+                }
+
+                //tab?
+                if (c == '\t')
+                {
+                    if (!AcceptsTab)
+                    {
+                        return false;
+                    }
+
+                    if (Selection.Start.iLine == Selection.End.iLine)
+                    {
+                        ClearSelected();
+                        //insert tab as spaces
+                        var spaces = TabLength - (Selection.Start.iChar % TabLength);
+
+                        //replace mode? select forward chars
+                        if (IsReplaceMode)
+                        {
+                            for (var i = 0; i < spaces; i++)
+                            {
+                                Selection.GoRight(true);
+                            }
+
+                            Selection.Inverse();
+                        }
+
+                        InsertText(new String(' ', spaces));
+                    }
+                    else if ((lastModifiers & Keys.Shift) == 0)
+                    {
+                        IncreaseIndent();
+                    }
+                }
+                else
+                {
+                    //replace \r on \n
+                    if (c == '\r')
+                    {
+                        c = '\n';
+                    }
+
+                    //replace mode? select forward char
                     if (IsReplaceMode)
                     {
-                        for (int i = 0; i < spaces; i++)
-                            Selection.GoRight(true);
+                        Selection.GoRight(true);
                         Selection.Inverse();
                     }
 
-                    InsertText(new String(' ', spaces));
-                }
-                else
-                    if ((lastModifiers & Keys.Shift) == 0)
-                        IncreaseIndent();
-            }
-            else
-            {
-                //replace \r on \n
-                if (c == '\r')
-                    c = '\n';
+                    //insert char
+                    InsertChar(c);
 
-                //replace mode? select forward char
-                if (IsReplaceMode)
-                {
-                    Selection.GoRight(true);
-                    Selection.Inverse();
+                    //do autoindent
+                    if (c == '\n' || AutoIndentExistingLines)
+                    {
+                        DoAutoIndentIfNeed();
+                    }
                 }
 
-                //insert char
-                InsertChar(c);
-
-                //do autoindent
-                if (c == '\n' || AutoIndentExistingLines)
-                    DoAutoIndentIfNeed();
+                DoCaretVisible();
+                Invalidate();
+                OnKeyPressed(sourceC);
             }
 
-            DoCaretVisible();
-            Invalidate();
-            OnKeyPressed(sourceC);
             return true;
         }
 
@@ -3722,21 +3795,29 @@
             base.OnKeyUp(e);
 
             if (e.KeyCode == Keys.ShiftKey)
+            {
                 lastModifiers &= ~Keys.Shift;
+            }
 
             if (e.KeyCode == Keys.Alt)
+            {
                 lastModifiers &= ~Keys.Alt;
+            }
 
             if (e.KeyCode == Keys.ControlKey)
+            {
                 lastModifiers &= ~Keys.Control;
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
 
-            if(Focused)
+            if (Focused)
+            {
                 lastModifiers = e.Modifiers;
+            }
 
             handledChar = false;
 
@@ -3749,106 +3830,150 @@
             switch (e.KeyCode)
             {
                 case Keys.Enter:
-                    if(consoleMode)
+                    if (consoleMode)
                     {
-						if (e.Modifiers == Keys.Control)
+                        if (e.Modifiers == Keys.Control)
+                        {
                             RunQuery();
-						else if(e.Modifiers == Keys.Shift)
-							promptLines++;
-						else
-							AutoDetectLineBreak();
+                        }
+                        else if (e.Modifiers == Keys.Shift)
+                        {
+                            promptLines++;
+                        }
+                        else
+                        {
+                            AutoDetectLineBreak();
+                        }
                     }
 
                     break;
 
                 case Keys.C:
                     if (e.Modifiers == Keys.Control)
+                    {
                         Copy();
+                    }
 
                     if (e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         CommentSelected();
+                    }
 
                     break;
 
                 case Keys.X:
                     if (e.Modifiers == Keys.Control && !ReadOnly)
+                    {
                         Cut();
+                    }
 
                     break;
 
                 case Keys.V:
                     if (e.Modifiers == Keys.Control && !ReadOnly)
+                    {
                         Paste();
+                    }
 
                     break;
 
                 case Keys.A:
                     if (e.Modifiers == Keys.Control)
+                    {
                         Selection.SelectAll();
+                    }
 
                     break;
 
                 case Keys.Z:
                     if (e.Modifiers == Keys.Control && !ReadOnly)
+                    {
                         Undo();
+                    }
 
                     break;
 
                 case Keys.Y:
                     if (e.Modifiers == Keys.Control && !ReadOnly)
+                    {
                         Redo();
+                    }
 
                     break;
 
                 case Keys.U:
                     if (e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         LowerCase();
+                    }
 
                     if (e.Modifiers == Keys.Control)
+                    {
                         UpperCase();
+                    }
 
                     break;
 
                 case Keys.Tab:
                     if (e.Modifiers == Keys.Shift && !ReadOnly)
+                    {
                         DecreaseIndent();
+                    }
 
                     break;
 
                 case Keys.OemMinus:
                     if (e.Modifiers == Keys.Control)
+                    {
                         NavigateBackward();
+                    }
 
                     if (e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         NavigateForward();
+                    }
 
                     break;
 
                 case Keys.Back:
-                    if (ReadOnly) 
+                    if (ReadOnly)
+                    {
                         break;
+                    }
 
                     if (e.Modifiers == Keys.Alt)
+                    {
                         Undo();
+                    }
                     else if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
                     {
                         if (OnKeyPressing('\b')) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         if (!Selection.IsEmpty)
+                        {
                             ClearSelected();
+                        }
                         else
+                        {
                             InsertChar('\b');
+                        }
 
                         OnKeyPressed('\b');
                     }
                     else if (e.Modifiers == Keys.Control)
                     {
                         if (OnKeyPressing('\b')) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         if (!Selection.IsEmpty)
+                        {
                             ClearSelected();
+                        }
 
                         Selection.GoWordLeft(true);
                         ClearSelected();
@@ -3858,39 +3983,45 @@
                     break;
 
                 case Keys.Insert:
-                    if (e.Modifiers == Keys.None)
+                    if (e.Modifiers == Keys.None && !ReadOnly)
                     {
-                        if (!ReadOnly)
-                            isReplaceMode = !isReplaceMode;
+                        isReplaceMode = !isReplaceMode;
                     }
                     else if (e.Modifiers == Keys.Control)
                     {
                         Copy();
                     }
-                    else if (e.Modifiers == Keys.Shift)
+                    else if (e.Modifiers == Keys.Shift && !ReadOnly)
                     {
-                        if (!ReadOnly)
-                            Paste();
+                        Paste();
                     }
 
                     break;
 
                 case Keys.Delete:
-                    if (ReadOnly) 
+                    if (ReadOnly)
+                    {
                         break;
+                    }
 
                     if (e.Modifiers == Keys.None)
                     {
-                        if (OnKeyPressing((char) 0xff)) //KeyPress event processed key
+                        if (OnKeyPressing((char)0xff)) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         if (!Selection.IsEmpty)
+                        {
                             ClearSelected();
+                        }
                         else
                         {
                             //if line contains only spaces then delete line
                             if (this[Selection.Start.iLine].StartSpacesCount == this[Selection.Start.iLine].Count)
+                            {
                                 RemoveSpacesAfterCaret();
+                            }
 
                             if (Selection.GoRightThroughFolded())
                             {
@@ -3904,15 +4035,19 @@
                             }
                         }
 
-                        OnKeyPressed((char) 0xff);
+                        OnKeyPressed((char)0xff);
                     }
                     else if (e.Modifiers == Keys.Control)
                     {
                         if (OnKeyPressing((char)0xff)) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         if (!Selection.IsEmpty)
+                        {
                             ClearSelected();
+                        }
                         else
                         {
                             Selection.GoWordRight(true);
@@ -3924,7 +4059,9 @@
                     else if (e.Modifiers == Keys.Shift)
                     {
                         if (OnKeyPressing((char)0xff)) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         Cut();
                         OnKeyPressed((char)0xff);
@@ -3933,16 +4070,22 @@
                     break;
 
                 case Keys.Space:
-                    if (ReadOnly) 
+                    if (ReadOnly)
+                    {
                         break;
+                    }
 
                     if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
                     {
                         if (OnKeyPressing(' ')) //KeyPress event processed key
+                        {
                             break;
+                        }
 
                         if (!Selection.IsEmpty)
+                        {
                             ClearSelected();
+                        }
 
                         //replace mode? select forward char
                         if (IsReplaceMode)
@@ -3960,7 +4103,9 @@
                     if (consoleMode)
                     {
                         if (Selection.Start.iLine == LinesCount - promptLines && Selection.Start.iChar == prompt.Length)
+                        {
                             break;
+                        }
                         else if (Selection.Start.iLine < LinesCount - promptLines)
                         {
                             Selection.Start = new Place(prompt.Length, LinesCount - promptLines);
@@ -3969,33 +4114,45 @@
                     }
 
                     if (e.Modifiers == Keys.Control || e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         Selection.GoWordLeft(e.Shift);
+                    }
 
                     if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
+                    {
                         Selection.GoLeft(e.Shift);
+                    }
 
                     if (e.Modifiers == AltShift)
                     {
                         CheckAndChangeSelectionType();
 
                         if (Selection.ColumnSelectionMode)
+                        {
                             Selection.GoLeft_ColumnSelectionMode();
+                        }
                     }
 
                     break;
                 case Keys.Right:
                     if (e.Modifiers == Keys.Control || e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         Selection.GoWordRight(e.Shift);
+                    }
 
                     if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
+                    {
                         Selection.GoRight(e.Shift);
+                    }
 
                     if (e.Modifiers == AltShift)
                     {
                         CheckAndChangeSelectionType();
 
                         if (Selection.ColumnSelectionMode)
+                        {
                             Selection.GoRight_ColumnSelectionMode();
+                        }
                     }
 
                     break;
@@ -4032,13 +4189,14 @@
                         CheckAndChangeSelectionType();
 
                         if (Selection.ColumnSelectionMode)
+                        {
                             Selection.GoUp_ColumnSelectionMode();
+                        }
                     }
 
-                    if (e.Modifiers == Keys.Alt)
+                    if (e.Modifiers == Keys.Alt && !ReadOnly && !Selection.ColumnSelectionMode)
                     {
-                        if (!ReadOnly && !Selection.ColumnSelectionMode)
-                            MoveSelectedLinesUp();
+                        MoveSelectedLinesUp();
                     }
                     break;
 
@@ -4070,17 +4228,19 @@
                         Selection.GoDown(e.Shift);
                         ScrollLeft();
                     }
-                    else if(e.Modifiers == AltShift)
+                    else if (e.Modifiers == AltShift)
                     {
                         CheckAndChangeSelectionType();
+
                         if (Selection.ColumnSelectionMode)
+                        {
                             Selection.GoDown_ColumnSelectionMode();
+                        }
                     }
 
-                    if (e.Modifiers == Keys.Alt)
+                    if (e.Modifiers == Keys.Alt && !ReadOnly && !Selection.ColumnSelectionMode)
                     {
-                        if (!ReadOnly && !Selection.ColumnSelectionMode)
-                            MoveSelectedLinesDown();
+                        MoveSelectedLinesDown();
                     }
 
                     break;
@@ -4105,7 +4265,9 @@
 
                 case Keys.Home:
                     if (e.Modifiers == Keys.Control || e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         Selection.GoFirst(e.Shift);
+                    }
 
                     if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
                     {
@@ -4117,10 +4279,15 @@
 
                 case Keys.End:
                     if (e.Modifiers == Keys.Control || e.Modifiers == (Keys.Control | Keys.Shift))
+                    {
                         Selection.GoLast(e.Shift);
+                    }
 
                     if (e.Modifiers == Keys.None || e.Modifiers == Keys.Shift)
+                    {
                         Selection.GoEnd(e.Shift);
+                    }
+
                     break;
 
                 case Keys.Alt:
@@ -4128,17 +4295,24 @@
 
                 default:
                     if ((e.Modifiers & Keys.Control) != 0)
+                    {
                         return;
+                    }
 
                     if ((e.Modifiers & Keys.Alt) != 0)
                     {
                         if ((Control.MouseButtons & MouseButtons.Left) != 0)
+                        {
                             CheckAndChangeSelectionType();
+                        }
+
                         return;
                     }
 
                     if (e.KeyCode == Keys.ShiftKey)
+                    {
                         return;
+                    }
 
                     break;
             }
@@ -4148,33 +4322,37 @@
             Invalidate();
         }
 
-		void AutoDetectLineBreak()
-		{
-			var cmd = Query;
-			var openBrackets = 0;
+        void AutoDetectLineBreak()
+        {
+            var cmd = Query;
+            var openBrackets = 0;
 
-			foreach (var ch in cmd)
-			{
-				switch(ch)
-				{
-					case '(':
-					case '[':
-					case '{':
-						openBrackets++;
-						break;
-					case ')':
-					case ']':
-					case '}':
-						openBrackets--;
-						break;
-				}
-			}
+            foreach (var ch in cmd)
+            {
+                switch (ch)
+                {
+                    case '(':
+                    case '[':
+                    case '{':
+                        openBrackets++;
+                        break;
+                    case ')':
+                    case ']':
+                    case '}':
+                        openBrackets--;
+                        break;
+                }
+            }
 
-			if(openBrackets > 0)
-				promptLines++;
-			else
-				RunQuery();
-		}
+            if (openBrackets > 0)
+            {
+                promptLines++;
+            }
+            else
+            {
+                RunQuery();
+            }
+        }
 
         #endregion
 
@@ -4230,7 +4408,7 @@
             if (newLine == to)
                 newLine = FindPrevVisibleLine(from);
 
-			//Selection.Start = new Place(0, newLine);
+            //Selection.Start = new Place(0, newLine);
             needRecalc = true;
             Invalidate();
         }
@@ -4422,7 +4600,7 @@
                 temp.Add(i);
 
             RemoveLines(temp);
-            Selection.Start = new Place(0, iLine-1);
+            Selection.Start = new Place(0, iLine - 1);
             SelectedText = text + "\n";
             Selection.Start = new Place(prevSelection.Start.iChar, prevSelection.Start.iLine - 1);
             Selection.End = new Place(prevSelection.End.iChar, prevSelection.End.iLine - 1);
@@ -4588,7 +4766,7 @@
 
         VisualMarker FindVisualMarkerForPoint(Point p)
         {
-            foreach (VisualMarker m in visibleMarkers)
+            foreach (VisualMarker m in _visibleMarkers)
                 if (m.rectangle.Contains(p))
                     return m;
 
@@ -4938,13 +5116,13 @@
             if (needRecalcFoldingLines)
                 RecalcFoldingLines();
 
-            #if DEBUG
+#if DEBUG
             var sw = Stopwatch.StartNew();
-            #endif
+#endif
 
-            visibleMarkers.Clear();
+            _visibleMarkers.Clear();
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            
+
             var servicePen = new Pen(ServiceLinesColor);
             var indentBrush = new SolidBrush(IndentBackColor);
             var paddingBrush = new SolidBrush(PaddingBackColor);
@@ -5016,13 +5194,13 @@
                 {
                     e.Graphics.FillRectangle(line.BackgroundBrush,
                         new Rectangle(leftTextIndent, y, textWidth, textHeight));
-                }                
+                }
 
                 //draw current line background
 
                 if (iLine == Selection.Start.iLine && Selection.IsEmpty)
                     e.Graphics.FillRectangle(currentLineBrush, new Rectangle(leftTextIndent, y, ClientSize.Width, textHeight));
-                
+
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //OnPaint event
@@ -5047,13 +5225,13 @@
 
                 //create markers
                 if (lineInfo.VisibleState == VisibleState.StartOfHiddenBlock)
-                    visibleMarkers.Add(new ExpandFoldingMarker(iLine, r1));
+                    _visibleMarkers.Add(new ExpandFoldingMarker(iLine, r1));
 
                 if (!string.IsNullOrEmpty(line.FoldingStartMarker) &&
                     lineInfo.VisibleState == VisibleState.Visible &&
                     string.IsNullOrEmpty(line.FoldingEndMarker))
                 {
-                    visibleMarkers.Add(new CollapseFoldingMarker(iLine, r1));
+                    _visibleMarkers.Add(new CollapseFoldingMarker(iLine, r1));
                 }
 
                 if (lineInfo.VisibleState == VisibleState.Visible &&
@@ -5104,7 +5282,7 @@
                 BracketsStyle2.Draw(e.Graphics, PlaceToPoint(leftBracketPosition2.Start), leftBracketPosition2);
                 BracketsStyle2.Draw(e.Graphics, PlaceToPoint(rightBracketPosition2.Start), rightBracketPosition2);
             }
-            
+
             e.Graphics.SmoothingMode = SmoothingMode.None;
 
             //draw folding indicator
@@ -5116,10 +5294,10 @@
                     int startFoldingY = (startFoldingLine >= 0 ? lineInfos[startFoldingLine].startY : 0) - VerticalScroll.Value + CharHeight / 2;
                     int endFoldingY = CharHeight - VerticalScroll.Value;
 
-                    if(endFoldingLine >= 0)
+                    if (endFoldingLine >= 0)
                         endFoldingY += lineInfos[endFoldingLine].startY + (lineInfos[endFoldingLine].WordWrapStringsCount - 1) * CharHeight;
                     else
-                        endFoldingY +=  (WordWrapLinesCount + 1) * CharHeight;
+                        endFoldingY += (WordWrapLinesCount + 1) * CharHeight;
 
                     using (var indicatorPen = new Pen(Color.FromArgb(100, FoldingIndicatorColor), 4))
                         e.Graphics.DrawLine(indicatorPen, LeftIndent - 5, startFoldingY, LeftIndent - 5, endFoldingY);
@@ -5129,7 +5307,7 @@
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             //draw markers
-            foreach (VisualMarker m in visibleMarkers)
+            foreach (VisualMarker m in _visibleMarkers)
                 m.Draw(e.Graphics, servicePen);
 
             e.Graphics.SmoothingMode = SmoothingMode.None;
@@ -5144,7 +5322,7 @@
                 SetCaretPos(car.X, car.Y);
                 ShowCaret(Handle);
 
-                using(Pen pen = new Pen(CaretColor))
+                using (Pen pen = new Pen(CaretColor))
                     e.Graphics.DrawLine(pen, car.X, car.Y, car.X, car.Y + CharHeight);
             }
             else
@@ -5162,11 +5340,11 @@
             indentBrush.Dispose();
             currentLineBrush.Dispose();
             paddingBrush.Dispose();
-            
-            #if DEBUG
+
+#if DEBUG
             Debug.WriteLine("OnPaint: " + sw.ElapsedMilliseconds);
-            #endif
-            
+#endif
+
             base.OnPaint(e);
         }
 
@@ -5176,7 +5354,7 @@
 
             using (var pen = new Pen(Color.FromArgb(200, ServiceLinesColor)) { DashStyle = DashStyle.Dot })
             {
-                foreach (var iLine in foldingPairs)
+                foreach (var iLine in _foldingPairs)
                 {
                     if (iLine.Key < endLine && iLine.Value > startLine)
                     {
@@ -5229,7 +5407,7 @@
             if (lineInfo.VisibleState == VisibleState.StartOfHiddenBlock)
             {
                 //rendering by FoldedBlockStyle
-                FoldedBlockStyle.Draw(e.Graphics, new Point(startX + firstChar*CharWidth, y),
+                FoldedBlockStyle.Draw(e.Graphics, new Point(startX + firstChar * CharWidth, y),
                         new Range(this, from + firstChar, iLine, from + lastChar + 1, iLine));
             }
             else
@@ -5253,7 +5431,7 @@
                             currentStyleIndex = style;
                         }
                     }
-                    
+
                     FlushRendering(e.Graphics, currentStyleIndex, new Point(startX + (iLastFlushedChar + 1) * CharWidth, y),
                             new Range(this, from + iLastFlushedChar + 1, iLine, from + lastChar + 1, iLine));
                 }
@@ -5272,7 +5450,7 @@
                 textRange = Selection.GetIntersectionWith(textRange);
 
                 if (textRange != null && SelectionStyle != null)
-                    SelectionStyle.Draw(e.Graphics, new Point(startX + (textRange.Start.iChar - from)*CharWidth, y), textRange);
+                    SelectionStyle.Draw(e.Graphics, new Point(startX + (textRange.Start.iChar - from) * CharWidth, y), textRange);
             }
         }
 
@@ -5445,7 +5623,8 @@
             if ((Control.ModifierKeys & Keys.Alt) != 0 && !WordWrap)
             {
                 Selection.ColumnSelectionMode = true;
-            }else
+            }
+            else
             //change selection type to Range
             {
                 Selection.ColumnSelectionMode = false;
@@ -5473,9 +5652,9 @@
         /// <returns>Line and char position</returns>
         public Place PointToPlace(Point point)
         {
-            #if DEBUG
+#if DEBUG
             var sw = Stopwatch.StartNew();
-            #endif
+#endif
 
             point.Offset(HorizontalScroll.Value, VerticalScroll.Value);
             point.Offset(-LeftIndent - Paddings.Left, 0);
@@ -5484,7 +5663,7 @@
 
             for (; iLine < lines.Count; iLine++)
             {
-                y = lineInfos[iLine].startY + lineInfos[iLine].WordWrapStringsCount*CharHeight;
+                y = lineInfos[iLine].startY + lineInfos[iLine].WordWrapStringsCount * CharHeight;
                 if (y > point.Y && lineInfos[iLine].VisibleState == VisibleState.Visible)
                     break;
             }
@@ -5503,16 +5682,16 @@
             //
             int start = lineInfos[iLine].GetWordWrapStringStartPosition(iWordWrapLine);
             int finish = lineInfos[iLine].GetWordWrapStringFinishPosition(iWordWrapLine, lines[iLine]);
-            var x = (int) Math.Round((float) point.X/CharWidth);
+            var x = (int)Math.Round((float)point.X / CharWidth);
             x = x < 0 ? start : start + x;
             if (x > finish)
                 x = finish + 1;
             if (x > lines[iLine].Count)
                 x = lines[iLine].Count;
 
-            #if DEBUG
+#if DEBUG
             Debug.WriteLine("PointToPlace: " + sw.ElapsedMilliseconds);
-            #endif
+#endif
 
             return new Place(x, iLine);
         }
@@ -5544,48 +5723,58 @@
         //find folding markers for highlighting
         void HighlightFoldings()
         {
-            if (LinesCount == 0)
-                return;
-            //
-            int prevStartFoldingLine = startFoldingLine;
-            int prevEndFoldingLine = endFoldingLine;
-            //
-            startFoldingLine = -1;
-            endFoldingLine = -1;
-            //
-            string marker = null;
-            int counter = 0;
-            for (int i = Selection.Start.iLine; i >= Math.Max(Selection.Start.iLine - maxLinesForFolding, 0); i--)
+            if (LinesCount != 0)
             {
-                bool hasStartMarker = lines.LineHasFoldingStartMarker(i);
-                bool hasEndMarker = lines.LineHasFoldingEndMarker(i);
+                var prevStartFoldingLine = startFoldingLine;
+                var prevEndFoldingLine = endFoldingLine;
+                startFoldingLine = -1;
+                endFoldingLine = -1;
 
-                if (hasEndMarker && hasStartMarker)
-                    continue;
+                var marker = default(String);
+                var counter = 0;
 
-                if (hasStartMarker)
+                for (var i = Selection.Start.iLine; i >= Math.Max(Selection.Start.iLine - maxLinesForFolding, 0); i--)
                 {
-                    counter--;
-                    if (counter == -1) //found start folding
+                    var hasStartMarker = lines.LineHasFoldingStartMarker(i);
+                    var hasEndMarker = lines.LineHasFoldingEndMarker(i);
+
+                    if (!hasEndMarker || !hasStartMarker)
                     {
-                        startFoldingLine = i;
-                        marker = lines[i].FoldingStartMarker;
-                        break;
+                        if (hasStartMarker)
+                        {
+                            counter--;
+
+                            if (counter == -1) //found start folding
+                            {
+                                startFoldingLine = i;
+                                marker = lines[i].FoldingStartMarker;
+                                break;
+                            }
+                        }
+
+                        if (hasEndMarker && i != Selection.Start.iLine)
+                        {
+                            counter++;
+                        }
                     }
                 }
-                if (hasEndMarker && i != Selection.Start.iLine)
-                    counter++;
-            }
-            if (startFoldingLine >= 0)
-            {
-                //find end of block
-                endFoldingLine = FindEndOfFoldingBlock(startFoldingLine, maxLinesForFolding);
-                if (endFoldingLine == startFoldingLine)
-                    endFoldingLine = -1;
-            }
 
-            if (startFoldingLine != prevStartFoldingLine || endFoldingLine != prevEndFoldingLine)
-                OnFoldingHighlightChanged();
+                if (startFoldingLine >= 0)
+                {
+                    //find end of block
+                    endFoldingLine = FindEndOfFoldingBlock(startFoldingLine, maxLinesForFolding);
+
+                    if (endFoldingLine == startFoldingLine)
+                    {
+                        endFoldingLine = -1;
+                    }
+                }
+
+                if (startFoldingLine != prevStartFoldingLine || endFoldingLine != prevEndFoldingLine)
+                {
+                    OnFoldingHighlightChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -5785,23 +5974,29 @@
 
         #region dtor
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(Boolean disposing)
         {
             base.Dispose(disposing);
 
             if (disposing)
             {
                 if (SyntaxHighlighter != null)
+                {
                     SyntaxHighlighter.Dispose();
+                }
 
-                timer.Dispose();
-                timer2.Dispose();
+                _timer1.Dispose();
+                _timer2.Dispose();
 
                 if (Font != null)
+                {
                     Font.Dispose();
+                }
 
                 if (TextSource != null)
+                {
                     TextSource.Dispose();
+                }
             }
         }
 
@@ -5809,7 +6004,11 @@
 
         #region Drag and drop
 
-        bool IsDragDrop { get; set; }
+        Boolean IsDragDrop
+        {
+            get;
+            set;
+        }
 
         protected override void OnDragEnter(DragEventArgs e)
         {
@@ -5818,6 +6017,7 @@
                 e.Effect = DragDropEffects.Copy;
                 IsDragDrop = true;
             }
+
             base.OnDragEnter(e);
         }
 
@@ -5825,14 +6025,18 @@
         {
             if (e.Data.GetDataPresent(DataFormats.Text))
             {
-                if (ParentForm!=null)
+                if (ParentForm != null)
+                {
                     ParentForm.Activate();
+                }
+
                 Focus();
-                var  p = PointToClient(new Point(e.X, e.Y));
+                var p = PointToClient(new Point(e.X, e.Y));
                 Selection.Start = PointToPlace(p);
                 InsertText(e.Data.GetData(DataFormats.Text).ToString());
                 IsDragDrop = false;
             }
+
             base.OnDragDrop(e);
         }
 
@@ -5844,6 +6048,7 @@
                 Selection.Start = PointToPlace(p);
                 Invalidate();
             }
+
             base.OnDragOver(e);
         }
 
@@ -5857,26 +6062,24 @@
 
         #region Nested type: LineYComparer
 
-        class LineYComparer : IComparer<LineInfo>
+        sealed class LineYComparer : IComparer<LineInfo>
         {
-            readonly int Y;
+            readonly Int32 _y;
 
-            public LineYComparer(int Y)
+            public LineYComparer(Int32 y)
             {
-                this.Y = Y;
+                _y = y;
             }
 
-            #region IComparer<LineInfo> Members
-
-            public int Compare(LineInfo x, LineInfo y)
+            public Int32 Compare(LineInfo x, LineInfo y)
             {
                 if (x.startY == -10)
-                    return -y.startY.CompareTo(Y);
-                else
-                    return x.startY.CompareTo(Y);
-            }
+                {
+                    return -y.startY.CompareTo(_y);
+                }
 
-            #endregion
+                return x.startY.CompareTo(_y);
+            }
         }
 
         #endregion
