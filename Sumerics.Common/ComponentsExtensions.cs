@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class ContainerExtensions
+    public static class ComponentsExtensions
     {
         public static T Get<T>(this IComponents container)
             where T : class
