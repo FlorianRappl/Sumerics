@@ -78,7 +78,7 @@
 			series.Title = points.Label;
 			series.ContourColors = _plot.ColorPalette.GenerateColors(_plot.Levels.Length);
 
-			if (_plot.ShowLevel && !IsPreview)
+			if (_plot.ShowLevel)
 			{
 				series.FontSize = Double.NaN;
 				series.LabelBackground = OxyColor.FromArgb(220, 255, 255, 255);

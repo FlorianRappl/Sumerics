@@ -9,8 +9,6 @@
 
         Boolean IsGridEnabled { get; }
 
-        Boolean IsPreview { get; }
-
         Boolean IsSeriesEnabled { get; }
 
         PlotValue Plot { get; }

@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Plots
 {
     using System;
+    using System.IO;
 
     public interface IPlotControl
     {
@@ -12,10 +13,10 @@
 
         void ToggleGrid();
 
-        void AsPreview();
+        void PreviewMode();
 
         void CenterPlot();
 
-        void ExportPlot(String fileName, Int32 width, Int32 height);
+        void ExportAsPng(Stream stream, Int32 width, Int32 height);
     }
 }

@@ -37,19 +37,5 @@
         }
 
         #endregion
-
-        #region Methods
-
-        public override void ActivatePreview()
-        {
-            IsPreview = true;
-
-            foreach (var subplot in _subplots)
-            {
-                subplot.ActivatePreview();
-            }
-        }
-
-        #endregion
     }
 }
