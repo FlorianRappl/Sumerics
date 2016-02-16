@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IMathInput
+    public interface IMathInputService
     {
         String ConvertToYamp(String markup);
     }

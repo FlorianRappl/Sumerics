@@ -5,7 +5,7 @@
         public void RegisterComponents(Components components)
         {
             var service = new MathInputService();
-            components.Register<IMathInput>(service);
+            components.Register<IMathInputService>(service);
         }
     }
 }

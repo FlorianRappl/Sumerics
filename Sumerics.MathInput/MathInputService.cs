@@ -3,7 +3,7 @@
     using Sumerics.MathInput.Parser;
     using System;
 
-    sealed class MathInputService : IMathInput
+    sealed class MathInputService : IMathInputService
     {
         public String ConvertToYamp(String markup)
         {

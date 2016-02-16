@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMathInput.cs" />
+    <Compile Include="IMathInputService.cs" />
     <Compile Include="MathInputModule.cs" />
     <Compile Include="MathInputService.cs" />
     <Compile Include="Parser\ColumnParseElement.cs" />
