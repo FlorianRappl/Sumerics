@@ -1,60 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
-	public class PlotScriptObject : AbstractScriptObject
-	{
-		string variable;
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
 
-		public PlotScriptObject()
+	public class PlotScriptObject : AbstractScriptObject
+    {
+        readonly IEnumerable<String> _functions;
+		String _variable;
+
+		public PlotScriptObject(IEnumerable<String> functions)
 		{
+            _functions = functions;
 			Title = "Plots";
 			InputConnectors = 2;
 		}
 
 		protected override AbstractScriptObject CreateCopy()
 		{
-			var plots = new PlotScriptObject();
-			plots.Title = "Choose a plot method";
-			plots.variable = variable;
-			return plots;
+            return new PlotScriptObject(_functions)
+            {
+			    Title = "Choose a plot method",
+			    _variable = _variable
+            };
 		}
 
-		public string PlotFunction
+		public String PlotFunction
 		{
-			get { return variable; }
+			get { return _variable; }
 			set
 			{
-				variable = value;
+				_variable = value;
 				RaisePropertyChanged("PlotFunction");
 			}
 		}
 
 		protected override UIElement CreateContent()
 		{
-			var cb = new ComboBox();
+            var cb = new ComboBox
+            {
+			    Height = 20,
+			    DataContext = this,
+			    Margin = new Thickness(5),
+			    IsEditable = false,
+			    ItemsSource = _functions
+            };
 
-			cb.Height = 20;
-			cb.DataContext = this;
-			cb.Margin = new Thickness(5);
-			cb.IsEditable = false;
-			cb.ItemsSource = ScriptControl.Instance.PlotFunctions;
+            if (cb.Items.Count > 0)
+            {
+                cb.SelectedIndex = 0;
+            }
 
-			if (cb.Items.Count > 0)
-				cb.SelectedIndex = 0;
+			var binding = new Binding("PlotFunction")
+            {
+			    Mode = BindingMode.TwoWay,
+			    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
 
-			var binding = new Binding("PlotFunction");
-			binding.Mode = BindingMode.TwoWay;
-			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 			cb.SetBinding(ComboBox.SelectedItemProperty, binding);
-
 			return cb;
 		}
 	}

@@ -11,7 +11,7 @@ namespace Sumerics.Controls
 {
 	public class OperatorScriptObject : AbstractScriptObject
 	{
-		string variable;
+		String _variable;
 
 		public OperatorScriptObject()
 		{
@@ -19,17 +19,17 @@ namespace Sumerics.Controls
 			InputConnectors = 2;
 		}
 
-		public string Operator
+		public String Operator
 		{
-			get { return variable; }
+			get { return _variable; }
 			set
 			{
-				variable = value;
-				RaisePropertyChanged("Operator");
+				_variable = value;
+				RaisePropertyChanged();
 			}
 		}
 
-		static readonly string[] operators = new string[]
+		static readonly String[] Operators = new[]
 		{
 			"+", "-", "*", "/", "\\", "%",
 			"^", ":", ".*", "./", ".\\", ".^",
@@ -38,30 +38,36 @@ namespace Sumerics.Controls
 
 		protected override AbstractScriptObject CreateCopy()
 		{
-			var op =  new OperatorScriptObject();
-			op.Title = "Select an operator";
-			op.variable = variable;
-			return op;
+            return new OperatorScriptObject
+            {
+                Title = "Select an operator",
+                _variable = _variable
+            };
 		}
 
 		protected override UIElement CreateContent()
 		{
-			var cb = new ComboBox();
+            var cb = new ComboBox
+            {
+			    Height = 20,
+			    DataContext = this,
+			    Margin = new Thickness(5),
+			    IsEditable = false,
+			    ItemsSource = Operators
+            };
 
-			cb.Height = 20;
-			cb.DataContext = this;
-			cb.Margin = new Thickness(5);
-			cb.IsEditable = false;
-			cb.ItemsSource = operators;
+            if (cb.Items.Count > 0)
+            {
+                cb.SelectedIndex = 0;
+            }
 
-			if (cb.Items.Count > 0)
-				cb.SelectedIndex = 0;
+			var binding = new Binding("Operator")
+            {
+			    Mode = BindingMode.TwoWay,
+			    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
 
-			var binding = new Binding("Operator");
-			binding.Mode = BindingMode.TwoWay;
-			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 			cb.SetBinding(ComboBox.SelectedItemProperty, binding);
-
 			return cb;
 		}
 	}

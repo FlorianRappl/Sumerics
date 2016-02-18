@@ -7,7 +7,6 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
-    using YAMP;
 
 	/// <summary>
 	/// Interaction logic for ScriptControl.xaml
@@ -27,12 +26,6 @@
 			typeof(ICommand),
 			typeof(ScriptControl),
 			new FrameworkPropertyMetadata(null, OnRunCommandChange));
-
-		public static readonly DependencyProperty ContextProperty = DependencyProperty.Register(
-			"Context", 
-			typeof(ParseContext),
-			typeof(ScriptControl), 
-			new PropertyMetadata(null));
 
 		public static readonly DependencyProperty SensorFunctionsProperty = DependencyProperty.Register(
 			"SensorFunctions",
@@ -88,8 +81,6 @@
 		Double _translateX = 0.0;
 		Double _translateY = 0.0;
 
-        static ScriptControl _instance;
-
 		#endregion
 
 		#region ctor
@@ -106,39 +97,28 @@
 
 		#region Properties
 
-        public static ScriptControl Instance
-        {
-            get { return _instance ?? (_instance = new ScriptControl()); }
-        }
-
-		public ObservableCollection<string> SensorFunctions
+		public ObservableCollection<String> SensorFunctions
 		{
-			get { return (ObservableCollection<string>)GetValue(SensorFunctionsProperty); }
+			get { return (ObservableCollection<String>)GetValue(SensorFunctionsProperty); }
 			set { SetValue(SensorFunctionsProperty, value); }
 		}
 
-		public ObservableCollection<string> NumericFunctions
+		public ObservableCollection<String> NumericFunctions
 		{
-			get { return (ObservableCollection<string>)GetValue(NumericFunctionsProperty); }
+			get { return (ObservableCollection<String>)GetValue(NumericFunctionsProperty); }
 			set { SetValue(NumericFunctionsProperty, value); }
 		}
 
-		public ObservableCollection<string> PlotFunctions
+		public ObservableCollection<String> PlotFunctions
 		{
-			get { return (ObservableCollection<string>)GetValue(PlotFunctionsProperty); }
+			get { return (ObservableCollection<String>)GetValue(PlotFunctionsProperty); }
 			set { SetValue(PlotFunctionsProperty, value); }
 		}
 
-		public ObservableCollection<string> SystemFunctions
+		public ObservableCollection<String> SystemFunctions
 		{
 			get { return (ObservableCollection<string>)GetValue(SystemFunctionsProperty); }
 			set { SetValue(SystemFunctionsProperty, value); }
-		}
-
-		public ParseContext Context
-		{
-			get { return (ParseContext)GetValue(ContextProperty); }
-			set { SetValue(ContextProperty, value); }
 		}
 
 		public ICommand RunCommand
@@ -163,7 +143,7 @@
             CenterContainer.Children.Remove(element);
         }
 
-        public void Shift(ScriptElement scriptElement, double dx, double dy)
+        public void Shift(ScriptElement scriptElement, Double dx, Double dy)
         {
             var left = dx / _scale + Canvas.GetLeft(scriptElement);
             var top = dy / _scale + Canvas.GetTop(scriptElement);
@@ -214,19 +194,19 @@
 
 		void AddLeft()
 		{
-            var snsr = new ScriptElement
+            var snsr = new ScriptElement(this)
             {
-                ScriptHost = new SensorScriptObject()
+                ScriptHost = new SensorScriptObject(SensorFunctions)
             };
-            var func = new ScriptElement
+            var func = new ScriptElement(this)
             {
-                ScriptHost = new FunctionScriptObject()
+                ScriptHost = new FunctionScriptObject(NumericFunctions)
             };
-            var plot = new ScriptElement
+            var plot = new ScriptElement(this)
             {
-                ScriptHost = new PlotScriptObject()
+                ScriptHost = new PlotScriptObject(PlotFunctions)
             };
-            var oprt = new ScriptElement
+            var oprt = new ScriptElement(this)
             {
                 ScriptHost = new OperatorScriptObject()
             };
@@ -234,7 +214,7 @@
             var list = new[] { snsr, func, plot, oprt };
 			var pos = ElementOffset;
 
-			foreach(var el in list)
+			foreach (var el in list)
 			{
 				Add(LeftContainer, 5, pos, el);
 				pos += ElementHeight + ElementOffset;
@@ -243,11 +223,11 @@
 
 		void AddRight()
 		{
-            var stmt = new ScriptElement
+            var stmt = new ScriptElement(this)
             {
                 ScriptHost = new StatementScriptObject()
             };
-            var cnds = new ScriptElement
+            var cnds = new ScriptElement(this)
             {
                 ScriptHost = new ConditionScriptObject()
             };

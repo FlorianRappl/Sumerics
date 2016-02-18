@@ -1,60 +1,64 @@
-﻿using System;
+﻿namespace Sumerics.Controls
+{
+    using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using YAMP;
 
-namespace Sumerics.Controls
-{
 	public class SensorScriptObject : AbstractScriptObject
-	{
-		string variable;
+    {
+        readonly IEnumerable<String> _functions;
+		String _variable;
 
-		public SensorScriptObject()
+		public SensorScriptObject(IEnumerable<String> functions)
 		{
+            _functions = functions;
 			Title = "Sensors";
 		}
 
 		protected override AbstractScriptObject CreateCopy()
 		{
-			var sensors = new SensorScriptObject();
-			sensors.Title = "Pick a sensor function";
-			sensors.variable = variable;
-			return sensors;
+            return new SensorScriptObject(_functions)
+            {
+			    Title = "Pick a sensor function",
+			    _variable = _variable
+            };
 		}
 
-		public string SensorFunction
+		public String SensorFunction
 		{
-			get { return variable; }
+			get { return _variable; }
 			set
 			{
-				variable = value;
+				_variable = value;
 				RaisePropertyChanged("SensorFunction");
 			}
 		}
 
 		protected override UIElement CreateContent()
 		{
-			var cb = new ComboBox();
+            var cb = new ComboBox
+            {
+                Height = 20,
+                DataContext = this,
+                Margin = new Thickness(5),
+                IsEditable = false,
+                ItemsSource = _functions
+            };
 
-			cb.Height = 20;
-			cb.DataContext = this;
-			cb.Margin = new Thickness(5);
-			cb.IsEditable = false;
-			cb.ItemsSource = ScriptControl.Instance.SensorFunctions;
+            if (cb.Items.Count > 0)
+            {
+                cb.SelectedIndex = 0;
+            }
 
-			if (cb.Items.Count > 0)
-				cb.SelectedIndex = 0;
+            var binding = new Binding("SensorFunction")
+            {
+			    Mode = BindingMode.TwoWay,
+			    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
 
-			var binding = new Binding("SensorFunction");
-			binding.Mode = BindingMode.TwoWay;
-			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 			cb.SetBinding(ComboBox.SelectedItemProperty, binding);
-
 			return cb;
 		}
 	}

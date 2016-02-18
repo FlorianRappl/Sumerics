@@ -1,59 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
-	public class FunctionScriptObject : AbstractScriptObject
-	{
-		string variable;
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
 
-		public FunctionScriptObject()
+	public class FunctionScriptObject : AbstractScriptObject
+    {
+        readonly IEnumerable<String> _functions;
+		String _variable;
+
+		public FunctionScriptObject(IEnumerable<String> functions)
 		{
+            _functions = functions;
 			Title = "Functions";
 		}
 
 		protected override AbstractScriptObject CreateCopy()
 		{
-			var functions = new FunctionScriptObject();
-			functions.Title = "Pick a numeric function";
-			functions.variable = variable;
-			return functions;
+            return new FunctionScriptObject(_functions)
+            {
+			    Title = "Pick a numeric function",
+			    _variable = _variable
+            };
 		}
 
-		public string NumericFunction
+		public String NumericFunction
 		{
-			get { return variable; }
+			get { return _variable; }
 			set
 			{
-				variable = value;
-				RaisePropertyChanged("NumericFunction");
+				_variable = value;
+				RaisePropertyChanged();
 			}
 		}
 
 		protected override UIElement CreateContent()
 		{
-			var cb = new ComboBox();
+            var cb = new ComboBox
+            {
+			    Height = 20,
+			    DataContext = this,
+			    Margin = new Thickness(5),
+			    IsEditable = false,
+                ItemsSource = _functions
+            };
 
-			cb.Height = 20;
-			cb.DataContext = this;
-			cb.Margin = new Thickness(5);
-			cb.IsEditable = false;
-			cb.ItemsSource = ScriptControl.Instance.NumericFunctions;
+            if (cb.Items.Count > 0)
+            {
+                cb.SelectedIndex = 0;
+            }
 
-			if (cb.Items.Count > 0)
-				cb.SelectedIndex = 0;
+            var binding = new Binding("NumericFunction")
+            {
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
 
-			var binding = new Binding("NumericFunction");
-			binding.Mode = BindingMode.TwoWay;
-			binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
 			cb.SetBinding(ComboBox.SelectedItemProperty, binding);
-
 			return cb;
 		}
 	}

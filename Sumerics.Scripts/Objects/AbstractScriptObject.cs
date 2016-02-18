@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+
 	public abstract class AbstractScriptObject : INotifyPropertyChanged, IDisposable
 	{
-		#region Members
+		#region Fields
 
-		int inConnectors;
-		int outConnectors;
+		Int32 _inConnectors;
+		Int32 _outConnectors;
 
 		#endregion
 
@@ -78,10 +74,10 @@ namespace Sumerics.Controls
 
 		public int InputConnectors
 		{
-			get { return inConnectors; }
+			get { return _inConnectors; }
 			protected set
 			{
-				inConnectors = value;
+				_inConnectors = value;
 
 				if (InputConnectorsChanged != null)
 					InputConnectorsChanged(this, EventArgs.Empty);
@@ -90,10 +86,10 @@ namespace Sumerics.Controls
 
 		public int OutputConnectors
 		{
-			get { return outConnectors; }
+			get { return _outConnectors; }
 			protected set
 			{
-				outConnectors = value;
+				_outConnectors = value;
 
 				if (OutputConnectorsChanged != null)
 					OutputConnectorsChanged(this, EventArgs.Empty);
@@ -122,26 +118,32 @@ namespace Sumerics.Controls
 
 		internal AbstractScriptObject Copy()
 		{
-			if (IsCopy)
-				return this;
-
-			var m = CreateCopy();
-			m.Element = m.CreateContent();
-			m.IsCopy = true;
-			m.ValueMissing = ValueMissing;
-			return m;
+			if (!IsCopy)
+            {
+                var m = CreateCopy();
+                m.Element = m.CreateContent();
+                m.IsCopy = true;
+                m.ValueMissing = ValueMissing;
+                return m;
+            }
+				
+            return this;
 		}
 
-		protected void RaisePropertyChanged(string property)
+		protected void RaisePropertyChanged([CallerMemberName] String property = null)
 		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(property));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
 		}
 
         public void Dispose()
         {
             if (Element != null && Element is IDisposable)
+            {
                 ((IDisposable)Element).Dispose();
+            }
 		}
 
 		#endregion
