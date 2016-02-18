@@ -1,37 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using micautLib;
-using System.Diagnostics;
-using FastColoredTextBoxNS;
-using System.Timers;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using FastColoredTextBoxNS;
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Shapes;
+
     /// <summary>
     /// Interaction logic for EditorControl.xaml
     /// </summary>
     public partial class EditorControl : UserControl
     {
-        #region Members
+        #region Fields
 
-        AutocompletePopup autoComplete;
-        IScriptFileModel model;
-        StyleIndex styleIndex;
-        ObservableCollection<ErrorRange> errorRanges;
-        MathInputPanelWrapper mipw;
+        readonly AutocompletePopup _autoComplete;
+        readonly IScriptFileModel _model;
+        readonly StyleIndex _styleIndex;
+        readonly ObservableCollection<ErrorRange> _errorRanges;
+        readonly MathInputPanelWrapper _mipw;
 
         #endregion
 
@@ -46,41 +33,32 @@ namespace Sumerics.Controls
 
         public EditorControl(IScriptFileModel model)
         {
-            this.model = model;
-            errorRanges = new ObservableCollection<ErrorRange>();
-
             InitializeComponent();
+
+            var index = Editor.AddStyle(new WavyLineStyle(255, System.Drawing.Color.Red));
+
+            _model = model;
+            _errorRanges = new ObservableCollection<ErrorRange>();
+            _mipw = new MathInputPanelWrapper("Draw statement");
+            _autoComplete = new AutocompletePopup(this);
+            _styleIndex = Editor.GetStyleIndexMask(new FastColoredTextBoxNS.Style[] { Editor.Styles[index] });
+
             SetupEditor();
-            SetupAutocomplete();
             SetupMathInput();
             SetupSoftKeyboard();
-
-            CopyButton.Click += CopyButtonClicked;
-            PasteButton.Click += PasteButtonClicked;
-            InputPanelButton.Click += InputPanelButtonClicked;
-
-            SaveButton.Click += SaveButtonClicked;
-            SaveAsButton.Click += SaveAsButtonClick;
-            CloseButton.Click += CloseButtonClicked;
-
-            UndoButton.Click += UndoButtonClicked;
-            RedoButton.Click += RedoButtonClicked;
-
-            ExecuteButton.Click += ExecuteButtonClicked;
-            ShowErrorsButton.Click += ShowErrorsButton_Click;
-            Errors.ItemsSource = errorRanges;
+            SetupHandlers();
         }
 
         void SetupMathInput()
         {
-            mipw = new MathInputPanelWrapper("Draw statement");
-
-            if (!mipw.IsAvailable)
+            if (!_mipw.IsAvailable)
+            {
                 MathInputButton.IsEnabled = false;
+            }
             else
             {
-                MathInputButton.Click += (s, ev) => mipw.Open();
-                mipw.OnInsertPressed += MathInputInserted;
+                MathInputButton.Click += (s, ev) => _mipw.Open();
+                _mipw.OnInsertPressed += MathInputInserted;
             }
         }
 
@@ -101,13 +79,6 @@ namespace Sumerics.Controls
             Editor.ToolTipNeeded += ShowToolTip;
             Editor.KeyDown += EditorKeyDown;
 
-            var index = Editor.AddStyle(new FastColoredTextBoxNS.WavyLineStyle(255, System.Drawing.Color.Red));
-            styleIndex = Editor.GetStyleIndexMask(new FastColoredTextBoxNS.Style[] { Editor.Styles[index] });
-        }
-
-        void SetupAutocomplete()
-        {
-            autoComplete = new AutocompletePopup(this);
             AutocompleteButton.Click += ShowAutoComplete;
         }
 
@@ -118,16 +89,34 @@ namespace Sumerics.Controls
             InputPanel.PlaceFocus = SetFocus;
         }
 
+        void SetupHandlers()
+        {
+            CopyButton.Click += CopyButtonClicked;
+            PasteButton.Click += PasteButtonClicked;
+            InputPanelButton.Click += InputPanelButtonClicked;
+
+            SaveButton.Click += SaveButtonClicked;
+            SaveAsButton.Click += SaveAsButtonClick;
+            CloseButton.Click += CloseButtonClicked;
+
+            UndoButton.Click += UndoButtonClicked;
+            RedoButton.Click += RedoButtonClicked;
+
+            ExecuteButton.Click += ExecuteButtonClicked;
+            ShowErrorsButton.Click += ShowErrorsButton_Click;
+            Errors.ItemsSource = _errorRanges;
+        }
+
         #endregion
 
         #region Properties
 
         public IScriptFileModel Model
         {
-            get { return model; }
+            get { return _model; }
         }
 
-        public string Text
+        public String Text
         {
             get { return Editor.Text; }
             set
@@ -141,111 +130,125 @@ namespace Sumerics.Controls
 
         #region Events
 
-        void InputPanelButtonClicked(object sender, RoutedEventArgs e)
+        void InputPanelButtonClicked(Object sender, RoutedEventArgs e)
         {
             InputPanel.Toggle();
         }
 
-        void MathInputInserted(object sender, string query)
+        void MathInputInserted(Object sender, String query)
         {
-            Editor.InsertText(model.TransformMathML(query));
+            Editor.InsertText(_model.TransformMathML(query));
         }
 
-        void EditorKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        void EditorKeyDown(Object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == System.Windows.Forms.Keys.F5)
+            {
                 Execute();
+            }
             else if (e.KeyCode == System.Windows.Forms.Keys.S && e.Modifiers == System.Windows.Forms.Keys.Control)
-                model.Save();
+            {
+                _model.Save();
+            }
             else if (e.KeyCode == System.Windows.Forms.Keys.W && e.Modifiers == System.Windows.Forms.Keys.Control)
-                model.Close();
+            {
+                _model.Close();
+            }
             else if (e.KeyCode == System.Windows.Forms.Keys.N && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
                 if (OnCreateNewFile != null)
+                {
                     OnCreateNewFile(this, EventArgs.Empty);
+                }
             }
             else if (e.KeyCode == System.Windows.Forms.Keys.O && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
                 if (OnOpenAnotherFile != null)
+                {
                     OnOpenAnotherFile(this, EventArgs.Empty);
+                }
             }
         }
 
-        void ShowErrorsButton_Click(object sender, RoutedEventArgs e)
+        void ShowErrorsButton_Click(Object sender, RoutedEventArgs e)
         {
             if (ErrorGrid.Visibility == Visibility.Visible)
+            {
                 ErrorGrid.Visibility = Visibility.Collapsed;
+            }
             else
+            {
                 ErrorGrid.Visibility = Visibility.Visible;
+            }
         }
 
-        void CloseButtonClicked(object sender, RoutedEventArgs e)
+        void CloseButtonClicked(Object sender, RoutedEventArgs e)
         {
-            model.Close();
+            _model.Close();
         }
 
-        void SaveButtonClicked(object sender, RoutedEventArgs e)
-        {
-            Editor.IsChanged = false;
-            model.Save();
-        }
-
-        void SaveAsButtonClick(object sender, RoutedEventArgs e)
+        void SaveButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.IsChanged = false;
-            model.SaveAs();
+            _model.Save();
         }
 
-        void ContentChangedDelayed(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        void SaveAsButtonClick(Object sender, RoutedEventArgs e)
         {
-            model.Changed = Editor.IsChanged;
-            model.Compile();
+            Editor.IsChanged = false;
+            _model.SaveAs();
         }
 
-        void ExecuteButtonClicked(object sender, RoutedEventArgs e)
+        void ContentChangedDelayed(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        {
+            _model.Changed = Editor.IsChanged;
+            _model.Compile();
+        }
+
+        void ExecuteButtonClicked(Object sender, RoutedEventArgs e)
         {
             Execute();
         }
 
-        void PasteButtonClicked(object sender, RoutedEventArgs e)
+        void PasteButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.Paste();
         }
 
-        void CopyButtonClicked(object sender, RoutedEventArgs e)
+        void CopyButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.Copy();
         }
 
-        void RedoButtonClicked(object sender, RoutedEventArgs e)
+        void RedoButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.Redo();
         }
 
-        void UndoButtonClicked(object sender, RoutedEventArgs e)
+        void UndoButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.Undo();
         }
 
-        void UndoRedoStateChanged(object sender, EventArgs e)
+        void UndoRedoStateChanged(Object sender, EventArgs e)
         {
             UndoButton.IsEnabled = Editor.UndoEnabled;
             RedoButton.IsEnabled = Editor.RedoEnabled;
         }
 
-        void ShowAutoComplete(object sender, RoutedEventArgs e)
+        void ShowAutoComplete(Object sender, RoutedEventArgs e)
         {
-            autoComplete.Show(true);
+            _autoComplete.Show(true);
             Editor.Focus();
         }
 
-        void SelectionChanged(object sender, EventArgs e)
+        void SelectionChanged(Object sender, EventArgs e)
         {
             Line.Text = c2s(Editor.Selection.Start.iLine);
             Column.Text = c2s(Editor.Selection.Start.iChar);
         }
 
-        string c2s(int p)
+        String c2s(Int32 p)
         {
             return (p + 1).ToString();
         }
@@ -254,7 +257,7 @@ namespace Sumerics.Controls
 
         #region Methods
 
-        void InsertText(string obj)
+        void InsertText(String obj)
         {
             Editor.InsertText(obj);
         }
@@ -264,7 +267,9 @@ namespace Sumerics.Controls
             Editor.ResetSelectionToPrompt();
 
             if (Editor.Selection.IsEmpty)
+            {
                 Editor.Selection.GoLeft(true);
+            }
 
             Editor.ClearSelected();
         }
@@ -277,45 +282,51 @@ namespace Sumerics.Controls
 
         void Execute()
         {
-            model.Compile();
+            _model.Compile();
 
-            if (errorRanges.Count == 0)
-                model.Execute();
+            if (_errorRanges.Count == 0)
+            {
+                _model.Execute();
+            }
             else
+            {
                 ErrorGrid.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         #endregion
 
         #region Handle Errors
 
-        void ShowToolTip(object sender, ToolTipNeededEventArgs e)
+        void ShowToolTip(Object sender, ToolTipNeededEventArgs e)
         {
-            for(var i = 0; i < errorRanges.Count; i++)
+            for (var i = 0; i < _errorRanges.Count; i++)
             {
-                if (errorRanges[i].Range.Contains(e.Place))
+                if (_errorRanges[i].Range.Contains(e.Place))
                 {
                     e.ToolTipTitle = "Compilation error";
-                    e.ToolTipText = errorRanges[i].Message;
+                    e.ToolTipText = _errorRanges[i].Message;
                     e.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
                     break;
                 }
             }
         }
 
-        public void SetError(int line, int col, int length, string message)
+        public void SetError(Int32 line, Int32 col, Int32 length, String message)
         {
             var from = Editor.PlaceToPosition(new Place(col - 1, line - 1));
             var range = Editor.GetRange(from, from + length);
 
             if (length > 0 && range.Text.Length == 0)
+            {
                 range = Editor.GetRange(Math.Max(from - length, 0), from);
+            }
 
             if (range.Text.Length > 0)
             {
-                range.SetStyle(styleIndex);
+                range.SetStyle(_styleIndex);
 
-                errorRanges.Add(new ErrorRange
+                _errorRanges.Add(new ErrorRange
                 {
                     Message = message,
                     Range = range,
@@ -323,7 +334,7 @@ namespace Sumerics.Controls
                     Line = line
                 });
 
-                ErrorCount.Text = errorRanges.Count.ToString();
+                ErrorCount.Text = _errorRanges.Count.ToString();
             }
         }
 
@@ -331,8 +342,8 @@ namespace Sumerics.Controls
         {
             var r = new Range(Editor);
             r.SelectAll();
-            r.ClearStyle(styleIndex);
-            errorRanges.Clear();
+            r.ClearStyle(_styleIndex);
+            _errorRanges.Clear();
             ErrorCount.Text = "0";
         }
 
@@ -345,11 +356,11 @@ namespace Sumerics.Controls
         {
             public Range Range { get; set; }
 
-            public string Message { get; set; }
+            public String Message { get; set; }
 
-            public int Column { get; set; }
+            public Int32 Column { get; set; }
 
-            public int Line { get; set; }
+            public Int32 Line { get; set; }
         }
 
         #endregion

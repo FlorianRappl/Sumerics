@@ -1,7 +1,5 @@
 ﻿namespace Sumerics.Controls
 {
-    using YAMP;
-
     public interface IPlotViewModel
     {
         void UndockPlot();
@@ -13,9 +11,5 @@
         void OpenPlotSeries();
 
         void OpenPlotSettings();
-
-        void SavePlot(SumericsPlot frame);
-
-        PlotValue Plot { get; }
     }
 }

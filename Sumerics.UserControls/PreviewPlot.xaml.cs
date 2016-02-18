@@ -5,7 +5,6 @@
     using OxyPlot.Series;
     using System.Windows;
     using System.Windows.Controls;
-    using YAMP;
 
     /// <summary>
     /// Interaction logic for PreviewPlot.xaml
@@ -20,7 +19,7 @@
         }
 
         #endregion
-
+        /*
         #region Dependency Property
 
         public Value SelectedPreview
@@ -120,5 +119,6 @@
         }
 
         #endregion
+        */
     }
 }

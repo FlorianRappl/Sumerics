@@ -1,8 +1,6 @@
 ﻿namespace Sumerics.Controls
 {
-    using OxyPlot;
     using System;
-    using System.Globalization;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Windows.Input;
@@ -37,21 +35,9 @@
             return keyEvent.KeyboardDevice.Modifiers == ModifierKeys.None && keyEvent.Key == value;
         }
 
-        public static Byte ToHexColor(this String str, Int32 start)
-        {
-            var sub = str.Substring(start, 2);
-            return Byte.Parse(sub, NumberStyles.HexNumber);
-        }
-
         public static Color FromHexToColor(this String str)
         {
             return Color.FromRgb(str.ToHexColor(1), str.ToHexColor(3), str.ToHexColor(5));
-        }
-
-        public static Byte ToRgbColor(this String str)
-        {
-            var sub = Math.Min(Int32.Parse(str), 255);
-            return Convert.ToByte(sub);
         }
 
         public static Color FromRgbToColor(this String str)
@@ -76,15 +62,10 @@
             return Color.FromRgb(colors[0], colors[1], colors[2]);
 		}
 
-		public static OxyColor OxyColorFromString(this String color)
+		public static Brush BrushFromString(this String value)
 		{
-			var c = ColorFromString(color);
-			return OxyColor.FromArgb(c.A, c.R, c.G, c.B);
-		}
-
-		public static Brush BrushFromString(this String color)
-		{
-			return new SolidColorBrush(ColorFromString(color));
+            var color = value.ColorFromString();
+			return new SolidColorBrush(color);
 		}
 
 		public static Color ColorFromString(this String color)

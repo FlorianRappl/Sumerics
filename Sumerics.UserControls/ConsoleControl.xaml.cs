@@ -1,9 +1,7 @@
 ﻿namespace Sumerics.Controls
 {
-    using micautLib;
     using System;
     using System.Collections.ObjectModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -17,17 +15,21 @@
     {
         #region Fields
 
+        readonly AutocompletePopup _autoComplete;
+        readonly MathInputPanelWrapper _mipw;
         ICommand _command;
         String[] _currentHistory;
 		Int32 _historyIndex;
-		AutocompletePopup _autoComplete;
-        MathInputControl _mip;
 
         #endregion
 
-        #region Event
+        #region Events
 
-        public event EventHandler<string> MathInputReceived;
+        public event EventHandler<String> MathInputReceived
+        {
+            add { _mipw.OnInsertPressed += value; }
+            remove { _mipw.OnInsertPressed -= value; }
+        }
 
         #endregion
 
@@ -35,9 +37,15 @@
 
         public static readonly DependencyProperty HasNotificationProperty = DependencyProperty.Register(
             "HasNotification", 
-            typeof(bool), 
-            typeof(ConsoleControl), 
-            new FrameworkPropertyMetadata(false, OnNotificationChanged));      
+            typeof(Boolean), 
+            typeof(ConsoleControl),
+            new FrameworkPropertyMetadata(false, OnNotificationChanged));
+
+        public static readonly DependencyProperty CanStopProperty = DependencyProperty.Register(
+            "CanStop",
+            typeof(Boolean),
+            typeof(ConsoleControl),
+            new FrameworkPropertyMetadata(false, OnStopChanged));     
 
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register(
             "Command",
@@ -47,15 +55,15 @@
 
         public static readonly DependencyProperty InputProperty = DependencyProperty.Register(
             "Input",
-            typeof(string),
+            typeof(String),
             typeof(ConsoleControl),
             new FrameworkPropertyMetadata(null, OnInputChange));
 
         public static readonly DependencyProperty CommandHistoryProperty = DependencyProperty.Register(
             "CommandHistory",
-            typeof(ObservableCollection<string>),
+            typeof(ObservableCollection<String>),
             typeof(ConsoleControl),
-			new FrameworkPropertyMetadata(new ObservableCollection<string>()));
+			new FrameworkPropertyMetadata(new ObservableCollection<String>()));
 
 		public static readonly DependencyProperty AutoCompleteItemsProperty = DependencyProperty.Register(
 			"AutoCompleteItems", 
@@ -75,10 +83,28 @@
             typeof(ConsoleControl),
             new PropertyMetadata(null));
 
+        public static readonly DependencyProperty CancelQueriesCommandProperty = DependencyProperty.Register(
+            "CancelQueriesCommand",
+            typeof(ICommand),
+            typeof(ConsoleControl),
+            new PropertyMetadata(null));
+
+        public static readonly DependencyProperty CancelQueriesCommandParameterProperty = DependencyProperty.Register(
+            "CancelQueriesCommandParameter",
+            typeof(Object),
+            typeof(ConsoleControl),
+            new PropertyMetadata(null));
+
         static void OnNotificationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (d as ConsoleControl);
-            control.Notification.IsOpen = (bool)e.NewValue;
+            control.Notification.IsOpen = (Boolean)e.NewValue;
+        }
+
+        static void OnStopChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (d as ConsoleControl);
+            control.StopButton.IsEnabled = (Boolean)e.NewValue;
         }  
 
         static void OnCommandChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -91,7 +117,7 @@
         static void OnInputChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as ConsoleControl;
-            var value = e.NewValue as string;
+            var value = e.NewValue as String;
 			control.Console.Query = value;
         }
 
@@ -119,8 +145,8 @@
             InputPanel.PlaceFocus = SetFocus;
             InputPanel.Insert = InsertText;
             InputPanel.Delete = Backspace;
-            _currentHistory = new string[0];
-			CommandHistory.Add(string.Empty);
+            _currentHistory = new String[0];
+			CommandHistory.Add(String.Empty);
 
 			Console.OnQueryEntered += OnQueryEntered;
 			Console.OnHistoryDown += OnHistoryDown;
@@ -140,56 +166,18 @@
             CollapseButton.Click += CollapseButtonClick;
             ExpandButton.Click += ExpandButtonClick;
             StopButton.Click += StopButtonClick;
-            QueryResultViewModel.RunningQueriesChanged += OnRunningQueriesChanged;
 
-            InitializeComplete();
-            InitializeMip();
-        }
+            _autoComplete = new AutocompletePopup(this);
+            _mipw = new MathInputPanelWrapper("Draw query");
 
-		void InitializeComplete()
-		{
-			_autoComplete = new AutocompletePopup(this);
-		}
-
-        #endregion
-
-        #region Math Input Panel
-
-        void InitializeMip()
-        {
-            try
+            if (!_mipw.IsAvailable)
             {
-                _mip = new MathInputControl();
-                _mip.SetCaptionText("Draw query");
-                _mip.EnableExtendedButtons(true);
-                _mip.Insert += InsertMathInputPanel;
-                _mip.Close += CloseMathInputPanel;
-                MathInputButton.Click += OpenMathInputPanel;
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine("MATH INPUT PANEL COULD NOT BE LOADED... See exception for details.");
-                Trace.WriteLine(ex);
                 MathInputButton.IsEnabled = false;
             }
-		}
-
-        void OpenMathInputPanel(object sender, EventArgs ev)
-        {
-            _mip.Show();
-        }
-
-        void CloseMathInputPanel()
-        {
-            _mip.Hide();
-        }
-
-        void InsertMathInputPanel(string query)
-        {
-            _mip.Clear();
-
-            if (MathInputReceived != null)
-                MathInputReceived(this, query);
+            else
+            {
+                MathInputButton.Click += (s, ev) => _mipw.Open();
+            }
         }
 
         #endregion
@@ -202,6 +190,12 @@
             set { SetValue(HasNotificationProperty, value); }
         }
 
+        public Boolean CanStop
+        {
+            get { return (Boolean)GetValue(CanStopProperty); }
+            set { SetValue(CanStopProperty, value); }
+        }
+
         public ICommand OpenEditorCommand
         {
             get { return (ICommand)GetValue(OpenEditorCommandProperty); }
@@ -212,6 +206,18 @@
         {
             get { return (Object)GetValue(OpenEditorCommandParameterProperty); }
             set { SetValue(OpenEditorCommandParameterProperty, value); }
+        }
+
+        public ICommand CancelQueriesCommand
+        {
+            get { return (ICommand)GetValue(CancelQueriesCommandProperty); }
+            set { SetValue(CancelQueriesCommandProperty, value); }
+        }
+
+        public Object CancelQueriesCommandParameter
+        {
+            get { return (Object)GetValue(CancelQueriesCommandParameterProperty); }
+            set { SetValue(CancelQueriesCommandParameterProperty, value); }
         }
 
 		public ObservableCollection<AutocompleteItem> AutoCompleteItems
@@ -271,11 +277,6 @@
 			e.Handled = true;
 		}
 
-        void OnRunningQueriesChanged(Object sender, EventArgs e)
-        {
-            StopButton.IsEnabled = QueryResultViewModel.HasRunningQueries;
-        }
-
 		public void SetFocus()
 		{
 			Host.Focus();
@@ -294,9 +295,11 @@
 
         void StopButtonClick(Object sender, RoutedEventArgs e)
         {
-            foreach (var query in QueryResultViewModel.RunningQueries)
+            var command = CancelQueriesCommand;
+
+            if (command != null)
             {
-                query.Cancel();
+                command.Execute(CancelQueriesCommandParameter);
             }
         }
 
@@ -403,8 +406,6 @@
 
 		void OnQueryEntered(Object sender, FastColoredTextBoxNS.QueryEventArgs e)
 		{
-			var query = new QueryResultViewModel(e.Query, e.Region);
-
             if (e.IsHistoryEntry)
             {
                 if (CommandHistory.Count > 1 && CommandHistory[CommandHistory.Count - 2] == e.Query)
@@ -418,9 +419,9 @@
                 _currentHistory = CommandHistory.ToArray();
             }
 
-            if (_command != null && _command.CanExecute(query))
+            if (_command != null && _command.CanExecute(e.Query))
             {
-                _command.Execute(query);
+                _command.Execute(e.Query);
             }
 		}
 

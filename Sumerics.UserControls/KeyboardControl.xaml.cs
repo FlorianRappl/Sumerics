@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace Sumerics.Controls
+﻿namespace Sumerics.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media.Animation;
+
     /// <summary>
     /// Interaction logic for KeyboardControl.xaml
     /// </summary>
     public partial class KeyboardControl : UserControl
     {
-        bool hidden = true;
-        Action placeFocus;
-        Action<string> insert;
-        Action delete;
+        #region Fields
+
+        Boolean _hidden = true;
+        Action _placeFocus;
+        Action<String> _insert;
+        Action _delete;
+
+        #endregion
+
+        #region ctor
 
         public KeyboardControl()
         {
@@ -32,34 +27,42 @@ namespace Sumerics.Controls
             InitializePanel();
         }
 
+        #endregion
+
+        #region Properties
+
         public Action PlaceFocus
         {
-            get { return placeFocus ?? (() => { }); }
-            set { placeFocus = value; }
+            get { return _placeFocus ?? (() => { }); }
+            set { _placeFocus = value; }
         }
 
-        public Action<string> Insert
+        public Action<String> Insert
         {
-            get { return insert ?? (c => { }); }
-            set { insert = value; }
+            get { return _insert ?? (c => { }); }
+            set { _insert = value; }
         }
 
         public Action Delete
         {
-            get { return delete ?? (() => { }); }
-            set { delete = value; }
+            get { return _delete ?? (() => { }); }
+            set { _delete = value; }
         }
+
+        #endregion
+
+        #region Methods
 
         public void Toggle()
         {
-            if (!hidden)
+            if (!_hidden)
             {
-                hidden = true;
+                _hidden = true;
                 SlideInputPanel(InputGrid.Height + InputGrid.Margin.Bottom + InputGrid.Margin.Top, 0.0);
             }
-            else if (hidden)
+            else if (_hidden)
             {
-                hidden = false;
+                _hidden = false;
                 SlideInputPanel(0.0, InputGrid.Height + InputGrid.Margin.Bottom + InputGrid.Margin.Top);
             }
         }
@@ -73,14 +76,18 @@ namespace Sumerics.Controls
                     var bt = (Button)child;
 
                     if (bt.Tag == null)
+                    {
                         bt.Click += InsertButtonClick;
+                    }
                     else
+                    {
                         bt.Click += InsertSpecialButtonClick;
+                    }
                 }
             }
         }
 
-        void SlideInputPanel(double from, double to)
+        void SlideInputPanel(Double from, Double to)
         {
             var sb = new Storyboard();
             var animation = new DoubleAnimation(from, to, new Duration(new TimeSpan(0, 0, 0, 0, 500)));
@@ -91,18 +98,18 @@ namespace Sumerics.Controls
             PlaceFocus();
         }
 
-        void InsertButtonClick(object sender, RoutedEventArgs e)
+        void InsertButtonClick(Object sender, RoutedEventArgs e)
         {
             var bt = (Button)e.Source;
-            var content = (string)bt.Content;
+            var content = (String)bt.Content;
             Insert(content);
             PlaceFocus();
         }
 
-        void InsertSpecialButtonClick(object sender, RoutedEventArgs e)
+        void InsertSpecialButtonClick(Object sender, RoutedEventArgs e)
         {
             var bt = (Button)e.Source;
-            var content = (string)bt.Tag;
+            var content = (String)bt.Tag;
 
             switch (content)
             {
@@ -117,5 +124,7 @@ namespace Sumerics.Controls
 
             PlaceFocus();
         }
+
+        #endregion
     }
 }

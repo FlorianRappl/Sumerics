@@ -1,0 +1,12 @@
+﻿<local:BasePlotControl x:Class="Sumerics.Controls.Plots.Wpf3dPlotControl"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:local="clr-namespace:Sumerics.Controls.Plots"
+                       xmlns:p="clr-namespace:WPFChart3D;assembly=WPFChart3D"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                       mc:Ignorable="d" 
+                       d:DesignHeight="300" 
+                       d:DesignWidth="300">
+    <p:Plot3D x:Name="Plot" />
+</local:BasePlotControl>

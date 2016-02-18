@@ -2,9 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf" 
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" 
+             d:DesignWidth="400">
     
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,47 +21,73 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         
-        <ContentControl Name="PlotArea" Grid.Row="0" />
+        <ContentControl Name="PlotArea" 
+                        Grid.Row="0" />
   
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button Style="{DynamicResource MetroCircleButton}" Name="SaveButton"
-                    Click="SaveButtonClick" IsEnabled="False">
-                <Image Source="Images/save.png" ToolTip="Save plot" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1">
+            <Button Style="{DynamicResource MetroCircleButton}" 
+                    Name="SaveButton"
+                    Click="SaveButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/save.png" 
+                       ToolTip="Save plot" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="PrintButton"
-                    Click="PrintButtonClick" IsEnabled="False">
-                <Image Source="Images/printer.png" ToolTip="Print plot" />
+            <Button Style="{DynamicResource MetroCircleButton}"
+                    Name="PrintButton"
+                    Click="PrintButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/printer.png"
+                       ToolTip="Print plot" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="DuplicateButton"
-                    Click="DuplicateButtonClick" IsEnabled="False">
-                <Image Source="Images/undock.png" ToolTip="Duplicate plot" x:Name="DockImg" />
+            <Button Style="{DynamicResource MetroCircleButton}" 
+                    Name="DuplicateButton"
+                    Click="DuplicateButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/undock.png"
+                       ToolTip="Duplicate plot" 
+                       x:Name="DockImg" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="SeriesButton"
-                    Click="SeriesButtonClick" IsEnabled="False">
-                <Image Source="Images/series.png" ToolTip="Included series" />
+            <Button Style="{DynamicResource MetroCircleButton}" 
+                    Name="SeriesButton"
+                    Click="SeriesButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/series.png" 
+                       ToolTip="Included series" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="SettingsButton"
-                    Click="SettingsButtonClick" IsEnabled="False">
-                <Image Source="Images/settings.png" ToolTip="Plot settings" />
+            <Button Style="{DynamicResource MetroCircleButton}" 
+                    Name="SettingsButton"
+                    Click="SettingsButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/settings.png" 
+                       ToolTip="Plot settings" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="GridButton"
-                    Click="GridButtonClick" IsEnabled="False">
-                <Image Source="Images/gridlines.png" ToolTip="Toggle gridlines" />
+            <Button Style="{DynamicResource MetroCircleButton}"
+                    Name="GridButton"
+                    Click="GridButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/gridlines.png"
+                       ToolTip="Toggle gridlines" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="CenterButton"
-                    Click="CenterButtonClick" IsEnabled="False">
-                <Image Source="Images/fix.png" ToolTip="Reset axes transformations" />
+            <Button Style="{DynamicResource MetroCircleButton}" 
+                    Name="CenterButton"
+                    Click="CenterButtonClick" 
+                    IsEnabled="False">
+                <Image Source="Images/fix.png" 
+                       ToolTip="Reset axes transformations" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" Name="ConsoleButton"
+            <Button Style="{DynamicResource MetroCircleButton}"
+                    Name="ConsoleButton"
                     Click="ConsoleButtonClick">
-                <Image Source="Images/console.png" ToolTip="Enter command" />
+                <Image Source="Images/console.png" 
+                       ToolTip="Enter command" />
             </Button>
         </StackPanel>
         

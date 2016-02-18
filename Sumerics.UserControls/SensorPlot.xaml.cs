@@ -68,7 +68,7 @@
                 }
                 else
                 {
-                    _model.Subtitle = string.Empty;
+                    _model.Subtitle = String.Empty;
                 }
 			}
 		}
@@ -110,9 +110,13 @@
                     }
                     else
                     {
-                        var series = new LineSeries { Color = colors[i], StrokeThickness = 1.0, Title = labels[i] };
-                        series.MarkerType = markers[i];
-                        _model.Series.Add(series);
+                        _model.Series.Add(new LineSeries 
+                        { 
+                            Color = colors[i], 
+                            StrokeThickness = 1.0, 
+                            Title = labels[i],
+                            MarkerType = markers[i]
+                        });
                     }
 				}
             }
@@ -124,22 +128,28 @@
 
 		static PlotModel CreateModel()
         {
-            var model = new PlotModel();
-			model.TitleFontWeight = 1.0;
-			model.TitleFontSize = 16.0;
-			model.TitleColor = OxyColors.DarkGray;
-			model.Axes.Add(new LinearAxis());
-			model.Axes.Add(new LinearAxis());
-			model.Axes[0].Position = AxisPosition.Bottom;
-			model.Axes[0].Title = "Seconds";
-			model.Axes[1].Position = AxisPosition.Left;
-			model.LegendPosition = LegendPosition.LeftTop;
-			model.PlotMargins = new OxyThickness(0);
-			model.Padding = new OxyThickness(0, 10, 10, 0);
-			model.LegendBackground = OxyColor.FromArgb(100, 240, 240, 240);
-			model.LegendBorder = OxyColors.LightGray;
-			model.PlotAreaBorderThickness = new OxyThickness(0);
-			model.LegendOrientation = LegendOrientation.Horizontal;
+            var model = new PlotModel
+            {
+			    TitleFontWeight = 1.0,
+			    TitleFontSize = 16.0,
+			    TitleColor = OxyColors.DarkGray,
+			    LegendPosition = LegendPosition.LeftTop,
+			    PlotMargins = new OxyThickness(0),
+			    Padding = new OxyThickness(0, 10, 10, 0),
+			    LegendBackground = OxyColor.FromArgb(100, 240, 240, 240),
+			    LegendBorder = OxyColors.LightGray,
+			    PlotAreaBorderThickness = new OxyThickness(0),
+			    LegendOrientation = LegendOrientation.Horizontal
+            };
+            model.Axes.Add(new LinearAxis
+            {
+			    Position = AxisPosition.Bottom,
+			    Title = "Seconds"
+            });
+            model.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Left
+            });
             return model;
 		}
 

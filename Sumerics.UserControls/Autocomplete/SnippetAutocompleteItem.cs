@@ -59,8 +59,7 @@
 
         public override CompareResult Compare(String fragmentText)
         {
-            if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase) &&
-                   Text != fragmentText)
+            if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase) && Text != fragmentText)
             {
                 return CompareResult.Visible;
             }

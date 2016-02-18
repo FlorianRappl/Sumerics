@@ -130,9 +130,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="YAMP">
-      <HintPath>..\packages\YAMP.1.5.0.7513\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutocompletePopup.xaml.cs">
@@ -159,21 +156,21 @@
     <Compile Include="PlotControl.xaml.cs">
       <DependentUpon>PlotControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlotHandlers\ComplexSeries.cs" />
-    <Compile Include="PlotHandlers\SumericsBarPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsComplexPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsContourPlot.cs" />
-    <Compile Include="PlotHandlers\PlotFactory.cs" />
-    <Compile Include="PlotHandlers\SumericsErrorPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsHeatPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsLinePlot3D.cs" />
-    <Compile Include="PlotHandlers\SumericsOxyPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsPlot2D.cs" />
-    <Compile Include="PlotHandlers\SumericsPlot3D.cs" />
-    <Compile Include="PlotHandlers\SumericsPolarPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsSubPlot.cs" />
-    <Compile Include="PlotHandlers\SumericsSurfacePlot.cs" />
+    <Compile Include="Plots\BasePlotControl.cs" />
+    <Compile Include="Plots\ControlFactory.cs" />
+    <Compile Include="Plots\GridPlotControl.xaml.cs">
+      <DependentUpon>GridPlotControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Plots\Oxy2dPlotControl.xaml.cs">
+      <DependentUpon>Oxy2dPlotControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Plots\OxyBarPlotControl.xaml.cs">
+      <DependentUpon>OxyBarPlotControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Plots\OxyPlotControl.cs" />
+    <Compile Include="Plots\Wpf3dPlotControl.xaml.cs">
+      <DependentUpon>Wpf3dPlotControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PreviewPlot.xaml.cs">
       <DependentUpon>PreviewPlot.xaml</DependentUpon>
     </Compile>
@@ -190,7 +187,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="QueryResultViewModel.cs" />
     <Compile Include="SensorPlot.xaml.cs">
       <DependentUpon>SensorPlot.xaml</DependentUpon>
     </Compile>
@@ -225,6 +221,22 @@
     <Page Include="PlotControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Plots\GridPlotControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Plots\Oxy2dPlotControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Plots\OxyBarPlotControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Plots\Wpf3dPlotControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PreviewPlot.xaml">
       <SubType>Designer</SubType>
@@ -264,13 +276,21 @@
     <Resource Include="Images\fix.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
+      <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
+      <Name>Sumerics.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sumerics.Console\Sumerics.Console.csproj">
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>Sumerics.Console</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sumerics.Plots3D\Sumerics.Plots3D.csproj">
+    <ProjectReference Include="..\Sumerics.Plots3D\WPFChart3D.csproj">
       <Project>{38ee1803-0f43-4eb3-9322-00a936f41548}</Project>
-      <Name>Sumerics.Plots3D</Name>
+      <Name>WPFChart3D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Plots\Sumerics.Plots.csproj">
+      <Project>{d14e0331-db16-4876-bc19-e30dd8a30da9}</Project>
+      <Name>Sumerics.Plots</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

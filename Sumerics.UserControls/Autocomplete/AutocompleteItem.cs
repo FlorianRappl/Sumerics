@@ -63,7 +63,6 @@
 
         public virtual CompareResult Compare(String fragmentText)
         {
-
             if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase))
             {
                 return CompareResult.VisibleAndSelected;
