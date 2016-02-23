@@ -102,7 +102,7 @@
 
         void MathInputReceived(Object sender, String result)
         {
-            var service = _vm.Container.Get<IMathInput>();
+            var service = _vm.Container.Get<IMathInputService>();
 
             if (service != null)
             {

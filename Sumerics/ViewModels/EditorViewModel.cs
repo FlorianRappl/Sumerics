@@ -17,7 +17,7 @@
 
         readonly Kernel _kernel;
         readonly IConsole _console;
-        readonly IMathInput _service;
+        readonly IMathInputService _service;
         readonly ICommand _create;
         readonly ICommand _open;
         readonly ObservableCollection<EditorFileViewModel> _files;
@@ -27,16 +27,16 @@
 
         #region ctor
 
-        public EditorViewModel(Kernel kernel, IConsole console, IMathInput service)
+        public EditorViewModel(Kernel kernel, IConsole console, IMathInputService service)
         {
             _kernel = kernel;
             _console = console;
             _service = service;
             _files = new ObservableCollection<EditorFileViewModel>();
-            _files.Add(new EditorFileViewModel(this, kernel.Parser));
+            _files.Add(new EditorFileViewModel(this, kernel));
             _create = new RelayCommand(x =>
             {
-                var newfile = new EditorFileViewModel(this, kernel.Parser);
+                var newfile = new EditorFileViewModel(this, kernel);
                 Files.Add(newfile);
                 SelectedFile = newfile;
             });
@@ -65,7 +65,7 @@
             get { return _console; }
         }
 
-        public IMathInput Service
+        public IMathInputService Service
         {
             get { return _service; }
         }
@@ -110,7 +110,7 @@
                 }
             }
 
-            var tab = new EditorFileViewModel(this, _kernel.Parser, file);
+            var tab = new EditorFileViewModel(this, _kernel, file);
             Files.Add(tab);
             SelectedFile = tab;
         }

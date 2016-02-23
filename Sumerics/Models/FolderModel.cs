@@ -22,14 +22,14 @@
         {
             Info = new DirectoryInfo(drive.Name);
             IsDrive = true;
-            _icon = Icons.HomeIcon;
+            _icon = IconFactory.HomeIcon;
         }
 
         public FolderModel(DirectoryInfo directory)
         {
             Info = directory;
             IsDrive = directory.Parent == null;
-            _icon = IsDrive ? Icons.HomeIcon : Icons.FolderIcon;
+            _icon = IsDrive ? IconFactory.HomeIcon : IconFactory.FolderIcon;
         }
 
         public FolderModel(String directory) : 
@@ -40,7 +40,7 @@
         public FolderModel(Environment.SpecialFolder directory) : 
             this(Environment.GetFolderPath(directory))
         {
-            _icon = Icons.HeartIcon;
+            _icon = IconFactory.HeartIcon;
         }
 
         #endregion

@@ -15,11 +15,11 @@
     {
         #region Fields
 
-        readonly Parser _parser;
         readonly ParseContext _debugContext;
         readonly EditorViewModel _parent;
         readonly List<AutocompleteItem> _variableItems;
         readonly ObservableCollection<AutocompleteItem> _items;
+        readonly Kernel _kernel;
 
         String _path;
         Boolean _awaiting;
@@ -32,11 +32,11 @@
 
         #region ctor
 
-        public EditorFileViewModel(EditorViewModel parent, Parser parser)
+        public EditorFileViewModel(EditorViewModel parent, Kernel kernel)
         {
-            _parser = parser;
-            QueryResultViewModel.RunningQueriesChanged += OnRunningQueriesChanged;
-            _debugContext = new ParseContext(_parser.Context);
+            _kernel = kernel;
+            kernel.RunningQueriesChanged += OnRunningQueriesChanged;
+            _debugContext = new ParseContext(kernel.Parser.Context);
 
             _parent = parent;
             _items = new ObservableCollection<AutocompleteItem>();
@@ -50,8 +50,8 @@
             InitEditor();
         }
 
-        public EditorFileViewModel(EditorViewModel parent, Parser parser, String path)
-            : this(parent, parser)
+        public EditorFileViewModel(EditorViewModel parent, Kernel kernel, String path)
+            : this(parent, kernel)
         {
             _path = path;
             ReadText();
@@ -121,14 +121,14 @@
                 Changed = false;
             }
 
-            QueryResultViewModel.RunningQueriesChanged -= OnRunningQueriesChanged;
+            _kernel.RunningQueriesChanged -= OnRunningQueriesChanged;
             _parent.Remove(this);
         }
 
         public void Compile()
         {
             Clean();
-            var p = _parser.Parse(Text.Replace("\r\n", "\n"));
+            var p = _kernel.Parser.Parse(Text.Replace("\r\n", "\n"));
 
             if (p.Parser.HasErrors)
             {
@@ -157,12 +157,16 @@
 
         #region Events
 
-        void OnRunningQueriesChanged(object sender, EventArgs e)
+        void OnRunningQueriesChanged(Object sender, EventArgs e)
         {
             if (_awaiting)
+            {
                 _currentExecution = sender as QueryResultViewModel;
+            }
             else if (_currentExecution == sender)
+            {
                 _currentExecution = null;
+            }
         }
 
         public void Clean()
@@ -170,7 +174,9 @@
             _ed.ClearErrors();
 
             for (var i = 0; i < VariableItems.Count; i++)
+            {
                 Items.Remove(VariableItems[i]);
+            }
 
             VariableItems.Clear();
         }
@@ -179,7 +185,7 @@
         {
             for (var i = 0; i < symbols.Length; i++)
             {
-                var item = new AutocompleteItem(symbols[i], "Local variable " + symbols[i] + ".", Icons.VariableIcon);
+                var item = new AutocompleteItem(symbols[i], "Local variable " + symbols[i] + ".", IconFactory.VariableIcon);
                 Items.Add(item);
                 VariableItems.Add(item);
             }

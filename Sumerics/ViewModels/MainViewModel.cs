@@ -3,6 +3,7 @@
     using Sumerics.Commands;
     using Sumerics.Controls;
     using Sumerics.MathInput;
+    using Sumerics.Plots;
     using Sumerics.Views;
     using System;
     using System.Collections.Generic;
@@ -19,13 +20,14 @@
 
         readonly ICommand _openDialog;
         readonly ICommand _runQuery;
+        readonly IComponents _container;
         readonly Kernel _kernel;
         readonly ObservableCollection<VariableViewModel> _variables;
         readonly ObservableCollection<HelpViewModel> _functions;
         readonly ObservableCollection<AutocompleteItem> _availableItems;
         readonly NotificationsViewModel _notifications;
 
-        IPlotViewModel _lastPlot;
+        IPlotController _lastPlot;
         VariableViewModel _selectedVariable;
 
         String input;
@@ -37,8 +39,8 @@
         #region ctor
 
         public MainViewModel(IComponents container, IKernel kernel)
-            : base(container)
         {
+            _container = container;
             _kernel = kernel as Kernel;
 
             _variables = new ObservableCollection<VariableViewModel>();
@@ -46,12 +48,12 @@
 			_availableItems = new ObservableCollection<AutocompleteItem>();
             _notifications = new NotificationsViewModel();
 
-            _kernel.Context.OnLastPlotChanged += PlotCreated;
-            _kernel.Context.OnVariableChanged += VariableChanged;
-            _kernel.Context.OnVariableCreated += VariableCreated;
-            _kernel.Context.OnVariableRemoved += VariableRemoved;
-            _kernel.Context.OnNotificationReceived += _notifications.Received;
-            _kernel.Context.OnUserInputRequired += UserInput;
+            _kernel.Context.LastPlotChanged += PlotCreated;
+            _kernel.Context.VariableChanged += VariableChanged;
+            _kernel.Context.VariableCreated += VariableCreated;
+            _kernel.Context.VariableRemoved += VariableRemoved;
+            _kernel.Context.NotificationReceived += _notifications.Received;
+            _kernel.Context.UserInputRequired += UserInput;
 
 			FunctionFilter = String.Empty;
 			VariableFilter = String.Empty;
@@ -82,6 +84,11 @@
         #endregion
 
         #region Properties
+
+        public IComponents Container
+        {
+            get { return _container; }
+        }
 
         /// <summary>
         /// Gets or sets the currently applied function (help) filter.
@@ -219,19 +226,6 @@
         }
 
         /// <summary>
-        /// Gets or sets the created plot or the currently selected plot.
-        /// </summary>
-        public IPlotViewModel LastPlot
-        {
-            get { return _lastPlot; }
-            set
-            {
-                _lastPlot = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the selected value.
         /// </summary>
         public Value SelectedValue
@@ -269,7 +263,7 @@
 		{
             foreach (var k in _kernel.Parser.Keywords)
             {
-                var item = new AutocompleteItem(k, "The " + k + " keyword.", Icons.KeywordIcon);
+                var item = new AutocompleteItem(k, "The " + k + " keyword.", IconFactory.KeywordIcon);
                 EditorViewModel.BasicItems.Add(item);
                 _availableItems.Add(item);
             }
@@ -278,13 +272,13 @@
 			{
                 if (f.Topic.Equals("Constant"))
                 {
-                    var item = new AutocompleteItem(f.Name, f.Description, Icons.ConstantIcon);
+                    var item = new AutocompleteItem(f.Name, f.Description, IconFactory.ConstantIcon);
                     EditorViewModel.BasicItems.Add(item);
                     _availableItems.Add(item);
                 }
                 else
                 {
-                    var item = new AutocompleteItem(f.Name, f.Description, Icons.FunctionIcon);
+                    var item = new AutocompleteItem(f.Name, f.Description, IconFactory.FunctionIcon);
                     EditorViewModel.BasicItems.Add(item);
                     _availableItems.Add(item);
                 }
@@ -326,7 +320,7 @@
                     _variables.Add(vm);
                 }
 
-                _availableItems.Add(new AutocompleteItem(e.Name, "Variable", Icons.VariableIcon));
+                _availableItems.Add(new AutocompleteItem(e.Name, "Variable", IconFactory.VariableIcon));
             });
         }
 
@@ -363,7 +357,7 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                var service = Container.Get<IMathInput>();
+                var service = Container.Get<IMathInputService>();
                 var input = new InputDialog(service) { UserMessage = e.Message };
                 input.Closed += (s, ev) => e.Continue(input.UserInput);
                 input.Show();
@@ -376,7 +370,7 @@
             {
                 var visualizer = Container.Get<IVisualizer>();
                 var console = Container.Get<IConsole>();
-                LastPlot = new PlotViewModel(e.Value, visualizer, console);
+                //LastPlot = new PlotViewModel(e.Value, visualizer, console);
             });
         }
 

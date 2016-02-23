@@ -16,13 +16,13 @@
         #region Fields
 
         readonly MathInputPanelWrapper _panel;
-        readonly IMathInput _service;
+        readonly IMathInputService _service;
 
         #endregion
 
         #region ctor
 
-        public InputDialog(IMathInput service)
+        public InputDialog(IMathInputService service)
         {
             InitializeComponent();
             UserInput = String.Empty;
@@ -67,7 +67,7 @@
             Input.Text = _service.ConvertToYamp(query);
         }
 
-        public static String Show(IMathInput service, String message)
+        public static String Show(IMathInputService service, String message)
         {
             var inp = new InputDialog(service);
             inp.UserMessage = String.IsNullOrEmpty(message) ? "Your input has been requested:" : message;

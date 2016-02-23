@@ -24,6 +24,13 @@
         readonly List<PluginViewModel> _plugins;
         readonly Documentation _documentation;
         readonly ILogger _logger;
+        readonly List<QueryResultViewModel> _running;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler RunningQueriesChanged;
 
         #endregion
 
@@ -34,6 +41,7 @@
             _logger = logger;
             _parser = new Parser { UseScripting = true };
             _plugins = new List<PluginViewModel>();
+            _running = new List<QueryResultViewModel>();
 
             LoadPlugins();
             _documentation = Documentation.Create(Context);
@@ -75,6 +83,16 @@
             get { return _plugins; }
         }
 
+        public Boolean HasRunningQueries
+        {
+            get { return _running.Count > 0; }
+        }
+
+        public IEnumerable<QueryResultViewModel> RunningQueries
+        {
+            get { return _running.AsEnumerable(); }
+        }
+
         #endregion
 
         #region Files
@@ -112,9 +130,11 @@
 
         public void StopAll()
         {
-            if (QueryResultViewModel.HasRunningQueries)
+            if (HasRunningQueries)
             {
-                foreach (var query in QueryResultViewModel.RunningQueries)
+                var queries = _running.ToArray();
+
+                foreach (var query in queries)
                 {
                     query.Cancel();
                 }
@@ -128,51 +148,53 @@
 
         public async Task RunAsync(QueryResultViewModel state, String query)
         {
-            if (String.IsNullOrEmpty(state.Query))
+            if (!String.IsNullOrEmpty(state.Query))
             {
-                state.Running = false;
-                return;
-            }
+                AddRunningQuery(state);
 
-            try
-            {
-                var result = await Task.Run(() =>
+                try
                 {
-                    state.Thread = Thread.CurrentThread;
-                    return _parser.Evaluate(query.Replace("\r\n", "\n"));
-                });
-                state.Running = false;
+                    var result = await Task.Run(() =>
+                    {
+                        state.Thread = Thread.CurrentThread;
+                        return _parser.Evaluate(query.Replace("\r\n", "\n"));
+                    });
 
-                //if (!result.IsMuted)
-                {
-                    state.Value = result;
+                    //if (!result.IsMuted)
+                    {
+                        state.Value = result;
+                    }
                 }
-            }
-            catch (YAMPParseException ex)
-            {
-                var error = ex.Errors.FirstOrDefault();
-
-                if (error != null)
+                catch (YAMPParseException ex)
                 {
-                    state.Error = new YAMPException(error.Message);
+                    var error = ex.Errors.FirstOrDefault();
+
+                    if (error != null)
+                    {
+                        state.Error = new YAMPException(error.Message);
+                    }
+                    else
+                    {
+                        state.Error = ex;
+                    }
                 }
-                else
+                catch (YAMPRuntimeException ex)
                 {
                     state.Error = ex;
                 }
-            }
-            catch (YAMPRuntimeException ex)
-            {
-                state.Error = ex;
-            }
-            catch (ThreadAbortException)
-            {
-                state.Error = new Exception("The computation has been aborted.");
-            }
-            catch (Exception ex)
-            {
-                state.Error = ex;
-                _logger.Error(ex);
+                catch (ThreadAbortException)
+                {
+                    state.Error = new Exception("The computation has been aborted.");
+                }
+                catch (Exception ex)
+                {
+                    state.Error = ex;
+                    _logger.Error(ex);
+                }
+                finally
+                {
+                    RemoveRunningQuery(state);
+                }
             }
         }
 
@@ -184,6 +206,32 @@
         public Task SaveWorkspaceAsync(String fileName)
         {
             return Task.Run(() => Context.Save(fileName));
+        }
+
+        #endregion
+
+        #region Helpers
+
+        void AddRunningQuery(QueryResultViewModel qrvm)
+        {
+            qrvm.Running = true;
+            _running.Add(qrvm);
+
+            if (_running.Count == 1 && RunningQueriesChanged != null)
+            {
+                RunningQueriesChanged(qrvm, EventArgs.Empty);
+            }
+        }
+
+        void RemoveRunningQuery(QueryResultViewModel qrvm)
+        {
+            qrvm.Running = false;
+            _running.Remove(qrvm);
+
+            if (_running.Count == 0 && RunningQueriesChanged != null)
+            {
+                RunningQueriesChanged(qrvm, EventArgs.Empty);
+            }
         }
 
         #endregion

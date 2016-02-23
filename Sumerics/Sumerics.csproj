@@ -151,18 +151,21 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YAMP, Version=1.5.0.7513, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.1.5.0.7513\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
+    <Reference Include="YAMP, Version=1.5.1.29926, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.1.5.1.29926\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Io">
-      <HintPath>..\packages\YAMP.Io.1.5.0.7911\lib\net40\YAMP.Io.dll</HintPath>
+    <Reference Include="YAMP.Io, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Io.1.5.1.30138\lib\net40\YAMP.Io.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Physics">
-      <HintPath>..\packages\YAMP.Physics.1.5.0.7895\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
+    <Reference Include="YAMP.Physics, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Physics.1.5.1.30138\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Sensors">
-      <HintPath>..\packages\YAMP.Sensors.1.5.0.7948\lib\net45\YAMP.Sensors.dll</HintPath>
+    <Reference Include="YAMP.Sensors, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Sensors.1.5.1.30138\lib\net45\YAMP.Sensors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +195,7 @@
     <Compile Include="Managers\DialogManager.cs" />
     <Compile Include="Proxies\SettingsProxy.cs" />
     <Compile Include="SumericsApp.cs" />
+    <Compile Include="ViewModels\QueryResultViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -219,7 +223,7 @@
     <Compile Include="Views\OutputDialog.xaml.cs">
       <DependentUpon>OutputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\Icons.cs" />
+    <Compile Include="Codebase\IconFactory.cs" />
     <Compile Include="Views\PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
     </Compile>
@@ -437,6 +441,10 @@
     <ProjectReference Include="..\Sumerics.MathInput\Sumerics.MathInput.csproj">
       <Project>{42f72d64-3415-4424-a8c4-9fb906e889cc}</Project>
       <Name>Sumerics.MathInput</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Plots\Sumerics.Plots.csproj">
+      <Project>{d14e0331-db16-4876-bc19-e30dd8a30da9}</Project>
+      <Name>Sumerics.Plots</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sumerics.Scripts\Sumerics.Scripts.csproj">
       <Project>{be7752ef-094a-4ae3-836f-4e8689d51c2f}</Project>

@@ -2,6 +2,7 @@
 {
     using Sumerics.Controls;
     using Sumerics.Dialogs;
+    using Sumerics.Plots;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
@@ -30,7 +31,7 @@
 
                 if (window != null)
                 {
-                    SetPlot(window.PlotModel);
+                    SetPlot(window.Controller);
                     window.Close();
                 }
             });
@@ -42,9 +43,9 @@
             {
                 var window = DialogExtensions.Get<PlotWindow>();
 
-                if (window != null && Object.ReferenceEquals(window.PlotModel.Plot, context))
+                if (window != null && Object.ReferenceEquals(window.Controller.Plot, context))
                 {
-                    SetPlot(window.PlotModel);
+                    SetPlot(window.Controller);
                     window.Close();
                 }
             });
@@ -54,7 +55,7 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                Plotter.Undock();
+                //Plotter.Undock();
             });
         }
 
@@ -62,21 +63,21 @@
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                var plotter = Plotter;
+                //var plotter = Plotter;
 
-                if (plotter.Data == null || !Object.ReferenceEquals(plotter.Data.Plot, context))
-                {
-                    var model = new PlotViewModel((PlotValue)context, this, _console);
-                    model.UndockPlot();
-                }
-                else
-                {
-                    plotter.Undock();
-                }
+                //if (plotter.Data == null || !Object.ReferenceEquals(plotter.Data.Plot, context))
+                //{
+                //    var model = new PlotViewModel((PlotValue)context, this, _console);
+                //    model.UndockPlot();
+                //}
+                //else
+                //{
+                //    plotter.Undock();
+                //}
             });
         }
 
-        static void SetPlot(IPlotViewModel value)
+        static void SetPlot(IPlotController controller)
         {
             var window = App.Current.MainWindow as MainWindow;
 
@@ -86,7 +87,7 @@
 
                 if (vm != null)
                 {
-                    vm.LastPlot = value;
+                    //vm.LastPlot = controller;
                 }
             }
         }

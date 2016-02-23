@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Scripts", "Sumeric
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Console", "Sumerics.Console\Sumerics.Console.csproj", "{6DD14A85-CCFC-4774-BD26-0F5772512319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Plots3D", "Sumerics.Plots3D\Sumerics.Plots3D.csproj", "{38EE1803-0F43-4EB3-9322-00A936F41548}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFChart3D", "Sumerics.Plots3D\WPFChart3D.csproj", "{38EE1803-0F43-4EB3-9322-00A936F41548}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DTools", "3DTools\3DTools.csproj", "{5F603892-DE40-4246-A969-1C6717AFE35D}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Api", "Sumerics.Api\Sumerics.Api.csproj", "{701B551E-FE50-4333-A35F-86978B4175EB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.MathInput", "Sumerics.MathInput\Sumerics.MathInput.csproj", "{42F72D64-3415-4424-A8C4-9FB906E889CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Plots", "Sumerics.Plots\Sumerics.Plots.csproj", "{D14E0331-DB16-4876-BC19-E30DD8A30DA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -206,6 +208,18 @@ Global
 		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|x64.ActiveCfg = Release|Any CPU
 		{42F72D64-3415-4424-A8C4-9FB906E889CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.AppUp|Any CPU.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.AppUp|Any CPU.Build.0 = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.AppUp|x64.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.AppUp|x86.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|x64.ActiveCfg = Release|Any CPU
+		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

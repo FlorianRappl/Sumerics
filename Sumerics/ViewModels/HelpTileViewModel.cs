@@ -25,7 +25,7 @@
 		{
             _window = window;
 			_entry = entry;
-            _icon = Icons.GetHighImage(entry.Topic.Kind);
+            _icon = IconFactory.GetHighImage(entry.Topic.Kind);
             _documentation = documentation;
             _clicked = new RelayCommand(x =>
             {

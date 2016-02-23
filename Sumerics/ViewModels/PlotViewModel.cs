@@ -92,7 +92,7 @@
             _visualizer.Dock(Plot);
         }
 
-        public void SavePlot(SumericsPlot frame)
+        public void SavePlot()
         {
             var vm = new SaveImageViewModel(Environment.CurrentDirectory);
             var dialog = new SaveImageWindow(vm);
@@ -109,7 +109,7 @@
 
             if (dialog.Accepted)
             {
-                frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
+                //frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
                 var filename = Path.GetFileName(dialog.SelectedFile);
                 var info = String.Format("The plot has been successfully saved in the file {0}.", filename);
                 OutputDialog.Show("File created", info);

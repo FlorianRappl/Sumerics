@@ -10,7 +10,7 @@
         {
             Time = DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss");
             Message = e.Message;
-            Icon = Icons.GetMessageImage(e.Type);
+            Icon = IconFactory.GetMessageImage(e.Type);
         }
 
         public String Time 

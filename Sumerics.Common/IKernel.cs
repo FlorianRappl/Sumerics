@@ -5,6 +5,8 @@
 
     public interface IKernel
     {
+        event EventHandler RunningQueriesChanged;
+
         Task RunAsync(String query);
 
         void StopAll();

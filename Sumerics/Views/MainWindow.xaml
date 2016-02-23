@@ -230,8 +230,7 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
 
-                            <r:PreviewPlot Grid.Row="2" 
-                                           SelectedPreview="{Binding SelectedValue}">
+                            <r:PreviewPlot Grid.Row="2">
                                 <r:PreviewPlot.Style>
                                     <Style>
                                         <Setter Property="ContentControl.Height" 
@@ -258,7 +257,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <r:PlotControl Data="{Binding LastPlot}" 
+                        <r:PlotControl Controller="{Binding LastPlot}" 
                                        Grid.Row="0" 
                                        x:Name="MyLastPlot" />
 

@@ -24,7 +24,7 @@
             {
                 var kernel = _container.Get<Kernel>();
                 var console = _container.Get<IConsole>();
-                var service = _container.Get<IMathInput>();
+                var service = _container.Get<IMathInputService>();
                 var vm = new EditorViewModel(kernel, console, service);
                 editor = new EditorWindow(vm);
             }

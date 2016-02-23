@@ -71,7 +71,7 @@
         /// </summary>
         public Object Icon 
         { 
-            get { return IsDirectory ? Icons.FolderIcon : Icons.FileIcon; }
+            get { return IsDirectory ? IconFactory.FolderIcon : IconFactory.FileIcon; }
         }
 
         /// <summary>

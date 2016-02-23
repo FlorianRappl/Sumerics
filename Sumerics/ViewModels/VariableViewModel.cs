@@ -8,6 +8,8 @@
 	{
 		#region Fields
 
+        static readonly IconFactory Factory = new IconFactory();
+
 		String _type;
         String _shortInfo;
 		Value _value;
@@ -70,7 +72,7 @@
             {
                 this._value = value;
                 Type = value.Header;
-                Icon = Icons.GetVariableImage(value);
+                Icon = Factory.Create(value);
 
 				switch (Type)
 				{

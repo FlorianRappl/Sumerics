@@ -9,7 +9,7 @@
     /// Is a cache for images. Speedups loading of images by caching them and
     /// creating a uniform layer of accessing various icons.
     /// </summary>
-    static class Icons
+    sealed class IconFactory : TypeFactory<Value, BitmapImage>
     {
         #region The cached images
 
@@ -58,19 +58,28 @@
             { NotificationType.Success, new BitmapImage(new Uri(@"..\Icons\success.png", UriKind.Relative)) }
         };
 
-        static readonly Dictionary<Type, BitmapImage> _variables = new Dictionary<Type, BitmapImage>
+        #endregion
+
+        #region ctor
+
+        public IconFactory()
+            : base(false)
         {
-            { typeof(PlotValue), new BitmapImage(new Uri(@"..\Resources\plot.png", UriKind.Relative)) },
-            { typeof(MatrixValue), new BitmapImage(new Uri(@"..\Resources\matrix.png", UriKind.Relative)) },
-            { typeof(ScalarValue), new BitmapImage(new Uri(@"..\Resources\scalar.png", UriKind.Relative)) },
-            { typeof(StringValue), new BitmapImage(new Uri(@"..\Resources\string.png", UriKind.Relative)) },
-            { typeof(FunctionValue), new BitmapImage(new Uri(@"..\Resources\function.png", UriKind.Relative)) },
-            { typeof(Value), new BitmapImage(new Uri(@"..\Resources\unknown.png", UriKind.Relative)) }
-        };
+            Register<PlotValue>(_ => new BitmapImage(new Uri(@"..\Resources\plot.png", UriKind.Relative)));
+            Register<MatrixValue>(_ => new BitmapImage(new Uri(@"..\Resources\matrix.png", UriKind.Relative)));
+            Register<ScalarValue>(_ => new BitmapImage(new Uri(@"..\Resources\scalar.png", UriKind.Relative)));
+            Register<StringValue>(_ => new BitmapImage(new Uri(@"..\Resources\string.png", UriKind.Relative)));
+            Register<FunctionValue>(_ => new BitmapImage(new Uri(@"..\Resources\function.png", UriKind.Relative)));
+        }
 
         #endregion
 
         #region Methods
+
+        public static BitmapImage GetMessageImage(NotificationType type)
+        {
+            return _notifications[type];
+        }
 
         public static BitmapImage GetLowImage(String category)
         {
@@ -96,29 +105,9 @@
             return _imgFunctionHd;
         }
 
-        public static BitmapImage GetVariableImage(Value value)
+        protected override BitmapImage CreateDefault()
         {
-            var type = value.GetType();
-            var closestMatch = default(BitmapImage);
-
-            foreach (var pair in _variables)
-            {
-                if (type == pair.Key)
-                {
-                    return pair.Value;
-                }
-                else if (type.IsSubclassOf(pair.Key))
-                {
-                    closestMatch = pair.Value;
-                }
-            }
-
-            return closestMatch;
-        }
-
-        public static BitmapImage GetMessageImage(NotificationType type)
-        {
-            return _notifications[type];
+            return new BitmapImage(new Uri(@"..\Resources\unknown.png", UriKind.Relative));
         }
 
         #endregion

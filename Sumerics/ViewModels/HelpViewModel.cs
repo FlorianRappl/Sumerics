@@ -23,7 +23,7 @@
         public HelpViewModel(HelpSection entry, IDialogManager dialogs)
 		{
 			_help = entry;
-            _icon = Icons.GetLowImage(entry.Topic);
+            _icon = IconFactory.GetLowImage(entry.Topic);
             _show = new RelayCommand(x => dialogs.Open(Dialog.Help, _help));
 		}
 

@@ -1,28 +1,27 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
-    using Sumerics.Controls;
-    using Sumerics.ViewModels;
+    using Sumerics.Plots;
 
     /// <summary>
     /// Interaction logic for PlotWindow.xaml
     /// </summary>
     public partial class PlotWindow : MetroWindow
     {
-        private PlotWindow()
+        private PlotWindow(IPlotController controller)
         {
             InitializeComponent();
+            Plot.Controller = controller;
         }
 
-        public IPlotViewModel PlotModel
+        public IPlotController Controller
         {
-            get { return Plot.Data; } 
-            set { Plot.Data = value; }
+            get { return Plot.Controller; } 
         }
 
-        internal static void Show(PlotViewModel plot)
+        internal static void Show(IPlotController controller)
         {
-            var window = new PlotWindow { PlotModel = plot };
+            var window = new PlotWindow(controller);
             window.Show();
         }
     }
