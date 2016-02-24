@@ -139,6 +139,7 @@
     <Compile Include="Autocomplete\CompareResult.cs" />
     <Compile Include="Autocomplete\SelectedEventArgs.cs" />
     <Compile Include="Autocomplete\SnippetAutocompleteItem.cs" />
+    <Compile Include="ConsoleQueryReference.cs" />
     <Compile Include="CountConverter.cs" />
     <Compile Include="ConsoleControl.xaml.cs">
       <DependentUpon>ConsoleControl.xaml</DependentUpon>

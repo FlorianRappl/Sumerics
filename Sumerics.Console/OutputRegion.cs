@@ -59,7 +59,7 @@
             get { return _text; }
             set 
             {
-                if (!_text.Equals(value))
+                if (String.CompareOrdinal(_text, value) != 0)
                 {
                     var old = _text;
                     _text = value;

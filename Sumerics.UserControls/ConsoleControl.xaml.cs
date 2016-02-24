@@ -419,9 +419,11 @@
                 _currentHistory = CommandHistory.ToArray();
             }
 
-            if (_command != null && _command.CanExecute(e.Query))
+            var cqr = new ConsoleQueryReference(e.Query, e.Region, Console);
+
+            if (_command != null && _command.CanExecute(cqr))
             {
-                _command.Execute(e.Query);
+                _command.Execute(cqr);
             }
 		}
 

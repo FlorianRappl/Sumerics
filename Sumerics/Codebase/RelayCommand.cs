@@ -8,19 +8,19 @@
     {
         #region Fields
 
-        readonly Action<object> _execute;
-        readonly Predicate<object> _canExecute;
+        readonly Action<Object> _execute;
+        readonly Predicate<Object> _canExecute;
 
-        #endregion // Fields
+        #endregion
 
-        #region Constructors
+        #region ctors
 
-        public RelayCommand(Action<object> execute)
+        public RelayCommand(Action<Object> execute)
             : this(execute, null)
         {
         }
 
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<Object> execute, Predicate<Object> canExecute)
         {
             if (execute == null)
                 throw new ArgumentNullException("execute");
@@ -28,9 +28,10 @@
             _execute = execute;
             _canExecute = canExecute;
         }
-        #endregion // Constructors
 
-        #region ICommand Members
+        #endregion
+
+        #region Methods
 
         [DebuggerStepThrough]
         public Boolean CanExecute(Object parameter)
@@ -49,6 +50,6 @@
             _execute(parameter);
         }
 
-        #endregion // ICommand Members
+        #endregion
     }
 }

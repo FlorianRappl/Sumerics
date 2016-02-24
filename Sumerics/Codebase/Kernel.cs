@@ -160,10 +160,7 @@
                         return _parser.Evaluate(query.Replace("\r\n", "\n"));
                     });
 
-                    //if (!result.IsMuted)
-                    {
-                        state.Value = result;
-                    }
+                    state.Value = result;
                 }
                 catch (YAMPParseException ex)
                 {

@@ -66,8 +66,9 @@
 
             _runQuery = new RelayCommand(x =>
             {
-                var query = x.ToString();
-                var qrvm = new QueryResultViewModel(query);
+                var cqr = x as ConsoleQueryReference;
+                var qrvm = new QueryResultViewModel(cqr, _kernel.Context);
+                var query = cqr.OriginalQuery;
                 var newQuery = Container.Get<ICommandFactory>().TryCommand(query);
 
                 if (newQuery != null)
