@@ -1,12 +1,11 @@
 ﻿namespace Sumerics.ViewModels
 {
-    using Sumerics.Controls;
     using Sumerics.Views;
     using System;
     using System.IO;
     using YAMP;
 
-    sealed class PlotViewModel : BaseViewModel, IPlotViewModel
+    sealed class PlotViewModel : BaseViewModel
     {
         #region Fields
 

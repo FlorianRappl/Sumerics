@@ -5,6 +5,7 @@
     using System.Collections.ObjectModel;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using System.Windows.Shapes;
 
     /// <summary>
@@ -15,29 +16,20 @@
         #region Fields
 
         readonly AutocompletePopup _autoComplete;
-        readonly IScriptFileModel _model;
         readonly StyleIndex _styleIndex;
         readonly ObservableCollection<ErrorRange> _errorRanges;
         readonly MathInputPanelWrapper _mipw;
 
         #endregion
 
-        #region Events
-
-        public event EventHandler OnCreateNewFile;
-        public event EventHandler OnOpenAnotherFile;
-
-        #endregion
-
         #region ctor
 
-        public EditorControl(IScriptFileModel model)
+        public EditorControl()
         {
             InitializeComponent();
 
             var index = Editor.AddStyle(new WavyLineStyle(255, System.Drawing.Color.Red));
 
-            _model = model;
             _errorRanges = new ObservableCollection<ErrorRange>();
             _mipw = new MathInputPanelWrapper("Draw statement");
             _autoComplete = new AutocompletePopup(this);
@@ -109,12 +101,171 @@
 
         #endregion
 
-        #region Properties
+        #region Dependency Properties
 
-        public IScriptFileModel Model
+        public ObservableCollection<AutocompleteItem> AutoCompleteItems
         {
-            get { return _model; }
+            get { return (ObservableCollection<AutocompleteItem>)GetValue(AutoCompleteItemsProperty); }
+            set { SetValue(AutoCompleteItemsProperty, value); }
         }
+
+        public static readonly DependencyProperty AutoCompleteItemsProperty = DependencyProperty.Register(
+            "AutoCompleteItems",
+            typeof(ObservableCollection<AutocompleteItem>),
+            typeof(EditorControl),
+            new FrameworkPropertyMetadata(new ObservableCollection<AutocompleteItem>(), OnAutoCompleteItemsChange));
+
+        public Func<String, String> MathConverter
+        {
+            get { return (Func<String, String>)GetValue(MathConverterProperty); }
+            set { SetValue(MathConverterProperty, value); }
+        }
+
+        public static readonly DependencyProperty MathConverterProperty =
+            DependencyProperty.Register("MathConverter", typeof(Func<String, String>), typeof(EditorControl), new PropertyMetadata(null));
+
+        public ICommand CloseCommand
+        {
+            get { return (ICommand)GetValue(CloseCommandProperty); }
+            set { SetValue(CloseCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseCommandProperty =
+            DependencyProperty.Register("CloseCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+
+        public Object CloseCommandParameter
+        {
+            get { return (Object)GetValue(CloseCommandParameterProperty); }
+            set { SetValue(CloseCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseCommandParameterProperty =
+            DependencyProperty.Register("CloseCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+
+        public ICommand SaveCommand
+        {
+            get { return (ICommand)GetValue(SaveCommandProperty); }
+            set { SetValue(SaveCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty SaveCommandProperty =
+            DependencyProperty.Register("SaveCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+
+        public Object SaveCommandParameter
+        {
+            get { return (Object)GetValue(SaveCommandParameterProperty); }
+            set { SetValue(SaveCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty SaveCommandParameterProperty =
+            DependencyProperty.Register("SaveCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+
+        public ICommand SaveAsCommand
+        {
+            get { return (ICommand)GetValue(SaveAsCommandProperty); }
+            set { SetValue(SaveAsCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty SaveAsCommandProperty =
+            DependencyProperty.Register("SaveAsCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+
+        public Object SaveAsCommandParameter
+        {
+            get { return (Object)GetValue(SaveAsCommandParameterProperty); }
+            set { SetValue(SaveAsCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty SaveAsCommandParameterProperty =
+            DependencyProperty.Register("SaveAsCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+
+        public Boolean Changed
+        {
+            get { return (Boolean)GetValue(ChangedProperty); }
+            set { SetValue(ChangedProperty, value); }
+        }
+
+        public static readonly DependencyProperty ChangedProperty =
+            DependencyProperty.Register("Changed", typeof(Boolean), typeof(EditorControl), new PropertyMetadata(false));
+
+        public ICommand CompileCommand
+        {
+            get { return (ICommand)GetValue(CompileCommandProperty); }
+            set { SetValue(CompileCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty CompileCommandProperty =
+            DependencyProperty.Register("CompileCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+
+        public Object CompileCommandParameter
+        {
+            get { return (Object)GetValue(CompileCommandParameterProperty); }
+            set { SetValue(CompileCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty CompileCommandParameterProperty =
+            DependencyProperty.Register("CompileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(false));
+
+        public ICommand ExecuteCommand
+        {
+            get { return (ICommand)GetValue(ExecuteCommandProperty); }
+            set { SetValue(ExecuteCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExecuteCommandProperty =
+            DependencyProperty.Register("ExecuteCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+        public Object ExecuteCommandParameter
+        {
+            get { return (Object)GetValue(ExecuteCommandParameterProperty); }
+            set { SetValue(ExecuteCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExecuteCommandParameterProperty =
+            DependencyProperty.Register("ExecuteCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+
+        public ICommand NewFileCommand
+        {
+            get { return (ICommand)GetValue(NewFileCommandProperty); }
+            set { SetValue(NewFileCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty NewFileCommandProperty =
+            DependencyProperty.Register("NewFileCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+        public Object NewFileCommandParameter
+        {
+            get { return (Object)GetValue(NewFileCommandParameterProperty); }
+            set { SetValue(NewFileCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty NewFileCommandParameterProperty =
+            DependencyProperty.Register("NewFileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+
+        public ICommand OpenFileCommand
+        {
+            get { return (ICommand)GetValue(OpenFileCommandProperty); }
+            set { SetValue(OpenFileCommandProperty, value); }
+        }
+
+        public static readonly DependencyProperty OpenFileCommandProperty =
+            DependencyProperty.Register("OpenFileCommand", typeof(ICommand), typeof(EditorControl), new PropertyMetadata(null));
+
+        public Object OpenFileCommandParameter
+        {
+            get { return (Object)GetValue(OpenFileCommandParameterProperty); }
+            set { SetValue(OpenFileCommandParameterProperty, value); }
+        }
+
+        public static readonly DependencyProperty OpenFileCommandParameterProperty =
+            DependencyProperty.Register("OpenFileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
+        
+        #endregion
+
+        #region Properties
 
         public String Text
         {
@@ -130,6 +281,20 @@
 
         #region Events
 
+        static void OnAutoCompleteItemsChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var basis = (EditorControl)d;
+            var newList = (ObservableCollection<AutocompleteItem>)e.NewValue;
+            var oldList = basis._autoComplete.AvailableItems;
+
+            oldList.Clear();
+
+            foreach (var entry in newList)
+            {
+                oldList.Add(entry);
+            }
+        }
+
         void InputPanelButtonClicked(Object sender, RoutedEventArgs e)
         {
             InputPanel.Toggle();
@@ -137,7 +302,13 @@
 
         void MathInputInserted(Object sender, String query)
         {
-            Editor.InsertText(_model.TransformMathML(query));
+            var converter = MathConverter;
+
+            if (converter != null)
+            {
+                var text = converter(query);
+                Editor.InsertText(text);
+            }
         }
 
         void EditorKeyDown(Object sender, System.Windows.Forms.KeyEventArgs e)
@@ -148,24 +319,30 @@
             }
             else if (e.KeyCode == System.Windows.Forms.Keys.S && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
-                _model.Save();
+                SaveButtonClicked(sender, null);
             }
             else if (e.KeyCode == System.Windows.Forms.Keys.W && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
-                _model.Close();
+                CloseButtonClicked(sender, null);
             }
             else if (e.KeyCode == System.Windows.Forms.Keys.N && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
-                if (OnCreateNewFile != null)
+                var command = NewFileCommand;
+                var parameter = NewFileCommandParameter;
+
+                if (command != null && command.CanExecute(parameter))
                 {
-                    OnCreateNewFile(this, EventArgs.Empty);
+                    command.Execute(parameter);
                 }
             }
             else if (e.KeyCode == System.Windows.Forms.Keys.O && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
-                if (OnOpenAnotherFile != null)
+                var command = OpenFileCommand;
+                var parameter = OpenFileCommandParameter;
+
+                if (command != null && command.CanExecute(parameter))
                 {
-                    OnOpenAnotherFile(this, EventArgs.Empty);
+                    command.Execute(parameter);
                 }
             }
         }
@@ -184,25 +361,52 @@
 
         void CloseButtonClicked(Object sender, RoutedEventArgs e)
         {
-            _model.Close();
+            var command = CloseCommand;
+            var parameter = CloseCommandParameter;
+
+            if (command != null && command.CanExecute(parameter))
+            {
+                command.Execute(parameter);
+            }
         }
 
         void SaveButtonClicked(Object sender, RoutedEventArgs e)
         {
             Editor.IsChanged = false;
-            _model.Save();
+
+            var command = SaveCommand;
+            var parameter = SaveCommandParameter;
+
+            if (command != null && command.CanExecute(parameter))
+            {
+                command.Execute(parameter);
+            }
         }
 
         void SaveAsButtonClick(Object sender, RoutedEventArgs e)
         {
             Editor.IsChanged = false;
-            _model.SaveAs();
+
+            var command = SaveAsCommand;
+            var parameter = SaveAsCommandParameter;
+
+            if (command != null && command.CanExecute(parameter))
+            {
+                command.Execute(parameter);
+            }
         }
 
         void ContentChangedDelayed(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
-            _model.Changed = Editor.IsChanged;
-            _model.Compile();
+            Changed = Editor.IsChanged;
+
+            var command = CompileCommand;
+            var parameter = CompileCommandParameter;
+
+            if (command != null && command.CanExecute(parameter))
+            {
+                command.Execute(parameter);
+            }
         }
 
         void ExecuteButtonClicked(Object sender, RoutedEventArgs e)
@@ -282,13 +486,15 @@
 
         void Execute()
         {
-            _model.Compile();
+            var command = CompileCommand;
+            var parameter = CompileCommandParameter;
 
-            if (_errorRanges.Count == 0)
+            if (command != null && command.CanExecute(parameter))
             {
-                _model.Execute();
+                command.Execute(parameter);
             }
-            else
+
+            if (_errorRanges.Count != 0)
             {
                 ErrorGrid.Visibility = System.Windows.Visibility.Visible;
             }
@@ -352,7 +558,7 @@
             Editor.Refresh();
         }
 
-        class ErrorRange
+        sealed class ErrorRange
         {
             public Range Range { get; set; }
 

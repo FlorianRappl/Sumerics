@@ -59,7 +59,7 @@
 
         public AutocompletePopup(EditorControl editor) : this(editor.Editor, editor.Host)
         {
-            _availableItems = editor.Model.Items;
+            _availableItems = editor.AutoCompleteItems;
         }
 
         #endregion

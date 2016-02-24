@@ -6,12 +6,13 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Windows.Input;
     using YAMP;
 
     /// <summary>
     /// ViewModel for one tab in the editor, i.e. one file.
     /// </summary>
-    public sealed class EditorFileViewModel : BaseViewModel, IScriptFileModel
+    public sealed class EditorFileViewModel : BaseViewModel
     {
         #region Fields
 
@@ -47,7 +48,7 @@
                 Items.Add(item);
             }
 
-            InitEditor();
+            Control = new EditorControl { DataContext = this };
         }
 
         public EditorFileViewModel(EditorViewModel parent, Kernel kernel, String path)
@@ -57,17 +58,19 @@
             ReadText();
         }
 
-        void InitEditor()
-        {
-            var ed = new EditorControl(this);
-            ed.OnCreateNewFile += (s, e) => _parent.Create.Execute(null);
-            ed.OnOpenAnotherFile += (s, e) => _parent.Open.Execute(null);
-            Control = ed;
-        }
-
         #endregion
 
         #region Commands
+
+        public ICommand NewFile
+        {
+            get { return _parent.Create; }
+        }
+
+        public ICommand OpenFile
+        {
+            get { return _parent.Open; }
+        }
 
         public void Save()
         {

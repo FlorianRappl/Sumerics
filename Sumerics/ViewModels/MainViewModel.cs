@@ -3,7 +3,6 @@
     using Sumerics.Commands;
     using Sumerics.Controls;
     using Sumerics.MathInput;
-    using Sumerics.Plots;
     using Sumerics.Views;
     using System;
     using System.Collections.Generic;
@@ -27,7 +26,6 @@
         readonly ObservableCollection<AutocompleteItem> _availableItems;
         readonly NotificationsViewModel _notifications;
 
-        IPlotController _lastPlot;
         VariableViewModel _selectedVariable;
 
         String input;
@@ -68,8 +66,8 @@
 
             _runQuery = new RelayCommand(x =>
             {
-                var qrvm = x as QueryResultViewModel;
-                var query = qrvm.Query;
+                var query = x.ToString();
+                var qrvm = new QueryResultViewModel(query);
                 var newQuery = Container.Get<ICommandFactory>().TryCommand(query);
 
                 if (newQuery != null)
