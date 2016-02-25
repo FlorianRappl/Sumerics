@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.ViewModels
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Dialogs;
     using Sumerics.Views;
     using System;
     using System.Windows.Input;
@@ -11,7 +12,6 @@
     {
         #region Fields
 
-        readonly HelpWindow _window;
         readonly HelpEntry _entry;
         readonly BitmapImage _icon;
         readonly Documentation _documentation;
@@ -21,15 +21,20 @@
 
         #region ctor
 
-        public HelpTileViewModel(HelpWindow window, HelpEntry entry, Documentation documentation)
+        public HelpTileViewModel(HelpEntry entry, Documentation documentation)
 		{
-            _window = window;
 			_entry = entry;
             _icon = IconFactory.GetHighImage(entry.Topic.Kind);
             _documentation = documentation;
             _clicked = new RelayCommand(x =>
             {
-                _window.Topic = _documentation.Get(_entry.Name);
+                var window = DialogExtensions.Get<HelpWindow>();
+
+                if (window != null)
+                {
+                    var topic = _documentation.Get(_entry.Name);
+                    window.Topic = topic;
+                }
             });
 		}
 

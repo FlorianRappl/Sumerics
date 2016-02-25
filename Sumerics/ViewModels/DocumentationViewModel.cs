@@ -1,7 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
     using MahApps.Metro.Controls;
-    using Sumerics.Views;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using YAMP.Help;
@@ -17,7 +16,7 @@
 
 		#region ctor
 
-        public DocumentationViewModel(HelpWindow window, Documentation documentation)
+        public DocumentationViewModel(Documentation documentation)
 		{
             _groups = new ObservableCollection<PanoramaGroup>();
             _documentation = documentation;
@@ -29,7 +28,7 @@
 
                 foreach (var item in topic)
                 {
-                    var vm = new HelpTileViewModel(window, item, documentation);
+                    var vm = new HelpTileViewModel(item, documentation);
                     content.Add(vm);
                 }
 

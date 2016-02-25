@@ -24,7 +24,7 @@
             {
                 var kernel = _container.Get<IKernel>() as Kernel;
                 var commands = _container.Get<ICommandFactory>();
-                var vm = new DocumentationViewModel(window, kernel.Help);
+                var vm = new DocumentationViewModel(kernel.Help);
                 window = new HelpWindow(vm, commands);
             }
 

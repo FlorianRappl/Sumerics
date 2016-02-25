@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
+    using System.Linq;
     using System.Windows;
 
     static class DialogExtensions
@@ -21,17 +22,7 @@
         public static T Get<T>()
             where T : Window
         {
-            foreach (var window in App.Current.Windows)
-            {
-                var current = window as T;
-
-                if (current != null)
-                {
-                    return current;
-                }
-            }
-
-            return default(T);
+            return  App.Current.Windows.OfType<T>().FirstOrDefault();
         }
 
         public static void Close<T>(this IDialogHandler handler)
