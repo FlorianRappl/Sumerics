@@ -83,18 +83,18 @@
             var colLength = length + 1;
             var cols = m.GetLength(0);
             var rows = m.GetLength(1);
-            var w = Math.Max(1, CurrentChars / colLength - 1);
-            var loops = cols / w;
+            var width = Math.Max(1, CurrentChars / colLength - 1);
+            var loops = cols / width;
 
-            if (cols > loops * w)
+            if (cols > loops * width)
             {
                 loops++;
             }
 
             for (var k = 0; k < loops; k++)
             {
-                var c = k * w;
-                var max = c + Math.Min(w - 1, cols - c);
+                var c = k * width + 1;
+                var max = c + Math.Min(width - 1, cols - c);
                 sb.AppendLine();
                 sb.AppendLine();
 
@@ -113,7 +113,7 @@
                 {
                     sb.AppendLine();
 
-                    for (var j = c; j < max; j++)
+                    for (var j = c - 1; j < max; j++)
                     {
                         sb.Append(m[j, i].PadLeft(colLength));
                     }
@@ -147,21 +147,19 @@
         {
             var cols = values.GetLength(0);
             var rows = values.GetLength(1);
-            var length = 0;
+            var maxLength = 0;
 
             for (var j = 0; j != rows; j++)
             {
-                var sum = 0;
-
                 for (var i = 0; i != cols; i++)
                 {
-                    sum += values[i, j].Length;
+                    var colLength = values[i, j].Length;
+                    maxLength = Math.Max(colLength, maxLength);
                 }
 
-                length = Math.Max(sum, length);
             }
 
-            return length;
+            return maxLength;
         }
     }
 }
