@@ -5,7 +5,8 @@
     using System.Collections.Generic;
     using System.Reflection;
     using System.Windows;
-    //using YAMP.Sensors;
+    using System.Linq;
+    using YAMP.Sensors;
 
     /// <summary>
     /// Interaction logic for AboutWindow.xaml
@@ -14,9 +15,9 @@
     {
         #region Fields
 
-        int longitude;
-        int latitude;
-        int compass;
+        Int32 longitude;
+        Int32 latitude;
+        Int32 compass;
 
         //GPSFunction gps;
         //CompFunction cmp;
@@ -72,44 +73,42 @@
         {
             Dispatcher.Invoke(() =>
             {
-                Position.Text = string.Format("Your current position is {0}° {1}° with heading {2}° north.", longitude, latitude, compass);
+                Position.Text = String.Format("Your current position is {0}° {1}° with heading {2}° north.", longitude, latitude, compass);
             });
         }
 
-        IDictionary<string, string> PerformReflection()
+        static SumericsInfo PerformReflection()
         {
-            var values = new Dictionary<string, string>();
             var app = Assembly.GetExecutingAssembly();
-
-            var title = app.GetCustomAttributes(typeof(AssemblyTitleAttribute), false)[0] as AssemblyTitleAttribute;
-            values.Add("Title", title.Title);
-
-            var product = app.GetCustomAttributes(typeof(AssemblyProductAttribute), false)[0] as AssemblyProductAttribute;
-            values.Add("Product", product.Product);
-
-            var copyright = app.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0] as AssemblyCopyrightAttribute;
-            values.Add("Copyright", copyright.Copyright);
-
-            var company = app.GetCustomAttributes(typeof(AssemblyCompanyAttribute), false)[0] as AssemblyCompanyAttribute;
-            values.Add("Company", company.Company);
-
-            var description = app.GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false)[0] as AssemblyDescriptionAttribute;
-            values.Add("Description", description.Description);
-
-            var version = app.GetName().Version;
-            values.Add("Version", version.ToString());
-
-            return values;
+            return new SumericsInfo
+            {
+                Title = app.GetCustomAttributes<AssemblyTitleAttribute>().First().Title,
+                ProductName = app.GetCustomAttributes<AssemblyProductAttribute>().First().Product,
+                Copyright = app.GetCustomAttributes<AssemblyCopyrightAttribute>().First().Copyright,
+                Company = app.GetCustomAttributes<AssemblyCompanyAttribute>().First().Company,
+                Description = app.GetCustomAttributes<AssemblyDescriptionAttribute>().First().Description,
+                Version = app.GetName().Version.ToString()
+            };
         }
 
-        string GetCopyright(IDictionary<string, string> infos)
+        sealed class SumericsInfo
         {
-            return infos["Copyright"] + ", " + infos["Company"];
+            public String Title;
+            public String ProductName;
+            public String Copyright;
+            public String Description;
+            public String Company;
+            public String Version;
         }
 
-        string GetVersion(IDictionary<string, string> infos)
+        static String GetCopyright(SumericsInfo infos)
         {
-            return infos["Product"] + ", Version: " + infos["Version"];
+            return String.Concat(infos.Copyright, ", ", infos.Company);
+        }
+
+        static String GetVersion(SumericsInfo infos)
+        {
+            return String.Concat(infos.ProductName, ", Version: ", infos.Version);
         }
 
         #endregion
