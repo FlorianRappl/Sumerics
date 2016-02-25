@@ -24,8 +24,10 @@
             {
                 var kernel = _container.Get<IKernel>() as Kernel;
                 var commands = _container.Get<ICommandFactory>();
-                var vm = new DocumentationViewModel(kernel.Help);
-                window = new HelpWindow(vm, commands);
+                window = new HelpWindow(commands)
+                {
+                    DataContext = new DocumentationViewModel(kernel.Help)
+                };
             }
 
             if (parameters.Length == 1 && parameters[0] is HelpSection)

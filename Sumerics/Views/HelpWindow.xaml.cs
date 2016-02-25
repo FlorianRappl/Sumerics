@@ -28,19 +28,16 @@
 
 		HelpSection _topic;
 
-        static readonly String UserAgent = "Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405";
-
 		#endregion
 
 		#region ctor
 
-		public HelpWindow(DocumentationViewModel vm, ICommandFactory commands)
+		public HelpWindow(ICommandFactory commands)
         {
 			_results = new ObservableCollection<HelpSection>();
             _commands = commands;
 			InitializeComponent();
 			SearchResults.ItemsSource = _results;
-            DataContext = vm;
             Browser.Navigated += Browser_Navigated;
         }
 
@@ -135,23 +132,24 @@
 
         #region Set Browser Silent
 
-        static void SetSilent(WebBrowser browser, bool silent)
+        static void SetSilent(WebBrowser browser, Boolean silent)
         {
-            if (browser == null)
-                throw new ArgumentNullException("browser");
-
             var sp = browser.Document as IOleServiceProvider;
 
             if (sp != null)
             {
                 var IID_IWebBrowserApp = new Guid("0002DF05-0000-0000-C000-000000000046");
                 var IID_IWebBrowser2 = new Guid("D30C1661-CDAF-11d0-8A3E-00C04FC9E26E");
+                var webBrowser = default(Object);
 
-                object webBrowser;
                 sp.QueryService(ref IID_IWebBrowserApp, ref IID_IWebBrowser2, out webBrowser);
 
                 if (webBrowser != null)
-                    webBrowser.GetType().InvokeMember("Silent", BindingFlags.Instance | BindingFlags.Public | BindingFlags.PutDispProperty, null, webBrowser, new object[] { silent });
+                {
+                    var type = webBrowser.GetType();
+                    var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.PutDispProperty;
+                    type.InvokeMember("Silent", flags, null, webBrowser, new Object[] { silent });
+                }
             }
         }
 
@@ -159,7 +157,7 @@
         interface IOleServiceProvider
         {
             [PreserveSig]
-            int QueryService([In] ref Guid guidService, [In] ref Guid riid, [MarshalAs(UnmanagedType.IDispatch)] out object ppvObject);
+            Int32 QueryService([In] ref Guid guidService, [In] ref Guid riid, [MarshalAs(UnmanagedType.IDispatch)] out Object ppvObject);
         }
 
 		#endregion
