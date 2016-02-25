@@ -175,6 +175,7 @@
     </ApplicationDefinition>
     <Compile Include="Codebase\FileLogger.cs" />
     <Compile Include="Codebase\Kernel.cs" />
+    <Compile Include="Codebase\SumericsInfo.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Dialogs\AboutDialogHandler.cs" />
     <Compile Include="Dialogs\DemosDialogHandler.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
     <Compile Include="Managers\SensorManager.cs" />
     <Compile Include="Models\OptionsModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="Proxies\TabProxy.cs" />
     <Compile Include="Proxies\VisualizerProxy.cs" />

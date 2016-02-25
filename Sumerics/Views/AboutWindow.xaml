@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
+                      xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="About" 
                       ResizeMode="NoResize" 
@@ -23,6 +24,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.DataContext>
+        <vm:AboutViewModel />
+    </Window.DataContext>
     <Controls:MetroContentControl>
         <Grid Margin="15">
             <Grid.RowDefinitions>
@@ -42,11 +46,9 @@
 
             <StackPanel Grid.Column="1" 
                         Grid.Row="1">
-                <TextBlock Name="Version"
-                           Text="Version 0.0.0.0" 
+                <TextBlock Text="{Binding Version}" 
                            Margin="0,0,0,5" />
-                <TextBlock Name="Copyright" 
-                           Text="Copyright 2012-2013, Florian Rappl." 
+                <TextBlock Text="{Binding Copyright}" 
                            Margin="0,5,0,5" />
                 <TextBlock Text="Sensor Numerics uses the following packages:" 
                            Margin="0,5,0,5"
@@ -69,8 +71,7 @@
                 <TextBlock Text="NAudio by Mark Heath." 
                            Margin="10,3,0,3" 
                            Foreground="Gray"/>
-                <TextBlock Name="Position" 
-                           Text="Your current position is 49° 16° with heading 320° north." 
+                <TextBlock Text="{Binding Position}" 
                            Margin="0,5,0,0" />
             </StackPanel>
         </Grid>
