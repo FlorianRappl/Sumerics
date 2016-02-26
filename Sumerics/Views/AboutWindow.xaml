@@ -5,7 +5,7 @@
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="About" 
+                      Title="{x:Static local:Messages.About}" 
                       ResizeMode="NoResize" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -24,9 +24,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    
     <Window.DataContext>
         <vm:AboutViewModel />
     </Window.DataContext>
+    
     <Controls:MetroContentControl>
         <Grid Margin="15">
             <Grid.RowDefinitions>
@@ -50,7 +52,7 @@
                            Margin="0,0,0,5" />
                 <TextBlock Text="{Binding Copyright}" 
                            Margin="0,5,0,5" />
-                <TextBlock Text="Sensor Numerics uses the following packages:" 
+                <TextBlock Text="{x:Static local:Messages.UsedPackages}" 
                            Margin="0,5,0,5"
                            Foreground="SteelBlue" />
                 <TextBlock Text="OxyPlot by Oystein Bjorke." 

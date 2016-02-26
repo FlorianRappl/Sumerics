@@ -6,7 +6,7 @@
                       Icon="../Icons/Sumerics.png" 
                       WindowStartupLocation="CenterOwner"
                       ResizeMode="NoResize"
-                      Title="Enter quick statement" 
+                      Title="{x:Static local:Messages.EnterQuickStatement}" 
                       Height="140" 
                       Width="400">
     
@@ -29,7 +29,7 @@
                 <RowDefinition Height="45" />
             </Grid.RowDefinitions>
 
-            <TextBox Controls:TextboxHelper.Watermark="Place the statement here." 
+            <TextBox Controls:TextboxHelper.Watermark="{x:Static local:Messages.PlaceTheStatement}" 
                      Name="Input" 
                      FontSize="20"
                      TabIndex="0"
@@ -41,7 +41,7 @@
                     Margin="0,5,0,0"
                     Grid.Row="1" 
                     HorizontalAlignment="Right" 
-                    ToolTip="Evaluate input"
+                    ToolTip="{x:Static local:Messages.EvaluateInput}"
                     Click="EvaluateClick">
                 <Image Source="../Resources/check.png" />
             </Button>

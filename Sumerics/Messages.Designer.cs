@@ -97,11 +97,47 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color palette:.
+        /// </summary>
+        public static string ColorPaletteLabel {
+            get {
+                return ResourceManager.GetString("ColorPaletteLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compass.
         /// </summary>
         public static string Compass {
             get {
                 return ResourceManager.GetString("Compass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contour settings.
+        /// </summary>
+        public static string ContourSettings {
+            get {
+                return ResourceManager.GetString("ContourSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the title here.
+        /// </summary>
+        public static string DataTitleHint {
+            get {
+                return ResourceManager.GetString("DataTitleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data title:.
+        /// </summary>
+        public static string DataTitleLabel {
+            get {
+                return ResourceManager.GetString("DataTitleLabel", resourceCulture);
             }
         }
         
@@ -120,6 +156,24 @@ namespace Sumerics {
         public static string Enabled {
             get {
                 return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter quick statement.
+        /// </summary>
+        public static string EnterQuickStatement {
+            get {
+                return ResourceManager.GetString("EnterQuickStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluate input.
+        /// </summary>
+        public static string EvaluateInput {
+            get {
+                return ResourceManager.GetString("EvaluateInput", resourceCulture);
             }
         }
         
@@ -196,6 +250,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place the statement here..
+        /// </summary>
+        public static string PlaceTheStatement {
+            get {
+                return ResourceManager.GetString("PlaceTheStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins..
         /// </summary>
         public static string PluginDescription {
@@ -255,6 +318,33 @@ namespace Sumerics {
         public static string Sensors {
             get {
                 return ResourceManager.GetString("Sensors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lines visible.
+        /// </summary>
+        public static string ShowLevelsHint {
+            get {
+                return ResourceManager.GetString("ShowLevelsHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show levels:.
+        /// </summary>
+        public static string ShowLevelsLabel {
+            get {
+                return ResourceManager.GetString("ShowLevelsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensor Numerics uses the following packages:.
+        /// </summary>
+        public static string UsedPackages {
+            get {
+                return ResourceManager.GetString("UsedPackages", resourceCulture);
             }
         }
         

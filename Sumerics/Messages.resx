@@ -129,14 +129,32 @@
   <data name="ChangeWorkingDirectory" xml:space="preserve">
     <value>Change working directory</value>
   </data>
+  <data name="ColorPaletteLabel" xml:space="preserve">
+    <value>Color palette:</value>
+  </data>
   <data name="Compass" xml:space="preserve">
     <value>Compass</value>
+  </data>
+  <data name="ContourSettings" xml:space="preserve">
+    <value>Contour settings</value>
+  </data>
+  <data name="DataTitleHint" xml:space="preserve">
+    <value>Enter the title here</value>
+  </data>
+  <data name="DataTitleLabel" xml:space="preserve">
+    <value>Data title:</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+  <data name="EnterQuickStatement" xml:space="preserve">
+    <value>Enter quick statement</value>
+  </data>
+  <data name="EvaluateInput" xml:space="preserve">
+    <value>Evaluate input</value>
   </data>
   <data name="Gyrometer" xml:space="preserve">
     <value>Gyrometer</value>
@@ -162,6 +180,9 @@
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
+  <data name="PlaceTheStatement" xml:space="preserve">
+    <value>Place the statement here.</value>
+  </data>
   <data name="PluginDescription" xml:space="preserve">
     <value>Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins.</value>
   </data>
@@ -182,6 +203,15 @@
   </data>
   <data name="Sensors" xml:space="preserve">
     <value>Sensors</value>
+  </data>
+  <data name="ShowLevelsHint" xml:space="preserve">
+    <value>Lines visible</value>
+  </data>
+  <data name="ShowLevelsLabel" xml:space="preserve">
+    <value>Show levels:</value>
+  </data>
+  <data name="UsedPackages" xml:space="preserve">
+    <value>Sensor Numerics uses the following packages:</value>
   </data>
   <data name="Visualization" xml:space="preserve">
     <value>Visualization</value>
