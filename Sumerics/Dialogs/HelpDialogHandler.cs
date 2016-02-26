@@ -24,15 +24,18 @@
             {
                 var kernel = _container.Get<IKernel>() as Kernel;
                 var commands = _container.Get<ICommandFactory>();
-                window = new HelpWindow(commands)
-                {
-                    DataContext = new DocumentationViewModel(kernel.Help)
-                };
+                var model = new DocumentationViewModel(kernel.Help, commands);
+                window = new HelpWindow { DataContext = model };
             }
 
             if (parameters.Length == 1 && parameters[0] is HelpSection)
             {
-                window.Topic = (HelpSection)parameters[0];
+                var model = window.DataContext as DocumentationViewModel;
+
+                if (model != null)
+                {
+                    model.Topic = (HelpSection)parameters[0];
+                }
             }
 
             window.Show();

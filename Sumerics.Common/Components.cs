@@ -63,7 +63,14 @@
 
         public Object Create(Type type)
         {
-            return _block.Create(type);
+            try
+            {
+                return _block.Create(type);
+            }
+            catch
+            {
+                return Activator.CreateInstance(type);
+            }
         }
     }
 }

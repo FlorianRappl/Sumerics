@@ -72,15 +72,14 @@
                     </Grid.ColumnDefinitions>
                     
                     <TextBlock Foreground="DarkGray"
-                               Name="HelpSource"
-                               Text="Documentation > Overview" 
+                               Text="{Binding BreadCrumb}" 
                                VerticalAlignment="Center" />
 
                     <TextBox Controls:TextboxHelper.Watermark="Search..." 
-                             KeyUp="SearchChanged"
+                             x:Name="Search"
                              Grid.Column="1" 
                              VerticalAlignment="Center" 
-                             x:Name="Search"
+                             Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              GotFocus="SearchGotFocus" 
                              LostFocus="SearchLostFocus" />
                     
@@ -94,8 +93,9 @@
                                 BorderBrush="DarkGray" 
                                 BorderThickness="1">
                             <ListBox Name="SearchResults" 
+                                     ItemsSource="{Binding Results}"
                                      HorizontalContentAlignment="Stretch"
-                                     SelectionChanged="SelectionChanged">
+                                     SelectedItem="{Binding SearchSelection}">
                                 
                                 <ListBox.ItemContainerStyle>
                                     <Style TargetType="ListBoxItem">
@@ -131,8 +131,7 @@
                        Grid.Column="0"
                        Source="../Icons/help.png" />
                 
-                <TextBlock Name="HelpTitle" 
-                           Text="Help" 
+                <TextBlock Text="{Binding Title}" 
                            Grid.Row="1"
                            Grid.Column="1"
                            VerticalAlignment="Center" 
@@ -141,7 +140,7 @@
                 <TabControl Grid.Row="2"
                             Grid.Column="0"
                             Grid.ColumnSpan="2" 
-                            Name="Tabs">
+                            SelectedIndex="{Binding TabIndex}">
                     <TabItem>
                         <Controls:Panorama ItemBox="120"
                                            ItemsSource="{Binding Groups}"
@@ -159,22 +158,22 @@
 
                             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
                                     Grid.Column="0"
-                                    Click="InfoClick" 
+                                    Command="{Binding Info}"
                                     Width="40" 
                                     Height="40"
                                     VerticalAlignment="Top" 
-                                    Name="InfoButton"
+                                    Visibility="{Binding HasInfo}"
                                     HorizontalAlignment="Left" 
                                     ToolTip="More information">
                                 <Image Source="../Icons/internet.png" />
                             </Button>
 
-                            <RichTextBox Name="HelpText"
-                                         Grid.Column="1"
+                            <RichTextBox Grid.Column="1"
                                          VerticalAlignment="Stretch" 
                                          FontSize="18"
                                          BorderBrush="Transparent" 
                                          IsReadOnly="True"
+                                         local:RichTextBoxHelper.BoundDocument="{Binding CurrentDocument}"
                                          ScrollViewer.VerticalScrollBarVisibility="Visible">
                                 <RichTextBox.Resources>
                                     <Style TargetType="{x:Type Paragraph}">
@@ -186,7 +185,7 @@
 
                             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
                                     Grid.Column="0"
-                                    Click="BackClick" 
+                                    Command="{Binding Home}"
                                     Width="40" 
                                     Height="40"
                                     VerticalAlignment="Bottom" 
@@ -206,17 +205,14 @@
 
                             <Controls:ProgressRing IsActive="True" 
                                                    Grid.Column="1"
-                                                   Name="Loading" />
+                                                   Visibility="{Binding IsLoading}" />
 
-                            <WebBrowser Visibility="Hidden" 
-                                        Grid.Column="1" 
-                                        Source="about:blank"
-                                        LoadCompleted="ContentLoaded" 
-                                        Name="Browser" />
+                            <ContentControl Content="{Binding Browser}"
+                                            Grid.Column="1" />
 
                             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
                                     Grid.Column="0"
-                                    Click="InternetBackClick" 
+                                    Command="{Binding Back}" 
                                     Width="40"
                                     Height="40"
                                     VerticalAlignment="Bottom" 

@@ -175,6 +175,7 @@
     </ApplicationDefinition>
     <Compile Include="Codebase\FileLogger.cs" />
     <Compile Include="Codebase\Kernel.cs" />
+    <Compile Include="Codebase\RichTextBoxHelper.cs" />
     <Compile Include="Codebase\SumericsInfo.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Dialogs\AboutDialogHandler.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Dialogs\LoadWorkspaceHandler.cs" />
     <Compile Include="Dialogs\OptionsDialogHandler.cs" />
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
+    <Compile Include="Extensions\WebBrowserExtensions.cs" />
     <Compile Include="Managers\SensorManager.cs" />
     <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
