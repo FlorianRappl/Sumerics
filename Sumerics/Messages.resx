@@ -120,7 +120,73 @@
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="Accelerometer" xml:space="preserve">
+    <value>Accelerometer</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="ChangeWorkingDirectory" xml:space="preserve">
+    <value>Change working directory</value>
+  </data>
+  <data name="Compass" xml:space="preserve">
+    <value>Compass</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Gyrometer" xml:space="preserve">
+    <value>Gyrometer</value>
+  </data>
+  <data name="Inclinometer" xml:space="preserve">
+    <value>Inclinometer</value>
+  </data>
+  <data name="Interaction" xml:space="preserve">
+    <value>Interaction</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="LoadWorkspace" xml:space="preserve">
+    <value>Load workspace</value>
+  </data>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Open documentation</value>
+  </data>
+  <data name="OpenEditor" xml:space="preserve">
+    <value>Open editor</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins.</value>
+  </data>
+  <data name="Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>Changes require a restart of the application.</value>
+  </data>
+  <data name="SaveWorkspace" xml:space="preserve">
+    <value>Save workspace</value>
+  </data>
+  <data name="SearchHelp" xml:space="preserve">
+    <value>Search help</value>
+  </data>
+  <data name="SearchVariables" xml:space="preserve">
+    <value>Search variables</value>
+  </data>
+  <data name="Sensors" xml:space="preserve">
+    <value>Sensors</value>
+  </data>
+  <data name="Visualization" xml:space="preserve">
+    <value>Visualization</value>
+  </data>
+  <data name="WatchSamples" xml:space="preserve">
+    <value>Watch samples</value>
   </data>
 </root>

@@ -70,11 +70,209 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accelerometer.
+        /// </summary>
+        public static string Accelerometer {
+            get {
+                return ResourceManager.GetString("Accelerometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change working directory.
+        /// </summary>
+        public static string ChangeWorkingDirectory {
+            get {
+                return ResourceManager.GetString("ChangeWorkingDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass.
+        /// </summary>
+        public static string Compass {
+            get {
+                return ResourceManager.GetString("Compass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gyrometer.
+        /// </summary>
+        public static string Gyrometer {
+            get {
+                return ResourceManager.GetString("Gyrometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inclinometer.
+        /// </summary>
+        public static string Inclinometer {
+            get {
+                return ResourceManager.GetString("Inclinometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interaction.
+        /// </summary>
+        public static string Interaction {
+            get {
+                return ResourceManager.GetString("Interaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string Light {
+            get {
+                return ResourceManager.GetString("Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load workspace.
+        /// </summary>
+        public static string LoadWorkspace {
+            get {
+                return ResourceManager.GetString("LoadWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open documentation.
+        /// </summary>
+        public static string OpenDocumentation {
+            get {
+                return ResourceManager.GetString("OpenDocumentation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open editor.
+        /// </summary>
+        public static string OpenEditor {
+            get {
+                return ResourceManager.GetString("OpenEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {
             get {
                 return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins..
+        /// </summary>
+        public static string PluginDescription {
+            get {
+                return ResourceManager.GetString("PluginDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string Plugins {
+            get {
+                return ResourceManager.GetString("Plugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes require a restart of the application..
+        /// </summary>
+        public static string RestartRequired {
+            get {
+                return ResourceManager.GetString("RestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save workspace.
+        /// </summary>
+        public static string SaveWorkspace {
+            get {
+                return ResourceManager.GetString("SaveWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search help.
+        /// </summary>
+        public static string SearchHelp {
+            get {
+                return ResourceManager.GetString("SearchHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search variables.
+        /// </summary>
+        public static string SearchVariables {
+            get {
+                return ResourceManager.GetString("SearchVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensors.
+        /// </summary>
+        public static string Sensors {
+            get {
+                return ResourceManager.GetString("Sensors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualization.
+        /// </summary>
+        public static string Visualization {
+            get {
+                return ResourceManager.GetString("Visualization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Watch samples.
+        /// </summary>
+        public static string WatchSamples {
+            get {
+                return ResourceManager.GetString("WatchSamples", resourceCulture);
             }
         }
     }
