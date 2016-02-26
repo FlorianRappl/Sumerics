@@ -30,9 +30,9 @@
     
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Options"
+            <Button Content="{x:Static local:Messages.Options}"
                     Click="OptionsClick" />
-            <Button Content="About" 
+            <Button Content="{x:Static local:Messages.About}" 
                     Click="AboutClick" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
