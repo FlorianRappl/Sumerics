@@ -129,6 +129,9 @@
   <data name="ChangeWorkingDirectory" xml:space="preserve">
     <value>Change working directory</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="ColorPaletteLabel" xml:space="preserve">
     <value>Color palette:</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="DataTitleLabel" xml:space="preserve">
     <value>Data title:</value>
+  </data>
+  <data name="DecisionRequired" xml:space="preserve">
+    <value>Decision required</value>
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
@@ -191,6 +197,12 @@
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Changes require a restart of the application.</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Samples</value>
+  </data>
+  <data name="SamplesDescription" xml:space="preserve">
+    <value>Demonstrations and samples</value>
   </data>
   <data name="SaveWorkspace" xml:space="preserve">
     <value>Save workspace</value>

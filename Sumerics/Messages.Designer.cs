@@ -97,6 +97,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color palette:.
         /// </summary>
         public static string ColorPaletteLabel {
@@ -138,6 +147,15 @@ namespace Sumerics {
         public static string DataTitleLabel {
             get {
                 return ResourceManager.GetString("DataTitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decision required.
+        /// </summary>
+        public static string DecisionRequired {
+            get {
+                return ResourceManager.GetString("DecisionRequired", resourceCulture);
             }
         }
         
@@ -282,6 +300,24 @@ namespace Sumerics {
         public static string RestartRequired {
             get {
                 return ResourceManager.GetString("RestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Samples.
+        /// </summary>
+        public static string Samples {
+            get {
+                return ResourceManager.GetString("Samples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Demonstrations and samples.
+        /// </summary>
+        public static string SamplesDescription {
+            get {
+                return ResourceManager.GetString("SamplesDescription", resourceCulture);
             }
         }
         
