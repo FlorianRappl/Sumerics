@@ -7,7 +7,7 @@
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
                       x:Name="MyOptionsWindow" 
-                      Title="Options"
+                      Title="{x:Static local:Messages.Options}"
                       Height="600"
                       Width="700">
     <Window.Resources>
@@ -31,7 +31,7 @@
             </Grid.RowDefinitions>
 
             <TabControl Grid.Row="0">
-                <TabItem Header="Sensor plots">
+                <TabItem Header="{x:Static local:Messages.SensorPlots}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -50,11 +50,11 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="0" 
-                                   Text="Livestream:"
+                                   Text="{x:Static local:Messages.LivestreamLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Updates" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Updates}" 
                                                Grid.Row="0" 
                                                Grid.Column="1"
                                                Width="150"
@@ -64,7 +64,7 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="1" 
-                                   Text="Maximum entries:"
+                                   Text="{x:Static local:Messages.MaximumEntriesLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
@@ -87,11 +87,11 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="2" 
-                                   Text="Accelerometer:"
+                                   Text="{x:Static local:Messages.AccelerometerLabel}"
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Quickview" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Quickview}" 
                                                Grid.Row="2"
                                                Grid.Column="1"
                                                Width="150" 
@@ -101,11 +101,11 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="3" 
-                                   Text="Compass:"
+                                   Text="{x:Static local:Messages.CompassLabel}"
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Quickview" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Quickview}" 
                                                Grid.Row="3" 
                                                Grid.Column="1"
                                                Width="150" 
@@ -115,11 +115,11 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="4" 
-                                   Text="Gyrometer:"
+                                   Text="{x:Static local:Messages.GyrometerLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Quickview"
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Quickview}"
                                                Grid.Row="4"
                                                Grid.Column="1"
                                                Width="150"
@@ -129,11 +129,11 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="5" 
-                                   Text="Inclinometer:"
+                                   Text="{x:Static local:Messages.InclinometerLabel}"
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Quickview" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Quickview}" 
                                                Grid.Row="5"
                                                Grid.Column="1"
                                                Width="150"
@@ -143,11 +143,11 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="6"
-                                   Text="Light:"
+                                   Text="{x:Static local:Messages.LightLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Quickview" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Quickview}" 
                                                Grid.Row="6"
                                                Grid.Column="1" 
                                                Width="150" 
@@ -157,7 +157,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="Console">
+                <TabItem Header="{x:Static local:Messages.Console}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -172,11 +172,11 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="0" 
-                                   Text="Command history:"
+                                   Text="{x:Static local:Messages.CommandHistoryLabel}"
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Save"
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Save}"
                                                Grid.Row="0"
                                                Grid.Column="1"
                                                Width="150" 
@@ -186,11 +186,11 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="1"
-                                   Text="Evaluate math drawings:"
+                                   Text="{x:Static local:Messages.EvaluateMathDrawingsLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
-                        <Controls:ToggleSwitch Header="Automatic" 
+                        <Controls:ToggleSwitch Header="{x:Static local:Messages.AutomaticHint}" 
                                                Grid.Row="1"
                                                Grid.Column="1"
                                                Width="150" 
@@ -200,7 +200,7 @@
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="2"
-                                   Text="Font size:" 
+                                   Text="{x:Static local:Messages.FontSizeLabel}" 
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
@@ -223,7 +223,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="Advanced">
+                <TabItem Header="{x:Static local:Messages.Advanced}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -238,7 +238,7 @@
 
                         <TextBlock Grid.Column="0" 
                                    Grid.Row="0" 
-                                   Text="Error log:"
+                                   Text="{x:Static local:Messages.ErrorLogLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
                         
@@ -247,13 +247,13 @@
                                VerticalAlignment="Center">
                             <Hyperlink Command="{Binding ViewErrorLog}" 
                                        FontSize="16">
-                                View in editor
+                                <TextBlock Text="{x:Static local:Messages.ViewInEditor}" />
                             </Hyperlink>
                         </Label>
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="1"
-                                   Text="Global startup script:&#x0a;(requires admin privileges)"
+                                   Text="{x:Static local:Messages.GlobalStartupScriptLabel}"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
@@ -263,13 +263,13 @@
                             <Hyperlink Command="{Binding ViewGlobalScript}" 
                                        FontSize="16"
                                        IsEnabled="{Binding CanViewGlobalScript}">
-                                View in editor
+                                <TextBlock Text="{x:Static local:Messages.ViewInEditor}" />
                             </Hyperlink>
                         </Label>
 
                         <TextBlock Grid.Column="0"
                                    Grid.Row="2"
-                                   Text="User startup script:"
+                                   Text="{x:Static local:Messages.UserStartupScriptLabel}"
                                    FontSize="16" 
                                    VerticalAlignment="Center" />
 
@@ -278,7 +278,7 @@
                                VerticalAlignment="Center">
                             <Hyperlink Command="{Binding ViewLocalScript}"
                                        FontSize="16">
-                                View in editor
+                                <TextBlock Text="{x:Static local:Messages.ViewInEditor}" />
                             </Hyperlink>
                         </Label>
                     </Grid>

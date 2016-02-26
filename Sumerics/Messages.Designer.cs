@@ -79,11 +79,38 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accelerometer:.
+        /// </summary>
+        public static string AccelerometerLabel {
+            get {
+                return ResourceManager.GetString("AccelerometerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string Actions {
             get {
                 return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced.
+        /// </summary>
+        public static string Advanced {
+            get {
+                return ResourceManager.GetString("Advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string AutomaticHint {
+            get {
+                return ResourceManager.GetString("AutomaticHint", resourceCulture);
             }
         }
         
@@ -115,11 +142,38 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command history:.
+        /// </summary>
+        public static string CommandHistoryLabel {
+            get {
+                return ResourceManager.GetString("CommandHistoryLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compass.
         /// </summary>
         public static string Compass {
             get {
                 return ResourceManager.GetString("Compass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compass:.
+        /// </summary>
+        public static string CompassLabel {
+            get {
+                return ResourceManager.GetString("CompassLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Console.
+        /// </summary>
+        public static string Console {
+            get {
+                return ResourceManager.GetString("Console", resourceCulture);
             }
         }
         
@@ -187,11 +241,48 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error log:.
+        /// </summary>
+        public static string ErrorLogLabel {
+            get {
+                return ResourceManager.GetString("ErrorLogLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Evaluate input.
         /// </summary>
         public static string EvaluateInput {
             get {
                 return ResourceManager.GetString("EvaluateInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluate math drawings:.
+        /// </summary>
+        public static string EvaluateMathDrawingsLabel {
+            get {
+                return ResourceManager.GetString("EvaluateMathDrawingsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font size:.
+        /// </summary>
+        public static string FontSizeLabel {
+            get {
+                return ResourceManager.GetString("FontSizeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global startup script:
+        ///(requires admin privileges).
+        /// </summary>
+        public static string GlobalStartupScriptLabel {
+            get {
+                return ResourceManager.GetString("GlobalStartupScriptLabel", resourceCulture);
             }
         }
         
@@ -205,11 +296,29 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gyrometer:.
+        /// </summary>
+        public static string GyrometerLabel {
+            get {
+                return ResourceManager.GetString("GyrometerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inclinometer.
         /// </summary>
         public static string Inclinometer {
             get {
                 return ResourceManager.GetString("Inclinometer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inclinometer:.
+        /// </summary>
+        public static string InclinometerLabel {
+            get {
+                return ResourceManager.GetString("InclinometerLabel", resourceCulture);
             }
         }
         
@@ -232,11 +341,38 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light:.
+        /// </summary>
+        public static string LightLabel {
+            get {
+                return ResourceManager.GetString("LightLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Livestream:.
+        /// </summary>
+        public static string LivestreamLabel {
+            get {
+                return ResourceManager.GetString("LivestreamLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load workspace.
         /// </summary>
         public static string LoadWorkspace {
             get {
                 return ResourceManager.GetString("LoadWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum entries:.
+        /// </summary>
+        public static string MaximumEntriesLabel {
+            get {
+                return ResourceManager.GetString("MaximumEntriesLabel", resourceCulture);
             }
         }
         
@@ -295,6 +431,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quickview.
+        /// </summary>
+        public static string Quickview {
+            get {
+                return ResourceManager.GetString("Quickview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changes require a restart of the application..
         /// </summary>
         public static string RestartRequired {
@@ -318,6 +463,15 @@ namespace Sumerics {
         public static string SamplesDescription {
             get {
                 return ResourceManager.GetString("SamplesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
@@ -349,6 +503,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sensor plots.
+        /// </summary>
+        public static string SensorPlots {
+            get {
+                return ResourceManager.GetString("SensorPlots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensors.
         /// </summary>
         public static string Sensors {
@@ -376,11 +539,38 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        public static string Updates {
+            get {
+                return ResourceManager.GetString("Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensor Numerics uses the following packages:.
         /// </summary>
         public static string UsedPackages {
             get {
                 return ResourceManager.GetString("UsedPackages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User startup script:.
+        /// </summary>
+        public static string UserStartupScriptLabel {
+            get {
+                return ResourceManager.GetString("UserStartupScriptLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View in editor.
+        /// </summary>
+        public static string ViewInEditor {
+            get {
+                return ResourceManager.GetString("ViewInEditor", resourceCulture);
             }
         }
         

@@ -123,8 +123,17 @@
   <data name="Accelerometer" xml:space="preserve">
     <value>Accelerometer</value>
   </data>
+  <data name="AccelerometerLabel" xml:space="preserve">
+    <value>Accelerometer:</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="AutomaticHint" xml:space="preserve">
+    <value>Automatic</value>
   </data>
   <data name="ChangeWorkingDirectory" xml:space="preserve">
     <value>Change working directory</value>
@@ -135,8 +144,17 @@
   <data name="ColorPaletteLabel" xml:space="preserve">
     <value>Color palette:</value>
   </data>
+  <data name="CommandHistoryLabel" xml:space="preserve">
+    <value>Command history:</value>
+  </data>
   <data name="Compass" xml:space="preserve">
     <value>Compass</value>
+  </data>
+  <data name="CompassLabel" xml:space="preserve">
+    <value>Compass:</value>
+  </data>
+  <data name="Console" xml:space="preserve">
+    <value>Console</value>
   </data>
   <data name="ContourSettings" xml:space="preserve">
     <value>Contour settings</value>
@@ -159,14 +177,33 @@
   <data name="EnterQuickStatement" xml:space="preserve">
     <value>Enter quick statement</value>
   </data>
+  <data name="ErrorLogLabel" xml:space="preserve">
+    <value>Error log:</value>
+  </data>
   <data name="EvaluateInput" xml:space="preserve">
     <value>Evaluate input</value>
+  </data>
+  <data name="EvaluateMathDrawingsLabel" xml:space="preserve">
+    <value>Evaluate math drawings:</value>
+  </data>
+  <data name="FontSizeLabel" xml:space="preserve">
+    <value>Font size:</value>
+  </data>
+  <data name="GlobalStartupScriptLabel" xml:space="preserve">
+    <value>Global startup script:
+(requires admin privileges)</value>
   </data>
   <data name="Gyrometer" xml:space="preserve">
     <value>Gyrometer</value>
   </data>
+  <data name="GyrometerLabel" xml:space="preserve">
+    <value>Gyrometer:</value>
+  </data>
   <data name="Inclinometer" xml:space="preserve">
     <value>Inclinometer</value>
+  </data>
+  <data name="InclinometerLabel" xml:space="preserve">
+    <value>Inclinometer:</value>
   </data>
   <data name="Interaction" xml:space="preserve">
     <value>Interaction</value>
@@ -174,8 +211,17 @@
   <data name="Light" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="LightLabel" xml:space="preserve">
+    <value>Light:</value>
+  </data>
+  <data name="LivestreamLabel" xml:space="preserve">
+    <value>Livestream:</value>
+  </data>
   <data name="LoadWorkspace" xml:space="preserve">
     <value>Load workspace</value>
+  </data>
+  <data name="MaximumEntriesLabel" xml:space="preserve">
+    <value>Maximum entries:</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>Open documentation</value>
@@ -195,6 +241,9 @@
   <data name="Plugins" xml:space="preserve">
     <value>Plugins</value>
   </data>
+  <data name="Quickview" xml:space="preserve">
+    <value>Quickview</value>
+  </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Changes require a restart of the application.</value>
   </data>
@@ -203,6 +252,9 @@
   </data>
   <data name="SamplesDescription" xml:space="preserve">
     <value>Demonstrations and samples</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="SaveWorkspace" xml:space="preserve">
     <value>Save workspace</value>
@@ -213,6 +265,9 @@
   <data name="SearchVariables" xml:space="preserve">
     <value>Search variables</value>
   </data>
+  <data name="SensorPlots" xml:space="preserve">
+    <value>Sensor plots</value>
+  </data>
   <data name="Sensors" xml:space="preserve">
     <value>Sensors</value>
   </data>
@@ -222,8 +277,17 @@
   <data name="ShowLevelsLabel" xml:space="preserve">
     <value>Show levels:</value>
   </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Updates</value>
+  </data>
   <data name="UsedPackages" xml:space="preserve">
     <value>Sensor Numerics uses the following packages:</value>
+  </data>
+  <data name="UserStartupScriptLabel" xml:space="preserve">
+    <value>User startup script:</value>
+  </data>
+  <data name="ViewInEditor" xml:space="preserve">
+    <value>View in editor</value>
   </data>
   <data name="Visualization" xml:space="preserve">
     <value>Visualization</value>
