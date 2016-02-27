@@ -138,6 +138,9 @@
   <data name="AutomaticHint" xml:space="preserve">
     <value>Automatic</value>
   </data>
+  <data name="BackToolTip" xml:space="preserve">
+    <value>Back to the topic</value>
+  </data>
   <data name="ChangeWorkingDirectory" xml:space="preserve">
     <value>Change working directory</value>
   </data>
@@ -168,6 +171,9 @@
   <data name="ContourSettings" xml:space="preserve">
     <value>Contour settings</value>
   </data>
+  <data name="Current" xml:space="preserve">
+    <value>Current</value>
+  </data>
   <data name="CustomizeSubplot" xml:space="preserve">
     <value>Customize current subplot</value>
   </data>
@@ -182,6 +188,9 @@
   </data>
   <data name="Disabled" xml:space="preserve">
     <value>Disabled</value>
+  </data>
+  <data name="DrawInputToolTip" xml:space="preserve">
+    <value>Draw input</value>
   </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
@@ -214,11 +223,23 @@
   <data name="HeightInPx" xml:space="preserve">
     <value>Height (px)</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="Inclinometer" xml:space="preserve">
     <value>Inclinometer</value>
   </data>
   <data name="InclinometerLabel" xml:space="preserve">
     <value>Inclinometer:</value>
+  </data>
+  <data name="InfoToolTip" xml:space="preserve">
+    <value>More information</value>
+  </data>
+  <data name="InputHint" xml:space="preserve">
+    <value>Place your input here.</value>
+  </data>
+  <data name="InputRequired" xml:space="preserve">
+    <value>Input Required</value>
   </data>
   <data name="Interaction" xml:space="preserve">
     <value>Interaction</value>
@@ -247,6 +268,12 @@
   <data name="MaximumEntriesLabel" xml:space="preserve">
     <value>Maximum entries:</value>
   </data>
+  <data name="MoreToolTip" xml:space="preserve">
+    <value>More help topics</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>Open documentation</value>
   </data>
@@ -258,6 +285,9 @@
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="Places" xml:space="preserve">
+    <value>Places</value>
   </data>
   <data name="PlaceTheStatement" xml:space="preserve">
     <value>Place the statement here.</value>
@@ -279,6 +309,9 @@
   </data>
   <data name="Plugins" xml:space="preserve">
     <value>Plugins</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
   </data>
   <data name="Quickview" xml:space="preserve">
     <value>Quickview</value>
@@ -310,8 +343,14 @@
   <data name="SearchHelp" xml:space="preserve">
     <value>Search help</value>
   </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>Search...</value>
+  </data>
   <data name="SearchVariables" xml:space="preserve">
     <value>Search variables</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Select folder</value>
   </data>
   <data name="SensorPlots" xml:space="preserve">
     <value>Sensor plots</value>

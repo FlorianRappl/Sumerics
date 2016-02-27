@@ -5,7 +5,7 @@
                       xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Help"
+                      Title="{x:Static local:Messages.Help}"
                       ResizeMode="NoResize" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -43,7 +43,7 @@
                                    Fill="#77000000" 
                                    Canvas.Left="0" />
                     </Canvas>
-                    </Controls:Tile>
+                </Controls:Tile>
             </DataTemplate>
 
         </ResourceDictionary>
@@ -75,7 +75,7 @@
                                Text="{Binding BreadCrumb}" 
                                VerticalAlignment="Center" />
 
-                    <TextBox Controls:TextboxHelper.Watermark="Search..." 
+                    <TextBox Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchHint}" 
                              x:Name="Search"
                              Grid.Column="1" 
                              VerticalAlignment="Center" 
@@ -101,8 +101,10 @@
                                     <Style TargetType="ListBoxItem">
                                         <Setter Property="Padding"
                                                 Value="0" />
+                                        
                                         <Setter Property="Width"
                                                 Value="180" />
+                                        
                                         <Setter Property="Height" 
                                                 Value="40" />
                                     </Style>
@@ -114,6 +116,7 @@
                                             <TextBlock Text="{Binding Name}"
                                                        FontWeight="Bold" 
                                                        TextTrimming="CharacterEllipsis" />
+                                            
                                             <TextBlock Text="{Binding Description}" 
                                                        FontWeight="ExtraLight"
                                                        TextTrimming="CharacterEllipsis" />
@@ -164,7 +167,7 @@
                                     VerticalAlignment="Top" 
                                     Visibility="{Binding HasInfo}"
                                     HorizontalAlignment="Left" 
-                                    ToolTip="More information">
+                                    ToolTip="{x:Static local:Messages.InfoToolTip}">
                                 <Image Source="../Icons/internet.png" />
                             </Button>
 
@@ -191,7 +194,7 @@
                                     VerticalAlignment="Bottom" 
                                     Name="BackButton"
                                     HorizontalAlignment="Left" 
-                                    ToolTip="More help topics">
+                                    ToolTip="{x:Static local:Messages.MoreToolTip}">
                                 <Image Source="../Resources/back.png" />
                             </Button>
                         </Grid>
@@ -218,7 +221,7 @@
                                     VerticalAlignment="Bottom" 
                                     Name="InternetBackButton"
                                     HorizontalAlignment="Left"
-                                    ToolTip="Back to the topic">
+                                    ToolTip="{x:Static local:Messages.BackToolTip}">
                                 <Image Source="../Resources/back.png" />
                             </Button>
                         </Grid>

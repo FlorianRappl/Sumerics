@@ -4,7 +4,7 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Select folder" 
+                      Title="{x:Static local:Messages.SelectFolder}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 
@@ -47,7 +47,7 @@
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="120" />
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -57,7 +57,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="Places" 
+                <TextBlock Text="{x:Static local:Messages.Places}" 
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -68,7 +68,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="Previous" 
+                <TextBlock Text="{x:Static local:Messages.Previous}" 
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -79,7 +79,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="Current" 
+                <TextBlock Text="{x:Static local:Messages.Current}" 
                            HorizontalAlignment="Center" 
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -90,7 +90,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="Next"
+                <TextBlock Text="{x:Static local:Messages.Next}"
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center"
@@ -113,6 +113,7 @@
                             <Image Source="{Binding Icon}" 
                                    Height="47"
                                    HorizontalAlignment="Center" />
+                            
                             <TextBlock Text="{Binding Name}"
                                        HorizontalAlignment="Center" />
                         </StackPanel>
@@ -134,6 +135,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Icon}" 
                                    Height="25" />
+                            
                             <TextBlock Text="{Binding Name}" 
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -154,6 +156,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Icon}"
                                    Height="25" />
+                            
                             <TextBlock Text="{Binding Name}" 
                                        VerticalAlignment="Center" />
                         </StackPanel>
@@ -173,6 +176,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Icon}" 
                                    Height="25" />
+                            
                             <TextBlock Text="{Binding Name}" 
                                        VerticalAlignment="Center" />
                         </StackPanel>

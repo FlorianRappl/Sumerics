@@ -124,6 +124,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back to the topic.
+        /// </summary>
+        public static string BackToolTip {
+            get {
+                return ResourceManager.GetString("BackToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change working directory.
         /// </summary>
         public static string ChangeWorkingDirectory {
@@ -214,6 +223,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current.
+        /// </summary>
+        public static string Current {
+            get {
+                return ResourceManager.GetString("Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customize current subplot.
         /// </summary>
         public static string CustomizeSubplot {
@@ -255,6 +273,15 @@ namespace Sumerics {
         public static string Disabled {
             get {
                 return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw input.
+        /// </summary>
+        public static string DrawInputToolTip {
+            get {
+                return ResourceManager.GetString("DrawInputToolTip", resourceCulture);
             }
         }
         
@@ -350,6 +377,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inclinometer.
         /// </summary>
         public static string Inclinometer {
@@ -364,6 +400,33 @@ namespace Sumerics {
         public static string InclinometerLabel {
             get {
                 return ResourceManager.GetString("InclinometerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More information.
+        /// </summary>
+        public static string InfoToolTip {
+            get {
+                return ResourceManager.GetString("InfoToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place your input here..
+        /// </summary>
+        public static string InputHint {
+            get {
+                return ResourceManager.GetString("InputHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Required.
+        /// </summary>
+        public static string InputRequired {
+            get {
+                return ResourceManager.GetString("InputRequired", resourceCulture);
             }
         }
         
@@ -449,6 +512,24 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More help topics.
+        /// </summary>
+        public static string MoreToolTip {
+            get {
+                return ResourceManager.GetString("MoreToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open documentation.
         /// </summary>
         public static string OpenDocumentation {
@@ -481,6 +562,15 @@ namespace Sumerics {
         public static string Options {
             get {
                 return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Places.
+        /// </summary>
+        public static string Places {
+            get {
+                return ResourceManager.GetString("Places", resourceCulture);
             }
         }
         
@@ -544,6 +634,15 @@ namespace Sumerics {
         public static string Plugins {
             get {
                 return ResourceManager.GetString("Plugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous.
+        /// </summary>
+        public static string Previous {
+            get {
+                return ResourceManager.GetString("Previous", resourceCulture);
             }
         }
         
@@ -638,11 +737,29 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string SearchHint {
+            get {
+                return ResourceManager.GetString("SearchHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search variables.
         /// </summary>
         public static string SearchVariables {
             get {
                 return ResourceManager.GetString("SearchVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select folder.
+        /// </summary>
+        public static string SelectFolder {
+            get {
+                return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
         
