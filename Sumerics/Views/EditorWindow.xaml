@@ -4,7 +4,7 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Editor"
+                      Title="{x:Static local:Messages.Editor}"
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
                       Height="600"
@@ -38,14 +38,14 @@
                             VerticalAlignment="Center">
                     <Button Style="{StaticResource MetroCircleButton}"
                             Name="NewButton" 
-                            ToolTip="New file" 
+                            ToolTip="{x:Static local:Messages.NewFileToolTip}" 
                             Command="{Binding Create}">
                         <Image Source="../Icons/new.png" />
                     </Button>
                 
                     <Button Style="{StaticResource MetroCircleButton}"
                             Name="OpenButton" 
-                            ToolTip="Open file"
+                            ToolTip="{x:Static local:Messages.OpenFileToolTip}"
                             Command="{Binding Open}">
                         <Image Source="../Icons/open.png" />
                     </Button>

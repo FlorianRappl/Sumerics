@@ -192,6 +192,9 @@
   <data name="DrawInputToolTip" xml:space="preserve">
     <value>Draw input</value>
   </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
   <data name="Enabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
@@ -219,6 +222,9 @@
   </data>
   <data name="GyrometerLabel" xml:space="preserve">
     <value>Gyrometer:</value>
+  </data>
+  <data name="HeatmapSettings" xml:space="preserve">
+    <value>Heatmap settings</value>
   </data>
   <data name="HeightInPx" xml:space="preserve">
     <value>Height (px)</value>
@@ -271,6 +277,9 @@
   <data name="MoreToolTip" xml:space="preserve">
     <value>More help topics</value>
   </data>
+  <data name="NewFileToolTip" xml:space="preserve">
+    <value>New file</value>
+  </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
@@ -282,6 +291,9 @@
   </data>
   <data name="OpenFile" xml:space="preserve">
     <value>Open file...</value>
+  </data>
+  <data name="OpenFileToolTip" xml:space="preserve">
+    <value>Open file</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>

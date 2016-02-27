@@ -286,6 +286,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Editor.
+        /// </summary>
+        public static string Editor {
+            get {
+                return ResourceManager.GetString("Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled.
         /// </summary>
         public static string Enabled {
@@ -364,6 +373,15 @@ namespace Sumerics {
         public static string GyrometerLabel {
             get {
                 return ResourceManager.GetString("GyrometerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heatmap settings.
+        /// </summary>
+        public static string HeatmapSettings {
+            get {
+                return ResourceManager.GetString("HeatmapSettings", resourceCulture);
             }
         }
         
@@ -521,6 +539,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New file.
+        /// </summary>
+        public static string NewFileToolTip {
+            get {
+                return ResourceManager.GetString("NewFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
         public static string Next {
@@ -553,6 +580,15 @@ namespace Sumerics {
         public static string OpenFile {
             get {
                 return ResourceManager.GetString("OpenFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open file.
+        /// </summary>
+        public static string OpenFileToolTip {
+            get {
+                return ResourceManager.GetString("OpenFileToolTip", resourceCulture);
             }
         }
         
