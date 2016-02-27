@@ -128,9 +128,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\MahApps.Metro.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NAudio.1.6\lib\net20\NAudio.dll</HintPath>
+      <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -151,21 +151,21 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YAMP, Version=1.5.1.29926, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YAMP.1.5.1.29926\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="YAMP, Version=1.5.2.27330, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YAMP.1.5.2.27330\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
     </Reference>
-    <Reference Include="YAMP.Io, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YAMP.Io.1.5.1.30138\lib\net40\YAMP.Io.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="YAMP.Io, Version=1.5.2.27814, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YAMP.Io.1.5.2.27814\lib\net40\YAMP.Io.dll</HintPath>
     </Reference>
-    <Reference Include="YAMP.Physics, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YAMP.Physics.1.5.1.30138\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="YAMP.Physics, Version=1.5.2.27812, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YAMP.Physics.1.5.2.27812\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
     </Reference>
-    <Reference Include="YAMP.Sensors, Version=1.5.1.30138, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\YAMP.Sensors.1.5.1.30138\lib\net45\YAMP.Sensors.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="YAMP.Sensors, Version=1.5.2.27813, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\YAMP.Sensors.1.5.2.27813\lib\net45\YAMP.Sensors.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
