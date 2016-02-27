@@ -6,7 +6,7 @@
                       WindowStartupLocation="CenterScreen" 
                       Icon="../Icons/Sumerics.png"
                       x:Name="MySettingsWindow" 
-                      Title="Plot settings"
+                      Title="{x:Static local:Messages.PlotSettings}"
                       ResizeMode="NoResize" 
                       Height="500"
                       Width="700">
@@ -50,7 +50,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
-                       Text="Title of the plot:" 
+                       Text="{x:Static local:Messages.TitleLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
@@ -58,18 +58,18 @@
                      Grid.Column="1" 
                      AcceptsReturn="False" 
                      FontSize="16"
-                     Controls:TextboxHelper.Watermark="Enter the title here" 
+                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.TitleHint}" 
                      Height="30"
                      Controls:TextboxHelper.ClearTextButton="True"
                      Text="{Binding Title}" />
 
             <TextBlock Grid.Column="0" 
                        Grid.Row="2" 
-                       Text="Show the legend:" 
+                       Text="{x:Static local:Messages.ShowLegendLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
-            <Controls:ToggleSwitch Header="Legend visible"
+            <Controls:ToggleSwitch Header="{x:Static local:Messages.ShowLegendHint}"
                                    Grid.Row="2" 
                                    Grid.Column="1"
                                    Width="150"
@@ -78,7 +78,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="3"
-                       Text="Legend border color:" 
+                       Text="{x:Static local:Messages.LegendBorderColorLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
             
@@ -92,7 +92,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="4"
-                       Text="Legend background color:" 
+                       Text="{x:Static local:Messages.LegendBackgroundColorLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
@@ -106,7 +106,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="5"
-                       Text="Legend position:" 
+                       Text="{x:Static local:Messages.LegendPositionLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 

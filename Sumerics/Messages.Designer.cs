@@ -142,11 +142,29 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color:.
+        /// </summary>
+        public static string ColorLabel {
+            get {
+                return ResourceManager.GetString("ColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color palette:.
         /// </summary>
         public static string ColorPaletteLabel {
             get {
                 return ResourceManager.GetString("ColorPaletteLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Columns to show:.
+        /// </summary>
+        public static string ColumnsLabel {
+            get {
+                return ResourceManager.GetString("ColumnsLabel", resourceCulture);
             }
         }
         
@@ -192,6 +210,15 @@ namespace Sumerics {
         public static string ContourSettings {
             get {
                 return ResourceManager.GetString("ContourSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customize current subplot.
+        /// </summary>
+        public static string CustomizeSubplot {
+            get {
+                return ResourceManager.GetString("CustomizeSubplot", resourceCulture);
             }
         }
         
@@ -350,6 +377,33 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legend background color:.
+        /// </summary>
+        public static string LegendBackgroundColorLabel {
+            get {
+                return ResourceManager.GetString("LegendBackgroundColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend border color:.
+        /// </summary>
+        public static string LegendBorderColorLabel {
+            get {
+                return ResourceManager.GetString("LegendBorderColorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend position:.
+        /// </summary>
+        public static string LegendPositionLabel {
+            get {
+                return ResourceManager.GetString("LegendPositionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string Light {
@@ -440,6 +494,42 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plot.
+        /// </summary>
+        public static string Plot {
+            get {
+                return ResourceManager.GetString("Plot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plot settings.
+        /// </summary>
+        public static string PlotSettings {
+            get {
+                return ResourceManager.GetString("PlotSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the title here.
+        /// </summary>
+        public static string PlotTitleHint {
+            get {
+                return ResourceManager.GetString("PlotTitleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title of the plot:.
+        /// </summary>
+        public static string PlotTitleLabel {
+            get {
+                return ResourceManager.GetString("PlotTitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins..
         /// </summary>
         public static string PluginDescription {
@@ -472,6 +562,15 @@ namespace Sumerics {
         public static string RestartRequired {
             get {
                 return ResourceManager.GetString("RestartRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rows to show:.
+        /// </summary>
+        public static string RowsLabel {
+            get {
+                return ResourceManager.GetString("RowsLabel", resourceCulture);
             }
         }
         
@@ -566,6 +665,51 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Series settings.
+        /// </summary>
+        public static string SeriesSettings {
+            get {
+                return ResourceManager.GetString("SeriesSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the title here.
+        /// </summary>
+        public static string SeriesTitleHint {
+            get {
+                return ResourceManager.GetString("SeriesTitleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Series title:.
+        /// </summary>
+        public static string SeriesTitleLabel {
+            get {
+                return ResourceManager.GetString("SeriesTitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Legend visible.
+        /// </summary>
+        public static string ShowLegendHint {
+            get {
+                return ResourceManager.GetString("ShowLegendHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the legend:.
+        /// </summary>
+        public static string ShowLegendLabel {
+            get {
+                return ResourceManager.GetString("ShowLegendLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lines visible.
         /// </summary>
         public static string ShowLevelsHint {
@@ -580,6 +724,51 @@ namespace Sumerics {
         public static string ShowLevelsLabel {
             get {
                 return ResourceManager.GetString("ShowLevelsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show lines:.
+        /// </summary>
+        public static string ShowLinesLabel {
+            get {
+                return ResourceManager.GetString("ShowLinesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subplot settings.
+        /// </summary>
+        public static string SubplotSettings {
+            get {
+                return ResourceManager.GetString("SubplotSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbol:.
+        /// </summary>
+        public static string SymbolLabel {
+            get {
+                return ResourceManager.GetString("SymbolLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the title here.
+        /// </summary>
+        public static string TitleHint {
+            get {
+                return ResourceManager.GetString("TitleHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title of the plot:.
+        /// </summary>
+        public static string TitleLabel {
+            get {
+                return ResourceManager.GetString("TitleLabel", resourceCulture);
             }
         }
         

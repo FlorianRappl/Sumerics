@@ -144,8 +144,14 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="ColorLabel" xml:space="preserve">
+    <value>Color:</value>
+  </data>
   <data name="ColorPaletteLabel" xml:space="preserve">
     <value>Color palette:</value>
+  </data>
+  <data name="ColumnsLabel" xml:space="preserve">
+    <value>Columns to show:</value>
   </data>
   <data name="CommandHistoryLabel" xml:space="preserve">
     <value>Command history:</value>
@@ -161,6 +167,9 @@
   </data>
   <data name="ContourSettings" xml:space="preserve">
     <value>Contour settings</value>
+  </data>
+  <data name="CustomizeSubplot" xml:space="preserve">
+    <value>Customize current subplot</value>
   </data>
   <data name="DataTitleHint" xml:space="preserve">
     <value>Enter the title here</value>
@@ -214,6 +223,15 @@
   <data name="Interaction" xml:space="preserve">
     <value>Interaction</value>
   </data>
+  <data name="LegendBackgroundColorLabel" xml:space="preserve">
+    <value>Legend background color:</value>
+  </data>
+  <data name="LegendBorderColorLabel" xml:space="preserve">
+    <value>Legend border color:</value>
+  </data>
+  <data name="LegendPositionLabel" xml:space="preserve">
+    <value>Legend position:</value>
+  </data>
   <data name="Light" xml:space="preserve">
     <value>Light</value>
   </data>
@@ -244,6 +262,18 @@
   <data name="PlaceTheStatement" xml:space="preserve">
     <value>Place the statement here.</value>
   </data>
+  <data name="Plot" xml:space="preserve">
+    <value>Plot</value>
+  </data>
+  <data name="PlotSettings" xml:space="preserve">
+    <value>Plot settings</value>
+  </data>
+  <data name="PlotTitleHint" xml:space="preserve">
+    <value>Enter the title here</value>
+  </data>
+  <data name="PlotTitleLabel" xml:space="preserve">
+    <value>Title of the plot:</value>
+  </data>
   <data name="PluginDescription" xml:space="preserve">
     <value>Plugins can extend the possibilities of Sumerics. Including a plugin is quite straight forward. Just place the plugin you want to include in the subfolder plugins of Sumerics. It will then be shown in the list below. This list is the location where you can enable or disable existing plugins.</value>
   </data>
@@ -255,6 +285,9 @@
   </data>
   <data name="RestartRequired" xml:space="preserve">
     <value>Changes require a restart of the application.</value>
+  </data>
+  <data name="RowsLabel" xml:space="preserve">
+    <value>Rows to show:</value>
   </data>
   <data name="Samples" xml:space="preserve">
     <value>Samples</value>
@@ -286,11 +319,41 @@
   <data name="Sensors" xml:space="preserve">
     <value>Sensors</value>
   </data>
+  <data name="SeriesSettings" xml:space="preserve">
+    <value>Series settings</value>
+  </data>
+  <data name="SeriesTitleHint" xml:space="preserve">
+    <value>Enter the title here</value>
+  </data>
+  <data name="SeriesTitleLabel" xml:space="preserve">
+    <value>Series title:</value>
+  </data>
+  <data name="ShowLegendHint" xml:space="preserve">
+    <value>Legend visible</value>
+  </data>
+  <data name="ShowLegendLabel" xml:space="preserve">
+    <value>Show the legend:</value>
+  </data>
   <data name="ShowLevelsHint" xml:space="preserve">
     <value>Lines visible</value>
   </data>
   <data name="ShowLevelsLabel" xml:space="preserve">
     <value>Show levels:</value>
+  </data>
+  <data name="ShowLinesLabel" xml:space="preserve">
+    <value>Show lines:</value>
+  </data>
+  <data name="SubplotSettings" xml:space="preserve">
+    <value>Subplot settings</value>
+  </data>
+  <data name="SymbolLabel" xml:space="preserve">
+    <value>Symbol:</value>
+  </data>
+  <data name="TitleHint" xml:space="preserve">
+    <value>Enter the title here</value>
+  </data>
+  <data name="TitleLabel" xml:space="preserve">
+    <value>Title of the plot:</value>
   </data>
   <data name="Updates" xml:space="preserve">
     <value>Updates</value>

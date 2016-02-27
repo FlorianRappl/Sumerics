@@ -6,7 +6,7 @@
                       WindowStartupLocation="CenterScreen" 
                       Icon="../Icons/Sumerics.png"
                       x:Name="MySettingsWindow" 
-                      Title="Subplot settings"
+                      Title="{x:Static local:Messages.SubplotSettings}"
                       ResizeMode="NoResize" 
                       Height="500" 
                       Width="700">
@@ -42,13 +42,13 @@
                        Grid.Row="0"
                        Grid.ColumnSpan="2" 
                        Foreground="DarkGray"
-                       Text="Customize current subplot" 
+                       Text="{x:Static local:Messages.CustomizeSubplot}" 
                        FontSize="32" 
                        VerticalAlignment="Center" />
 
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
-                       Text="Title of the plot:" 
+                       Text="{x:Static local:Messages.PlotTitleLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
@@ -56,14 +56,14 @@
                      Grid.Column="1" 
                      AcceptsReturn="False" 
                      FontSize="16"
-                     Controls:TextboxHelper.Watermark="Enter the title here" 
+                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.PlotTitleHint}" 
                      Height="30"
                      Controls:TextboxHelper.ClearTextButton="True" 
                      Text="{Binding Title}" />
 
             <TextBlock Grid.Column="0"
                        Grid.Row="2" 
-                       Text="Rows to show:" 
+                       Text="{x:Static local:Messages.RowsLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
             
@@ -89,7 +89,7 @@
             
             <TextBlock Grid.Column="0" 
                        Grid.Row="3"
-                       Text="Columns to show:" 
+                       Text="{x:Static local:Messages.ColumnsLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
