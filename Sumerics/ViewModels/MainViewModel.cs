@@ -262,7 +262,8 @@
 		{
             foreach (var k in _kernel.Parser.Keywords)
             {
-                var item = new AutocompleteItem(k, "The " + k + " keyword.", IconFactory.KeywordIcon);
+                var message = String.Format(Messages.Keyword, k);
+                var item = new AutocompleteItem(k, message, IconFactory.KeywordIcon);
                 EditorViewModel.BasicItems.Add(item);
                 _availableItems.Add(item);
             }
@@ -319,7 +320,7 @@
                     _variables.Add(vm);
                 }
 
-                _availableItems.Add(new AutocompleteItem(e.Name, "Variable", IconFactory.VariableIcon));
+                _availableItems.Add(new AutocompleteItem(e.Name, Messages.Variable, IconFactory.VariableIcon));
             });
         }
 

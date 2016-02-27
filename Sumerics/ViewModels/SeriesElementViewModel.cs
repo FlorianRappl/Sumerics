@@ -44,7 +44,7 @@
 			{
                 if (String.IsNullOrEmpty(value))
                 {
-                    _title = "Data #" + _index;
+                    _title = String.Format("{0} #{1}", Messages.Data, _index.ToString());
                 }
                 else
                 {

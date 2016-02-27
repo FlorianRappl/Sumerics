@@ -44,9 +44,9 @@
             {
                 var vm = new OpenFileViewModel(Environment.CurrentDirectory);
                 var dialog = new OpenFileWindow(vm);
-                dialog.Title = "Open file ...";
-                dialog.AddFilter("All files (*.*)", "*.*");
-                dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
+                dialog.Title = Messages.OpenFile;
+                dialog.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
+                dialog.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
                 dialog.ShowDialog();
 
                 if (dialog.Accepted)
@@ -142,9 +142,13 @@
 
             if (filesChanged > 0)
             {
-                var result = DecisionDialog.Show(
-                    String.Format("You have {0} unsaved file(s). Do you want to save them?", filesChanged),
-                    new[] { "Yes, I want to save them.", "No, but thanks!", "Cancel closing." });
+                var message = String.Format(Messages.EditorSaveQuestionMultiple, filesChanged);
+                var result = DecisionDialog.Show(message, new[] 
+                { 
+                    Messages.EditorSaveAnswerYesMultiple,
+                    Messages.EditorSaveAnswerNo,
+                    Messages.EditorSaveAnswerCancel 
+                });
 
                 if (result == 1)
                 {

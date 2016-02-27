@@ -172,26 +172,30 @@
         /// </summary>
         /// <param name="name">The name, i.e. the description.</param>
         /// <param name="value">The value, i.e. like .jpg or .png or similar.</param>
-        public void AddFilter(string name, string value)
+        public void AddFilter(String name, String value)
         {
             Filters.Add(name);
             _filters.Add(name, value);
 
             if (_filters.Count == 1)
+            {
                 SelectedFilter = name;
+            }
         }
 
         /// <summary>
         /// Removes a file (extension) filter from the dialog.
         /// </summary>
         /// <param name="name">The name, i.e. the description, of the filter to remove.</param>
-        public void RemoveFilter(string name)
+        public void RemoveFilter(String name)
         {
             Filters.Remove(name);
             _filters.Remove(name);
 
             if (_selectedFilter == name)
-                SelectedFilter = Filters.Count > 0 ? Filters[0] : string.Empty;
+            {
+                SelectedFilter = Filters.Count > 0 ? Filters[0] : String.Empty;
+            }
         }
 
         /// <summary>
@@ -210,26 +214,33 @@
             catch { }
 
             foreach (var folder in folders)
+            {
                 Files.Add(new FileModel(folder));
+            }
 
             var files = new FileInfo[0];
 
             try
             {
-                if (string.IsNullOrEmpty(SelectedFilter))
+                if (String.IsNullOrEmpty(SelectedFilter))
+                {
                     files = CurrentDirectory.Info.GetFiles();
+                }
                 else
+                {
                     files = CurrentDirectory.Info.GetFiles(_filters[_selectedFilter]);
+                }
             }
             catch { }
 
             foreach (var file in files)
+            {
                 Files.Add(new FileModel(file));
+            }
         }
 
         protected virtual void UpdateDirectoryHistory()
         {
-
             Directories.Clear();
             var current = _currentDirectory;
 

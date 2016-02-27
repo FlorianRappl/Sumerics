@@ -88,8 +88,8 @@
         {
             var vm = new SaveFileViewModel(Environment.CurrentDirectory);
             var dialog = new SaveFileWindow(vm);
-            dialog.AddFilter("YAMP Script (*.ys)", "*.ys");
-            dialog.AddFilter("Textfile (*.txt)", "*.txt");
+            dialog.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
+            dialog.AddFilter(Messages.Textfile + " (*.txt)", "*.txt");
             dialog.ShowDialog();
 
             if (dialog.Accepted)
@@ -102,8 +102,12 @@
         {
             if (Changed)
             {
-                var result = DecisionDialog.Show("The content has been changed. Save the changes?",
-                    new[] { "Yes, save the changes.", "No, but thanks!", "Cancel closing." });
+                var result = DecisionDialog.Show(Messages.EditorSaveQuestion, new[] 
+                {
+                    Messages.EditorSaveAnswerYes, 
+                    Messages.EditorSaveAnswerNo, 
+                    Messages.EditorSaveAnswerCancel 
+                });
 
                 if (result == 2)
                 {
@@ -151,7 +155,8 @@
             if (_currentExecution == null || _currentExecution.Running)
             {
                 _awaiting = true;
-                _parent.Console.Execute(Text, "Evaluating " + FileName);
+                var message = String.Format(Messages.EvaluateFile, FileName);
+                _parent.Console.Execute(Text, message);
                 _awaiting = false;
             }
         }
@@ -184,11 +189,12 @@
             VariableItems.Clear();
         }
 
-        void AddVariableSymbols(string[] symbols)
+        void AddVariableSymbols(String[] symbols)
         {
             for (var i = 0; i < symbols.Length; i++)
             {
-                var item = new AutocompleteItem(symbols[i], "Local variable " + symbols[i] + ".", IconFactory.VariableIcon);
+                var message = String.Format(Messages.LocalVariable, symbols[i]);
+                var item = new AutocompleteItem(symbols[i], message, IconFactory.VariableIcon);
                 Items.Add(item);
                 VariableItems.Add(item);
             }
@@ -255,7 +261,7 @@
             {
                 if (IsSaveAs)
                 {
-                    return "untitled";
+                    return Messages.EditorUntitledFile;
                 }
 
                 return Path.GetFileName(_path); 
@@ -280,7 +286,7 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show("Cannot open file", ex.Message);
+                OutputDialog.Show(Messages.ErrorCannotOpenFile, ex.Message);
             }
         }
 
@@ -293,7 +299,7 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show("Cannot save file", ex.Message);
+                OutputDialog.Show(Messages.ErrorCannotSaveFile, ex.Message);
             }
         }
 
@@ -309,7 +315,7 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show("Cannot save file", ex.Message);
+                OutputDialog.Show(Messages.ErrorCannotSaveFile, ex.Message);
             }
         }
 

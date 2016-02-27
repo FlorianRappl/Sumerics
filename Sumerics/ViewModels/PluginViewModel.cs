@@ -148,17 +148,23 @@
 			Title = GetAttr<AssemblyTitleAttribute>(assembly).Title;
 			Description = GetAttr<AssemblyDescriptionAttribute>(assembly).Description;
 			Company = GetAttr<AssemblyCompanyAttribute>(assembly).Company;
-			Version = string.Format("{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
+			Version = String.Format("{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
 
-			foreach (var name in names)
-				if (name.EndsWith("icon.png"))
-					SetIcon(assembly, name);
+            foreach (var name in names)
+            {
+                if (name.EndsWith("icon.png"))
+                {
+                    SetIcon(assembly, name);
+                }
+            }
 
-			if (_icon == null)
-				_icon = new BitmapImage(new Uri(@"..\Icons\plugin.png", UriKind.Relative));
+            if (_icon == null)
+            {
+                _icon = new BitmapImage(new Uri(@"..\Icons\plugin.png", UriKind.Relative));
+            }
 		}
 
-		void SetIcon(Assembly assembly, string name)
+		void SetIcon(Assembly assembly, String name)
 		{
 			var stream = assembly.GetManifestResourceStream(name);
 

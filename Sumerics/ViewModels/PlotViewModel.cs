@@ -97,7 +97,7 @@
             var dialog = new SaveImageWindow(vm);
             dialog.ImageWidth = 640;
             dialog.ImageHeight = 480;
-            dialog.Title = "Save plot as ...";
+            dialog.Title = Messages.SavePlotAs;
 
             if (!String.IsNullOrEmpty(_plot.Title))
             {
@@ -110,8 +110,8 @@
             {
                 //frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
                 var filename = Path.GetFileName(dialog.SelectedFile);
-                var info = String.Format("The plot has been successfully saved in the file {0}.", filename);
-                OutputDialog.Show("File created", info);
+                var info = String.Format(Messages.PlotSavedMessage, filename);
+                OutputDialog.Show(Messages.FileCreated, info);
             }
         }
 

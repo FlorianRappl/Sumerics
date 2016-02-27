@@ -126,9 +126,11 @@
             if (File.Exists(path))
             {
                 var fn = Path.GetFileName(path);
-
-                var result = DecisionDialog.Show("Do you want to overwrite the file " + fn + "?", new[] {
-                    "Sure, go ahead and overwrite it.", "I am not sure, please cancel."
+                var message = String.Format(Messages.OverwriteQuestion, fn);
+                var result = DecisionDialog.Show(message, new[] 
+                {
+                    Messages.OverwriteAnswerYes, 
+                    Messages.OverwriteAnswerCancel
                 });
 
                 if (result == 1)

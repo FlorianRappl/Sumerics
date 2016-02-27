@@ -16,7 +16,7 @@
         public SaveImageViewModel(String startFileOrFolder)
             : base(startFileOrFolder)
         {
-            AddFilter("PNG File (*.png)", "*.png");
+            AddFilter(Messages.PngFile + " (*.png)", "*.png");
         }
 
         #endregion

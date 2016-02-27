@@ -41,9 +41,9 @@
         public DocumentationViewModel(Documentation documentation, ICommandFactory commands)
 		{
             _searchText = String.Empty;
-            _breadCrumb = "Documentation > Overview";
+            _breadCrumb = BuildBreadCrumb(Messages.Documentation, Messages.Overview);
             _groups = new ObservableCollection<PanoramaGroup>();
-            _title = "Help";
+            _title = Messages.Help;
             _results = new ObservableCollection<HelpSection>();
             _documentation = documentation;
             _commands = commands;
@@ -59,14 +59,14 @@
             _home = new RelayCommand(_ =>
             {
                 TabIndex = 0;
-                Title = "Help";
-                BreadCrumb = "Documentation > Overview";
+                Title = Messages.Help;
+                BreadCrumb = BuildBreadCrumb(Messages.Documentation, Messages.Overview);
             });
             _back = new RelayCommand(_ => 
             {
                 TabIndex = 1;
-                Title = "Help";
-                BreadCrumb = "Documentation > Overview";
+                Title = Messages.Help;
+                BreadCrumb = BuildBreadCrumb(Messages.Documentation, Messages.Overview);
                 IsLoading = Visibility.Visible;
             });
             _more = new RelayCommand(_ =>
@@ -182,7 +182,7 @@
             set
             {
                 _topic = value;
-                BreadCrumb = "Documentation > " + _topic.Topic;
+                BreadCrumb = BuildBreadCrumb(Messages.Documentation, _topic.Topic);
                 Title = _topic.Name;
                 HasInfo = _topic.HasLink ? Visibility.Visible : Visibility.Collapsed;
                 CurrentDocument = FillDocumentation();
@@ -224,6 +224,11 @@
 
         #region Methods
 
+        static String BuildBreadCrumb(String front, String back)
+        {
+            return String.Format("{0} > {1}", front, back);
+        }
+
         FlowDocument FillDocumentation()
         {
             var document = new FlowDocument();
@@ -248,7 +253,7 @@
                 else
                 {
                     var paragraph = new Paragraph();
-                    InsertIntoParagraph(paragraph, "No usages available.");
+                    InsertIntoParagraph(paragraph, Messages.NoUsagesAvailable);
                     document.Blocks.Add(paragraph);
                 }
             }
@@ -270,7 +275,7 @@
          Paragraph GetUsage(Boolean hasCommand, HelpFunctionUsage usage)
         {
             var p = new Paragraph();
-            var r = new Run("Usage");
+            var r = new Run(Messages.Usage);
             r.FontWeight = FontWeights.Bold;
             r.FontSize = 20;
             p.Inlines.Add(r);
@@ -298,11 +303,11 @@
 
             if (String.IsNullOrEmpty(description))
             {
-                InsertIntoParagraph(p, "Description", "No description available.");
+                InsertIntoParagraph(p, Messages.Description, Messages.NoDescriptionAvailable);
             }
             else
             {
-                InsertIntoParagraph(p, "Description", description);
+                InsertIntoParagraph(p, Messages.Description, description);
             }
 
             return p;
@@ -314,11 +319,11 @@
 
             if (arguments.Count == 0)
             {
-                InsertIntoParagraph(p, "Arguments", "---");
+                InsertIntoParagraph(p, Messages.Arguments, "---");
             }
             else
             {
-                InsertIntoParagraph(p, "Arguments", arguments);
+                InsertIntoParagraph(p, Messages.Arguments, arguments);
             }
 
             return p;
@@ -327,14 +332,14 @@
         static Paragraph GetReturns(List<String> returns)
         {
             var p = new Paragraph();
-            InsertIntoParagraph(p, "Returns", returns);
+            InsertIntoParagraph(p, Messages.Returns, returns);
             return p;
         }
 
         static Paragraph GetExamples(List<HelpExample> examples)
         {
             var p = new Paragraph();
-            InsertIntoParagraph(p, "Examples", examples);
+            InsertIntoParagraph(p, Messages.Examples, examples);
             return p;
         }
 
@@ -354,7 +359,7 @@
             }
             else
             {
-                var no = new Run("No examples available.");
+                var no = new Run(Messages.NoExamplesAvailable);
                 no.Foreground = new SolidColorBrush(Colors.DarkGray);
                 p.Inlines.Add(no);
             }
@@ -364,7 +369,7 @@
 
         static void InsertIntoParagraph(Paragraph p, HelpExample example, Int32 nr)
         {
-            var c = new Run("( copy ) ");
+            var c = new Run(Messages.CopyCommand);
             c.Foreground = new SolidColorBrush(Colors.LightGray);
             c.FontSize = 10.0;
             p.Inlines.Add(c);
@@ -410,7 +415,7 @@
 
         static void InsertIntoParagraph(Paragraph p, String description)
         {
-            var r = new Run("Description");
+            var r = new Run(Messages.Description);
             r.Foreground = new SolidColorBrush(Colors.Black);
             r.FontWeight = FontWeights.Bold;
             r.FontSize = 20;

@@ -427,4 +427,109 @@
   <data name="WidthInPx" xml:space="preserve">
     <value>Width (px)</value>
   </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>( copy )</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="EditorSaveAnswerCancel" xml:space="preserve">
+    <value>Cancel closing.</value>
+  </data>
+  <data name="EditorSaveAnswerNo" xml:space="preserve">
+    <value>No, but thanks!</value>
+  </data>
+  <data name="EditorSaveAnswerYes" xml:space="preserve">
+    <value>Yes, save the changes.</value>
+  </data>
+  <data name="EditorSaveAnswerYesMultiple" xml:space="preserve">
+    <value>Yes, I want to save them.</value>
+  </data>
+  <data name="EditorSaveQuestion" xml:space="preserve">
+    <value>The content has been changed. Save the changes?</value>
+  </data>
+  <data name="EditorSaveQuestionMultiple" xml:space="preserve">
+    <value>You have {0} unsaved file(s). Do you want to save them?</value>
+  </data>
+  <data name="EditorUntitledFile" xml:space="preserve">
+    <value>untitled</value>
+  </data>
+  <data name="ErrorCannotOpenFile" xml:space="preserve">
+    <value>Cannot open file</value>
+  </data>
+  <data name="ErrorCannotSaveFile" xml:space="preserve">
+    <value>Cannot save file</value>
+  </data>
+  <data name="EvaluateFile" xml:space="preserve">
+    <value>Evaluating {0}</value>
+  </data>
+  <data name="Examples" xml:space="preserve">
+    <value>Examples</value>
+  </data>
+  <data name="FileCreated" xml:space="preserve">
+    <value>File created</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>The {0} keyword.</value>
+  </data>
+  <data name="LocalVariable" xml:space="preserve">
+    <value>Local variable {0}.</value>
+  </data>
+  <data name="NoDescriptionAvailable" xml:space="preserve">
+    <value>No description available.</value>
+  </data>
+  <data name="NoExamplesAvailable" xml:space="preserve">
+    <value>No examples available.</value>
+  </data>
+  <data name="NoUsagesAvailable" xml:space="preserve">
+    <value>No usages available.</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Overview</value>
+  </data>
+  <data name="OverwriteAnswerCancel" xml:space="preserve">
+    <value>I am not sure, please cancel.</value>
+  </data>
+  <data name="OverwriteAnswerYes" xml:space="preserve">
+    <value>Sure, go ahead and overwrite it.</value>
+  </data>
+  <data name="OverwriteQuestion" xml:space="preserve">
+    <value>Do you want to overwrite the file {0}?</value>
+  </data>
+  <data name="PlotSavedMessage" xml:space="preserve">
+    <value>The plot has been successfully saved in the file {0}.</value>
+  </data>
+  <data name="PngFile" xml:space="preserve">
+    <value>PNG File</value>
+  </data>
+  <data name="Returns" xml:space="preserve">
+    <value>Returns</value>
+  </data>
+  <data name="SavePlotAs" xml:space="preserve">
+    <value>Save plot as ...</value>
+  </data>
+  <data name="Textfile" xml:space="preserve">
+    <value>Textfile</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="Variable" xml:space="preserve">
+    <value>Variable</value>
+  </data>
+  <data name="YampScript" xml:space="preserve">
+    <value>YAMP Script</value>
+  </data>
 </root>

@@ -50,7 +50,7 @@
 			{
                 if (String.IsNullOrEmpty(value))
                 {
-                    _title = "Data";
+                    _title = Messages.Data;
                 }
                 else
                 {
