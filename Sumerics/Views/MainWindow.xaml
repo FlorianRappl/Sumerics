@@ -133,7 +133,7 @@
                             <TextBox Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchHelp}"
                                      Text="{Binding FunctionFilter, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="0, 0, 0, 5" />
+                                     Margin="0 0 0 5" />
 
                             <ListBox ItemsSource="{Binding Functions}" 
                                      Grid.Row="1"
@@ -160,7 +160,7 @@
                                                    Margin="0"
                                                    DockPanel.Dock="Left" />
                                             
-                                            <TextBlock Margin="4, 0, 0, 0"
+                                            <TextBlock Margin="4 0 0 0"
                                                        Text="{Binding Name}" 
                                                        VerticalAlignment="Center" />
                                         </DockPanel>
@@ -174,7 +174,7 @@
                                           Command="{Binding RunQuery}"
                                           TabIndex="0"
                                           Input="{Binding InputCommand}"
-                                          Margin="10, 0, 10, 0"
+                                          Margin="10 0 10 0"
                                           Focusable="True"
                                           HasNotification="{Binding Notifications.IsAvailable}"
                                           AutoCompleteItems="{Binding AvailableItems}"
@@ -191,7 +191,7 @@
                             <TextBox Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchVariables}"
                                      Text="{Binding VariableFilter, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="0, 0, 0, 5" />
+                                     Margin="0 0 0 5" />
 
                             <ListBox ItemsSource="{Binding Variables}" 
                                      SelectedItem="{Binding SelectedVariable}"
@@ -217,7 +217,7 @@
                                             
                                             <TextBlock Text="{Binding Name}"
                                                        Foreground="SteelBlue"
-                                                       Margin="4, 0, 0, 0"
+                                                       Margin="4 0 0 0"
                                                        VerticalAlignment="Center" />
                                             
                                             <TextBlock Text="{Binding ShortInfo}"
@@ -265,7 +265,7 @@
                                   Grid.Column="1">
 
                             <Grid Width="150" 
-                                  Margin="4,0,0,0">
+                                  Margin="4 0 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
@@ -274,7 +274,7 @@
                                 <TextBox Controls:TextboxHelper.ClearTextButton="True"
                                          Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchVariables}"
                                          Text="{Binding VariableFilter, UpdateSourceTrigger=PropertyChanged}"
-                                         Margin="0, 0, 0, 5" />
+                                         Margin="0 0 0 5" />
 
                                 <ListBox ItemsSource="{Binding Variables}"
                                          SelectedItem="{Binding SelectedVariable}"
@@ -301,7 +301,7 @@
                                                 
                                                 <TextBlock Text="{Binding Name}" 
                                                            Foreground="SteelBlue" 
-                                                           Margin="4, 0, 0, 0"
+                                                           Margin="4 0 0 0"
                                                            VerticalAlignment="Center" />
                                                 
                                                 <TextBlock Text="{Binding ShortInfo}" 
@@ -364,7 +364,7 @@
                 </TabItem>
 
                 <TabItem Header="{x:Static local:Messages.Plugins}">
-                    <Grid Margin="40, 10, 40, 10">
+                    <Grid Margin="40 10 40 10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition />
@@ -381,7 +381,7 @@
                         <ListBox ItemsSource="{Binding Plugins}" 
                                  Grid.Row="1" 
                                  HorizontalContentAlignment="Stretch"
-                                 Margin="-10, 20, -10, 20" 
+                                 Margin="-10 20 -10 20" 
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
@@ -409,13 +409,13 @@
                                                Grid.Column="0"
                                                Stretch="Uniform" />
 
-                                        <StackPanel Margin="10, 0, 10, 0" 
+                                        <StackPanel Margin="10 0 10 0" 
                                                     Grid.Column="1">
                                             <TextBlock Text="{Binding Title}"
                                                        FontWeight="Bold"
                                                        HorizontalAlignment="Left"
                                                        FontSize="18"
-                                                       Margin="0, 0, 0, 10" />
+                                                       Margin="0 0 0 10" />
                                             
                                             <TextBlock Text="{Binding Description}" 
                                                        Foreground="DarkGray"
@@ -425,12 +425,12 @@
                                                        FontSize="14" />
                                         </StackPanel>
 
-                                        <StackPanel Margin="10, 0, 10, 0" 
+                                        <StackPanel Margin="10 0 10 0" 
                                                     Grid.Column="2"
                                                     MaxWidth="300">
                                             <TextBlock Text="{Binding Version}" 
                                                        HorizontalAlignment="Right"
-                                                       Margin="0, 0, 0, 10" 
+                                                       Margin="0 0 0 10" 
                                                        FontWeight="Bold" 
                                                        FontSize="18" />
                                             
