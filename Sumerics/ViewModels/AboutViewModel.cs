@@ -5,13 +5,10 @@
 
     sealed class AboutViewModel : BaseViewModel, IDisposable
     {
-        static readonly String Message = "Your current position is {0}° {1}° with heading {2}° north.";
-
         readonly SumericsInfo _info;
         readonly Gps _gps;
         readonly Compass _compass;
         readonly ClientPosition _client;
-        String _position;
 
         public AboutViewModel()
         {
@@ -27,20 +24,19 @@
 
             _gps.Changed += PositionChanged;
             _compass.Changed += DirectionChanged;
-            _position = _client.ToString();
         }
 
         void DirectionChanged(Object sender, CompassEventArgs e)
         {
             _client.Direction = e.Value.Magnetic;
-            Position = _client.ToString();
+            RaisePropertyChanged("Position");
         }
 
         void PositionChanged(Object sender, GpsEventArgs e)
         {
             _client.Longitude = e.Value.Longitude;
             _client.Latitude = e.Value.Latitude;
-            Position = _client.ToString();
+            RaisePropertyChanged("Position");
         }
 
         public String Copyright
@@ -55,8 +51,7 @@
 
         public String Position
         {
-            get { return _position; }
-            private set { _position = value; RaisePropertyChanged(); }
+            get { return _client.ToString(); }
         }
 
         void IDisposable.Dispose()
@@ -73,7 +68,8 @@
 
             public override String ToString()
             {
-                return String.Format(Message, Longitude.ToString("0"), Latitude.ToString("0"), Direction.ToString("0"));
+                var message = Messages.AboutPositionMessage;
+                return String.Format(message, Longitude.ToString("0"), Latitude.ToString("0"), Direction.ToString("0"));
             }
         }
     }

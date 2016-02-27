@@ -4,7 +4,7 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Save image..." 
+                      Title="{x:Static local:Messages.SaveImage}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 
@@ -30,15 +30,15 @@
     <Controls:MetroContentControl>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition />
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="70" />
             </Grid.RowDefinitions>
 
             <ListView Grid.Column="0"
@@ -123,9 +123,9 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" 
-                                Value="Left"/>
+                                Value="Left" />
                         <Setter Property="VerticalContentAlignment" 
-                                Value="Center"/>
+                                Value="Center" />
                     </Style>
                 </ListView.ItemContainerStyle>
                 
@@ -172,7 +172,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Width (px)" 
+                <TextBlock Text="{x:Static local:Messages.WidthInPx}" 
                            VerticalAlignment="Center" 
                            Padding="10" 
                            Grid.Row="0" />
@@ -190,7 +190,7 @@
                          Width="50"
                          Margin="10 2 5 2" />
 
-                <TextBlock Text="Height (px)"
+                <TextBlock Text="{x:Static local:Messages.HeightInPx}"
                            VerticalAlignment="Center"
                            Padding="10"
                            Grid.Row="1" />

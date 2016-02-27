@@ -4,7 +4,7 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Save file..." 
+                      Title="{x:Static local:Messages.SaveFile}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 
@@ -30,15 +30,15 @@
     <Controls:MetroContentControl>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition />
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="70" />
             </Grid.RowDefinitions>
 
             <ListView Grid.Column="0" 
@@ -121,9 +121,9 @@
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" 
-                                Value="Left"/>
+                                Value="Left" />
                         <Setter Property="VerticalContentAlignment" 
-                                Value="Center"/>
+                                Value="Center" />
                     </Style>
                 </ListView.ItemContainerStyle>
 
@@ -149,7 +149,7 @@
                      Margin="5" 
                      Text="{Binding FileName}"
                      KeyDown="TextBoxKeyPressed" 
-                     TextChanged="TextBoxChanged"/>
+                     TextChanged="TextBoxChanged" />
 
             <ComboBox ItemsSource="{Binding Filters}" 
                       SelectedItem="{Binding SelectedFilter}"

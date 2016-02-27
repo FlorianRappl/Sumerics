@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="AboutPositionMessage" xml:space="preserve">
+    <value>Your current position is {0}° {1}° with heading {2}° north.</value>
+  </data>
   <data name="Accelerometer" xml:space="preserve">
     <value>Accelerometer</value>
   </data>
@@ -199,6 +202,9 @@
   <data name="GyrometerLabel" xml:space="preserve">
     <value>Gyrometer:</value>
   </data>
+  <data name="HeightInPx" xml:space="preserve">
+    <value>Height (px)</value>
+  </data>
   <data name="Inclinometer" xml:space="preserve">
     <value>Inclinometer</value>
   </data>
@@ -229,6 +235,9 @@
   <data name="OpenEditor" xml:space="preserve">
     <value>Open editor</value>
   </data>
+  <data name="OpenFile" xml:space="preserve">
+    <value>Open file...</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
   </data>
@@ -255,6 +264,12 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SaveFile" xml:space="preserve">
+    <value>Save file...</value>
+  </data>
+  <data name="SaveImage" xml:space="preserve">
+    <value>Save image...</value>
   </data>
   <data name="SaveWorkspace" xml:space="preserve">
     <value>Save workspace</value>
@@ -294,5 +309,8 @@
   </data>
   <data name="WatchSamples" xml:space="preserve">
     <value>Watch samples</value>
+  </data>
+  <data name="WidthInPx" xml:space="preserve">
+    <value>Width (px)</value>
   </data>
 </root>

@@ -70,6 +70,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your current position is {0}° {1}° with heading {2}° north..
+        /// </summary>
+        public static string AboutPositionMessage {
+            get {
+                return ResourceManager.GetString("AboutPositionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accelerometer.
         /// </summary>
         public static string Accelerometer {
@@ -305,6 +314,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Height (px).
+        /// </summary>
+        public static string HeightInPx {
+            get {
+                return ResourceManager.GetString("HeightInPx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inclinometer.
         /// </summary>
         public static string Inclinometer {
@@ -395,6 +413,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open file....
+        /// </summary>
+        public static string OpenFile {
+            get {
+                return ResourceManager.GetString("OpenFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {
@@ -472,6 +499,24 @@ namespace Sumerics {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save file....
+        /// </summary>
+        public static string SaveFile {
+            get {
+                return ResourceManager.GetString("SaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save image....
+        /// </summary>
+        public static string SaveImage {
+            get {
+                return ResourceManager.GetString("SaveImage", resourceCulture);
             }
         }
         
@@ -589,6 +634,15 @@ namespace Sumerics {
         public static string WatchSamples {
             get {
                 return ResourceManager.GetString("WatchSamples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width (px).
+        /// </summary>
+        public static string WidthInPx {
+            get {
+                return ResourceManager.GetString("WidthInPx", resourceCulture);
             }
         }
     }
