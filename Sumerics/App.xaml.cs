@@ -30,7 +30,7 @@
         void HandleUnhandledException(Object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             _app.Components.All<ILogger>().ForEach(logger => logger.Error(e.Exception));
-            OutputDialog.Show("Exception occurred", e.Exception.Message);
+            OutputDialog.Show(Messages.Exception, e.Exception.Message);
             e.Handled = true;
         }
     }

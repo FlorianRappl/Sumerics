@@ -6,10 +6,25 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using YAMP.Sensors.Devices;
 
     sealed class SensorManager
     {
+        readonly Accelerometer _accelerometer;
+        readonly Gyrometer _gyrometer;
+        readonly Inclinometer _inclinometer;
+        readonly AmbientLight _light;
+        readonly Compass _compass;
         CancellationTokenSource _cts;
+
+        public SensorManager()
+        {
+            _accelerometer = new Accelerometer();
+            _gyrometer = new Gyrometer();
+            _inclinometer = new Inclinometer();
+            _light = new AmbientLight();
+            _compass = new Compass();
+        }
 
         public void Cancel()
         {
@@ -47,10 +62,10 @@
 
         public void Set(SensorPlot plot, Boolean show, Int32 length)
         {
-            //plot.Length = length;
-            //plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            plot.Length = length;
+            plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
             //SensorGrid.RowDefinitions[Grid.GetRow(plot)].Height = show ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-            //plot.Maximized = false;
+            plot.Maximized = false;
         }
 
         public async Task MeasureAsync()
@@ -61,11 +76,11 @@
 
                 while (!_cts.IsCancellationRequested)
                 {
-                    //var acc = AccFunction.Acceleration;
-                    //var gyro = GyroFunction.AngularVelocity;
-                    //var inc = IncFunction.Inclination;
-                    //var light = LightFunction.Light;
-                    //var comp = CompFunction.HeadingMagneticNorth;
+                    var acc = _accelerometer.CurrentAcceleration;
+                    var gyro = _gyrometer.CurrentAngularVelocity;
+                    var inc = _inclinometer.CurrentGradient;
+                    var light = _light.CurrentLight;
+                    var comp = _compass.CurrentHeading;
 
                     //AccelerometerPlot.AddValues(acc[0], acc[1], acc[2]);
                     //GyrometerPlot.AddValues(gyro[0], gyro[1], gyro[2]);

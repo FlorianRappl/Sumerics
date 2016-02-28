@@ -532,4 +532,10 @@
   <data name="YampScript" xml:space="preserve">
     <value>YAMP Script</value>
   </data>
+  <data name="ComputationAborted" xml:space="preserve">
+    <value>The computation has been aborted.</value>
+  </data>
+  <data name="Exception" xml:space="preserve">
+    <value>Exception occurred</value>
+  </data>
 </root>

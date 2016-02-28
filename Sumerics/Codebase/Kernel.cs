@@ -181,7 +181,7 @@
                 }
                 catch (ThreadAbortException)
                 {
-                    state.Error = new Exception("The computation has been aborted.");
+                    state.Error = new Exception(Messages.ComputationAborted);
                 }
                 catch (Exception ex)
                 {

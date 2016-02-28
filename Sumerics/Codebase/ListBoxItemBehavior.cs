@@ -6,8 +6,6 @@
 
     public static class ListBoxItemBehavior
     {
-        #region IsBroughtIntoViewWhenSelected
-
         public static Boolean GetIsBroughtIntoViewWhenSelected(ListBoxItem listBoxItem)
         {
             return (Boolean)listBoxItem.GetValue(IsBroughtIntoViewWhenSelectedProperty);
@@ -57,7 +55,5 @@
                 }
             }
         }
-
-        #endregion
     }
 }

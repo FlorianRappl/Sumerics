@@ -223,6 +223,15 @@ namespace Sumerics {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The computation has been aborted..
+        /// </summary>
+        public static string ComputationAborted {
+            get {
+                return ResourceManager.GetString("ComputationAborted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Console.
         /// </summary>
         public static string Console {
@@ -489,6 +498,15 @@ namespace Sumerics {
         public static string Examples {
             get {
                 return ResourceManager.GetString("Examples", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exception occurred.
+        /// </summary>
+        public static string Exception {
+            get {
+                return ResourceManager.GetString("Exception", resourceCulture);
             }
         }
         
