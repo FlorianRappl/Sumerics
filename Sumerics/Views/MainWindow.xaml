@@ -3,7 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:d="clr-namespace:Sumerics;assembly=Common"
-                      xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
+                      xmlns:uc="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:s="clr-namespace:Sumerics.Controls;assembly=Scripts"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
@@ -59,35 +59,35 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <local:ActionButton Grid.Row="0" 
-                                            Text="{x:Static res:Messages.LoadWorkspace}"
-                                            CommandParameter="{x:Static d:Dialog.LoadWorkspace}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="0" 
+                                         Text="{x:Static res:Messages.LoadWorkspace}"
+                                         CommandParameter="{x:Static d:Dialog.LoadWorkspace}"
+                                         Command="{Binding OpenDialog}" />
 
-                        <local:ActionButton Grid.Row="1"
-                                            Text="{x:Static res:Messages.SaveWorkspace}"
-                                            CommandParameter="{x:Static d:Dialog.SaveWorkspace}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="1"
+                                         Text="{x:Static res:Messages.SaveWorkspace}"
+                                         CommandParameter="{x:Static d:Dialog.SaveWorkspace}"
+                                         Command="{Binding OpenDialog}" />
 
-                        <local:ActionButton Grid.Row="2"
-                                            Text="{x:Static res:Messages.ChangeWorkingDirectory}"
-                                            CommandParameter="{x:Static d:Dialog.Directory}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="2"
+                                         Text="{x:Static res:Messages.ChangeWorkingDirectory}"
+                                         CommandParameter="{x:Static d:Dialog.Directory}"
+                                         Command="{Binding OpenDialog}" />
 
-                        <local:ActionButton Grid.Row="3"
-                                            Text="{x:Static res:Messages.OpenEditor}"
-                                            CommandParameter="{x:Static d:Dialog.Editor}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="3"
+                                         Text="{x:Static res:Messages.OpenEditor}"
+                                         CommandParameter="{x:Static d:Dialog.Editor}"
+                                         Command="{Binding OpenDialog}" />
 
-                        <local:ActionButton Grid.Row="4"
-                                            Text="{x:Static res:Messages.WatchSamples}"
-                                            CommandParameter="{x:Static d:Dialog.Demos}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="4"
+                                         Text="{x:Static res:Messages.WatchSamples}"
+                                         CommandParameter="{x:Static d:Dialog.Demos}"
+                                         Command="{Binding OpenDialog}" />
 
-                        <local:ActionButton Grid.Row="5"
-                                            Text="{x:Static res:Messages.OpenDocumentation}"
-                                            CommandParameter="{x:Static d:Dialog.Help}"
-                                            Command="{Binding OpenDialog}" />
+                        <uc:ActionButton Grid.Row="5"
+                                         Text="{x:Static res:Messages.OpenDocumentation}"
+                                         CommandParameter="{x:Static d:Dialog.Help}"
+                                         Command="{Binding OpenDialog}" />
 
                         <ListBox ItemsSource="{Binding Notifications.Messages}"
                                  Grid.Row="0"
@@ -170,17 +170,17 @@
                             </ListBox>
                         </Grid>
 
-                        <r:ConsoleControl Name="MyConsole" 
-                                          Grid.Column="1"
-                                          Command="{Binding RunQuery}"
-                                          TabIndex="0"
-                                          Input="{Binding InputCommand}"
-                                          Margin="10 0 10 0"
-                                          Focusable="True"
-                                          HasNotification="{Binding Notifications.IsAvailable}"
-                                          AutoCompleteItems="{Binding AvailableItems}"
-                                          OpenEditorCommand="{Binding OpenDialog}"
-                                          OpenEditorCommandParameter="{x:Static d:Dialog.Editor}"/>
+                        <uc:ConsoleControl Name="MyConsole" 
+                                           Grid.Column="1"
+                                           Command="{Binding RunQuery}"
+                                           TabIndex="0"
+                                           Input="{Binding InputCommand}"
+                                           Margin="10 0 10 0"
+                                           Focusable="True"
+                                           HasNotification="{Binding Notifications.IsAvailable}"
+                                           AutoCompleteItems="{Binding AvailableItems}"
+                                           OpenEditorCommand="{Binding OpenDialog}"
+                                           OpenEditorCommandParameter="{x:Static d:Dialog.Editor}"/>
 
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
@@ -231,8 +231,8 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
 
-                            <r:PreviewPlot Grid.Row="2">
-                                <r:PreviewPlot.Style>
+                            <uc:PreviewPlot Grid.Row="2">
+                                <uc:PreviewPlot.Style>
                                     <Style>
                                         <Setter Property="ContentControl.Height" 
                                                 Value="150" />
@@ -245,8 +245,8 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </r:PreviewPlot.Style>
-                            </r:PreviewPlot>
+                                </uc:PreviewPlot.Style>
+                            </uc:PreviewPlot>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -258,9 +258,9 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <r:PlotControl Controller="{Binding LastPlot}" 
-                                       Grid.Row="0" 
-                                       x:Name="MyLastPlot" />
+                        <uc:PlotControl Controller="{Binding LastPlot}" 
+                                        Grid.Row="0" 
+                                        x:Name="MyLastPlot" />
 
                         <Expander ExpandDirection="Right" 
                                   Grid.Column="1">
@@ -332,35 +332,35 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         
-                        <r:SensorPlot x:Name="AccelerometerPlot"
-                                      Title="{x:Static res:Messages.Accelerometer}"
-                                      Unit="g" 
-                                      Grid.Row="0"
-                                      Legend="x,y,z" />
+                        <uc:SensorPlot x:Name="AccelerometerPlot"
+                                       Title="{x:Static res:Messages.Accelerometer}"
+                                       Unit="g" 
+                                       Grid.Row="0"
+                                       Legend="x,y,z" />
                         
-                        <r:SensorPlot x:Name="CompassPlot"
-                                      Title="{x:Static res:Messages.Compass}"
-                                      Unit="deg" 
-                                      Grid.Row="1" 
-                                      Legend="Angle" />
+                        <uc:SensorPlot x:Name="CompassPlot"
+                                       Title="{x:Static res:Messages.Compass}"
+                                       Unit="deg" 
+                                       Grid.Row="1" 
+                                       Legend="Angle" />
                         
-                        <r:SensorPlot x:Name="GyrometerPlot" 
-                                      Title="{x:Static res:Messages.Gyrometer}"
-                                      Unit="deg/s" 
-                                      Grid.Row="2" 
-                                      Legend="x,y,z" />
+                        <uc:SensorPlot x:Name="GyrometerPlot" 
+                                       Title="{x:Static res:Messages.Gyrometer}"
+                                       Unit="deg/s" 
+                                       Grid.Row="2" 
+                                       Legend="x,y,z" />
                         
-                        <r:SensorPlot x:Name="LightPlot" 
-                                      Title="{x:Static res:Messages.Light}" 
-                                      Unit="lux"
-                                      Grid.Row="3" 
-                                      Legend="Front" />
+                        <uc:SensorPlot x:Name="LightPlot" 
+                                       Title="{x:Static res:Messages.Light}" 
+                                       Unit="lux"
+                                       Grid.Row="3" 
+                                       Legend="Front" />
                         
-                        <r:SensorPlot x:Name="InclinometerPlot"
-                                      Title="{x:Static res:Messages.Inclinometer}"
-                                      Unit="deg" 
-                                      Grid.Row="4" 
-                                      Legend="x,y,z" />
+                        <uc:SensorPlot x:Name="InclinometerPlot"
+                                       Title="{x:Static res:Messages.Inclinometer}"
+                                       Unit="deg" 
+                                       Grid.Row="4" 
+                                       Legend="x,y,z" />
                     </Grid>
                 </TabItem>
 
