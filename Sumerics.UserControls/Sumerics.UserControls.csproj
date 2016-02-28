@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <ResolveComReferenceSilent>True</ResolveComReferenceSilent>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{87AE97E6-F957-441B-9315-CADEA63A847D}</ProjectGuid>
@@ -132,6 +133,9 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionButton.xaml.cs">
+      <DependentUpon>ActionButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AutocompletePopup.xaml.cs">
       <DependentUpon>AutocompletePopup.xaml</DependentUpon>
     </Compile>
@@ -206,6 +210,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ActionButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AutocompletePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,7 +263,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\command.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\save.png" />
   </ItemGroup>

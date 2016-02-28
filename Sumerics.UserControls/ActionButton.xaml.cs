@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Controls
 {
     using System;
     using System.Windows;
@@ -16,10 +16,10 @@
             DependencyProperty.Register("Command", typeof(ICommand), typeof(ActionButton), new PropertyMetadata(null, OnCommandChanged));
 
         public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(ActionButton), new PropertyMetadata(null, OnCommandParameterChanged));
+            DependencyProperty.Register("CommandParameter", typeof(Object), typeof(ActionButton), new PropertyMetadata(null, OnCommandParameterChanged));
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(ActionButton), new PropertyMetadata(null, OnTextChanged));
+            DependencyProperty.Register("Text", typeof(String), typeof(ActionButton), new PropertyMetadata(null, OnTextChanged));
 
         #endregion
 

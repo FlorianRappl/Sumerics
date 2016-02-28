@@ -203,9 +203,6 @@
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Codebase\ActionButton.xaml.cs">
-      <DependentUpon>ActionButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Codebase\BindableStaticResource.cs" />
     <Compile Include="Proxies\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
@@ -291,10 +288,6 @@
     <Compile Include="ViewModels\SubPlotSettingsViewModel.cs" />
     <Compile Include="ViewModels\VariableViewModel.cs" />
     <Page Include="Views\AboutWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Codebase\ActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -468,9 +461,6 @@
     <Resource Include="Resources\scalar.png" />
     <Resource Include="Resources\plot.png" />
     <Resource Include="Resources\string.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\command.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\help.png" />

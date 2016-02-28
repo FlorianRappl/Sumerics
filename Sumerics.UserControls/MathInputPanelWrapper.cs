@@ -56,7 +56,9 @@
 
         void InsertMathInputPanel(String query)
         {
+#pragma warning disable 467
             _panel.Clear();
+#pragma warning restore 467
 
             if (OnInsertPressed != null)
             {
