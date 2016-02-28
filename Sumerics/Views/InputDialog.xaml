@@ -2,7 +2,8 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics" 
-                      Title="{x:Static local:Messages.InputRequired}"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.InputRequired}"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -45,7 +46,7 @@
                        TextWrapping="Wrap"
                        VerticalAlignment="Center" />
 
-            <TextBox Controls:TextboxHelper.Watermark="{x:Static local:Messages.InputHint}" 
+            <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.InputHint}" 
                      Name="Input" 
                      FontSize="20"
                      TabIndex="0"
@@ -61,7 +62,7 @@
                     Grid.Column="1"
                     Grid.Row="2" 
                     HorizontalAlignment="Left" 
-                    ToolTip="{x:Static local:Messages.DrawInputToolTip}" 
+                    ToolTip="{x:Static res:Messages.DrawInputToolTip}" 
                     Click="DrawClick" 
                     x:Name="DrawInput">                
                 <Image Source="../Resources/pen.png" />
@@ -73,7 +74,7 @@
                     Grid.Column="1"
                     Grid.Row="2" 
                     HorizontalAlignment="Right" 
-                    ToolTip="{x:Static local:Messages.Close}" 
+                    ToolTip="{x:Static res:Messages.Close}" 
                     Click="CloseClick">
                 <Image Source="../Resources/check.png" />
             </Button>

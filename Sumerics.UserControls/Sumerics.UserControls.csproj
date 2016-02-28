@@ -296,6 +296,10 @@
       <Project>{d14e0331-db16-4876-bc19-e30dd8a30da9}</Project>
       <Name>Sumerics.Plots</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Resources\Sumerics.Resources.csproj">
+      <Project>{510f4806-4872-46c9-b92a-4562b2e52481}</Project>
+      <Name>Sumerics.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\clear.png" />

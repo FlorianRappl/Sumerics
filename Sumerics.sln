@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics", "Sumerics\Sumerics.csproj", "{936CED45-07A3-47F7-8FF1-B6D2C456CC6A}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -36,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.MathInput", "Sumerics.MathInput\Sumerics.MathInput.csproj", "{42F72D64-3415-4424-A8C4-9FB906E889CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Plots", "Sumerics.Plots\Sumerics.Plots.csproj", "{D14E0331-DB16-4876-BC19-E30DD8A30DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Resources", "Sumerics.Resources\Sumerics.Resources.csproj", "{510F4806-4872-46C9-B92A-4562B2E52481}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,6 +226,18 @@ Global
 		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|x64.ActiveCfg = Release|Any CPU
 		{D14E0331-DB16-4876-BC19-E30DD8A30DA9}.Release|x86.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.AppUp|Any CPU.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.AppUp|Any CPU.Build.0 = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.AppUp|x64.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.AppUp|x86.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|x64.ActiveCfg = Release|Any CPU
+		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

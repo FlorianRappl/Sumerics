@@ -2,6 +2,7 @@
 {
     using MahApps.Metro.Controls;
     using Sumerics.Commands;
+    using Sumerics.Resources;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;

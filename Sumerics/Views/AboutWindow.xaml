@@ -5,7 +5,8 @@
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="{x:Static local:Messages.About}" 
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.About}" 
                       ResizeMode="NoResize" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -52,7 +53,7 @@
                            Margin="0,0,0,5" />
                 <TextBlock Text="{Binding Copyright}" 
                            Margin="0,5,0,5" />
-                <TextBlock Text="{x:Static local:Messages.UsedPackages}" 
+                <TextBlock Text="{x:Static res:Messages.UsedPackages}" 
                            Margin="0,5,0,5"
                            Foreground="SteelBlue" />
                 <TextBlock Text="OxyPlot by Oystein Bjorke." 

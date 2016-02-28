@@ -4,7 +4,8 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:uc="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:local="clr-namespace:Sumerics"
-                      Title="{x:Static local:Messages.SeriesSettings}" 
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.SeriesSettings}" 
                       ResizeMode="NoResize"
                       WindowStartupLocation="CenterScreen" 
                       Icon="../Icons/Sumerics.png"
@@ -57,7 +58,7 @@
 
                             <TextBlock Grid.Column="0" 
                                        Grid.Row="0" 
-                                       Text="{x:Static local:Messages.SeriesTitleLabel}" 
+                                       Text="{x:Static res:Messages.SeriesTitleLabel}" 
                                        FontSize="16"
                                        VerticalAlignment="Center" />
 
@@ -65,13 +66,13 @@
                                      Grid.Column="1" 
                                      AcceptsReturn="False" 
                                      FontSize="16"
-                                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.SeriesTitleHint}" 
+                                     Controls:TextboxHelper.Watermark="{x:Static res:Messages.SeriesTitleHint}" 
                                      Height="30"
                                      Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
 
                             <TextBlock Grid.Column="0"
                                        Grid.Row="1"
-                                       Text="{x:Static local:Messages.ShowLinesLabel}" 
+                                       Text="{x:Static res:Messages.ShowLinesLabel}" 
                                        FontSize="16"
                                        VerticalAlignment="Center" />
 
@@ -84,7 +85,7 @@
 
                             <TextBlock Grid.Column="0"
                                        Grid.Row="2" 
-                                       Text="{x:Static local:Messages.ColorLabel}" 
+                                       Text="{x:Static res:Messages.ColorLabel}" 
                                        FontSize="16"
                                        VerticalAlignment="Center" />
 
@@ -98,7 +99,7 @@
 
                             <TextBlock Grid.Column="0" 
                                        Grid.Row="3" 
-                                       Text="{x:Static local:Messages.SymbolLabel}" 
+                                       Text="{x:Static res:Messages.SymbolLabel}" 
                                        FontSize="16"
                                        VerticalAlignment="Center" />
 

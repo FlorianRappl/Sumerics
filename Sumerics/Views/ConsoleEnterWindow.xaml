@@ -3,10 +3,11 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
                       Icon="../Icons/Sumerics.png" 
                       WindowStartupLocation="CenterOwner"
                       ResizeMode="NoResize"
-                      Title="{x:Static local:Messages.EnterQuickStatement}" 
+                      Title="{x:Static res:Messages.EnterQuickStatement}" 
                       Height="140" 
                       Width="400">
     
@@ -29,7 +30,7 @@
                 <RowDefinition Height="45" />
             </Grid.RowDefinitions>
 
-            <TextBox Controls:TextboxHelper.Watermark="{x:Static local:Messages.PlaceTheStatement}" 
+            <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.PlaceTheStatement}" 
                      Name="Input" 
                      FontSize="20"
                      TabIndex="0"
@@ -41,7 +42,7 @@
                     Margin="0,5,0,0"
                     Grid.Row="1" 
                     HorizontalAlignment="Right" 
-                    ToolTip="{x:Static local:Messages.EvaluateInput}"
+                    ToolTip="{x:Static res:Messages.EvaluateInput}"
                     Click="EvaluateClick">
                 <Image Source="../Resources/check.png" />
             </Button>

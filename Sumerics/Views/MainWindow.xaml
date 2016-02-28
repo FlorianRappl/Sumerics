@@ -6,6 +6,7 @@
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:s="clr-namespace:Sumerics.Controls;assembly=Scripts"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
                       Title="Sumerics" 
                       ResizeMode="CanResizeWithGrip" 
                       WindowStartupLocation="CenterScreen" 
@@ -30,9 +31,9 @@
     
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="{x:Static local:Messages.Options}"
+            <Button Content="{x:Static res:Messages.Options}"
                     Click="OptionsClick" />
-            <Button Content="{x:Static local:Messages.About}" 
+            <Button Content="{x:Static res:Messages.About}" 
                     Click="AboutClick" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
@@ -42,7 +43,7 @@
             <TabControl SelectedIndex="1" 
                         x:Name="MainTabs">
 
-                <TabItem Header="{x:Static local:Messages.Actions}">
+                <TabItem Header="{x:Static res:Messages.Actions}">
                     <Grid Margin="40">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -59,32 +60,32 @@
                         </Grid.ColumnDefinitions>
 
                         <local:ActionButton Grid.Row="0" 
-                                            Text="{x:Static local:Messages.LoadWorkspace}"
+                                            Text="{x:Static res:Messages.LoadWorkspace}"
                                             CommandParameter="{x:Static d:Dialog.LoadWorkspace}"
                                             Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="1"
-                                            Text="{x:Static local:Messages.SaveWorkspace}"
+                                            Text="{x:Static res:Messages.SaveWorkspace}"
                                             CommandParameter="{x:Static d:Dialog.SaveWorkspace}"
                                             Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="2"
-                                            Text="{x:Static local:Messages.ChangeWorkingDirectory}"
+                                            Text="{x:Static res:Messages.ChangeWorkingDirectory}"
                                             CommandParameter="{x:Static d:Dialog.Directory}"
                                             Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="3"
-                                            Text="{x:Static local:Messages.OpenEditor}"
+                                            Text="{x:Static res:Messages.OpenEditor}"
                                             CommandParameter="{x:Static d:Dialog.Editor}"
                                             Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="4"
-                                            Text="{x:Static local:Messages.WatchSamples}"
+                                            Text="{x:Static res:Messages.WatchSamples}"
                                             CommandParameter="{x:Static d:Dialog.Demos}"
                                             Command="{Binding OpenDialog}" />
 
                         <local:ActionButton Grid.Row="5"
-                                            Text="{x:Static local:Messages.OpenDocumentation}"
+                                            Text="{x:Static res:Messages.OpenDocumentation}"
                                             CommandParameter="{x:Static d:Dialog.Help}"
                                             Command="{Binding OpenDialog}" />
 
@@ -116,7 +117,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="{x:Static local:Messages.Interaction}">
+                <TabItem Header="{x:Static res:Messages.Interaction}">
                     <Grid>                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150" />
@@ -131,7 +132,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBox Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchHelp}"
+                                     Controls:TextboxHelper.Watermark="{x:Static res:Messages.SearchHelp}"
                                      Text="{Binding FunctionFilter, UpdateSourceTrigger=PropertyChanged}"
                                      Margin="0 0 0 5" />
 
@@ -189,7 +190,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBox Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchVariables}"
+                                     Controls:TextboxHelper.Watermark="{x:Static res:Messages.SearchVariables}"
                                      Text="{Binding VariableFilter, UpdateSourceTrigger=PropertyChanged}"
                                      Margin="0 0 0 5" />
 
@@ -250,7 +251,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="{x:Static local:Messages.Visualization}">
+                <TabItem Header="{x:Static res:Messages.Visualization}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -272,7 +273,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBox Controls:TextboxHelper.ClearTextButton="True"
-                                         Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchVariables}"
+                                         Controls:TextboxHelper.Watermark="{x:Static res:Messages.SearchVariables}"
                                          Text="{Binding VariableFilter, UpdateSourceTrigger=PropertyChanged}"
                                          Margin="0 0 0 5" />
 
@@ -320,7 +321,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="{x:Static local:Messages.Sensors}" 
+                <TabItem Header="{x:Static res:Messages.Sensors}" 
                          x:Name="SensorsTab">
                     <Grid x:Name="SensorGrid">
                         <Grid.RowDefinitions>
@@ -332,38 +333,38 @@
                         </Grid.RowDefinitions>
                         
                         <r:SensorPlot x:Name="AccelerometerPlot"
-                                      Title="{x:Static local:Messages.Accelerometer}"
+                                      Title="{x:Static res:Messages.Accelerometer}"
                                       Unit="g" 
                                       Grid.Row="0"
                                       Legend="x,y,z" />
                         
                         <r:SensorPlot x:Name="CompassPlot"
-                                      Title="{x:Static local:Messages.Compass}"
+                                      Title="{x:Static res:Messages.Compass}"
                                       Unit="deg" 
                                       Grid.Row="1" 
                                       Legend="Angle" />
                         
                         <r:SensorPlot x:Name="GyrometerPlot" 
-                                      Title="{x:Static local:Messages.Gyrometer}"
+                                      Title="{x:Static res:Messages.Gyrometer}"
                                       Unit="deg/s" 
                                       Grid.Row="2" 
                                       Legend="x,y,z" />
                         
                         <r:SensorPlot x:Name="LightPlot" 
-                                      Title="{x:Static local:Messages.Light}" 
+                                      Title="{x:Static res:Messages.Light}" 
                                       Unit="lux"
                                       Grid.Row="3" 
                                       Legend="Front" />
                         
                         <r:SensorPlot x:Name="InclinometerPlot"
-                                      Title="{x:Static local:Messages.Inclinometer}"
+                                      Title="{x:Static res:Messages.Inclinometer}"
                                       Unit="deg" 
                                       Grid.Row="4" 
                                       Legend="x,y,z" />
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="{x:Static local:Messages.Plugins}">
+                <TabItem Header="{x:Static res:Messages.Plugins}">
                     <Grid Margin="40 10 40 10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -374,7 +375,7 @@
                         <TextBlock TextWrapping="Wrap" 
                                    FontSize="16" 
                                    MaxWidth="700"
-                                   Text="{x:Static local:Messages.PluginDescription}"
+                                   Text="{x:Static res:Messages.PluginDescription}"
                                    HorizontalAlignment="Left" 
                                    Foreground="SteelBlue" />
 
@@ -441,7 +442,7 @@
                                                        FontSize="14" />
                                         </StackPanel>
 
-                                        <Controls:ToggleSwitch Header="{x:Static local:Messages.Enabled}"
+                                        <Controls:ToggleSwitch Header="{x:Static res:Messages.Enabled}"
                                                                Grid.Column="3"
                                                                IsChecked="{Binding Active}" 
                                                                IsEnabled="{Binding Custom}" />
@@ -455,7 +456,7 @@
                                    FontSize="16"  
                                    MaxWidth="700"
                                    HorizontalAlignment="Left"
-                                   Text="{x:Static local:Messages.RestartRequired}"
+                                   Text="{x:Static res:Messages.RestartRequired}"
                                    Foreground="DarkGray" />
                     </Grid>
                 </TabItem>

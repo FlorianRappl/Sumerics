@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Resources;
     using Sumerics.Views;
     using System;
     using System.IO;

@@ -2,7 +2,8 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics" 
-                      Title="{x:Static local:Messages.DecisionRequired}"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.DecisionRequired}"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Icon="../Icons/Sumerics.png" 
                       WindowStartupLocation="CenterScreen"
@@ -59,7 +60,7 @@
                     Grid.Column="1"
                     Grid.Row="2" 
                     HorizontalAlignment="Right"
-                    ToolTip="{x:Static local:Messages.Close}" 
+                    ToolTip="{x:Static res:Messages.Close}" 
                     Click="CloseClick">
                 <Image Source="../Resources/check.png" />
             </Button>

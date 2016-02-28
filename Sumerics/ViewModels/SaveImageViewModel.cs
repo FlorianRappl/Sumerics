@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Resources;
     using System;
 
     public sealed class SaveImageViewModel : SaveFileViewModel

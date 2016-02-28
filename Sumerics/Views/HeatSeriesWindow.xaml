@@ -3,7 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Sumerics"
-                      Title="{x:Static local:Messages.HeatmapSettings}" 
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.HeatmapSettings}" 
                       ResizeMode="NoResize"
                       WindowStartupLocation="CenterScreen" 
                       Icon="../Icons/Sumerics.png"
@@ -44,7 +45,7 @@
 
                 <TextBlock Grid.Column="0"
                            Grid.Row="0"
-                           Text="{x:Static local:Messages.DataTitleLabel}" 
+                           Text="{x:Static res:Messages.DataTitleLabel}" 
                            FontSize="16"
                            VerticalAlignment="Center" />
 
@@ -52,13 +53,13 @@
                          Grid.Column="1"
                          AcceptsReturn="False" 
                          FontSize="16"
-                         Controls:TextboxHelper.Watermark="{x:Static local:Messages.DataTitleHint}" 
+                         Controls:TextboxHelper.Watermark="{x:Static res:Messages.DataTitleHint}" 
                          Height="30"
                          Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock Grid.Column="0"
                            Grid.Row="1" 
-                           Text="{x:Static local:Messages.ColorPaletteLabel}" 
+                           Text="{x:Static res:Messages.ColorPaletteLabel}" 
                            FontSize="16"
                            VerticalAlignment="Center" />
 

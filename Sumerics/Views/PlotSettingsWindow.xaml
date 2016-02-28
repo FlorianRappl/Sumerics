@@ -4,10 +4,11 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:uc="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:local="clr-namespace:Sumerics"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
                       WindowStartupLocation="CenterScreen" 
                       Icon="../Icons/Sumerics.png"
                       x:Name="MySettingsWindow" 
-                      Title="{x:Static local:Messages.PlotSettings}"
+                      Title="{x:Static res:Messages.PlotSettings}"
                       ResizeMode="NoResize" 
                       Height="500"
                       Width="700">
@@ -51,7 +52,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
-                       Text="{x:Static local:Messages.TitleLabel}" 
+                       Text="{x:Static res:Messages.TitleLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
@@ -59,18 +60,18 @@
                      Grid.Column="1" 
                      AcceptsReturn="False" 
                      FontSize="16"
-                     Controls:TextboxHelper.Watermark="{x:Static local:Messages.TitleHint}" 
+                     Controls:TextboxHelper.Watermark="{x:Static res:Messages.TitleHint}" 
                      Height="30"
                      Controls:TextboxHelper.ClearTextButton="True"
                      Text="{Binding Title}" />
 
             <TextBlock Grid.Column="0" 
                        Grid.Row="2" 
-                       Text="{x:Static local:Messages.ShowLegendLabel}" 
+                       Text="{x:Static res:Messages.ShowLegendLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
-            <Controls:ToggleSwitch Header="{x:Static local:Messages.ShowLegendHint}"
+            <Controls:ToggleSwitch Header="{x:Static res:Messages.ShowLegendHint}"
                                    Grid.Row="2" 
                                    Grid.Column="1"
                                    Width="150"
@@ -79,7 +80,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="3"
-                       Text="{x:Static local:Messages.LegendBorderColorLabel}" 
+                       Text="{x:Static res:Messages.LegendBorderColorLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
             
@@ -93,7 +94,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="4"
-                       Text="{x:Static local:Messages.LegendBackgroundColorLabel}" 
+                       Text="{x:Static res:Messages.LegendBackgroundColorLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 
@@ -107,7 +108,7 @@
 
             <TextBlock Grid.Column="0"
                        Grid.Row="5"
-                       Text="{x:Static local:Messages.LegendPositionLabel}" 
+                       Text="{x:Static res:Messages.LegendPositionLabel}" 
                        FontSize="16"
                        VerticalAlignment="Center" />
 

@@ -5,7 +5,8 @@
                       xmlns:vm="clr-namespace:Sumerics.ViewModels"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="{x:Static local:Messages.Help}"
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.Help}"
                       ResizeMode="NoResize" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -75,7 +76,7 @@
                                Text="{Binding BreadCrumb}" 
                                VerticalAlignment="Center" />
 
-                    <TextBox Controls:TextboxHelper.Watermark="{x:Static local:Messages.SearchHint}" 
+                    <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.SearchHint}" 
                              x:Name="Search"
                              Grid.Column="1" 
                              VerticalAlignment="Center" 
@@ -167,7 +168,7 @@
                                     VerticalAlignment="Top" 
                                     Visibility="{Binding HasInfo}"
                                     HorizontalAlignment="Left" 
-                                    ToolTip="{x:Static local:Messages.InfoToolTip}">
+                                    ToolTip="{x:Static res:Messages.InfoToolTip}">
                                 <Image Source="../Icons/internet.png" />
                             </Button>
 
@@ -194,7 +195,7 @@
                                     VerticalAlignment="Bottom" 
                                     Name="BackButton"
                                     HorizontalAlignment="Left" 
-                                    ToolTip="{x:Static local:Messages.MoreToolTip}">
+                                    ToolTip="{x:Static res:Messages.MoreToolTip}">
                                 <Image Source="../Resources/back.png" />
                             </Button>
                         </Grid>
@@ -221,7 +222,7 @@
                                     VerticalAlignment="Bottom" 
                                     Name="InternetBackButton"
                                     HorizontalAlignment="Left"
-                                    ToolTip="{x:Static local:Messages.BackToolTip}">
+                                    ToolTip="{x:Static res:Messages.BackToolTip}">
                                 <Image Source="../Resources/back.png" />
                             </Button>
                         </Grid>

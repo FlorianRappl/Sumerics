@@ -4,7 +4,8 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="{x:Static local:Messages.SaveImage}" 
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.SaveImage}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 
@@ -172,7 +173,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{x:Static local:Messages.WidthInPx}" 
+                <TextBlock Text="{x:Static res:Messages.WidthInPx}" 
                            VerticalAlignment="Center" 
                            Padding="10" 
                            Grid.Row="0" />
@@ -190,7 +191,7 @@
                          Width="50"
                          Margin="10 2 5 2" />
 
-                <TextBlock Text="{x:Static local:Messages.HeightInPx}"
+                <TextBlock Text="{x:Static res:Messages.HeightInPx}"
                            VerticalAlignment="Center"
                            Padding="10"
                            Grid.Row="1" />

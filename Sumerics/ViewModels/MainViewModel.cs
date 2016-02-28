@@ -3,6 +3,7 @@
     using Sumerics.Commands;
     using Sumerics.Controls;
     using Sumerics.MathInput;
+    using Sumerics.Resources;
     using Sumerics.Views;
     using System;
     using System.Collections.Generic;

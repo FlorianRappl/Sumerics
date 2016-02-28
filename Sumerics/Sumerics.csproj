@@ -191,16 +191,6 @@
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
     <Compile Include="Extensions\WebBrowserExtensions.cs" />
     <Compile Include="Managers\SensorManager.cs" />
-    <Compile Include="Messages.de.Designer.cs">
-      <DependentUpon>Messages.de.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Messages1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
     <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
@@ -410,14 +400,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Messages.de.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.de.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Messages.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -466,6 +448,10 @@
     <ProjectReference Include="..\Sumerics.Plots\Sumerics.Plots.csproj">
       <Project>{d14e0331-db16-4876-bc19-e30dd8a30da9}</Project>
       <Name>Sumerics.Plots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Resources\Sumerics.Resources.csproj">
+      <Project>{510f4806-4872-46c9-b92a-4562b2e52481}</Project>
+      <Name>Sumerics.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sumerics.Scripts\Sumerics.Scripts.csproj">
       <Project>{be7752ef-094a-4ae3-836f-4e8689d51c2f}</Project>

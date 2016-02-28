@@ -4,7 +4,8 @@
                       xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="{x:Static local:Messages.SelectFolder}" 
+                      xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      Title="{x:Static res:Messages.SelectFolder}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 
@@ -57,7 +58,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="{x:Static local:Messages.Places}" 
+                <TextBlock Text="{x:Static res:Messages.Places}" 
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -68,7 +69,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="{x:Static local:Messages.Previous}" 
+                <TextBlock Text="{x:Static res:Messages.Previous}" 
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -79,7 +80,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="{x:Static local:Messages.Current}" 
+                <TextBlock Text="{x:Static res:Messages.Current}" 
                            HorizontalAlignment="Center" 
                            Foreground="#666"
                            VerticalAlignment="Center" 
@@ -90,7 +91,7 @@
                     Grid.Row="0"
                     Background="#E0E0E0" 
                     BorderThickness="0">
-                <TextBlock Text="{x:Static local:Messages.Next}"
+                <TextBlock Text="{x:Static res:Messages.Next}"
                            HorizontalAlignment="Center"
                            Foreground="#666"
                            VerticalAlignment="Center"
