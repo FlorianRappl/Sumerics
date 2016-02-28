@@ -538,11 +538,17 @@
   <data name="Exception" xml:space="preserve">
     <value>Exception occurred</value>
   </data>
+  <data name="CloseFileToolTip" xml:space="preserve">
+    <value>Close file</value>
+  </data>
   <data name="CollapseAllBlocks" xml:space="preserve">
     <value>Collapse all blocks</value>
   </data>
   <data name="CommandHistory" xml:space="preserve">
     <value>Command History</value>
+  </data>
+  <data name="CopyToClipboard" xml:space="preserve">
+    <value>Copy to clipboard</value>
   </data>
   <data name="DrawExpression" xml:space="preserve">
     <value>Draw expression</value>
@@ -562,14 +568,26 @@
   <data name="NotificationAvailable" xml:space="preserve">
     <value>New notification available!</value>
   </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Paste from clipboard</value>
+  </data>
   <data name="PlotSettingsToolTip" xml:space="preserve">
     <value>Plot settings</value>
   </data>
   <data name="PrintPlotToolTip" xml:space="preserve">
     <value>Print plot</value>
   </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
   <data name="ResetAxesTansformationsToolTip" xml:space="preserve">
     <value>Reset axes transformations</value>
+  </data>
+  <data name="SaveFileAsToolTip" xml:space="preserve">
+    <value>Save file as ...</value>
+  </data>
+  <data name="SaveFileToolTip" xml:space="preserve">
+    <value>Save file</value>
   </data>
   <data name="SavePlotToolTip" xml:space="preserve">
     <value>Save plot</value>
@@ -585,5 +603,50 @@
   </data>
   <data name="ToggleInputPanel" xml:space="preserve">
     <value>Toggle input panel</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="ColumnAbbr" xml:space="preserve">
+    <value>col</value>
+  </data>
+  <data name="ErrorAbbr" xml:space="preserve">
+    <value>err</value>
+  </data>
+  <data name="ExecuteToolTip" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Line</value>
+  </data>
+  <data name="LineAbbr" xml:space="preserve">
+    <value>ln</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="ShowHideErrorsToolTip" xml:space="preserve">
+    <value>Show / hide errors</value>
+  </data>
+  <data name="CodeSnippet" xml:space="preserve">
+    <value>Code snippet: {0}</value>
+  </data>
+  <data name="ColumnsRange" xml:space="preserve">
+    <value>Columns {0} through {1}</value>
+  </data>
+  <data name="CompilationError" xml:space="preserve">
+    <value>Compilation error</value>
+  </data>
+  <data name="DimOfMatrix" xml:space="preserve">
+    <value>{0} x {1} matrix</value>
+  </data>
+  <data name="Evaluating" xml:space="preserve">
+    <value>Evaluating ...</value>
+  </data>
+  <data name="LinesOfText" xml:space="preserve">
+    <value>{0} lines of text</value>
   </data>
 </root>

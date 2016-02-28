@@ -50,13 +50,13 @@
                     Grid.Row="0">
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="SaveButton" 
-                    ToolTip="Save file">
+                    ToolTip="{x:Static res:Messages.SaveFileToolTip}">
                 <Image Source="Images/save.png" />
             </Button>
             
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="SaveAsButton" 
-                    ToolTip="Save file as ...">
+                    ToolTip="{x:Static res:Messages.SaveFileAsToolTip}">
                 <Image Source="Images/saveas.png" />
             </Button>
 
@@ -64,13 +64,13 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="UndoButton" 
-                    ToolTip="Undo">
+                    ToolTip="{x:Static res:Messages.Undo}">
                 <Image Source="Images/undo.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="RedoButton" 
-                    ToolTip="Redo">
+                    ToolTip="{x:Static res:Messages.Redo}">
                 <Image Source="Images/redo.png" />
             </Button>
 
@@ -78,13 +78,13 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="CopyButton" 
-                    ToolTip="Copy to clipboard">
+                    ToolTip="{x:Static res:Messages.CopyToClipboard}">
                 <Image Source="Images/copy.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="PasteButton" 
-                    ToolTip="Paste from clipboard">
+                    ToolTip="{x:Static res:Messages.PasteFromClipboard}">
                 <Image Source="Images/paste.png" />
             </Button>
 
@@ -92,7 +92,7 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="CloseButton" 
-                    ToolTip="Close file">
+                    ToolTip="{x:Static res:Messages.CloseFileToolTip}">
                 <Image Source="Images/close.png" />
             </Button>
         </StackPanel>
@@ -107,7 +107,7 @@
                     Grid.Row="3">
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="ExecuteButton" 
-                    ToolTip="Execute">
+                    ToolTip="{x:Static res:Messages.ExecuteToolTip}">
                 <Image Source="Images/check.png" />
             </Button>
 
@@ -115,19 +115,19 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="MathInputButton" 
-                    ToolTip="Draw expression">
+                    ToolTip="{x:Static res:Messages.DrawExpression}">
                 <Image Source="Images/pen.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="AutocompleteButton" 
-                    ToolTip="Show autocomplete">
+                    ToolTip="{x:Static res:Messages.ShowAutocomplete}">
                 <Image Source="Images/auto.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="InputPanelButton" 
-                    ToolTip="Toggle input panel">
+                    ToolTip="{x:Static res:Messages.ToggleInputPanel}">
                 <Image Source="Images/keyboard.png" />
             </Button>
 
@@ -135,7 +135,7 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="ShowErrorsButton" 
-                    ToolTip="Show / hide errors">
+                    ToolTip="{x:Static res:Messages.ShowHideErrorsToolTip}">
                 <Image Source="Images/errors.png" />
             </Button>
         </StackPanel>
@@ -154,16 +154,16 @@
                 <ColumnDefinition Width="30" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            
-            <TextBlock Text="Line" 
+
+            <TextBlock Text="{x:Static res:Messages.Line}" 
                        Grid.Column="0"
                        HorizontalAlignment="Center" />
-            
-            <TextBlock Text="Col" 
+
+            <TextBlock Text="{x:Static res:Messages.Column}" 
                        Grid.Column="1"
                        HorizontalAlignment="Center" />
-            
-            <TextBlock Text="Message" 
+
+            <TextBlock Text="{x:Static res:Messages.Message}" 
                        Grid.Column="2"
                        HorizontalAlignment="Center" />
 
@@ -213,7 +213,7 @@
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="err"
+            <TextBlock Text="{x:Static res:Messages.ErrorAbbr}"
                        Grid.Column="1" 
                        HorizontalAlignment="Center" />
 
@@ -222,7 +222,7 @@
                        FontWeight="Bold" 
                        x:Name="ErrorCount" />
 
-            <TextBlock Text="ln" 
+            <TextBlock Text="{x:Static res:Messages.LineAbbr}" 
                        Grid.Column="3" 
                        HorizontalAlignment="Center" />
 
@@ -231,7 +231,7 @@
                        FontWeight="Bold" 
                        x:Name="Line" />
 
-            <TextBlock Text="col" 
+            <TextBlock Text="{x:Static res:Messages.ColumnAbbr}" 
                        Grid.Column="5" 
                        HorizontalAlignment="Center" />
 

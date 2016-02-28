@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Controls
 {
     using FastColoredTextBoxNS;
+    using Sumerics.Resources;
     using System;
 
     /// <summary>
@@ -12,7 +13,7 @@
         public SnippetAutocompleteItem(String snippet)
         {
             Text = snippet.Replace("\r", "");
-            ToolTip = "Code snippet: " + Text;
+            ToolTip = String.Format(Messages.CodeSnippet, Text);
         }
 
         public override String ToString()

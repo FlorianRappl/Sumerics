@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Controls
 {
     using FastColoredTextBoxNS;
+    using Sumerics.Resources;
     using System;
     using System.Drawing;
     using System.Text;
@@ -31,7 +32,7 @@
         public void SetRunning()
         {
             _outputRegion.Style.ForeBrush = new SolidBrush(Color.SteelBlue);
-            _outputRegion.Text = "Evaluating ...";
+            _outputRegion.Text = Messages.Evaluating;
         }
 
         public void SetError(String message)
@@ -48,9 +49,10 @@
         public void SetText(String result)
         {
             var lc = result.Split('\n').Length;
+            var message = String.Concat("[ ", Messages.LinesOfText, " ]\n");
             _outputRegion.Style.ForeBrush = new SolidBrush(Color.DarkGray);
             _outputRegion.Fold = lc > 2;
-            _outputRegion.Text = String.Format("[ {0} Lines of text ]\n", lc) + result;
+            _outputRegion.Text = String.Format(message, lc) + result;
         }
 
         public void SetMatrix(String[,] values)
@@ -60,9 +62,10 @@
             var rows = values.GetLength(1);
             var requireFormat = TooManyColumns(cols, length);
             var mtxt = requireFormat ? GetFormattedText(values, length) : GetPlainText(values, length);
+            var message = String.Concat("[ ", Messages.DimOfMatrix, " ]");
             _outputRegion.Style.ForeBrush = new SolidBrush(Color.DarkGray);
             _outputRegion.Fold = rows > 1 || requireFormat;
-            _outputRegion.Text = String.Format("[ {0} x {1} Matrix ]", rows, cols) + mtxt;
+            _outputRegion.Text = String.Format(message, rows, cols) + mtxt;
         }
 
         public void SetResult(String value)
@@ -100,11 +103,11 @@
 
                 if (c != max)
                 {
-                    sb.AppendFormat("Columns {0} through {1}", c, max);
+                    sb.AppendFormat(Messages.ColumnsRange, c, max);
                 }
                 else
                 {
-                    sb.Append("Column ").Append(c);
+                    sb.Append(Messages.Column).Append(' ').Append(c);
                 }
 
                 sb.AppendLine();

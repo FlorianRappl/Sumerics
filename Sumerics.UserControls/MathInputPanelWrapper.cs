@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Controls
 {
     using micautLib;
+    using Sumerics.Resources;
     using System;
     using System.Diagnostics;
 
@@ -10,8 +11,10 @@
 
         public event EventHandler<String> OnInsertPressed;
 
-        public MathInputPanelWrapper(String caption = "Draw expression")
+        public MathInputPanelWrapper(String caption = null)
         {
+            caption = caption ?? Messages.DrawExpression;
+
             try
             {
                 _panel = new MathInputControl();

@@ -169,6 +169,24 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close file.
+        /// </summary>
+        public static string CloseFileToolTip {
+            get {
+                return ResourceManager.GetString("CloseFileToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code snippet: {0}.
+        /// </summary>
+        public static string CodeSnippet {
+            get {
+                return ResourceManager.GetString("CodeSnippet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Collapse all blocks.
         /// </summary>
         public static string CollapseAllBlocks {
@@ -196,11 +214,38 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        public static string Column {
+            get {
+                return ResourceManager.GetString("Column", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to col.
+        /// </summary>
+        public static string ColumnAbbr {
+            get {
+                return ResourceManager.GetString("ColumnAbbr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Columns to show:.
         /// </summary>
         public static string ColumnsLabel {
             get {
                 return ResourceManager.GetString("ColumnsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Columns {0} through {1}.
+        /// </summary>
+        public static string ColumnsRange {
+            get {
+                return ResourceManager.GetString("ColumnsRange", resourceCulture);
             }
         }
         
@@ -241,6 +286,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compilation error.
+        /// </summary>
+        public static string CompilationError {
+            get {
+                return ResourceManager.GetString("CompilationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The computation has been aborted..
         /// </summary>
         public static string ComputationAborted {
@@ -273,6 +327,15 @@ namespace Sumerics.Resources {
         public static string CopyCommand {
             get {
                 return ResourceManager.GetString("CopyCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to clipboard.
+        /// </summary>
+        public static string CopyToClipboard {
+            get {
+                return ResourceManager.GetString("CopyToClipboard", resourceCulture);
             }
         }
         
@@ -336,6 +399,15 @@ namespace Sumerics.Resources {
         public static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} x {1} matrix.
+        /// </summary>
+        public static string DimOfMatrix {
+            get {
+                return ResourceManager.GetString("DimOfMatrix", resourceCulture);
             }
         }
         
@@ -484,6 +556,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to err.
+        /// </summary>
+        public static string ErrorAbbr {
+            get {
+                return ResourceManager.GetString("ErrorAbbr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot open file.
         /// </summary>
         public static string ErrorCannotOpenFile {
@@ -538,6 +619,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluating ....
+        /// </summary>
+        public static string Evaluating {
+            get {
+                return ResourceManager.GetString("Evaluating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Examples.
         /// </summary>
         public static string Examples {
@@ -552,6 +642,15 @@ namespace Sumerics.Resources {
         public static string Exception {
             get {
                 return ResourceManager.GetString("Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execute.
+        /// </summary>
+        public static string ExecuteToolTip {
+            get {
+                return ResourceManager.GetString("ExecuteToolTip", resourceCulture);
             }
         }
         
@@ -755,6 +854,33 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line.
+        /// </summary>
+        public static string Line {
+            get {
+                return ResourceManager.GetString("Line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ln.
+        /// </summary>
+        public static string LineAbbr {
+            get {
+                return ResourceManager.GetString("LineAbbr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} lines of text.
+        /// </summary>
+        public static string LinesOfText {
+            get {
+                return ResourceManager.GetString("LinesOfText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Livestream:.
         /// </summary>
         public static string LivestreamLabel {
@@ -787,6 +913,15 @@ namespace Sumerics.Resources {
         public static string MaximumEntriesLabel {
             get {
                 return ResourceManager.GetString("MaximumEntriesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         
@@ -935,6 +1070,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paste from clipboard.
+        /// </summary>
+        public static string PasteFromClipboard {
+            get {
+                return ResourceManager.GetString("PasteFromClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Places.
         /// </summary>
         public static string Places {
@@ -1061,6 +1205,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Redo.
+        /// </summary>
+        public static string Redo {
+            get {
+                return ResourceManager.GetString("Redo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset axes transformations.
         /// </summary>
         public static string ResetAxesTansformationsToolTip {
@@ -1129,6 +1282,24 @@ namespace Sumerics.Resources {
         public static string SaveFile {
             get {
                 return ResourceManager.GetString("SaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save file as ....
+        /// </summary>
+        public static string SaveFileAsToolTip {
+            get {
+                return ResourceManager.GetString("SaveFileAsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save file.
+        /// </summary>
+        public static string SaveFileToolTip {
+            get {
+                return ResourceManager.GetString("SaveFileToolTip", resourceCulture);
             }
         }
         
@@ -1259,6 +1430,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show / hide errors.
+        /// </summary>
+        public static string ShowHideErrorsToolTip {
+            get {
+                return ResourceManager.GetString("ShowHideErrorsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legend visible.
         /// </summary>
         public static string ShowLegendHint {
@@ -1372,6 +1552,15 @@ namespace Sumerics.Resources {
         public static string ToggleInputPanel {
             get {
                 return ResourceManager.GetString("ToggleInputPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo.
+        /// </summary>
+        public static string Undo {
+            get {
+                return ResourceManager.GetString("Undo", resourceCulture);
             }
         }
         

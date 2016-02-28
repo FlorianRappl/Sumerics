@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Controls
 {
     using FastColoredTextBoxNS;
+    using Sumerics.Resources;
     using System;
     using System.Collections.ObjectModel;
     using System.Windows;
@@ -31,7 +32,7 @@
             var index = Editor.AddStyle(new WavyLineStyle(255, System.Drawing.Color.Red));
 
             _errorRanges = new ObservableCollection<ErrorRange>();
-            _mipw = new MathInputPanelWrapper("Draw statement");
+            _mipw = new MathInputPanelWrapper(Messages.DrawExpression);
             _autoComplete = new AutocompletePopup(this);
             _styleIndex = Editor.GetStyleIndexMask(new FastColoredTextBoxNS.Style[] { Editor.Styles[index] });
 
@@ -510,7 +511,7 @@
             {
                 if (_errorRanges[i].Range.Contains(e.Place))
                 {
-                    e.ToolTipTitle = "Compilation error";
+                    e.ToolTipTitle = Messages.CompilationError;
                     e.ToolTipText = _errorRanges[i].Message;
                     e.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Error;
                     break;
