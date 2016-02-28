@@ -5,7 +5,7 @@
              xmlns:c="clr-namespace:FastColoredTextBoxNS;assembly=Console"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:res="clr-namespace:Sumerics;assembly=Sumerics.Resources"
+             xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="500" 
              d:DesignWidth="600">
@@ -54,7 +54,7 @@
             <Border Background="Red" 
                     CornerRadius="8" 
                     Margin="15">
-                <TextBlock Text="New notification available!" 
+                <TextBlock Text="{x:Static res:Messages.NotificationAvailable}" 
                            FontWeight="Light"
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center"
@@ -118,7 +118,7 @@
                     Orientation="Horizontal">
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="EvaluateButton" 
-                    ToolTip="Evaluate input">
+                    ToolTip="{x:Static res:Messages.EvaluateInput}">
                 <Image Source="Images/check.png" />
             </Button>
 
@@ -127,7 +127,7 @@
             <Button Style="{StaticResource MetroCircleButton}" 
                     IsEnabled="False" 
                     Name="StopButton"
-                    ToolTip="Stop current evaluations">
+                    ToolTip="{x:Static res:Messages.StopEvaluation}">
                 <Image Source="Images/stop.png" />
             </Button>
 
@@ -135,25 +135,25 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="MathInputButton" 
-                    ToolTip="Draw expression">
+                    ToolTip="{x:Static res:Messages.DrawExpression}">
                 <Image Source="Images/pen.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="HistoryButton" 
-                    ToolTip="Command History">
+                    ToolTip="{x:Static res:Messages.CommandHistory}">
                 <Image Source="Images/history.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="AutocompleteButton" 
-                    ToolTip="Show autocomplete">
+                    ToolTip="{x:Static res:Messages.ShowAutocomplete}">
                 <Image Source="Images/auto.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="InputPanelButton" 
-                    ToolTip="Toggle input panel">
+                    ToolTip="{x:Static res:Messages.ToggleInputPanel}">
                 <Image Source="Images/keyboard.png" />
             </Button>
 
@@ -161,13 +161,13 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="CollapseButton" 
-                    ToolTip="Collapse all blocks">
+                    ToolTip="{x:Static res:Messages.CollapseAllBlocks}">
                 <Image Source="Images/collapse.png" />
             </Button>
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="ExpandButton" 
-                    ToolTip="Expand all blocks">
+                    ToolTip="{x:Static res:Messages.ExpandAllBlocks}">
                 <Image Source="Images/expand.png" />
             </Button>
 
@@ -175,7 +175,7 @@
 
             <Button Style="{StaticResource MetroCircleButton}"
                     Name="EditorButton" 
-                    ToolTip="Open editor">
+                    ToolTip="{x:Static res:Messages.OpenEditor}">
                 <Image Source="Images/editor.png" />
             </Button>
         </StackPanel>

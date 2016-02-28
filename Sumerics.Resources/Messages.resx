@@ -538,4 +538,52 @@
   <data name="Exception" xml:space="preserve">
     <value>Exception occurred</value>
   </data>
+  <data name="CollapseAllBlocks" xml:space="preserve">
+    <value>Collapse all blocks</value>
+  </data>
+  <data name="CommandHistory" xml:space="preserve">
+    <value>Command History</value>
+  </data>
+  <data name="DrawExpression" xml:space="preserve">
+    <value>Draw expression</value>
+  </data>
+  <data name="DuplicatePlotToolTip" xml:space="preserve">
+    <value>Duplicate plot</value>
+  </data>
+  <data name="EnterCommandToolTip" xml:space="preserve">
+    <value>Enter command</value>
+  </data>
+  <data name="ExpandAllBlocks" xml:space="preserve">
+    <value>Expand all blocks</value>
+  </data>
+  <data name="IncludedSeriesToolTip" xml:space="preserve">
+    <value>Included series</value>
+  </data>
+  <data name="NotificationAvailable" xml:space="preserve">
+    <value>New notification available!</value>
+  </data>
+  <data name="PlotSettingsToolTip" xml:space="preserve">
+    <value>Plot settings</value>
+  </data>
+  <data name="PrintPlotToolTip" xml:space="preserve">
+    <value>Print plot</value>
+  </data>
+  <data name="ResetAxesTansformationsToolTip" xml:space="preserve">
+    <value>Reset axes transformations</value>
+  </data>
+  <data name="SavePlotToolTip" xml:space="preserve">
+    <value>Save plot</value>
+  </data>
+  <data name="ShowAutocomplete" xml:space="preserve">
+    <value>Show autocomplete</value>
+  </data>
+  <data name="StopEvaluation" xml:space="preserve">
+    <value>Stop current evaluations</value>
+  </data>
+  <data name="ToggleGridlinesToolTip" xml:space="preserve">
+    <value>Toggle gridlines</value>
+  </data>
+  <data name="ToggleInputPanel" xml:space="preserve">
+    <value>Toggle input panel</value>
+  </data>
 </root>

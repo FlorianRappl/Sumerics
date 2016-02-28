@@ -169,6 +169,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse all blocks.
+        /// </summary>
+        public static string CollapseAllBlocks {
+            get {
+                return ResourceManager.GetString("CollapseAllBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color:.
         /// </summary>
         public static string ColorLabel {
@@ -192,6 +201,15 @@ namespace Sumerics.Resources {
         public static string ColumnsLabel {
             get {
                 return ResourceManager.GetString("ColumnsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command History.
+        /// </summary>
+        public static string CommandHistory {
+            get {
+                return ResourceManager.GetString("CommandHistory", resourceCulture);
             }
         }
         
@@ -340,11 +358,29 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Draw expression.
+        /// </summary>
+        public static string DrawExpression {
+            get {
+                return ResourceManager.GetString("DrawExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Draw input.
         /// </summary>
         public static string DrawInputToolTip {
             get {
                 return ResourceManager.GetString("DrawInputToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicate plot.
+        /// </summary>
+        public static string DuplicatePlotToolTip {
+            get {
+                return ResourceManager.GetString("DuplicatePlotToolTip", resourceCulture);
             }
         }
         
@@ -430,6 +466,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter command.
+        /// </summary>
+        public static string EnterCommandToolTip {
+            get {
+                return ResourceManager.GetString("EnterCommandToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter quick statement.
         /// </summary>
         public static string EnterQuickStatement {
@@ -507,6 +552,15 @@ namespace Sumerics.Resources {
         public static string Exception {
             get {
                 return ResourceManager.GetString("Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expand all blocks.
+        /// </summary>
+        public static string ExpandAllBlocks {
+            get {
+                return ResourceManager.GetString("ExpandAllBlocks", resourceCulture);
             }
         }
         
@@ -598,6 +652,15 @@ namespace Sumerics.Resources {
         public static string InclinometerLabel {
             get {
                 return ResourceManager.GetString("InclinometerLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Included series.
+        /// </summary>
+        public static string IncludedSeriesToolTip {
+            get {
+                return ResourceManager.GetString("IncludedSeriesToolTip", resourceCulture);
             }
         }
         
@@ -773,6 +836,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New notification available!.
+        /// </summary>
+        public static string NotificationAvailable {
+            get {
+                return ResourceManager.GetString("NotificationAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No usages available..
         /// </summary>
         public static string NoUsagesAvailable {
@@ -908,6 +980,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plot settings.
+        /// </summary>
+        public static string PlotSettingsToolTip {
+            get {
+                return ResourceManager.GetString("PlotSettingsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the title here.
         /// </summary>
         public static string PlotTitleHint {
@@ -962,11 +1043,29 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print plot.
+        /// </summary>
+        public static string PrintPlotToolTip {
+            get {
+                return ResourceManager.GetString("PrintPlotToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quickview.
         /// </summary>
         public static string Quickview {
             get {
                 return ResourceManager.GetString("Quickview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset axes transformations.
+        /// </summary>
+        public static string ResetAxesTansformationsToolTip {
+            get {
+                return ResourceManager.GetString("ResetAxesTansformationsToolTip", resourceCulture);
             }
         }
         
@@ -1048,6 +1147,15 @@ namespace Sumerics.Resources {
         public static string SavePlotAs {
             get {
                 return ResourceManager.GetString("SavePlotAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save plot.
+        /// </summary>
+        public static string SavePlotToolTip {
+            get {
+                return ResourceManager.GetString("SavePlotToolTip", resourceCulture);
             }
         }
         
@@ -1142,6 +1250,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show autocomplete.
+        /// </summary>
+        public static string ShowAutocomplete {
+            get {
+                return ResourceManager.GetString("ShowAutocomplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legend visible.
         /// </summary>
         public static string ShowLegendHint {
@@ -1187,6 +1304,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop current evaluations.
+        /// </summary>
+        public static string StopEvaluation {
+            get {
+                return ResourceManager.GetString("StopEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subplot settings.
         /// </summary>
         public static string SubplotSettings {
@@ -1228,6 +1354,24 @@ namespace Sumerics.Resources {
         public static string TitleLabel {
             get {
                 return ResourceManager.GetString("TitleLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle gridlines.
+        /// </summary>
+        public static string ToggleGridlinesToolTip {
+            get {
+                return ResourceManager.GetString("ToggleGridlinesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle input panel.
+        /// </summary>
+        public static string ToggleInputPanel {
+            get {
+                return ResourceManager.GetString("ToggleInputPanel", resourceCulture);
             }
         }
         

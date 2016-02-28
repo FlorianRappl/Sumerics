@@ -15,7 +15,7 @@
 
     <Grid Height="150"
           Name="InputGrid"
-          Margin="0,5,0,5">
+          Margin="0 5 0 5">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -38,55 +38,177 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="1" Grid.Row="0" Grid.Column="0" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="2" Grid.Row="0" Grid.Column="1" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="3" Grid.Row="0" Grid.Column="2" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content="1" 
+                Grid.Row="0"
+                Grid.Column="0" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="2" 
+                Grid.Row="0" 
+                Grid.Column="1" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="3"
+                Grid.Row="0" 
+                Grid.Column="2" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="4" Grid.Row="1" Grid.Column="0" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="5" Grid.Row="1" Grid.Column="1" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="6" Grid.Row="1" Grid.Column="2" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="4" 
+                Grid.Row="1"
+                Grid.Column="0" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="5" 
+                Grid.Row="1"
+                Grid.Column="1" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="6" 
+                Grid.Row="1"
+                Grid.Column="2" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="7" Grid.Row="2" Grid.Column="0" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="8" Grid.Row="2" Grid.Column="1" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="9" Grid.Row="2" Grid.Column="2" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="7"
+                Grid.Row="2" 
+                Grid.Column="0" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="8" 
+                Grid.Row="2" 
+                Grid.Column="1" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="9" 
+                Grid.Row="2" 
+                Grid.Column="2" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="i" Grid.Row="3" Grid.Column="0" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="0" Grid.Row="3" Grid.Column="1" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="," Grid.Row="3" Grid.Column="2" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="i" 
+                Grid.Row="3" 
+                Grid.Column="0" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="0" 
+                Grid.Row="3" 
+                Grid.Column="1" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="," 
+                Grid.Row="3"
+                Grid.Column="2" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="+" Grid.Row="0" Grid.Column="4" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="-" Grid.Row="0" Grid.Column="5" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="*" Grid.Row="0" Grid.Column="6" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="^" Grid.Row="0" Grid.Column="7" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="+" 
+                Grid.Row="0"
+                Grid.Column="4" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="-" 
+                Grid.Row="0"
+                Grid.Column="5" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="*" 
+                Grid.Row="0" 
+                Grid.Column="6" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="^"
+                Grid.Row="0"
+                Grid.Column="7" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="/" Grid.Row="1" Grid.Column="4" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="\" Grid.Row="1" Grid.Column="5" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="%" Grid.Row="1" Grid.Column="6" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="!" Grid.Row="1" Grid.Column="7" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="/"
+                Grid.Row="1"
+                Grid.Column="4" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content="\" 
+                Grid.Row="1"
+                Grid.Column="5" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="%" 
+                Grid.Row="1" 
+                Grid.Column="6" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="!" 
+                Grid.Row="1"
+                Grid.Column="7" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="=" Grid.Row="2" Grid.Column="4" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="~" Grid.Row="2" Grid.Column="5" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="&lt;" Grid.Row="2" Grid.Column="6" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="&gt;" Grid.Row="2" Grid.Column="7" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content="=" 
+                Grid.Row="2" 
+                Grid.Column="4" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content="~"
+                Grid.Row="2" 
+                Grid.Column="5" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="&lt;"
+                Grid.Row="2" 
+                Grid.Column="6" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="&gt;" 
+                Grid.Row="2" 
+                Grid.Column="7" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content=";" Grid.Row="3" Grid.Column="4" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="." Grid.Row="3" Grid.Column="5" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="(" Grid.Row="3" Grid.Column="6" />
-        <Button Style="{DynamicResource MetroInputButton}" Content=")" Grid.Row="3" Grid.Column="7" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content=";" 
+                Grid.Row="3" 
+                Grid.Column="4" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="." 
+                Grid.Row="3" 
+                Grid.Column="5" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="(" 
+                Grid.Row="3" 
+                Grid.Column="6" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content=")" 
+                Grid.Row="3" 
+                Grid.Column="7" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="[" Grid.Row="0" Grid.Column="9" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="]" Grid.Row="1" Grid.Column="9" />
-        <Button Style="{DynamicResource MetroInputButton}" Content=":" Grid.Row="2" Grid.Column="9" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="'" Grid.Row="3" Grid.Column="9" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="[" 
+                Grid.Row="0" 
+                Grid.Column="9" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Content="]"
+                Grid.Row="1" 
+                Grid.Column="9" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content=":"
+                Grid.Row="2"
+                Grid.Column="9" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="'" 
+                Grid.Row="3"
+                Grid.Column="9" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Content="x" Grid.Row="0" Grid.Column="10" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="y" Grid.Row="1" Grid.Column="10" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="z" Grid.Row="2" Grid.Column="10" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="$" Grid.Row="3" Grid.Column="10" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="x" 
+                Grid.Row="0" 
+                Grid.Column="10" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="y"
+                Grid.Row="1" 
+                Grid.Column="10" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="z" 
+                Grid.Row="2"
+                Grid.Column="10" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="$" 
+                Grid.Row="3" 
+                Grid.Column="10" />
 
-        <Button Style="{DynamicResource MetroInputButton}" Grid.Row="0" Grid.Column="11" Tag="b" Content="&#8592;" />
-        <Button Style="{DynamicResource MetroInputButton}" Grid.Row="1" Grid.Column="11" Tag="n" Content="&#x21a9;" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="_" Grid.Row="2" Grid.Column="11" />
-        <Button Style="{DynamicResource MetroInputButton}" Content="@" Grid.Row="3" Grid.Column="11" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Grid.Row="0"
+                Grid.Column="11" 
+                Tag="b" 
+                Content="&#8592;" />
+        <Button Style="{DynamicResource MetroInputButton}"
+                Grid.Row="1" 
+                Grid.Column="11" 
+                Tag="n" 
+                Content="&#x21a9;" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="_"
+                Grid.Row="2" 
+                Grid.Column="11" />
+        <Button Style="{DynamicResource MetroInputButton}" 
+                Content="@" 
+                Grid.Row="3" 
+                Grid.Column="11" />
     </Grid>
 </UserControl>

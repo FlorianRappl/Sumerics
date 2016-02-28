@@ -30,7 +30,7 @@
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Padding" 
-                            Value="0"/>
+                            Value="0" />
                     <EventSetter Event="PreviewMouseDoubleClick" 
                                  Handler="OnItemClicked" />
                     <EventSetter Event="PreviewTouchDown" 

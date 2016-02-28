@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
              mc:Ignorable="d"
              d:DesignHeight="300" 
              d:DesignWidth="400">
@@ -31,7 +32,7 @@
                     Click="SaveButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/save.png" 
-                       ToolTip="Save plot" />
+                       ToolTip="{x:Static res:Messages.SavePlotToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}"
@@ -39,7 +40,7 @@
                     Click="PrintButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/printer.png"
-                       ToolTip="Print plot" />
+                       ToolTip="{x:Static res:Messages.PrintPlotToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}" 
@@ -47,7 +48,7 @@
                     Click="DuplicateButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/undock.png"
-                       ToolTip="Duplicate plot" 
+                       ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" 
                        x:Name="DockImg" />
             </Button>
 
@@ -56,7 +57,7 @@
                     Click="SeriesButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/series.png" 
-                       ToolTip="Included series" />
+                       ToolTip="{x:Static res:Messages.IncludedSeriesToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}" 
@@ -64,7 +65,7 @@
                     Click="SettingsButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/settings.png" 
-                       ToolTip="Plot settings" />
+                       ToolTip="{x:Static res:Messages.PlotSettingsToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}"
@@ -72,7 +73,7 @@
                     Click="GridButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/gridlines.png"
-                       ToolTip="Toggle gridlines" />
+                       ToolTip="{x:Static res:Messages.ToggleGridlinesToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}" 
@@ -80,14 +81,14 @@
                     Click="CenterButtonClick" 
                     IsEnabled="False">
                 <Image Source="Images/fix.png" 
-                       ToolTip="Reset axes transformations" />
+                       ToolTip="{x:Static res:Messages.ResetAxesTansformationsToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButton}"
                     Name="ConsoleButton"
                     Click="ConsoleButtonClick">
                 <Image Source="Images/console.png" 
-                       ToolTip="Enter command" />
+                       ToolTip="{x:Static res:Messages.EnterCommandToolTip}" />
             </Button>
         </StackPanel>
         
