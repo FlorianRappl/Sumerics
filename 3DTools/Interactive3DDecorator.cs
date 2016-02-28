@@ -12,27 +12,17 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
-using System.Windows.Input;
-using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
-
-namespace _3DTools
+namespace WPFTools3D
 {
-    /// <summary>
-    /// Class causes a Viewport3D to become interactive.  To cause the interactivity,
-    /// a hidden visual, corresponding to the Visual being interacted with, is placed
-    /// on the PostViewportChildren layer, and is then interacted with, giving the illusion
-    /// of interacting with the 3D object.
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Documents;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     public class Interactive3DDecorator : Viewport3DDecorator
     {
         /// <summary>

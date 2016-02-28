@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:l="clr-namespace:_3DTools;assembly=3dtools"
+             xmlns:l="clr-namespace:WPFTools3D;assembly=3dtools"
              mc:Ignorable="d" 
              d:DesignHeight="300" 
              d:DesignWidth="300">

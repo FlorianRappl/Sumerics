@@ -193,6 +193,12 @@
   <ItemGroup>
     <Resource Include="Images\addstatement.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Resources\Sumerics.Resources.csproj">
+      <Project>{510f4806-4872-46c9-b92a-4562b2e52481}</Project>
+      <Name>Sumerics.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

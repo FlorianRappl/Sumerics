@@ -12,16 +12,16 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-
-namespace _3DTools
+namespace WPFTools3D
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     #region Mesh IValueConverters
 
     /// <summary>

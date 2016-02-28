@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5F603892-DE40-4246-A969-1C6717AFE35D}</ProjectGuid>
-    <RootNamespace>_3DTools</RootNamespace>
+    <RootNamespace>WPFTools3D</RootNamespace>
     <AssemblyName>3DTools</AssemblyName>
     <WarningLevel>4</WarningLevel>
     <OutputType>library</OutputType>

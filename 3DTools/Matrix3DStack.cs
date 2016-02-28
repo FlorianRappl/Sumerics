@@ -12,16 +12,13 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Media.Media3D;
-
-namespace _3DTools
+namespace WPFTools3D
 {
-    /// <summary>
-    ///     Matrix3DStack is a stack of Matrix3Ds.
-    /// </summary>
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Windows.Media.Media3D;
+
     public class Matrix3DStack : IEnumerable<Matrix3D>, ICollection
     {
         public Matrix3D Peek()

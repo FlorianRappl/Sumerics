@@ -10,33 +10,16 @@
 // 
 // http://CodePlex.com/Wiki/View.aspx?ProjectName=3DTools
 //
-// The following article discusses the mechanics behind this
-// trackball implementation: http://viewport3d.com/trackball.htm
-//
-// Reading the article is not required to use this sample code,
-// but skimming it might be useful.
-//
 //---------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Input;
-using System.Windows.Markup;
-
-namespace _3DTools
+namespace WPFTools3D
 {
-    /// <summary>
-    ///     Trackport3D loads a Model3D from a xaml file and displays it.  The user
-    ///     may rotate the view by dragging the mouse with the left mouse button.
-    ///     Dragging with the right mouse button will zoom in and out.
-    /// 
-    ///     Trackport3D is primarily an example of how to use the Trackball utility
-    ///     class, but it may be used as a custom control in your own applications.
-    /// </summary>
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Markup;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     public partial class Trackport3D : UserControl
     {
         private Trackball _trackball = new Trackball();

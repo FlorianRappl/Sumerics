@@ -12,32 +12,13 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-
-namespace _3DTools
+namespace WPFTools3D
 {
-    /// <summary>
-    ///     ScreenSpaceLines3D are a 3D line primitive whose thickness
-    ///     is constant in 2D space post projection.
-    /// 
-    ///     This means that the lines do not become foreshortened as
-    ///     they receed from the camera as other 3D primitives do under
-    ///     a typical perspective projection.
-    /// 
-    ///     Example Usage:
-    /// 
-    ///     &lt;tools:ScreenSpaceLines3D
-    ///         Points="0,0,0 0,1,0 0,1,0 1,1,0 1,1,0 0,0,1"
-    ///         Thickness="5" Color="Red"&gt;
-    /// 
-    ///     "Screen space" is a bit of a misnomer as the line thickness
-    ///     is specified in the 2D coordinate system of the container
-    ///     Viewport3D, not the screen.
-    /// </summary>
+    using System;
+    using System.Windows;
+    using System.Windows.Media;
+    using System.Windows.Media.Media3D;
+
     public class ScreenSpaceLines3D : ModelVisual3D
     {
         public ScreenSpaceLines3D()

@@ -12,27 +12,16 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
-using System.Windows.Input;
-using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
-
-namespace _3DTools
+namespace WPFTools3D
 {
-    /// <summary>
-    /// This class enables a Viewport3D to be enhanced by allowing UIElements to be placed 
-    /// behind and in front of the Viewport3D.  These can then be used for various enhancements.  
-    /// For examples see the Trackball, or InteractiveViewport3D.
-    /// </summary>
+    using System;
+    using System.Collections;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Data;
+    using System.Windows.Markup;
+    using System.Windows.Media;
+
     [ContentProperty("Content")]    
     public abstract class Viewport3DDecorator : FrameworkElement, IAddChild
     {

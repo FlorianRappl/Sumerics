@@ -14,7 +14,7 @@
 
 using System;
 
-namespace _3DTools
+namespace WPFTools3D
 {
     public enum ViewMode
     {

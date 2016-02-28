@@ -144,9 +144,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\3DTools\3DTools.csproj">
+    <ProjectReference Include="..\3DTools\WPFTools3D.csproj">
       <Project>{5f603892-de40-4246-a969-1c6717afe35d}</Project>
-      <Name>3DTools</Name>
+      <Name>WPFTools3D</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
