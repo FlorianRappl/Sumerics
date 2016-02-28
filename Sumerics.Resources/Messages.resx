@@ -649,4 +649,7 @@
   <data name="LinesOfText" xml:space="preserve">
     <value>{0} lines of text</value>
   </data>
+  <data name="PlotPlaceholder" xml:space="preserve">
+    <value>Nothing to visualize yet. Type plot(1:100, rand(100,3)) to generate a simple plot.</value>
+  </data>
 </root>

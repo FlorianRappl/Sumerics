@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Controls
 {
+    using Sumerics.Resources;
     using System;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -168,7 +169,7 @@
             StopButton.Click += StopButtonClick;
 
             _autoComplete = new AutocompletePopup(this);
-            _mipw = new MathInputPanelWrapper("Draw query");
+            _mipw = new MathInputPanelWrapper(Messages.DrawExpression);
 
             if (!_mipw.IsAvailable)
             {

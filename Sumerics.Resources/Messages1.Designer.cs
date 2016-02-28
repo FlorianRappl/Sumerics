@@ -1106,6 +1106,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nothing to visualize yet. Type plot(1:100, rand(100,3)) to generate a simple plot..
+        /// </summary>
+        public static string PlotPlaceholder {
+            get {
+                return ResourceManager.GetString("PlotPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The plot has been successfully saved in the file {0}..
         /// </summary>
         public static string PlotSavedMessage {

@@ -2,6 +2,7 @@
 {
     using Sumerics.Controls.Plots;
     using Sumerics.Plots;
+    using Sumerics.Resources;
     using System;
     using System.Windows;
     using System.Windows.Controls;
@@ -214,7 +215,7 @@
 			{
                 return new TextBlock
                 {
-				    Text = "Nothing to visualize yet. Type plot(1:100, rand(100,3)) to generate a simple plot.",
+				    Text = Messages.PlotPlaceholder,
 				    FontSize = 16,
 				    VerticalAlignment = System.Windows.VerticalAlignment.Center,
 				    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
