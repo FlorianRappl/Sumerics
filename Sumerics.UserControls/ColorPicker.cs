@@ -1,4 +1,4 @@
-﻿namespace Sumerics
+﻿namespace Sumerics.Controls
 {
     using System;
     using System.Collections;
@@ -54,12 +54,14 @@
         /// <param name="e">the argument</param>
         internal static ColorRoutedEventArgs RaiseColorChangedEvent(UIElement target, ColorEventArgs e)
         {
-            if (target == null) 
-				return null;
+            if (target != null)
+            {
+                var args = new ColorRoutedEventArgs(e) { RoutedEvent = ColorChangedEvent };
+                target.RaiseEvent(args);
+                return args;
+            }
 
-            ColorRoutedEventArgs args = new ColorRoutedEventArgs(e) { RoutedEvent = ColorChangedEvent };
-            target.RaiseEvent(args);
-            return args;
+			return null;
         }
 
         /// <summary>
@@ -93,12 +95,14 @@
         /// <param name="e">the argument</param>
         internal static ColorRoutedEventArgs RaisePreviewColorChangedEvent(UIElement target, ColorEventArgs e)
         {
-            if (target == null)
-				return null;
+            if (target != null)
+            {
+                var args = new ColorRoutedEventArgs(e) { RoutedEvent = PreviewColorChangedEvent };
+                target.RaiseEvent(args);
+                return args;
+            }
 
-            ColorRoutedEventArgs args = new ColorRoutedEventArgs(e) { RoutedEvent = PreviewColorChangedEvent };
-            target.RaiseEvent(args);
-            return args;
+			return null;
         }
 
         #endregion
@@ -205,7 +209,7 @@
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Input.CanExecuteRoutedEventArgs"/> instance
 		/// containing the event data.</param>
-        void CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecute(Object sender, CanExecuteRoutedEventArgs e)
         {
 			e.CanExecute = true;
         }
@@ -216,7 +220,7 @@
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Input.ExecutedRoutedEventArgs"/> instance
 		/// containing the event data.</param>
-        void Executed(object sender, ExecutedRoutedEventArgs e)
+        void Executed(Object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command.Equals(ColorDropCommand))
             {
@@ -234,7 +238,9 @@
                 var tag = e.Parameter as VisualTag;
 
                 if (tag != null)
+                {
                     SelectColor(tag.Brush);
+                }
 
 				e.Handled = true;
             }
@@ -261,78 +267,12 @@
 
 			CurrentColor = brush;
 
-            if (ColorPopup != null) 
-				ColorPopup.IsOpen = false;
+            if (ColorPopup != null)
+            {
+                ColorPopup.IsOpen = false;
+            }
         }
 
         #endregion
     }
-
-	#region Helpers
-
-	/// <summary>
-    /// Generic handler definition.
-    /// </summary>
-    public delegate void RoutedHandler<T>(object sender, T e) where T : RoutedEventArgs;
-
-    /// <summary>
-    /// Routed version of the <see cref="ColorEventArgs"/>.
-    /// </summary>
-    public class ColorRoutedEventArgs : RoutedEventArgs
-    {
-        /// <summary>
-        /// Gets or sets the entity.
-        /// </summary>
-        /// <value>The entity.</value>
-        public Brush Brush { get; set; }
-
-        #region Constructor
-
-        ///<summary>
-        ///Default constructor
-        ///</summary>
-        public ColorRoutedEventArgs(ColorEventArgs e)
-        {
-
-            Brush = e.Brush;
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// <see cref="DiagramEntity"/> event argument.
-    /// </summary>
-    public class ColorEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Gets or sets the entity.
-        /// </summary>
-        /// <value>The entity.</value>
-        public Brush Brush { get; set; }
-
-        #region Constructor
-
-        ///<summary>
-        ///Default constructor
-        ///</summary>
-        public ColorEventArgs(Brush brush)
-        {
-            Brush = brush;
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// Utility class to databing some stuff to the UI.
-    /// </summary>
-    public sealed class VisualTag
-    {
-        public Brush Brush { get; set; }
-
-        public string Title { get; set; }
-	}
-
-	#endregion
 }

@@ -217,7 +217,6 @@
       <DependentUpon>ActionButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Codebase\BindableStaticResource.cs" />
-    <Compile Include="Codebase\ColorPicker.cs" />
     <Compile Include="Proxies\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />

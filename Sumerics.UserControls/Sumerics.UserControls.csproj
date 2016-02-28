@@ -139,6 +139,9 @@
     <Compile Include="Autocomplete\CompareResult.cs" />
     <Compile Include="Autocomplete\SelectedEventArgs.cs" />
     <Compile Include="Autocomplete\SnippetAutocompleteItem.cs" />
+    <Compile Include="ColorEventArgs.cs" />
+    <Compile Include="ColorPicker.cs" />
+    <Compile Include="ColorRoutedEventArgs.cs" />
     <Compile Include="ConsoleQueryReference.cs" />
     <Compile Include="CountConverter.cs" />
     <Compile Include="ConsoleControl.xaml.cs">
@@ -186,9 +189,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RoutedHandler.cs" />
     <Compile Include="SensorPlot.xaml.cs">
       <DependentUpon>SensorPlot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VisualTag.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
