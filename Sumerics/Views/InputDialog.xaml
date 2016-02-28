@@ -65,7 +65,7 @@
                     ToolTip="{x:Static res:Messages.DrawInputToolTip}" 
                     Click="DrawClick" 
                     x:Name="DrawInput">                
-                <Image Source="../Resources/pen.png" />
+                <Image Source="../Icons/pen.png" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
@@ -76,7 +76,7 @@
                     HorizontalAlignment="Right" 
                     ToolTip="{x:Static res:Messages.Close}" 
                     Click="CloseClick">
-                <Image Source="../Resources/check.png" />
+                <Image Source="../Icons/check.png" />
             </Button>
         </Grid>
     </Controls:MetroContentControl>

@@ -134,6 +134,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MahApps.Metro.0.10.1.11-ALPHA\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -174,6 +175,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Codebase\FileLogger.cs" />
+    <Compile Include="Codebase\IconFactory.cs" />
     <Compile Include="Codebase\Kernel.cs" />
     <Compile Include="Codebase\RichTextBoxHelper.cs" />
     <Compile Include="Codebase\SumericsInfo.cs" />
@@ -189,6 +191,7 @@
     <Compile Include="Dialogs\LoadWorkspaceHandler.cs" />
     <Compile Include="Dialogs\OptionsDialogHandler.cs" />
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
+    <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WebBrowserExtensions.cs" />
     <Compile Include="Managers\SensorManager.cs" />
     <Compile Include="Models\OptionsModel.cs" />
@@ -223,7 +226,6 @@
     <Compile Include="Views\OutputDialog.xaml.cs">
       <DependentUpon>OutputDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Codebase\IconFactory.cs" />
     <Compile Include="Views\PlotWindow.xaml.cs">
       <DependentUpon>PlotWindow.xaml</DependentUpon>
     </Compile>
@@ -409,16 +411,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\logic_hd.png" />
-    <Resource Include="Resources\logic.png" />
-    <Resource Include="Resources\random_hd.png" />
-    <Resource Include="Resources\random.png" />
-    <Resource Include="Resources\statistics_hd.png" />
-    <Resource Include="Resources\statistics.png" />
-    <Resource Include="Resources\trigonometric_hd.png" />
-    <Resource Include="Resources\trigonometric.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Sumerics.png" />
   </ItemGroup>
   <ItemGroup>
@@ -456,14 +448,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\function.png" />
-    <Resource Include="Resources\matrix.png" />
-    <Resource Include="Resources\scalar.png" />
-    <Resource Include="Resources\plot.png" />
-    <Resource Include="Resources\string.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\help.png" />
+    <Resource Include="Icons\help_small.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\about.png" />
@@ -472,27 +457,13 @@
     <Resource Include="Icons\help.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\constant.png" />
-    <Resource Include="Resources\sensor.png" />
-    <Resource Include="Resources\system.png" />
+    <Resource Include="Icons\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\back.png" />
+    <Resource Include="Icons\check.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\constant_hd.png" />
-    <Resource Include="Resources\function_hd.png" />
-    <Resource Include="Resources\plot_hd.png" />
-    <Resource Include="Resources\sensor_hd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\system_hd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\check.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\close.png" />
+    <Resource Include="Icons\close.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -513,9 +484,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\plugin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\unknown.png" />
   </ItemGroup>
   <ItemGroup>
     <SplashScreen Include="splash.png" />
@@ -551,24 +519,10 @@
     <Resource Include="Icons\dialog.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ui.png" />
-    <Resource Include="Resources\ui_hd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\constant_ac.png" />
-    <Resource Include="Resources\function_ac.png" />
-    <Resource Include="Resources\keyword_ac.png" />
-    <Resource Include="Resources\variable_ac.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\pen.png" />
+    <Resource Include="Icons\pen.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\conversion.png" />
-    <Resource Include="Resources\conversion_hd.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

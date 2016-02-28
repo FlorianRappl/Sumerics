@@ -44,7 +44,7 @@
                     HorizontalAlignment="Right" 
                     ToolTip="{x:Static res:Messages.EvaluateInput}"
                     Click="EvaluateClick">
-                <Image Source="../Resources/check.png" />
+                <Image Source="../Icons/check.png" />
             </Button>
         </Grid>
     </Controls:MetroContentControl>

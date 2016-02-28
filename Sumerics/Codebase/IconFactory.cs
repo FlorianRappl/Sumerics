@@ -1,5 +1,6 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Resources;
     using System;
     using System.Collections.Generic;
     using System.Windows.Media.Imaging;
@@ -13,28 +14,28 @@
     {
         #region The cached images
 
-        static readonly BitmapImage _imgConversionLd = new BitmapImage(new Uri(@"..\Resources\conversion.png", UriKind.Relative));
-        static readonly BitmapImage _imgConstantLd = new BitmapImage(new Uri(@"..\Resources\constant.png", UriKind.Relative));
-        static readonly BitmapImage _imgFunctionLd = new BitmapImage(new Uri(@"..\Resources\function.png", UriKind.Relative));
-        static readonly BitmapImage _imgPlotLd = new BitmapImage(new Uri(@"..\Resources\plot.png", UriKind.Relative));
-        static readonly BitmapImage _imgSensorLd = new BitmapImage(new Uri(@"..\Resources\sensor.png", UriKind.Relative));
-        static readonly BitmapImage _imgSystemLd = new BitmapImage(new Uri(@"..\Resources\system.png", UriKind.Relative));
-        static readonly BitmapImage _imgTrigLd = new BitmapImage(new Uri(@"..\Resources\trigonometric.png", UriKind.Relative));
-        static readonly BitmapImage _imgStatisticLd = new BitmapImage(new Uri(@"..\Resources\statistics.png", UriKind.Relative));
-        static readonly BitmapImage _imgLogicLd = new BitmapImage(new Uri(@"..\Resources\logic.png", UriKind.Relative));
-        static readonly BitmapImage _imgRandomLd = new BitmapImage(new Uri(@"..\Resources\random.png", UriKind.Relative));
-        static readonly BitmapImage _imgUiLd = new BitmapImage(new Uri(@"..\Resources\ui.png", UriKind.Relative));
-        static readonly BitmapImage _imgConversionHd = new BitmapImage(new Uri(@"..\Resources\conversion_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgConstantHd = new BitmapImage(new Uri(@"..\Resources\constant_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgFunctionHd = new BitmapImage(new Uri(@"..\Resources\function_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgPlotHd = new BitmapImage(new Uri(@"..\Resources\plot_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgSensorHd = new BitmapImage(new Uri(@"..\Resources\sensor_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgSystemHd = new BitmapImage(new Uri(@"..\Resources\system_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgTrigHd = new BitmapImage(new Uri(@"..\Resources\trigonometric_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgStatisticHd = new BitmapImage(new Uri(@"..\Resources\statistics_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgLogicHd = new BitmapImage(new Uri(@"..\Resources\logic_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgRandomHd = new BitmapImage(new Uri(@"..\Resources\random_hd.png", UriKind.Relative));
-        static readonly BitmapImage _imgUiHd = new BitmapImage(new Uri(@"..\Resources\ui_hd.png", UriKind.Relative));
+        static readonly BitmapImage _imgConversionLd = Icons.conversion.ToBitmapImage();
+        static readonly BitmapImage _imgConstantLd = Icons.constant.ToBitmapImage();
+        static readonly BitmapImage _imgFunctionLd = Icons.function.ToBitmapImage();
+        static readonly BitmapImage _imgPlotLd = Icons.plot.ToBitmapImage();
+        static readonly BitmapImage _imgSensorLd = Icons.sensor.ToBitmapImage();
+        static readonly BitmapImage _imgSystemLd = Icons.system.ToBitmapImage();
+        static readonly BitmapImage _imgTrigLd = Icons.trigonometric.ToBitmapImage();
+        static readonly BitmapImage _imgStatisticLd = Icons.statistics.ToBitmapImage();
+        static readonly BitmapImage _imgLogicLd = Icons.logic.ToBitmapImage();
+        static readonly BitmapImage _imgRandomLd = Icons.random.ToBitmapImage();
+        static readonly BitmapImage _imgUiLd = Icons.ui.ToBitmapImage();
+        static readonly BitmapImage _imgConversionHd = Icons.conversion_hd.ToBitmapImage();
+        static readonly BitmapImage _imgConstantHd = Icons.constant_hd.ToBitmapImage();
+        static readonly BitmapImage _imgFunctionHd = Icons.function_hd.ToBitmapImage();
+        static readonly BitmapImage _imgPlotHd = Icons.plot_hd.ToBitmapImage();
+        static readonly BitmapImage _imgSensorHd = Icons.sensor_hd.ToBitmapImage();
+        static readonly BitmapImage _imgSystemHd = Icons.system_hd.ToBitmapImage();
+        static readonly BitmapImage _imgTrigHd = Icons.trigonometric_hd.ToBitmapImage();
+        static readonly BitmapImage _imgStatisticHd = Icons.statistics_hd.ToBitmapImage();
+        static readonly BitmapImage _imgLogicHd = Icons.logic_hd.ToBitmapImage();
+        static readonly BitmapImage _imgRandomHd = Icons.random_hd.ToBitmapImage();
+        static readonly BitmapImage _imgUiHd = Icons.ui_hd.ToBitmapImage();
 
         static readonly Dictionary<String, ImageEntry> _images = new Dictionary<String, ImageEntry>
         {
@@ -65,11 +66,11 @@
         public IconFactory()
             : base(false)
         {
-            Register<PlotValue>(_ => new BitmapImage(new Uri(@"..\Resources\plot.png", UriKind.Relative)));
-            Register<MatrixValue>(_ => new BitmapImage(new Uri(@"..\Resources\matrix.png", UriKind.Relative)));
-            Register<ScalarValue>(_ => new BitmapImage(new Uri(@"..\Resources\scalar.png", UriKind.Relative)));
-            Register<StringValue>(_ => new BitmapImage(new Uri(@"..\Resources\string.png", UriKind.Relative)));
-            Register<FunctionValue>(_ => new BitmapImage(new Uri(@"..\Resources\function.png", UriKind.Relative)));
+            Register<PlotValue>(_ => Icons.plot.ToBitmapImage());
+            Register<MatrixValue>(_ => Icons.matrix.ToBitmapImage());
+            Register<ScalarValue>(_ => Icons.scalar.ToBitmapImage());
+            Register<StringValue>(_ => Icons._string.ToBitmapImage());
+            Register<FunctionValue>(_ => Icons.function.ToBitmapImage());
         }
 
         #endregion
@@ -107,7 +108,7 @@
 
         protected override BitmapImage CreateDefault()
         {
-            return new BitmapImage(new Uri(@"..\Resources\unknown.png", UriKind.Relative));
+            return Icons.unknown.ToBitmapImage();
         }
 
         #endregion
@@ -122,13 +123,13 @@
 
         public static readonly BitmapImage HeartIcon = new BitmapImage(new Uri(@"Icons\heart.png", UriKind.Relative));
 
-        public static readonly BitmapImage KeywordIcon = new BitmapImage(new Uri(@"..\Resources\keyword_ac.png", UriKind.Relative));
+        public static readonly BitmapImage KeywordIcon = Icons.keyword_ac.ToBitmapImage();
 
-        public static readonly BitmapImage VariableIcon = new BitmapImage(new Uri(@"..\Resources\variable_ac.png", UriKind.Relative));
+        public static readonly BitmapImage VariableIcon = Icons.variable_ac.ToBitmapImage();
 
-        public static readonly BitmapImage FunctionIcon = new BitmapImage(new Uri(@"..\Resources\function_ac.png", UriKind.Relative));
+        public static readonly BitmapImage FunctionIcon = Icons.function_ac.ToBitmapImage();
 
-        public static readonly BitmapImage ConstantIcon = new BitmapImage(new Uri(@"..\Resources\constant_ac.png", UriKind.Relative));
+        public static readonly BitmapImage ConstantIcon = Icons.constant_ac.ToBitmapImage();
 
         #endregion
 

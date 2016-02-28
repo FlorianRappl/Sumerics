@@ -196,7 +196,7 @@
                                     Name="BackButton"
                                     HorizontalAlignment="Left" 
                                     ToolTip="{x:Static res:Messages.MoreToolTip}">
-                                <Image Source="../Resources/back.png" />
+                                <Image Source="../Icons/back.png" />
                             </Button>
                         </Grid>
                     </TabItem>
@@ -223,7 +223,7 @@
                                     Name="InternetBackButton"
                                     HorizontalAlignment="Left"
                                     ToolTip="{x:Static res:Messages.BackToolTip}">
-                                <Image Source="../Resources/back.png" />
+                                <Image Source="../Iconsback.png" />
                             </Button>
                         </Grid>
                     </TabItem>

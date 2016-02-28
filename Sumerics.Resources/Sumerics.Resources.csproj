@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,6 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Icons.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icons.resx</DependentUpon>
+    </Compile>
     <Compile Include="Messages.de.Designer.cs">
       <DependentUpon>Messages.de.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -52,6 +58,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Icons.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Icons.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Messages.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.de.Designer.cs</LastGenOutput>
@@ -60,6 +70,102 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant_ac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\constant_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\conversion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\conversion_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\function.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\function_ac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\function_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\keyword_ac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logic_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\matrix.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\plot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\plot_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\random.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\random_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\scalar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\sensor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\sensor_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\statistics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\statistics_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\string.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\system.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\system_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\trigonometric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\trigonometric_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ui.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ui_hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\variable_ac.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
+      <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
+      <Name>Sumerics.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

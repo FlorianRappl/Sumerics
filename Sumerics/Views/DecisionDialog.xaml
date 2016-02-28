@@ -62,7 +62,7 @@
                     HorizontalAlignment="Right"
                     ToolTip="{x:Static res:Messages.Close}" 
                     Click="CloseClick">
-                <Image Source="../Resources/check.png" />
+                <Image Source="../Icons/check.png" />
             </Button>
         </Grid>
     </Controls:MetroContentControl>

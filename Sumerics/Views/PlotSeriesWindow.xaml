@@ -130,7 +130,7 @@
                     Command="{Binding SaveAndClose}"
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right">
-                <Image Source="../Resources/check.png" />
+                <Image Source="../Icons/check.png" />
             </Button>
         </Grid>
     </Controls:MetroContentControl>
