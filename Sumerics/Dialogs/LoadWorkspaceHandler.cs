@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
+    using Sumerics.Resources;
     using Sumerics.Views;
     using System;
 
@@ -18,9 +19,9 @@
         public void Open(params Object[] parameters)
         {
             var dialog = _container.Obtain<OpenFileWindow>();
-            dialog.Title = "Open workspace ...";
-            dialog.AddFilter("All files (*.*)", "*.*");
-            dialog.AddFilter("Sumerics workspace (*.sws)", "*.sws");
+            dialog.Title = Messages.OpenWorkspace;
+            dialog.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
+            dialog.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
             dialog.ShowDialog();
 
             if (dialog.Accepted)

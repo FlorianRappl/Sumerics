@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
+    using Sumerics.Resources;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
@@ -19,10 +20,10 @@
         public void Open(params Object[] parameters)
         {
             var context = new SaveFileViewModel(Environment.CurrentDirectory);
-            context.AddFilter("Sumerics workspace (*.sws)", "*.sws");
+            context.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
             var dialog = _container.Obtain<SaveFileWindow>();
             dialog.DataContext = context;
-            dialog.Title = "Save workspace as ...";
+            dialog.Title = Messages.SaveWorkspaceAs;
             dialog.ShowDialog();
 
             if (context.Accepted)

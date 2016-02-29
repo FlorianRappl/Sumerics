@@ -565,6 +565,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file {0} does not exist and could not be created. Usually this is due to unsufficients privileges. Try running Sumerics in admin mode or create the file on your own to get rid of this exception..
+        /// </summary>
+        public static string ErrorCannotCreateFile {
+            get {
+                return ResourceManager.GetString("ErrorCannotCreateFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot open file.
         /// </summary>
         public static string ErrorCannotOpenFile {
@@ -1025,6 +1034,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open workspace ....
+        /// </summary>
+        public static string OpenWorkspace {
+            get {
+                return ResourceManager.GetString("OpenWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {
@@ -1349,6 +1367,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save workspace as ....
+        /// </summary>
+        public static string SaveWorkspaceAs {
+            get {
+                return ResourceManager.GetString("SaveWorkspaceAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search help.
         /// </summary>
         public static string SearchHelp {
@@ -1511,6 +1538,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sumerics workspace.
+        /// </summary>
+        public static string SumericsWorkspace {
+            get {
+                return ResourceManager.GetString("SumericsWorkspace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Symbol:.
         /// </summary>
         public static string SymbolLabel {
@@ -1570,6 +1606,15 @@ namespace Sumerics.Resources {
         public static string Undo {
             get {
                 return ResourceManager.GetString("Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unexpected error.
+        /// </summary>
+        public static string UnexpectedError {
+            get {
+                return ResourceManager.GetString("UnexpectedError", resourceCulture);
             }
         }
         

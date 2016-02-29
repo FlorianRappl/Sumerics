@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Dialogs
 {
     using Sumerics.MathInput;
+    using Sumerics.Resources;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
@@ -48,8 +49,8 @@
                     }
                     catch
                     {
-                        var message = String.Format("The file {0} does not exist and could not be created. Usually this is due to unsufficients privileges. Try running Sumerics in admin mode or create the file on your own to get rid of this exception.", file);
-                        OutputDialog.Show("Unexpected error", message);
+                        var message = String.Format(Messages.ErrorCannotCreateFile, file);
+                        OutputDialog.Show(Messages.UnexpectedError, message);
                         return;
                     }
                 }

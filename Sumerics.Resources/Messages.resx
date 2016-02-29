@@ -652,4 +652,19 @@
   <data name="PlotPlaceholder" xml:space="preserve">
     <value>Nothing to visualize yet. Type plot(1:100, rand(100,3)) to generate a simple plot.</value>
   </data>
+  <data name="ErrorCannotCreateFile" xml:space="preserve">
+    <value>The file {0} does not exist and could not be created. Usually this is due to unsufficients privileges. Try running Sumerics in admin mode or create the file on your own to get rid of this exception.</value>
+  </data>
+  <data name="OpenWorkspace" xml:space="preserve">
+    <value>Open workspace ...</value>
+  </data>
+  <data name="SaveWorkspaceAs" xml:space="preserve">
+    <value>Save workspace as ...</value>
+  </data>
+  <data name="SumericsWorkspace" xml:space="preserve">
+    <value>Sumerics workspace</value>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Unexpected error</value>
+  </data>
 </root>
