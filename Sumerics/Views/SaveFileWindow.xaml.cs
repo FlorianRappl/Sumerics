@@ -4,6 +4,7 @@
     using Sumerics.Models;
     using Sumerics.ViewModels;
     using System;
+    using System.IO;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
@@ -14,53 +15,11 @@
     /// </summary>
     public partial class SaveFileWindow : MetroWindow
     {
-        #region Fields
-
-        readonly SaveFileViewModel _vm;
-
-        #endregion
-
         #region ctor
 
-        public SaveFileWindow(SaveFileViewModel vm)
+        public SaveFileWindow()
         {
             InitializeComponent();
-            DataContext = _vm = vm;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the status if the dialog has been accepted.
-        /// </summary>
-        public Boolean Accepted
-        {
-            get { return _vm.Accepted; }
-        }
-
-        /// <summary>
-        /// Gets or sets the currently selected file.
-        /// </summary>
-        public String SelectedFile
-        {
-            get { return _vm.UserSelectedFile.FullName; }
-            set { _vm.FileName = value; }
-        }
-
-        #endregion
-
-        #region Methods
-
-        public void AddFilter(String name, String value)
-        {
-            _vm.AddFilter(name, value);
-        }
-
-        public void RemoveFilter(String name)
-        {
-            _vm.RemoveFilter(name);
         }
 
         #endregion
@@ -87,19 +46,23 @@
         void TextBoxKeyPressed(Object sender, KeyEventArgs e)
         {
             var tb = sender as TextBox;
+            var vm = DataContext as SaveFileViewModel;
 
             if (e.Key == Key.Enter)
             {
-                _vm.FileName = tb.Text;
-                var path = _vm.CurrentDirectory.FullName + "\\" + _vm.FileName;
+                if (vm != null)
+                {
+                    vm.FileName = tb.Text;
+                    var path = vm.CurrentDirectory.FullName + "\\" + vm.FileName;
 
-                if (System.IO.Directory.Exists(path))
-                {
-                    _vm.CurrentDirectory = new FolderModel(path);
-                }
-                else if (_vm.CanAccept)
-                {
-                    _vm.Accept.Execute(this);
+                    if (Directory.Exists(path))
+                    {
+                        vm.CurrentDirectory = new FolderModel(path);
+                    }
+                    else if (vm.CanAccept)
+                    {
+                        vm.Accept.Execute(this);
+                    }
                 }
             }
             else if (e.Key == Key.Escape)
@@ -111,7 +74,12 @@
         void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            _vm.CanAccept = !tb.Text.Equals(String.Empty) && _vm.IsValid(tb.Text);
+            var vm = DataContext as SaveFileViewModel;
+
+            if (tb != null && vm != null)
+            {
+                vm.CanAccept = !tb.Text.Equals(String.Empty) && vm.IsValid(tb.Text);
+            }
         }
 
         #endregion

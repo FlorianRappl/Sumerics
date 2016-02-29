@@ -87,15 +87,18 @@
 
         public void SaveAs()
         {
-            var vm = new SaveFileViewModel(Environment.CurrentDirectory);
-            var dialog = new SaveFileWindow(vm);
-            dialog.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
-            dialog.AddFilter(Messages.Textfile + " (*.txt)", "*.txt");
+            var context = new SaveFileViewModel(Environment.CurrentDirectory);
+            context.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
+            context.AddFilter(Messages.Textfile + " (*.txt)", "*.txt");
+            var dialog = new SaveFileWindow
+            {
+                DataContext = context
+            };
             dialog.ShowDialog();
 
-            if (dialog.Accepted)
+            if (context.Accepted)
             {
-                SaveText(dialog.SelectedFile);
+                SaveText(context.SelectedFile.FullName);
             }
         }
 
