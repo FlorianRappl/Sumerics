@@ -20,7 +20,7 @@
                 _panel = new MathInputControl();
                 _panel.SetCaptionText(caption);
                 _panel.EnableExtendedButtons(true);
-                _panel.Insert += InsertMathInputPanel;
+                _panel.Insert += Insert;
                 _panel.Close += Close;
                 IsAvailable = true;
             }
@@ -54,7 +54,7 @@
             }
         }
 
-        void InsertMathInputPanel(String query)
+        void Insert(String query)
         {
 #pragma warning disable 467
             _panel.Clear();

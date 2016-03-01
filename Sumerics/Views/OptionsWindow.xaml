@@ -7,7 +7,7 @@
                       ResizeMode="NoResize" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
-                      x:Name="MyOptionsWindow" 
+                      x:Name="ParentWindow" 
                       Title="{x:Static res:Messages.Options}"
                       Height="600"
                       Width="700">
@@ -289,7 +289,7 @@
 
             <Button Style="{DynamicResource MetroCircleButton}" 
                     Grid.Row="1"
-                    CommandParameter="{Binding ElementName=MyOptionsWindow}"
+                    CommandParameter="{Binding ElementName=ParentWindow}"
                     Grid.Column="1"
                     Width="40"
                     Height="40" 

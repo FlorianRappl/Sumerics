@@ -3,13 +3,21 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Sumerics" 
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       Title="{x:Static res:Messages.InputRequired}"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
+                      x:Name="ParentWindow"
                       ResizeMode="NoResize"
                       Height="200" 
                       Width="450">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding Cleanup}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Window.Resources>
         <ResourceDictionary>
@@ -40,13 +48,14 @@
                    Grid.RowSpan="3" 
                    VerticalAlignment="Top" />
 
-            <TextBlock Name="Message" 
+            <TextBlock Text="{Binding UserMessage}" 
                        FontSize="20" 
                        Grid.Column="1"
                        TextWrapping="Wrap"
                        VerticalAlignment="Center" />
 
             <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.InputHint}" 
+                     Text="{Binding UserInput}"
                      Name="Input" 
                      FontSize="20"
                      TabIndex="0"
@@ -57,25 +66,27 @@
                      PreviewKeyDown="TextBoxEnter" />
 
             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
+                    Visibility="{Binding DrawInputVisibility}"
                     Width="40" 
                     Margin="0 5 0 0" 
                     Grid.Column="1"
                     Grid.Row="2" 
                     HorizontalAlignment="Left" 
                     ToolTip="{x:Static res:Messages.DrawInputToolTip}" 
-                    Click="DrawClick" 
-                    x:Name="DrawInput">                
+                    Command="{Binding DrawInput}">                
                 <Image Source="../Icons/pen.png" />
             </Button>
 
             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
+                    x:Name="ConfirmButton"
                     Width="40" 
                     Margin="0 5 0 0" 
                     Grid.Column="1"
                     Grid.Row="2" 
                     HorizontalAlignment="Right" 
-                    ToolTip="{x:Static res:Messages.Close}" 
-                    Click="CloseClick">
+                    ToolTip="{x:Static res:Messages.Close}"
+                    CommandParameter="{Binding ElementName=ParentWindow}"
+                    Command="{Binding Confirm}">
                 <Image Source="../Icons/check.png" />
             </Button>
         </Grid>

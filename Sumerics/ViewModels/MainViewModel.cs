@@ -359,8 +359,15 @@
             App.Current.Dispatcher.Invoke(() =>
             {
                 var service = Container.Get<IMathInputService>();
-                var input = new InputDialog(service) { UserMessage = e.Message };
-                input.Closed += (s, ev) => e.Continue(input.UserInput);
+                var context = new InputViewModel(service);
+
+                if (!String.IsNullOrEmpty(e.Message))
+                {
+                    context.UserMessage = e.Message;
+                }
+
+                var input = new InputDialog { DataContext = context };
+                input.Closed += (s, ev) => e.Continue(context.Result);
                 input.Show();
             });
         }
