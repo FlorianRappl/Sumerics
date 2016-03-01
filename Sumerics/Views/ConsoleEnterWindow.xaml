@@ -5,6 +5,7 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
                       Icon="../Icons/Sumerics.png" 
+                      x:Name="Window"
                       WindowStartupLocation="CenterOwner"
                       ResizeMode="NoResize"
                       Title="{x:Static res:Messages.EnterQuickStatement}" 
@@ -31,7 +32,8 @@
             </Grid.RowDefinitions>
 
             <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.PlaceTheStatement}" 
-                     Name="Input" 
+                     Text="{Binding Input}"
+                     x:Name="InputBox"
                      FontSize="20"
                      TabIndex="0"
                      PreviewKeyDown="TextBoxEnter" 
@@ -39,11 +41,13 @@
 
             <Button Style="{DynamicResource MetroCircleButtonStyle}" 
                     Width="40" 
-                    Margin="0,5,0,0"
+                    x:Name="OkButton"
+                    Command="{Binding Evaluate}"
+                    CommandParameter="{Binding ElementName=Window}"
+                    Margin="0 5 0 0"
                     Grid.Row="1" 
                     HorizontalAlignment="Right" 
-                    ToolTip="{x:Static res:Messages.EvaluateInput}"
-                    Click="EvaluateClick">
+                    ToolTip="{x:Static res:Messages.EvaluateInput}">
                 <Image Source="../Icons/check.png" />
             </Button>
         </Grid>

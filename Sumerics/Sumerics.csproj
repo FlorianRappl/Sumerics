@@ -196,6 +196,7 @@
     <Compile Include="Managers\SensorManager.cs" />
     <Compile Include="Models\OptionsModel.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="ViewModels\ConsoleEnterViewModel.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="Proxies\TabProxy.cs" />
     <Compile Include="Proxies\VisualizerProxy.cs" />

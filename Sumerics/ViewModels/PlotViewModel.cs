@@ -40,7 +40,8 @@
 
         public void OpenConsole()
         {
-            var window = new ConsoleEnterWindow(_console);
+            var context = new ConsoleEnterViewModel(_console);
+            var window = new ConsoleEnterWindow { DataContext = context };
             window.ShowDialog();
         }
 
