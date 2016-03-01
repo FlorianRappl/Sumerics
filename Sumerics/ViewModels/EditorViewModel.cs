@@ -43,16 +43,17 @@
             });
             _open = new RelayCommand(x =>
             {
-                var vm = new OpenFileViewModel(Environment.CurrentDirectory);
-                var dialog = new OpenFileWindow(vm);
+                var context = new OpenFileViewModel();
+                context.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
+                context.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
+                var dialog = new OpenFileWindow();
+                dialog.DataContext = context;
                 dialog.Title = Messages.OpenFile;
-                dialog.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
-                dialog.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
                 dialog.ShowDialog();
 
-                if (dialog.Accepted)
+                if (context.Accepted)
                 {
-                    OpenFile(dialog.SelectedFile);
+                    OpenFile(context.SelectedFile.FullName);
                 }
             });
         }

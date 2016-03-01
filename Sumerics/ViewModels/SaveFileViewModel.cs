@@ -18,6 +18,11 @@
 
         #region ctor
 
+        public SaveFileViewModel()
+            : this(Environment.CurrentDirectory)
+        {
+        }
+
         public SaveFileViewModel(String startFileOrFolder)
         {
             _fileName = String.Empty;

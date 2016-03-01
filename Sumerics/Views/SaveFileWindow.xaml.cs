@@ -53,7 +53,7 @@
                 if (vm != null)
                 {
                     vm.FileName = tb.Text;
-                    var path = vm.CurrentDirectory.FullName + "\\" + vm.FileName;
+                    var path = Path.Combine(vm.CurrentDirectory.FullName, vm.FileName);
 
                     if (Directory.Exists(path))
                     {

@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Dialogs
 {
     using Sumerics.Resources;
+    using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
 
@@ -18,15 +19,17 @@
 
         public void Open(params Object[] parameters)
         {
+            var context = new OpenFileViewModel();
+            context.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
+            context.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
             var dialog = _container.Obtain<OpenFileWindow>();
+            dialog.Content = context;
             dialog.Title = Messages.OpenWorkspace;
-            dialog.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
-            dialog.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
             dialog.ShowDialog();
 
-            if (dialog.Accepted)
+            if (context.Accepted)
             {
-                _kernel.LoadWorkspaceAsync(dialog.SelectedFile);
+                _kernel.LoadWorkspaceAsync(context.SelectedFile.FullName);
             }
         }
 

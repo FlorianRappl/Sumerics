@@ -19,7 +19,7 @@
 
         public void Open(params Object[] parameters)
         {
-            var context = new SaveFileViewModel(Environment.CurrentDirectory);
+            var context = new SaveFileViewModel();
             context.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
             var dialog = _container.Obtain<SaveFileWindow>();
             dialog.DataContext = context;

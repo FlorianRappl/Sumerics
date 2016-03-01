@@ -8,6 +8,11 @@
     {
         #region ctor
 
+        public OpenFileViewModel()
+            : this(Environment.CurrentDirectory)
+        {
+        }
+
         public OpenFileViewModel(String startFileOrFolder)
         {
             if (File.Exists(startFileOrFolder))
