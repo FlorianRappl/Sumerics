@@ -22,8 +22,8 @@
             {
                 var settings = _container.Get<ISettings>();
                 var dialogs = _container.Get<IDialogManager>();
-                var vm = new OptionsViewModel(settings, dialogs);
-                current = new OptionsWindow(vm);
+                var context = new OptionsViewModel(settings, dialogs);
+                current = new OptionsWindow { DataContext = context };
             }
 
             current.Show();

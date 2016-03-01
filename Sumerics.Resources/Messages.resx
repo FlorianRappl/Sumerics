@@ -667,4 +667,16 @@
   <data name="UnexpectedError" xml:space="preserve">
     <value>Unexpected error</value>
   </data>
+  <data name="InputRequestedLabel" xml:space="preserve">
+    <value>Your input has been requested:</value>
+  </data>
+  <data name="DrawInput" xml:space="preserve">
+    <value>Draw input</value>
+  </data>
+  <data name="DecisionRequiredLabel" xml:space="preserve">
+    <value>Your decision is required:</value>
+  </data>
+  <data name="OnlyChoice" xml:space="preserve">
+    <value>The only choice.</value>
+  </data>
 </root>

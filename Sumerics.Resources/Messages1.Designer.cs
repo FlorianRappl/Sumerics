@@ -394,6 +394,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your decision is required:.
+        /// </summary>
+        public static string DecisionRequiredLabel {
+            get {
+                return ResourceManager.GetString("DecisionRequiredLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -435,6 +444,15 @@ namespace Sumerics.Resources {
         public static string DrawExpression {
             get {
                 return ResourceManager.GetString("DrawExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Draw input.
+        /// </summary>
+        public static string DrawInput {
+            get {
+                return ResourceManager.GetString("DrawInput", resourceCulture);
             }
         }
         
@@ -791,6 +809,15 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your input has been requested:.
+        /// </summary>
+        public static string InputRequestedLabel {
+            get {
+                return ResourceManager.GetString("InputRequestedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input Required.
         /// </summary>
         public static string InputRequired {
@@ -994,6 +1021,15 @@ namespace Sumerics.Resources {
         public static string NoUsagesAvailable {
             get {
                 return ResourceManager.GetString("NoUsagesAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The only choice..
+        /// </summary>
+        public static string OnlyChoice {
+            get {
+                return ResourceManager.GetString("OnlyChoice", resourceCulture);
             }
         }
         

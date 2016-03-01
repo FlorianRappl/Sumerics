@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
+    using Sumerics.Resources;
     using System;
     using System.Windows;
     using System.Windows.Input;
@@ -31,8 +32,8 @@
         public static Int32 Show(String message, String[] decisions)
         {
             var inp = new DecisionDialog();
-            inp.Message.Text = String.IsNullOrEmpty(message) ? "Your decision is required:" : message;
-            inp.Input.ItemsSource = decisions != null && decisions.Length > 0 ? decisions : new [] { "The only choice." };
+            inp.Message.Text = String.IsNullOrEmpty(message) ? Messages.DecisionRequiredLabel : message;
+            inp.Input.ItemsSource = decisions != null && decisions.Length > 0 ? decisions : new [] { Messages.OnlyChoice };
             inp.Input.SelectedIndex = 0;
             inp.ShowDialog();
             return inp.UserDecision;

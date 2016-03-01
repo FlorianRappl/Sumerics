@@ -35,9 +35,9 @@
                 Inclinometer = settings.Inclinometer,
                 Light = settings.Light
             };
-            _save = new RelayCommand(x =>
+            _save = new RelayCommand(obj =>
             {
-                var window = x as OptionsWindow;
+                var window = obj as OptionsWindow;
                 settings.LiveSensorData = _options.LiveSensorData;
                 settings.ConsoleFontSize = _options.ConsoleFontSize;
                 settings.LiveSensorHistory = _options.LiveSensorHistory;

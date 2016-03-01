@@ -97,7 +97,7 @@
             if (e.Key == Key.Enter)
             {
                 _vm.FileName = tb.Text;
-                var path = _vm.CurrentDirectory.FullName + "\\" + _vm.FileName;
+                var path = Path.Combine(_vm.CurrentDirectory.FullName, _vm.FileName);
 
                 if (Directory.Exists(path))
                 {

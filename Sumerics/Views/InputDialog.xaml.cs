@@ -3,6 +3,7 @@
     using MahApps.Metro.Controls;
     using Sumerics.Controls;
     using Sumerics.MathInput;
+    using Sumerics.Resources;
     using System;
     using System.ComponentModel;
     using System.Windows;
@@ -26,7 +27,7 @@
         {
             InitializeComponent();
             UserInput = String.Empty;
-            _panel = new MathInputPanelWrapper("Draw input");
+            _panel = new MathInputPanelWrapper(Messages.DrawInput);
             _service = service;
 
             if (_panel.IsAvailable)
@@ -70,7 +71,7 @@
         public static String Show(IMathInputService service, String message)
         {
             var inp = new InputDialog(service);
-            inp.UserMessage = String.IsNullOrEmpty(message) ? "Your input has been requested:" : message;
+            inp.UserMessage = String.IsNullOrEmpty(message) ? Messages.InputRequestedLabel : message;
             inp.ShowDialog();
             return inp.UserInput;
         }
