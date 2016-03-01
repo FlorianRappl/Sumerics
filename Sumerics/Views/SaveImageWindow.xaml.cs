@@ -15,57 +15,11 @@
     /// </summary>
     public partial class SaveImageWindow : MetroWindow
     {
-        #region Fields
-
-        readonly SaveImageViewModel _vm;
-
-        #endregion
-
         #region ctor
 
-        public SaveImageWindow(SaveImageViewModel vm)
+        public SaveImageWindow()
         {
             InitializeComponent();
-            DataContext = _vm = vm;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the status if the dialog has been accepted.
-        /// </summary>
-        public Boolean Accepted
-        {
-            get { return _vm.Accepted; }
-        }
-
-        /// <summary>
-        /// Gets or sets the currently selected file.
-        /// </summary>
-        public String SelectedFile
-        {
-            get { return _vm.UserSelectedFile.FullName; }
-            set { _vm.FileName = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets currently selected the image width.
-        /// </summary>
-        public Int32 ImageWidth
-        {
-            get { return _vm.ImageWidth; }
-            set { _vm.ImageWidth = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets the currently selected image height.
-        /// </summary>
-        public Int32 ImageHeight
-        {
-            get { return _vm.ImageHeight; }
-            set { _vm.ImageHeight = value; }
         }
 
         #endregion
@@ -96,16 +50,21 @@
 
             if (e.Key == Key.Enter)
             {
-                _vm.FileName = tb.Text;
-                var path = Path.Combine(_vm.CurrentDirectory.FullName, _vm.FileName);
+                var vm = DataContext as SaveImageViewModel;
 
-                if (Directory.Exists(path))
+                if (vm != null)
                 {
-                    _vm.CurrentDirectory = new FolderModel(path);
-                }
-                else if (_vm.CanAccept)
-                {
-                    _vm.Accept.Execute(this);
+                    vm.FileName = tb.Text;
+                    var path = Path.Combine(vm.CurrentDirectory.FullName, vm.FileName);
+
+                    if (Directory.Exists(path))
+                    {
+                        vm.CurrentDirectory = new FolderModel(path);
+                    }
+                    else if (vm.CanAccept)
+                    {
+                        vm.Accept.Execute(this);
+                    }
                 }
             }
             else if (e.Key == Key.Escape)
@@ -117,7 +76,12 @@
         void TextBoxChanged(Object sender, TextChangedEventArgs e)
         {
             var tb = sender as TextBox;
-            _vm.CanAccept = !tb.Text.Equals(String.Empty) && _vm.IsValid(tb.Text);
+            var vm = DataContext as SaveImageViewModel;
+
+            if (tb != null && vm != null)
+            {
+                vm.CanAccept = !tb.Text.Equals(String.Empty) && vm.IsValid(tb.Text);
+            }
         }
 
         #endregion

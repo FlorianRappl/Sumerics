@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
+    using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
 
@@ -15,12 +16,14 @@
 
         public void Open(params Object[] parameters)
         {
+            var context = new FolderBrowseViewModel();
             var dialog = _container.Obtain<FolderBrowseWindow>();
+            dialog.DataContext = context;
             dialog.ShowDialog();
 
-            if (dialog.Accepted)
+            if (context.Accepted)
             {
-                Environment.CurrentDirectory = dialog.SelectedDirectory;
+                Environment.CurrentDirectory = context.SelectedDirectory.FullName;
             }
         }
 

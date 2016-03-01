@@ -1,8 +1,6 @@
 ﻿namespace Sumerics.Views
 {
     using MahApps.Metro.Controls;
-    using Sumerics.Models;
-    using Sumerics.ViewModels;
     using System;
     using System.Threading.Tasks;
     using System.Windows;
@@ -13,34 +11,12 @@
 	/// </summary>
 	public partial class FolderBrowseWindow : MetroWindow
     {
-        #region Fields
-
-        readonly FolderBrowseViewModel _vm;
-
-        #endregion
-
         #region ctor
 
-        public FolderBrowseWindow(FolderBrowseViewModel vm)
+        public FolderBrowseWindow()
         {
 			InitializeComponent();
-            DataContext = _vm = vm;
 		}
-
-        #endregion
-
-        #region Properties
-
-        public Boolean Accepted
-        {
-            get { return _vm.Accepted; }
-        }
-
-        public String SelectedDirectory
-        {
-            get { return _vm.SelectedDirectory.FullName; }
-            set { _vm.SelectedDirectory = new FolderModel(value); }
-        }
 
         #endregion
 

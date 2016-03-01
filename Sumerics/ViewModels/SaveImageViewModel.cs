@@ -14,6 +14,11 @@
 
         #region ctor
 
+        public SaveImageViewModel()
+            : this(Environment.CurrentDirectory)
+        {
+        }
+
         public SaveImageViewModel(String startFileOrFolder)
             : base(startFileOrFolder)
         {

@@ -21,6 +21,11 @@
 
         #region ctor
 
+        public FolderBrowseViewModel()
+            : this(Environment.CurrentDirectory)
+        {
+        }
+
         public FolderBrowseViewModel(String startFolder)
         {
             CanAccept = true;

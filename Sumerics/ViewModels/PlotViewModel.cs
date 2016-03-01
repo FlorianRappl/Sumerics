@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Models;
     using Sumerics.Resources;
     using Sumerics.Views;
     using System;
@@ -95,23 +96,24 @@
 
         public void SavePlot()
         {
-            var vm = new SaveImageViewModel(Environment.CurrentDirectory);
-            var dialog = new SaveImageWindow(vm);
-            dialog.ImageWidth = 640;
-            dialog.ImageHeight = 480;
+            var context = new SaveImageViewModel();
+            context.ImageWidth = 640;
+            context.ImageHeight = 480;
+            var dialog = new SaveImageWindow { DataContext = context };
             dialog.Title = Messages.SavePlotAs;
 
             if (!String.IsNullOrEmpty(_plot.Title))
             {
-                dialog.SelectedFile = _plot.Title;
+                context.SelectedFile = new FileModel(_plot.Title);
             }
 
             dialog.ShowDialog();
 
-            if (dialog.Accepted)
+            if (context.Accepted)
             {
-                //frame.ExportPlot(dialog.SelectedFile, dialog.ImageWidth, dialog.ImageHeight);
-                var filename = Path.GetFileName(dialog.SelectedFile);
+                var path = context.SelectedFile.FullName;
+                //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
+                var filename = Path.GetFileName(path);
                 var info = String.Format(Messages.PlotSavedMessage, filename);
                 OutputDialog.Show(Messages.FileCreated, info);
             }
