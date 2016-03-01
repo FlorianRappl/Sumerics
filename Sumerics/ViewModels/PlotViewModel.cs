@@ -50,14 +50,14 @@
         {
             if (_plot is XYPlotValue)
             {
-                var vm = new PlotSettingsViewModel((XYPlotValue)_plot);
-                var window = new PlotSettingsWindow(vm);
+                var context = new PlotSettingsViewModel((XYPlotValue)_plot);
+                var window = new PlotSettingsWindow { DataContext = context };
                 window.ShowDialog();
             }
             else if (_plot is SubPlotValue)
             {
-                var vm = new SubPlotSettingsViewModel((SubPlotValue)_plot);
-                var window = new SubPlotSettingsWindow(vm);
+                var context = new SubPlotSettingsViewModel((SubPlotValue)_plot);
+                var window = new SubPlotSettingsWindow { DataContext = context };
                 window.ShowDialog();
             }
         }
@@ -66,20 +66,20 @@
         {
             if (_plot is ContourPlotValue)
             {
-                var vm = new ContourViewModel((ContourPlotValue)_plot);
-                var window = new ContourSeriesWindow(vm);
+                var context = new ContourViewModel((ContourPlotValue)_plot);
+                var window = new ContourSeriesWindow { DataContext = context };
                 window.ShowDialog();
             }
             else if (_plot is HeatmapPlotValue)
             {
-                var vm = new HeatmapViewModel((HeatmapPlotValue)_plot);
-                var window = new HeatSeriesWindow(vm);
+                var context = new HeatmapViewModel((HeatmapPlotValue)_plot);
+                var window = new HeatSeriesWindow { DataContext = context };
                 window.ShowDialog();
             }
             else if (_plot is XYPlotValue)
             {
-                var vm = new SeriesViewModel((XYPlotValue)_plot);
-                var window = new PlotSeriesWindow(vm);
+                var context = new SeriesViewModel((XYPlotValue)_plot);
+                var window = new PlotSeriesWindow { DataContext = context };
                 window.ShowDialog();
             }
         }
