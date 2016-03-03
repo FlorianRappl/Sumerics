@@ -7,7 +7,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
-    using System.Windows.Input;
     using YAMP;
 
     /// <summary>
@@ -49,7 +48,19 @@
                 Items.Add(item);
             }
 
-            Control = new EditorControl { DataContext = this };
+            Control = new EditorControl 
+            { 
+                DataContext = this,
+                OpenFileCommand = _parent.Open,
+                NewFileCommand = _parent.Create,
+                AutoCompleteItems = Items,
+                SaveAsCommand = new RelayCommand(_ => SaveAs()),
+                SaveCommand = new RelayCommand(_ => Save()),
+                CloseCommand = new RelayCommand(_ => Close()),
+                CompileCommand = new RelayCommand(_ => Compile()),
+                ExecuteCommand = new RelayCommand(_ => Execute()),
+                MathConverter = _parent.Service.ConvertToYamp,
+            };
         }
 
         public EditorFileViewModel(EditorViewModel parent, Kernel kernel, String path)
@@ -62,16 +73,6 @@
         #endregion
 
         #region Commands
-
-        public ICommand NewFile
-        {
-            get { return _parent.Create; }
-        }
-
-        public ICommand OpenFile
-        {
-            get { return _parent.Open; }
-        }
 
         public void Save()
         {
@@ -275,11 +276,6 @@
         #endregion
 
         #region Methods
-
-        public String TransformMathML(String query)
-        {
-            return _parent.Service.ConvertToYamp(query);
-        }
 
         void ReadText()
         {
