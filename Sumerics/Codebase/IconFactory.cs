@@ -115,13 +115,13 @@
 
         #region Properties
 
-        public static readonly BitmapImage FolderIcon = new BitmapImage(new Uri(@"Icons\folder.png", UriKind.Relative));
+        public static readonly BitmapImage FolderIcon = new BitmapImage(new Uri(@"..\Icons\folder.png", UriKind.Relative));
 
-        public static readonly BitmapImage FileIcon = new BitmapImage(new Uri(@"Icons\file.png", UriKind.Relative));
+        public static readonly BitmapImage FileIcon = new BitmapImage(new Uri(@"..\Icons\file.png", UriKind.Relative));
 
-        public static readonly BitmapImage HomeIcon = new BitmapImage(new Uri(@"Icons\home.png", UriKind.Relative));
+        public static readonly BitmapImage HomeIcon = new BitmapImage(new Uri(@"..\Icons\home.png", UriKind.Relative));
 
-        public static readonly BitmapImage HeartIcon = new BitmapImage(new Uri(@"Icons\heart.png", UriKind.Relative));
+        public static readonly BitmapImage HeartIcon = new BitmapImage(new Uri(@"..\Icons\heart.png", UriKind.Relative));
 
         public static readonly BitmapImage KeywordIcon = Icons.keyword_ac.ToBitmapImage();
 
