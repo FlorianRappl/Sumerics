@@ -52,7 +52,8 @@
                 }
                 else
                 {
-                    SelectedFile = new FileModel(CurrentDirectory.FullName + "\\" + value);
+                    var path = Path.Combine(CurrentDirectory.FullName, value);
+                    SelectedFile = new FileModel(path);
                 }
             }
         }

@@ -26,12 +26,13 @@
                 var kernel = _container.Get<Kernel>();
                 var console = _container.Get<IConsole>();
                 var service = _container.Get<IMathInputService>();
-                var vm = new EditorViewModel(kernel, console, service);
-                editor = new EditorWindow(vm);
+                var context = new EditorViewModel(kernel, console, service);
+                editor = new EditorWindow { DataContext = context };
             }
 
             if (parameters.Length == 1 && parameters[0] is String)
             {
+                var context = editor.DataContext as EditorViewModel;
                 var file = (String)parameters[0];
 
                 if (!File.Exists(file))
@@ -55,7 +56,10 @@
                     }
                 }
 
-                editor.OpenFile(file);
+                if (context != null)
+                {
+                    context.OpenFile(file);
+                }
             }
             
             editor.Show();

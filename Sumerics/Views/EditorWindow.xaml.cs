@@ -11,18 +11,18 @@
     /// </summary>
     public partial class EditorWindow : MetroWindow
     {
-        readonly EditorViewModel _vm;
-
-        public EditorWindow(EditorViewModel vm)
+        public EditorWindow()
         {
             InitializeComponent();
-            DataContext = _vm = vm;
-            Closing += (s, ev) => ev.Cancel = _vm.CloseAll();
-        }
+            Closing += (s, ev) =>
+            {
+                var vm = DataContext as EditorViewModel;
 
-        public void OpenFile(String file)
-        {
-            _vm.OpenFile(file);
+                if (vm != null)
+                {
+                    ev.Cancel = vm.CloseAll();
+                }
+            };
         }
 
         async void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)
