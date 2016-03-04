@@ -115,11 +115,12 @@
                 //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
                 var filename = Path.GetFileName(path);
                 var message = String.Format(Messages.PlotSavedMessage, filename);
-                var dialog = new OutputDialog
-                {
-                    DataContext = new OutputViewModel { Title = Messages.FileCreated, Message = message }
+                var output = new OutputViewModel 
+                { 
+                    Title = Messages.FileCreated, 
+                    Message = message 
                 };
-                dialog.Show();
+                output.ShowWindow();
             }
         }
 

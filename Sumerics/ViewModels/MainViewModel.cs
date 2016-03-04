@@ -366,9 +366,9 @@
                     context.UserMessage = e.Message;
                 }
 
-                var input = new InputDialog { DataContext = context };
-                input.Closed += (s, ev) => e.Continue(context.Result);
-                input.Show();
+                var window = WindowFactory.Instance.Create(context);
+                window.Closed += (s, ev) => e.Continue(context.Result);
+                window.Show();
             });
         }
 

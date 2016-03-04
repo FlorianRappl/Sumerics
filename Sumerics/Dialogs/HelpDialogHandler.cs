@@ -4,6 +4,7 @@
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
+    using System.Windows;
     using YAMP.Help;
 
     [DialogType(Dialog.Help)]
@@ -18,14 +19,14 @@
 
         public void Open(params Object[] parameters)
         {
-            var window = DialogExtensions.Get<HelpWindow>();
+            Window window = DialogExtensions.Get<HelpWindow>();
 
             if (window == null)
             {
                 var kernel = _container.Get<IKernel>() as Kernel;
                 var commands = _container.Get<ICommandFactory>();
-                var model = new DocumentationViewModel(kernel.Help, commands);
-                window = new HelpWindow { DataContext = model };
+                var context = new DocumentationViewModel(kernel.Help, commands);
+                window = WindowFactory.Instance.Create(context);
             }
 
             if (parameters.Length == 1 && parameters[0] is HelpSection)

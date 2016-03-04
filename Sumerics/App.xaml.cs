@@ -2,7 +2,6 @@
 {
     using Sumerics.Resources;
     using Sumerics.ViewModels;
-    using Sumerics.Views;
     using System;
     using System.Windows;
     using System.Windows.Threading;
@@ -24,18 +23,14 @@
         {
             _app.RegisterAssemblies();
             var vm = new MainViewModel(_app.Components, _app.Kernel);
-            var window = new MainWindow(vm);
-            window.Show();
+            vm.ShowWindow();
         }
 
         void HandleUnhandledException(Object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             _app.Components.All<ILogger>().ForEach(logger => logger.Error(e.Exception));
-            var dialog = new OutputDialog
-            {
-                DataContext = new OutputViewModel { Title = Messages.Exception, Message = e.Exception.Message }
-            };
-            dialog.Show();
+            var vm = new OutputViewModel { Title = Messages.Exception, Message = e.Exception.Message };
+            vm.ShowDialog();
             e.Handled = true;
         }
     }

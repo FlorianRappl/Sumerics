@@ -6,6 +6,7 @@
     using Sumerics.Views;
     using System;
     using System.IO;
+    using System.Windows;
 
     [DialogType(Dialog.Editor)]
     sealed class EditorDialogHandler : IDialogHandler
@@ -19,7 +20,7 @@
 
         public void Open(params Object[] parameters)
         {
-            var editor = DialogExtensions.Get<EditorWindow>();
+            var editor = DialogExtensions.Get<EditorWindow>() as Window;
 
             if (editor == null)
             {
@@ -27,7 +28,7 @@
                 var console = _container.Get<IConsole>();
                 var service = _container.Get<IMathInputService>();
                 var context = new EditorViewModel(kernel, console, service);
-                editor = new EditorWindow { DataContext = context };
+                editor = WindowFactory.Instance.Create(context);
             }
 
             if (parameters.Length == 1 && parameters[0] is String)
@@ -51,15 +52,12 @@
                     catch
                     {
                         var message = String.Format(Messages.ErrorCannotCreateFile, file);
-                        var dialog = new OutputDialog
-                        {
-                            DataContext = new OutputViewModel 
-                            { 
-                                Message = message, 
-                                Title = Messages.UnexpectedError 
-                            }
+                        var output = new OutputViewModel 
+                        { 
+                            Message = message, 
+                            Title = Messages.UnexpectedError 
                         };
-                        dialog.Show();
+                        output.ShowWindow();
                         return;
                     }
                 }

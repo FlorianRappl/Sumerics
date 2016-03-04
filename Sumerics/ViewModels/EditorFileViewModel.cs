@@ -321,11 +321,12 @@
 
         static void ShowOutputDialog(String title, String message)
         {
-            var dialog = new OutputDialog
-            {
-                DataContext = new OutputViewModel { Message = message, Title = title }
+            var output = new OutputViewModel 
+            { 
+                Message = message, 
+                Title = title 
             };
-            dialog.Show();
+            output.ShowWindow();
         }
 
         #endregion

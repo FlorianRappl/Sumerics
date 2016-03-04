@@ -1,4 +1,4 @@
-﻿namespace Sumerics.Codebase
+﻿namespace Sumerics
 {
     using Sumerics.ViewModels;
     using Sumerics.Views;
@@ -6,7 +6,7 @@
 
     sealed class WindowFactory : TypeFactory<BaseViewModel, Window>
     {
-        public WindowFactory()
+        private WindowFactory()
         {
             Register<MainViewModel>(ctx => new MainWindow(ctx));
             Register<AboutViewModel>(ctx => new AboutWindow { DataContext = ctx });
@@ -25,6 +25,8 @@
             Register<PlotSettingsViewModel>(ctx => new PlotSettingsWindow { DataContext = ctx });
             Register<SubPlotSettingsViewModel>(ctx => new SubPlotSettingsWindow { DataContext = ctx });
         }
+
+        public static WindowFactory Instance = new WindowFactory();
 
         protected override Window CreateDefault()
         {

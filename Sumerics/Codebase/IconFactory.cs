@@ -63,7 +63,7 @@
 
         #region ctor
 
-        public IconFactory()
+        private IconFactory()
             : base(false)
         {
             Register<PlotValue>(_ => Icons.plot.ToBitmapImage());
@@ -114,6 +114,8 @@
         #endregion
 
         #region Properties
+
+        public static readonly IconFactory Instance = new IconFactory();
 
         public static readonly BitmapImage FolderIcon = new BitmapImage(new Uri(@"..\Icons\folder.png", UriKind.Relative));
 

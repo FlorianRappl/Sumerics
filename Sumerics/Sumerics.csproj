@@ -192,6 +192,7 @@
     <Compile Include="Dialogs\LoadWorkspaceHandler.cs" />
     <Compile Include="Dialogs\OptionsDialogHandler.cs" />
     <Compile Include="Dialogs\SaveWorkspaceDialogHandler.cs" />
+    <Compile Include="Extensions\BaseViewModelExtensions.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WebBrowserExtensions.cs" />
     <Compile Include="Managers\SensorManager.cs" />
