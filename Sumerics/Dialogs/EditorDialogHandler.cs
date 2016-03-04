@@ -51,7 +51,15 @@
                     catch
                     {
                         var message = String.Format(Messages.ErrorCannotCreateFile, file);
-                        OutputDialog.Show(Messages.UnexpectedError, message);
+                        var dialog = new OutputDialog
+                        {
+                            DataContext = new OutputViewModel 
+                            { 
+                                Message = message, 
+                                Title = Messages.UnexpectedError 
+                            }
+                        };
+                        dialog.Show();
                         return;
                     }
                 }

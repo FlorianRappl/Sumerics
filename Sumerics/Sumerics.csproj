@@ -204,6 +204,7 @@
     <Compile Include="Managers\DialogManager.cs" />
     <Compile Include="Proxies\SettingsProxy.cs" />
     <Compile Include="SumericsApp.cs" />
+    <Compile Include="ViewModels\OutputViewModel.cs" />
     <Compile Include="ViewModels\QueryResultViewModel.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

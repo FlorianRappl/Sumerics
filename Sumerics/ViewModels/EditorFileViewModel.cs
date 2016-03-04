@@ -286,7 +286,7 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show(Messages.ErrorCannotOpenFile, ex.Message);
+                ShowOutputDialog(Messages.ErrorCannotOpenFile, ex.Message);
             }
         }
 
@@ -299,7 +299,7 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show(Messages.ErrorCannotSaveFile, ex.Message);
+                ShowOutputDialog(Messages.ErrorCannotSaveFile, ex.Message);
             }
         }
 
@@ -315,8 +315,17 @@
             }
             catch (Exception ex)
             {
-                OutputDialog.Show(Messages.ErrorCannotSaveFile, ex.Message);
+                ShowOutputDialog(Messages.ErrorCannotSaveFile, ex.Message);
             }
+        }
+
+        static void ShowOutputDialog(String title, String message)
+        {
+            var dialog = new OutputDialog
+            {
+                DataContext = new OutputViewModel { Message = message, Title = title }
+            };
+            dialog.Show();
         }
 
         #endregion

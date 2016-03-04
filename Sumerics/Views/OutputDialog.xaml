@@ -7,6 +7,7 @@
                       Icon="../Icons/Sumerics.png" 
                       WindowStartupLocation="CenterScreen"
                       ResizeMode="NoResize" 
+                      Title="{Binding Title}"
                       Height="160" 
                       Width="450">
 
@@ -39,7 +40,7 @@
                    Grid.RowSpan="2"
                    VerticalAlignment="Top" />
 
-            <TextBlock Name="Output"
+            <TextBlock Text="{Binding Message}"
                        FontSize="16"
                        Grid.Column="1"
                        TextWrapping="Wrap"

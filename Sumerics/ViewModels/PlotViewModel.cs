@@ -99,23 +99,27 @@
             var context = new SaveImageViewModel();
             context.ImageWidth = 640;
             context.ImageHeight = 480;
-            var dialog = new SaveImageWindow { DataContext = context };
-            dialog.Title = Messages.SavePlotAs;
+            var window = new SaveImageWindow { DataContext = context };
+            window.Title = Messages.SavePlotAs;
 
             if (!String.IsNullOrEmpty(_plot.Title))
             {
                 context.SelectedFile = new FileModel(_plot.Title);
             }
 
-            dialog.ShowDialog();
+            window.ShowDialog();
 
             if (context.Accepted)
             {
                 var path = context.SelectedFile.FullName;
                 //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
                 var filename = Path.GetFileName(path);
-                var info = String.Format(Messages.PlotSavedMessage, filename);
-                OutputDialog.Show(Messages.FileCreated, info);
+                var message = String.Format(Messages.PlotSavedMessage, filename);
+                var dialog = new OutputDialog
+                {
+                    DataContext = new OutputViewModel { Title = Messages.FileCreated, Message = message }
+                };
+                dialog.Show();
             }
         }
 

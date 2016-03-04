@@ -31,7 +31,7 @@
 
                 if (window != null)
                 {
-                    SetPlot(window.Controller);
+                    //SetPlot(window.Controller);
                     window.Close();
                 }
             });
@@ -43,11 +43,11 @@
             {
                 var window = DialogExtensions.Get<PlotWindow>();
 
-                if (window != null && Object.ReferenceEquals(window.Controller.Plot, context))
-                {
-                    SetPlot(window.Controller);
-                    window.Close();
-                }
+                //if (window != null && Object.ReferenceEquals(window.Controller.Plot, context))
+                //{
+                //    SetPlot(window.Controller);
+                //    window.Close();
+                //}
             });
         }
 

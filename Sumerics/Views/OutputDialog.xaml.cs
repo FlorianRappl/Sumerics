@@ -18,13 +18,5 @@
         {
             Close();
         }
-
-        public static void Show(String title, String message)
-        {
-            var outp = new OutputDialog();
-            outp.Title = title;
-            outp.Output.Text = message;
-            outp.ShowDialog();
-        }
     }
 }
