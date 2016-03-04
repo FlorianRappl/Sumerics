@@ -179,6 +179,7 @@
     <Compile Include="Codebase\Kernel.cs" />
     <Compile Include="Codebase\RichTextBoxHelper.cs" />
     <Compile Include="Codebase\SumericsInfo.cs" />
+    <Compile Include="Codebase\WindowFactory.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Dialogs\AboutDialogHandler.cs" />
     <Compile Include="Dialogs\DemosDialogHandler.cs" />
