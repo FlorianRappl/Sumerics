@@ -5,7 +5,7 @@
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
-                      Title="{x:Static res:Messages.OpenFile}" 
+                      Title="{Binding Title}" 
                       ResizeMode="CanResizeWithGrip" 
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen" 

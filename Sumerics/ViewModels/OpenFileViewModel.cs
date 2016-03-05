@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Models;
+    using Sumerics.Resources;
     using System;
     using System.IO;
 
@@ -15,6 +16,8 @@
 
         public OpenFileViewModel(String startFileOrFolder)
         {
+            Title = Messages.OpenFile;
+
             if (File.Exists(startFileOrFolder))
             {
                 SelectedFile = new FileModel(startFileOrFolder);

@@ -1,6 +1,7 @@
 ﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Models;
+    using Sumerics.Resources;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -28,6 +29,7 @@
 
         public FolderBrowseViewModel(String startFolder)
         {
+            Title = Messages.SelectFolder;
             CanAccept = true;
             _currentDirectories = new ObservableCollection<FolderModel>();
             _subDirectories = new ObservableCollection<FolderModel>();

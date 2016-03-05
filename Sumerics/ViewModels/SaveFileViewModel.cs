@@ -25,6 +25,7 @@
 
         public SaveFileViewModel(String startFileOrFolder)
         {
+            Title = Messages.SaveFile;
             _fileName = String.Empty;
 
             if (Directory.Exists(startFileOrFolder))

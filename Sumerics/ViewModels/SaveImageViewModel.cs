@@ -23,6 +23,7 @@
             : base(startFileOrFolder)
         {
             AddFilter(Messages.PngFile + " (*.png)", "*.png");
+            Title = Messages.SaveImage;
         }
 
         #endregion
