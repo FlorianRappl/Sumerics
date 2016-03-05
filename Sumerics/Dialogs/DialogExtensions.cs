@@ -5,18 +5,22 @@
 
     static class DialogExtensions
     {
-        public static T Obtain<T>(this IComponents container)
-            where T : Window
+        public static T Show<T>(this IDialogHandler handler)
+            where T : Window, new()
         {
             var current = Get<T>();
 
-            if (current != null)
+            if (current == null)
+            {
+                current = new T();
+                current.Show();
+            }
+            else
             {
                 current.Activate();
-                return current;
             }
 
-            return container.Create<T>();
+            return current;
         }
 
         public static T Get<T>()

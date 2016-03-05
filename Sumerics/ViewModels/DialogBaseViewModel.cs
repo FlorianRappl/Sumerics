@@ -14,6 +14,7 @@
         readonly ICommand _accept;
         readonly FileSystemWatcher _watcher;
         readonly ObservableCollection<FolderModel> _places;
+        String _title;
         Boolean _canAccept;
 
         #endregion
@@ -22,6 +23,7 @@
 
         public DialogBaseViewModel()
         {
+            _title = String.Empty;
             _places = new ObservableCollection<FolderModel>();
             PopulatePlaces();
 
@@ -50,6 +52,19 @@
         public ObservableCollection<FolderModel> Places
         {
             get { return _places; }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of the dialog.
+        /// </summary>
+        public String Title 
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                RaisePropertyChanged();
+            } 
         }
 
         /// <summary>

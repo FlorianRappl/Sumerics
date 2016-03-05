@@ -2,7 +2,6 @@
 {
     using Sumerics.Resources;
     using Sumerics.ViewModels;
-    using Sumerics.Views;
     using System;
 
     [DialogType(Dialog.SaveWorkspace)]
@@ -20,11 +19,9 @@
         public void Open(params Object[] parameters)
         {
             var context = new SaveFileViewModel();
+            context.Title = Messages.SaveWorkspaceAs;
             context.AddFilter(Messages.SumericsWorkspace + " (*.sws)", "*.sws");
-            var dialog = _container.Obtain<SaveFileWindow>();
-            dialog.DataContext = context;
-            dialog.Title = Messages.SaveWorkspaceAs;
-            dialog.ShowDialog();
+            context.ShowDialog();
 
             if (context.Accepted)
             {

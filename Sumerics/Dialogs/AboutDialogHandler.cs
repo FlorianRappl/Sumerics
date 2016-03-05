@@ -15,7 +15,7 @@
 
         public void Open(params Object[] parameters)
         {
-            _container.Obtain<AboutWindow>().Show();
+            this.Show<AboutWindow>();
         }
 
         public void Close()

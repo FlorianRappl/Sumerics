@@ -15,7 +15,7 @@
 
         public void Open(params Object[] parameters)
         {
-            _container.Obtain<DemoBrowser>().Show();
+            this.Show<DemoBrowser>();
         }
 
         public void Close()

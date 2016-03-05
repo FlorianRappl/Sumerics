@@ -1,7 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
     using Sumerics.ViewModels;
-    using Sumerics.Views;
     using System;
 
     [DialogType(Dialog.Directory)]
@@ -17,9 +16,7 @@
         public void Open(params Object[] parameters)
         {
             var context = new FolderBrowseViewModel();
-            var dialog = _container.Obtain<FolderBrowseWindow>();
-            dialog.DataContext = context;
-            dialog.ShowDialog();
+            context.ShowDialog();
 
             if (context.Accepted)
             {
