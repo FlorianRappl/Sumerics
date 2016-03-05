@@ -24,6 +24,7 @@
             Register<SeriesViewModel>(ctx => new PlotSeriesWindow { DataContext = ctx });
             Register<PlotSettingsViewModel>(ctx => new PlotSettingsWindow { DataContext = ctx });
             Register<SubPlotSettingsViewModel>(ctx => new SubPlotSettingsWindow { DataContext = ctx });
+            Register<OptionsViewModel>(ctx => new OptionsWindow { DataContext = ctx });
         }
 
         public static WindowFactory Instance = new WindowFactory();
