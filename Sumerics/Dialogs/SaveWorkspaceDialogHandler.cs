@@ -7,12 +7,10 @@
     [DialogType(Dialog.SaveWorkspace)]
     sealed class SaveWorkspaceDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
         readonly IKernel _kernel;
 
-        public SaveWorkspaceDialogHandler(IComponents container, IKernel kernel)
+        public SaveWorkspaceDialogHandler(IKernel kernel)
         {
-            _container = container;
             _kernel = kernel;
         }
 

@@ -16,7 +16,7 @@
 
         #region ctor
 
-        public DialogManager(IComponents container)
+        public DialogManager(IApplication container)
         {
             _handlers = new Dictionary<Dialog, IDialogHandler>();
 

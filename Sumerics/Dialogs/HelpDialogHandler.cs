@@ -10,11 +10,11 @@
     [DialogType(Dialog.Help)]
     sealed class HelpDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
+        readonly IApplication _app;
 
-        public HelpDialogHandler(IComponents container)
+        public HelpDialogHandler(IApplication app)
         {
-            _container = container;
+            _app = app;
         }
 
         public void Open(params Object[] parameters)
@@ -23,8 +23,8 @@
 
             if (window == null)
             {
-                var kernel = _container.Get<IKernel>() as Kernel;
-                var commands = _container.Get<ICommandFactory>();
+                var kernel = _app.Get<IKernel>() as Kernel;
+                var commands = _app.Get<ICommandFactory>();
                 var context = new DocumentationViewModel(kernel.Help, commands);
                 window = WindowFactory.Instance.Create(context);
             }

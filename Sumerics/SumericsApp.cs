@@ -5,14 +5,11 @@
     using System.Linq;
     using System.Reflection;
 
-    sealed class SumericsApp : IApplication
+    sealed class SumericsApp : Services, IApplication
     {
-        readonly Components _components;
-
         public SumericsApp()
         {
-            _components = new Components();
-            _components.Register<IApplication>(this);
+            Register<IApplication>(this);
         }
 
         public void RegisterAssemblies()
@@ -44,7 +41,7 @@
 
                     if (instance != null)
                     {
-                        instance.RegisterComponents(_components);
+                        instance.RegisterComponents(this);
                     }
                 }
             }
@@ -53,41 +50,6 @@
         public void Shutdown()
         {
             App.Current.Shutdown();
-        }
-
-        public IConsole Console
-        {
-            get { return _components.Get<IConsole>(); }
-        }
-
-        public IVisualizer Visualizer
-        {
-            get { return _components.Get<IVisualizer>(); }
-        }
-
-        public IKernel Kernel
-        {
-            get { return _components.Get<IKernel>(); }
-        }
-
-        public ITabs Tabs
-        {
-            get { return _components.Get<ITabs>(); }
-        }
-
-        public IDialogManager Dialog
-        {
-            get { return _components.Get<IDialogManager>(); }
-        }
-
-        public ISettings Settings
-        {
-            get { return _components.Get<ISettings>(); }
-        }
-
-        public IComponents Components
-        {
-            get { return _components; }
         }
     }
 }

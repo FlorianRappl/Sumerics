@@ -6,13 +6,6 @@
     [DialogType(Dialog.Directory)]
     sealed class DirectoryDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
-
-        public DirectoryDialogHandler(IComponents container)
-        {
-            _container = container;
-        }
-
         public void Open(params Object[] parameters)
         {
             var context = new FolderBrowseViewModel();

@@ -10,13 +10,13 @@
         #region Fields
 
         readonly Dictionary<String, BaseCommand> _commands;
-        readonly IComponents _container;
+        readonly IServices _container;
 
         #endregion
 
         #region ctor
 
-        public CommandFactory(IComponents container)
+        public CommandFactory(IServices container)
         {
             _commands = new Dictionary<String, BaseCommand>();
             _container = container;

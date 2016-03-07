@@ -22,13 +22,13 @@
         void Application_Startup(Object sender, StartupEventArgs e)
         {
             _app.RegisterAssemblies();
-            var vm = new MainViewModel(_app.Components, _app.Kernel);
+            var vm = new MainViewModel(_app);
             vm.ShowWindow();
         }
 
         void HandleUnhandledException(Object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            _app.Components.All<ILogger>().ForEach(logger => logger.Error(e.Exception));
+            _app.All<ILogger>().ForEach(logger => logger.Error(e.Exception));
             var vm = new OutputViewModel { Title = Messages.Exception, Message = e.Exception.Message };
             vm.ShowDialog();
             e.Handled = true;

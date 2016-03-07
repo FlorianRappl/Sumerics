@@ -6,7 +6,7 @@
 
     public class CoreModule : IModule
     {
-        public void RegisterComponents(Components components)
+        public void RegisterComponents(Services components)
         {
             components.Register<ILogger, FileLogger>();
             components.Register<IConsole, ConsoleProxy>();

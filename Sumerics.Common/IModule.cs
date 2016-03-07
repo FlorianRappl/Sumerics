@@ -2,6 +2,6 @@
 {
     public interface IModule
     {
-        void RegisterComponents(Components components);
+        void RegisterComponents(Services components);
     }
 }

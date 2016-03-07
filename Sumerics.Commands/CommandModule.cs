@@ -2,7 +2,7 @@
 {
     public sealed class CommandModule : IModule
     {
-        public void RegisterComponents(Components components)
+        public void RegisterComponents(Services components)
         {
             var commands = new CommandFactory(components);
             commands.RegisterCommands();

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IComponents
+    public interface IServices
     {
         Object Create(Type type);
 

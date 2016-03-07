@@ -8,11 +8,11 @@
     [DialogType(Dialog.Options)]
     sealed class OptionsDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
+        readonly IApplication _app;
 
-        public OptionsDialogHandler(IComponents container)
+        public OptionsDialogHandler(IApplication app)
         {
-            _container = container;
+            _app = app;
         }
 
         public void Open(params Object[] parameters)
@@ -21,8 +21,8 @@
 
             if (current == null)
             {
-                var settings = _container.Get<ISettings>();
-                var dialogs = _container.Get<IDialogManager>();
+                var settings = _app.Get<ISettings>();
+                var dialogs = _app.Get<IDialogManager>();
                 var context = new OptionsViewModel(settings, dialogs);
                 current = WindowFactory.Instance.Create(context);
             }

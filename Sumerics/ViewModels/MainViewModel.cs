@@ -4,7 +4,6 @@
     using Sumerics.Controls;
     using Sumerics.MathInput;
     using Sumerics.Resources;
-    using Sumerics.Views;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -20,7 +19,7 @@
 
         readonly ICommand _openDialog;
         readonly ICommand _runQuery;
-        readonly IComponents _container;
+        readonly IApplication _container;
         readonly Kernel _kernel;
         readonly ObservableCollection<VariableViewModel> _variables;
         readonly ObservableCollection<HelpViewModel> _functions;
@@ -37,10 +36,10 @@
 
         #region ctor
 
-        public MainViewModel(IComponents container, IKernel kernel)
+        public MainViewModel(IApplication container)
         {
             _container = container;
-            _kernel = kernel as Kernel;
+            _kernel = _container.Get<Kernel>();
 
             _variables = new ObservableCollection<VariableViewModel>();
             _functions = new ObservableCollection<HelpViewModel>();
@@ -62,7 +61,7 @@
             _openDialog = new RelayCommand(x =>
             {
                 var dialog = (Dialog)x;
-                Container.Get<IApplication>().Dialog.Open(dialog);
+                Container.Get<IDialogManager>().Open(dialog);
             });
 
             _runQuery = new RelayCommand(x =>
@@ -85,7 +84,7 @@
 
         #region Properties
 
-        public IComponents Container
+        public IApplication Container
         {
             get { return _container; }
         }

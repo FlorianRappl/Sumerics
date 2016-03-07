@@ -6,13 +6,6 @@
     [DialogType(Dialog.About)]
     sealed class AboutDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
-
-        public AboutDialogHandler(IComponents container)
-        {
-            _container = container;
-        }
-
         public void Open(params Object[] parameters)
         {
             this.Show<AboutWindow>();

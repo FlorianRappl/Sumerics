@@ -6,13 +6,6 @@
     [DialogType(Dialog.Demos)]
     sealed class DemosDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
-
-        public DemosDialogHandler(IComponents container)
-        {
-            _container = container;
-        }
-
         public void Open(params Object[] parameters)
         {
             this.Show<DemoBrowser>();

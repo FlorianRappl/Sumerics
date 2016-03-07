@@ -11,11 +11,11 @@
     [DialogType(Dialog.Editor)]
     sealed class EditorDialogHandler : IDialogHandler
     {
-        readonly IComponents _container;
+        readonly IApplication _app;
 
-        public EditorDialogHandler(IComponents container)
+        public EditorDialogHandler(IApplication app)
         {
-            _container = container;
+            _app = app;
         }
 
         public void Open(params Object[] parameters)
@@ -24,9 +24,9 @@
 
             if (editor == null)
             {
-                var kernel = _container.Get<Kernel>();
-                var console = _container.Get<IConsole>();
-                var service = _container.Get<IMathInputService>();
+                var kernel = _app.Get<Kernel>();
+                var console = _app.Get<IConsole>();
+                var service = _app.Get<IMathInputService>();
                 var context = new EditorViewModel(kernel, console, service);
                 editor = WindowFactory.Instance.Create(context);
             }

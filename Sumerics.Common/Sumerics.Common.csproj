@@ -43,13 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components.cs" />
-    <Compile Include="ComponentsExtensions.cs" />
+    <Compile Include="Services.cs" />
+    <Compile Include="ServicesExtensions.cs" />
     <Compile Include="Dialog.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="IConsole.cs" />
-    <Compile Include="IComponents.cs" />
+    <Compile Include="IServices.cs" />
     <Compile Include="IDialogManager.cs" />
     <Compile Include="IFactory.cs" />
     <Compile Include="IKernel.cs" />

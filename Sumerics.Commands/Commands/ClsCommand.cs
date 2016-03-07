@@ -4,17 +4,17 @@
 
     sealed class ClsCommand : BaseCommand
     {
-        readonly IApplication _app;
+        readonly IConsole _console;
 
         public ClsCommand(IApplication app) : 
             base(0, 0)
         {
-            _app = app;
+            _console = app.Get<IConsole>();
         }
 
         public String Invocation()
         {
-            _app.Console.Clear();
+            _console.Clear();
             return String.Empty;
         }
     }

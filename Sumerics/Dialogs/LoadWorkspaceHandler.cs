@@ -7,12 +7,10 @@
     [DialogType(Dialog.LoadWorkspace)]
     sealed class LoadWorkspaceHandler : IDialogHandler
     {
-        readonly IComponents _container;
         readonly IKernel _kernel;
 
-        public LoadWorkspaceHandler(IComponents container, IKernel kernel)
+        public LoadWorkspaceHandler(IKernel kernel)
         {
-            _container = container;
             _kernel = kernel;
         }
 

@@ -4,14 +4,13 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Components : IComponents
+    public class Services : IServices
     {
         readonly ServiceContainer _block;
 
-        public Components()
+        public Services()
         {
             _block = new ServiceContainer();
-            _block.RegisterInstance<IComponents>(this);
             _block.RegisterFallback((t, s) => true, request =>
             {
                 var type = request.ServiceType;
