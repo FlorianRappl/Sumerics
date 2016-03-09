@@ -114,7 +114,7 @@
 
         void FileWatcherReport(Object sender, FileSystemEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() => RaiseDirectoryChanged());
+            Dispatch(() => RaiseDirectoryChanged());
         }
 
         #endregion

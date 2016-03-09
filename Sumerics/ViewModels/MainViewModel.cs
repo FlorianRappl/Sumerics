@@ -291,7 +291,7 @@
 
         void VariableChanged(Object sender, VariableEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 for (var i = 0; i < _variables.Count; i++)
                 {
@@ -312,7 +312,7 @@
 
         void VariableCreated(Object sender, VariableEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 if (e.Name.Contains(variableFilter))
                 {
@@ -326,7 +326,7 @@
 
         void VariableRemoved(Object sender, VariableEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 for (var i = 0; i < _variables.Count; i++)
                 {
@@ -355,7 +355,7 @@
 
         void UserInput(Object sender, UserInputEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 var service = Container.Get<IMathInputService>();
                 var context = new InputViewModel(service);
@@ -373,7 +373,7 @@
 
         void PlotCreated(Object sender, PlotEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 var visualizer = Container.Get<IVisualizer>();
                 var console = Container.Get<IConsole>();

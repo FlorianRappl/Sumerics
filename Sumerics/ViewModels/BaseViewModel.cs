@@ -16,6 +16,11 @@
             }
         }
 
+        protected void Dispatch(Action action)
+        {
+            App.Current.Dispatcher.Invoke(action);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

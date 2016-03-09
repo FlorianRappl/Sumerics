@@ -54,7 +54,7 @@
                 
                 if (value == null)
                 {
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetVoid());
+                    Dispatch(() => _cqr.SetVoid());
                 }
                 else if (value is MatrixValue)
                 {
@@ -69,15 +69,15 @@
                         }
                     }
 
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetMatrix(values));
+                    Dispatch(() => _cqr.SetMatrix(values));
                 }
                 else if (value is StringValue)
                 {
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetText(value.ToString(Context)));
+                    Dispatch(() => _cqr.SetText(value.ToString(Context)));
                 }
                 else
                 {
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetResult(value.ToString(Context)));
+                    Dispatch(() => _cqr.SetResult(value.ToString(Context)));
                 }
 
                 RaisePropertyChanged(); 
@@ -93,7 +93,7 @@
 
                 if (_exception != null)
                 {
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetError(_exception.Message));
+                    Dispatch(() => _cqr.SetError(_exception.Message));
                 }
                 
                 RaisePropertyChanged(); 
@@ -109,7 +109,7 @@
 
                 if (_running)
                 {
-                    App.Current.Dispatcher.Invoke(() => _cqr.SetRunning());
+                    Dispatch(() => _cqr.SetRunning());
                 }
 
                 RaisePropertyChanged(); 

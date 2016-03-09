@@ -20,7 +20,7 @@
             _popupTimer.Elapsed += (s, e) =>
             {
                 _popupTimer.Stop();
-                App.Current.Dispatcher.Invoke(() => IsAvailable = false);
+                Dispatch(() => IsAvailable = false);
             };
         }
 
@@ -41,7 +41,7 @@
 
         public void Received(Object sender, NotificationEventArgs e)
         {
-            App.Current.Dispatcher.Invoke(() =>
+            Dispatch(() =>
             {
                 _messages.Insert(0, new NotificationViewModel(e));
                 IsAvailable = true;
