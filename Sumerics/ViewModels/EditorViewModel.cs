@@ -37,7 +37,7 @@
             _files.Add(new EditorFileViewModel(this, kernel));
             _create = new RelayCommand(x =>
             {
-                var newfile = new EditorFileViewModel(this, kernel);
+                var newfile = new EditorFileViewModel(this, _kernel);
                 Files.Add(newfile);
                 SelectedFile = newfile;
             });

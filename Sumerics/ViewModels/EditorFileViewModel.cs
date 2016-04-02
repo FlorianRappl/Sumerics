@@ -37,7 +37,7 @@
         {
             _kernel = kernel;
             kernel.RunningQueriesChanged += OnRunningQueriesChanged;
-            _debugContext = new ParseContext(kernel.Parser.Context);
+            _debugContext = new ParseContext(_kernel.Parser.Context);
 
             _parent = parent;
             _items = new ObservableCollection<AutocompleteItem>();

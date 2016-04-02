@@ -177,6 +177,7 @@
     <Compile Include="Codebase\FileLogger.cs" />
     <Compile Include="Codebase\IconFactory.cs" />
     <Compile Include="Codebase\Kernel.cs" />
+    <Compile Include="Codebase\Queries.cs" />
     <Compile Include="Codebase\RichTextBoxHelper.cs" />
     <Compile Include="Codebase\SumericsInfo.cs" />
     <Compile Include="Codebase\WindowFactory.cs" />

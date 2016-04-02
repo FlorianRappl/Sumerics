@@ -1,22 +1,22 @@
 ﻿namespace Sumerics
 {
     using Sumerics.Api;
-using Sumerics.Resources;
-using Sumerics.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using YAMP;
-using YAMP.Exceptions;
-using YAMP.Help;
-using YAMP.Io;
-using YAMP.Physics;
-using YAMP.Sensors;
+    using Sumerics.Resources;
+    using Sumerics.ViewModels;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using YAMP;
+    using YAMP.Exceptions;
+    using YAMP.Help;
+    using YAMP.Io;
+    using YAMP.Physics;
+    using YAMP.Sensors;
 
     public sealed class Kernel : IKernel
     {
@@ -25,7 +25,7 @@ using YAMP.Sensors;
         readonly Parser _parser;
         readonly List<PluginViewModel> _plugins;
         readonly ILogger _logger;
-        readonly List<QueryResultViewModel> _running;
+        readonly Queries _queries;
 
         Documentation _documentation;
 
@@ -33,7 +33,11 @@ using YAMP.Sensors;
 
         #region Events
 
-        public event EventHandler RunningQueriesChanged;
+        public event EventHandler RunningQueriesChanged
+        {
+            add { _queries.Changed += value; }
+            remove { _queries.Changed -= value; }
+        }
 
         #endregion
 
@@ -44,12 +48,17 @@ using YAMP.Sensors;
             _logger = logger;
             _parser = new Parser { UseScripting = true };
             _plugins = new List<PluginViewModel>();
-            _running = new List<QueryResultViewModel>();
+            _queries = new Queries();
         }
 
         #endregion
 
         #region Properties
+
+        public Queries RunningQueries
+        {
+            get { return _queries; }
+        }
 
         public Boolean IsWindows8
         {
@@ -74,16 +83,6 @@ using YAMP.Sensors;
         public List<PluginViewModel> Plugins
         {
             get { return _plugins; }
-        }
-
-        public Boolean HasRunningQueries
-        {
-            get { return _running.Count > 0; }
-        }
-
-        public IEnumerable<QueryResultViewModel> RunningQueries
-        {
-            get { return _running.AsEnumerable(); }
         }
 
         #endregion
@@ -123,9 +122,9 @@ using YAMP.Sensors;
 
         public void StopAll()
         {
-            if (HasRunningQueries)
+            if (!_queries.IsEmpty)
             {
-                var queries = _running.ToArray();
+                var queries = _queries.ToArray();
 
                 foreach (var query in queries)
                 {
@@ -157,7 +156,7 @@ using YAMP.Sensors;
         {
             if (!String.IsNullOrEmpty(state.Query))
             {
-                AddRunningQuery(state);
+                _queries.Add(state);
 
                 try
                 {
@@ -197,7 +196,7 @@ using YAMP.Sensors;
                 }
                 finally
                 {
-                    RemoveRunningQuery(state);
+                    _queries.Remove(state);
                 }
             }
         }
@@ -210,32 +209,6 @@ using YAMP.Sensors;
         public Task SaveWorkspaceAsync(String fileName)
         {
             return Task.Run(() => Context.Save(fileName));
-        }
-
-        #endregion
-
-        #region Helpers
-
-        void AddRunningQuery(QueryResultViewModel qrvm)
-        {
-            qrvm.Running = true;
-            _running.Add(qrvm);
-
-            if (_running.Count == 1 && RunningQueriesChanged != null)
-            {
-                RunningQueriesChanged(qrvm, EventArgs.Empty);
-            }
-        }
-
-        void RemoveRunningQuery(QueryResultViewModel qrvm)
-        {
-            qrvm.Running = false;
-            _running.Remove(qrvm);
-
-            if (_running.Count == 0 && RunningQueriesChanged != null)
-            {
-                RunningQueriesChanged(qrvm, EventArgs.Empty);
-            }
         }
 
         #endregion
