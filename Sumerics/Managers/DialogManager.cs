@@ -26,7 +26,7 @@
 
                 if (attribute != null && type.ImplementedInterfaces.Contains(typeof(IDialogHandler)))
                 {
-                    var handler = container.Create(type) as IDialogHandler;
+                    var handler = container.Get(type) as IDialogHandler;
 
                     if (handler != null)
                     {

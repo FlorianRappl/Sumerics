@@ -15,11 +15,5 @@
         {
             return container.All(typeof(T)).OfType<T>();
         }
-
-        public static T Create<T>(this IServices container)
-            where T : class
-        {
-            return container.Create(typeof(T)) as T;
-        }
     }
 }

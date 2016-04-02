@@ -40,7 +40,7 @@
                 {
                     if (type.IsSubclassOf(typeof(BaseCommand)))
                     {
-                        var command = _container.Create(type) as BaseCommand;
+                        var command = _container.Get(type) as BaseCommand;
 
                         if (command != null)
                         {

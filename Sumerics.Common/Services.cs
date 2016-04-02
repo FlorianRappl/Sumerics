@@ -1,68 +1,49 @@
 ﻿namespace Sumerics
 {
-    using LightInject;
+    using Microsoft.Practices.Unity;
     using System;
     using System.Collections.Generic;
 
     public class Services : IServices
     {
-        readonly ServiceContainer _block;
+        readonly UnityContainer _container;
 
         public Services()
         {
-            _block = new ServiceContainer();
-            _block.RegisterFallback((t, s) => true, request =>
-            {
-                var type = request.ServiceType;
-                var ctors = type.GetConstructors();
-
-                for (var i = 0; i < ctors.Length; i++)
-                {
-                    var ctor = ctors[i];
-                    var parameters = ctor.GetParameters();
-                    var arguments = new Object[parameters.Length];
-
-                    for (var j = 0; j < arguments.Length; j++)
-                    {
-                        arguments[j] = _block.GetInstance(parameters[j].ParameterType);
-                    }
-
-                    var result = ctor.Invoke(arguments);
-
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-
-                return null;
-            });
+            _container = new UnityContainer();
         }
 
         public void Register<T>(T instance)
         {
-            _block.RegisterInstance(instance);
+            _container.RegisterInstance(instance);
         }
 
         public void Register<TService, TImplementation>()
             where TImplementation : TService
         {
-            _block.Register<TService, TImplementation>();
+            _container.RegisterType<TService, TImplementation>();
         }
 
         public Object Get(Type type)
         {
-            return _block.GetInstance(type);
+            if (!_container.IsRegistered(type))
+            {
+                var interfaces = type.GetInterfaces();
+
+                if (interfaces.Length == 1 && _container.IsRegistered(interfaces[0]))
+                {
+                    var instance = _container.Resolve(interfaces[0]);
+                    _container.RegisterInstance(type, instance);
+                    return instance;
+                }
+            }
+
+            return _container.Resolve(type);
         }
 
         public IEnumerable<Object> All(Type type)
         {
-            return _block.GetAllInstances(type);
-        }
-
-        public Object Create(Type type)
-        {
-            return _block.Create(type);
+            return _container.ResolveAll(type);
         }
     }
 }
