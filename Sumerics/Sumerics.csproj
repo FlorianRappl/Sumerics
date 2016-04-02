@@ -422,6 +422,10 @@
     <Resource Include="Icons\settings.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Sumerics.Api\Sumerics.Api.csproj">
+      <Project>{701b551e-fe50-4333-a35f-86978b4175eb}</Project>
+      <Name>Sumerics.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sumerics.Commands\Sumerics.Commands.csproj">
       <Project>{f939f9e5-14de-47c7-bdaf-9ed28a635ae8}</Project>
       <Name>Sumerics.Commands</Name>

@@ -1,9 +1,8 @@
 ﻿namespace Sumerics.Api
 {
-    using System.Collections.Generic;
     using YAMP;
 
-    public class ApiProvider
+    sealed class ApiProvider : IApiProvider
     {
         readonly IApplication _application;
 

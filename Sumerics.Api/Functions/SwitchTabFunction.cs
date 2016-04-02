@@ -17,7 +17,8 @@
         [Example("switchtab(3)", "Opens the visualization tab.")]
         public void Function(ScalarValue index)
         {
-            _application.ChangeTab(index.IntValue - 1);
+            var tabs = _application.Get<ITabs>();
+            tabs.Change(index.IntValue - 1);
         }
     }
 }

@@ -17,14 +17,16 @@
         [Example("dock()", "Returns the last undocked plot to the visualization tab.")]
         public void Function()
         {
-            _application.Visualizer.Dock();
+            var visualizer = _application.Get<IVisualizer>();
+            visualizer.Dock();
         }
 
         [Description("Docks the given plot to the main window.")]
         [Example("a=cplot(sin); undock(); sleep(5000); dock(a)", "Returns the complex plot of the sinus to the visualization tab after 5s.")]
         public void Function(PlotValue plot)
         {
-            _application.Visualizer.Dock(plot);
+            var visualizer = _application.Get<IVisualizer>();
+            visualizer.Dock(plot);
         }
     }
 }

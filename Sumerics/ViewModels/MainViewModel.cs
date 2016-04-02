@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Api;
     using Sumerics.Commands;
     using Sumerics.Controls;
     using Sumerics.MathInput;
@@ -38,6 +39,8 @@
 
         public MainViewModel(IApplication container)
         {
+            var provider = container.Get<IApiProvider>();
+
             _container = container;
             _kernel = _container.Get<Kernel>();
 
@@ -46,6 +49,7 @@
 			_availableItems = new ObservableCollection<AutocompleteItem>();
             _notifications = new NotificationsViewModel();
 
+            _kernel.Load(provider);
             _kernel.Context.LastPlotChanged += PlotCreated;
             _kernel.Context.VariableChanged += VariableChanged;
             _kernel.Context.VariableCreated += VariableCreated;

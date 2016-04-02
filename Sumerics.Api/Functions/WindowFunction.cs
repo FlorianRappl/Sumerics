@@ -21,7 +21,8 @@
         {
             var converter = new StringToEnumConverter(typeof(Dialog));
             var dialog = (Dialog)converter.Convert(window);
-            _application.Open(dialog);
+            var dialogManager = _application.Get<IDialogManager>();
+            dialogManager.Open(dialog);
         }
     }
 }

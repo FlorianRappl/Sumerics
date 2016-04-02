@@ -1,21 +1,22 @@
 ﻿namespace Sumerics
 {
-    using Sumerics.Resources;
-    using Sumerics.ViewModels;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using YAMP;
-    using YAMP.Exceptions;
-    using YAMP.Help;
-    using YAMP.Io;
-    using YAMP.Physics;
-    using YAMP.Sensors;
+    using Sumerics.Api;
+using Sumerics.Resources;
+using Sumerics.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using YAMP;
+using YAMP.Exceptions;
+using YAMP.Help;
+using YAMP.Io;
+using YAMP.Physics;
+using YAMP.Sensors;
 
     public sealed class Kernel : IKernel
     {
@@ -23,9 +24,10 @@
 
         readonly Parser _parser;
         readonly List<PluginViewModel> _plugins;
-        readonly Documentation _documentation;
         readonly ILogger _logger;
         readonly List<QueryResultViewModel> _running;
+
+        Documentation _documentation;
 
         #endregion
 
@@ -43,16 +45,6 @@
             _parser = new Parser { UseScripting = true };
             _plugins = new List<PluginViewModel>();
             _running = new List<QueryResultViewModel>();
-
-            LoadPlugins();
-            _documentation = Documentation.Create(Context);
-
-            Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-
-            ExecuteGlobalScript();
-            ExecuteLocalScript();
-
-            _parser.InteractiveMode = true;
         }
 
         #endregion
@@ -140,6 +132,20 @@
                     query.Cancel();
                 }
             }
+        }
+
+        public void Load(IApiProvider provider)
+        {
+            provider.RegisterApi(_parser.Context);
+            LoadPlugins();
+            _documentation = Documentation.Create(Context);
+
+            Environment.CurrentDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            ExecuteGlobalScript();
+            ExecuteLocalScript();
+
+            _parser.InteractiveMode = true;
         }
 
         public Task RunAsync(String query)

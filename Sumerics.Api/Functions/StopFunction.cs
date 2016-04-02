@@ -16,7 +16,8 @@
         [Description("Sumerics performs every computation in a new thread, giving you great flexibility and a smooth UI. Therefore the only way to actively stop a computation is to kill it. This function kills all outstanding threads, which stops the related computations.")]
         public void Function()
         {
-            _application.Kernel.StopAll();
+            var kernel = _application.Get<IKernel>();
+            kernel.StopAll();
         }
     }
 }

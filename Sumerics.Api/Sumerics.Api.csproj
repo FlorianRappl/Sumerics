@@ -42,8 +42,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModule.cs" />
     <Compile Include="ApiProvider.cs" />
     <Compile Include="Functions\DockFunction.cs" />
+    <Compile Include="IApiProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Functions\StopFunction.cs" />
     <Compile Include="Functions\SwitchTabFunction.cs" />

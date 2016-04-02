@@ -17,14 +17,16 @@
         [Example("undock()", "Duplicates the currently selected plot.")]
         public void Function()
         {
-            _application.Visualizer.Undock();
+            var visualizer = _application.Get<IVisualizer>();
+            visualizer.Undock();
         }
 
         [Description("Undocks the given plot from the main window.")]
         [Example("undock(cplot(sin))", "Creates a new complex plot and undocks it immediately.")]
         public void Function(PlotValue plot)
         {
-            _application.Visualizer.Undock(plot);
+            var visualizer = _application.Get<IVisualizer>();
+            visualizer.Undock(plot);
         }
     }
 }
