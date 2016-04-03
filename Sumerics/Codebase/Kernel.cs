@@ -120,8 +120,11 @@
 
         #region Methods
 
-        public void StopAll()
+        public async void StopAll()
         {
+            //Delay to ensure that the simple stop is not also cancelled
+            await Task.Delay(10);
+
             if (!_queries.IsEmpty)
             {
                 var queries = _queries.ToArray();
