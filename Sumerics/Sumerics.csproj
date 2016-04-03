@@ -152,21 +152,21 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="YAMP, Version=1.5.2.27330, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.1.5.2.27330\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
+    <Reference Include="YAMP, Version=1.5.3.15660, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.1.5.3.15660\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Io, Version=1.5.2.27814, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.Io.1.5.2.27814\lib\net40\YAMP.Io.dll</HintPath>
+    <Reference Include="YAMP.Io, Version=1.5.3.15714, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Io.1.5.3.15714\lib\net40\YAMP.Io.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Physics, Version=1.5.2.27812, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.Physics.1.5.2.27812\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
+    <Reference Include="YAMP.Physics, Version=1.5.3.15714, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Physics.1.5.3.15714\lib\portable-net40+sl50+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\YAMP.Physics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="YAMP.Sensors, Version=1.5.2.27813, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\YAMP.Sensors.1.5.2.27813\lib\net45\YAMP.Sensors.dll</HintPath>
+    <Reference Include="YAMP.Sensors, Version=1.5.3.15714, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YAMP.Sensors.1.5.3.15714\lib\net45\YAMP.Sensors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
