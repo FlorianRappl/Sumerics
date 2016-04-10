@@ -144,7 +144,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\3DTools\WPFTools3D.csproj">
+    <ProjectReference Include="..\WPFTools3D\WPFTools3D.csproj">
       <Project>{5f603892-de40-4246-a969-1c6717afe35d}</Project>
       <Name>WPFTools3D</Name>
     </ProjectReference>

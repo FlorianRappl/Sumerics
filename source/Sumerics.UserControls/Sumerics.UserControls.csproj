@@ -301,7 +301,7 @@
       <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
       <Name>Sumerics.Console</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sumerics.Plots3D\WPFChart3D.csproj">
+    <ProjectReference Include="..\WPFChart3D\WPFChart3D.csproj">
       <Project>{38ee1803-0f43-4eb3-9322-00a936f41548}</Project>
       <Name>WPFChart3D</Name>
     </ProjectReference>
