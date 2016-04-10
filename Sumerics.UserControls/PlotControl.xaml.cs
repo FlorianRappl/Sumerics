@@ -17,6 +17,8 @@
     {
         #region Fields
 
+        static readonly ControlFactory Factory = new ControlFactory();
+
         Boolean _canDock;
 
         #endregion
@@ -32,8 +34,6 @@
 		#endregion
 
         #region Dependency Properties
-
-        static readonly ControlFactory Factory = new ControlFactory();
 
         public static readonly DependencyProperty ControllerProperty = DependencyProperty.Register(
                 "Controller",

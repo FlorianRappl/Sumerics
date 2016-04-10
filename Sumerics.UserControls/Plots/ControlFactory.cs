@@ -5,7 +5,7 @@
     public sealed class ControlFactory : TypeFactory<IPlotController, IPlotControl>
     {
         public ControlFactory()
-            : base(true)
+            : base(false)
         {
             Register<I3dPlotController>(controller => new Wpf3dPlotControl(controller));
             Register<I2dPlotController>(controller => new Oxy2dPlotControl(controller));

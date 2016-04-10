@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class TypeFactory<TKey, TProduct> : IFactory<TKey, TProduct>
     {
@@ -23,6 +24,7 @@
         public TProduct Create(TKey value)
         {
             var type = value.GetType();
+            var interfaces = type.GetInterfaces();
             var closest = default(Func<TKey, TProduct>);
 
             foreach (var pair in _mapping)
@@ -32,7 +34,7 @@
                     closest = pair.Value;
                     return closest(value);
                 }
-                else if (type.IsSubclassOf(pair.Key))
+                else if (type.IsSubclassOf(pair.Key) || interfaces.Contains(pair.Key))
                 {
                     closest = pair.Value;
                 }
