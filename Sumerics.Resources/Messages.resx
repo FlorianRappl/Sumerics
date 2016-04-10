@@ -679,4 +679,19 @@
   <data name="OnlyChoice" xml:space="preserve">
     <value>The only choice.</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="LanguageRestart" xml:space="preserve">
+    <value>Changing the language requires a restart of the application to take effect.</value>
+  </data>
 </root>
