@@ -28,6 +28,10 @@
                 var context = new DocumentationViewModel(kernel.Help, commands);
                 window = WindowFactory.Instance.Create(context);
             }
+            else
+            {
+                window.Activate();
+            }
 
             if (parameters.Length == 1 && parameters[0] is HelpSection)
             {

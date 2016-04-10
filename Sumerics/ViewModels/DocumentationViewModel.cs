@@ -273,25 +273,28 @@
             return p;
         }
 
-         Paragraph GetUsage(Boolean hasCommand, HelpFunctionUsage usage)
+        Paragraph GetUsage(Boolean hasCommand, HelpFunctionUsage usage)
         {
             var p = new Paragraph();
-            var r = new Run(Messages.Usage);
-            r.FontWeight = FontWeights.Bold;
-            r.FontSize = 20;
-            p.Inlines.Add(r);
+            p.Inlines.Add(new Run(Messages.Usage)
+            {
+                FontWeight = FontWeights.Bold,
+                FontSize = 20
+            });
             p.Inlines.Add(new LineBreak());
-            var u = new Run(usage.Usage);
-            u.Foreground = new SolidColorBrush(Colors.SteelBlue);
-            u.FontWeight = FontWeights.Bold;
-            p.Inlines.Add(u);
+            p.Inlines.Add(new Run(usage.Usage)
+            {
+                Foreground = new SolidColorBrush(Colors.SteelBlue),
+                FontWeight = FontWeights.Bold
+            });
 
             if (hasCommand && _commands.HasOverload(_topic.Name, usage.Arguments.Count))
             {
-                var o = new Run(_topic.Name + " " + String.Join(" ", usage.ArgumentNames));
-                o.Foreground = new SolidColorBrush(Colors.SteelBlue);
-                o.FontWeight = FontWeights.Bold;
-                p.Inlines.Add(o);
+                p.Inlines.Add(new Run(_topic.Name + " " + String.Join(" ", usage.ArgumentNames))
+                {
+                    Foreground = new SolidColorBrush(Colors.SteelBlue),
+                    FontWeight = FontWeights.Bold
+                });
                 p.Inlines.Add(new LineBreak());
             }
 
