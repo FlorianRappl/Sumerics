@@ -258,7 +258,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <uc:PlotControl Controller="{Binding LastPlot}" 
+                        <uc:PlotControl Controller="{Binding LastPlot.Controller}" 
                                         Grid.Row="0" 
                                         x:Name="MyLastPlot" />
 

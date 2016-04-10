@@ -1,19 +1,24 @@
 ﻿namespace Sumerics.ViewModels
 {
     using Sumerics.Models;
+    using Sumerics.Plots;
     using Sumerics.Resources;
     using Sumerics.Views;
     using System;
     using System.IO;
+    using System.Windows;
     using YAMP;
 
-    sealed class PlotViewModel : BaseViewModel
+    public sealed class PlotViewModel : BaseViewModel
     {
         #region Fields
+
+        static readonly PlotFactory ControllerFactory = new PlotFactory();
 
         readonly IVisualizer _visualizer;
         readonly PlotValue _plot;
         readonly IConsole _console;
+        readonly IPlotController _controller;
 
         #endregion
 
@@ -24,15 +29,16 @@
             _visualizer = visualizer;
             _console = console;
             _plot = plot;
+            _controller = ControllerFactory.Create(plot);
         }
 
         #endregion
 
         #region Properties
 
-        public PlotValue Plot
+        public IPlotController Controller
         {
-            get { return _plot; }
+            get { return _controller; }
         }
 
         #endregion
@@ -42,8 +48,7 @@
         public void OpenConsole()
         {
             var context = new ConsoleEnterViewModel(_console);
-            var window = new ConsoleEnterWindow { DataContext = context };
-            window.ShowDialog();
+            ShowDialog<ConsoleEnterWindow>(context);
         }
 
         public void OpenPlotSettings()
@@ -51,14 +56,12 @@
             if (_plot is XYPlotValue)
             {
                 var context = new PlotSettingsViewModel((XYPlotValue)_plot);
-                var window = new PlotSettingsWindow { DataContext = context };
-                window.ShowDialog();
+                ShowDialog<PlotSettingsWindow>(context);
             }
             else if (_plot is SubPlotValue)
             {
                 var context = new SubPlotSettingsViewModel((SubPlotValue)_plot);
-                var window = new SubPlotSettingsWindow { DataContext = context };
-                window.ShowDialog();
+                ShowDialog<SubPlotSettingsWindow>(context);
             }
         }
 
@@ -67,31 +70,28 @@
             if (_plot is ContourPlotValue)
             {
                 var context = new ContourViewModel((ContourPlotValue)_plot);
-                var window = new ContourSeriesWindow { DataContext = context };
-                window.ShowDialog();
+                ShowDialog<ContourSeriesWindow>(context);
             }
             else if (_plot is HeatmapPlotValue)
             {
                 var context = new HeatmapViewModel((HeatmapPlotValue)_plot);
-                var window = new HeatSeriesWindow { DataContext = context };
-                window.ShowDialog();
+                ShowDialog<HeatSeriesWindow>(context);
             }
             else if (_plot is XYPlotValue)
             {
                 var context = new SeriesViewModel((XYPlotValue)_plot);
-                var window = new PlotSeriesWindow { DataContext = context };
-                window.ShowDialog();
+                ShowDialog<PlotSeriesWindow>(context);
             }
         }
 
         public void UndockPlot()
         {
-            _visualizer.Undock(Plot);
+            _visualizer.Undock(_plot);
         }
 
         public void DockPlot()
         {
-            _visualizer.Dock(Plot);
+            _visualizer.Dock(_plot);
         }
 
         public void SavePlot()
@@ -122,6 +122,17 @@
                 };
                 output.ShowWindow();
             }
+        }
+
+        #endregion
+
+        #region Helpers
+
+        static void ShowDialog<TWindow>(Object context)
+            where TWindow : Window, new()
+        {
+            var window = new TWindow { DataContext = context };
+            window.ShowDialog();
         }
 
         #endregion

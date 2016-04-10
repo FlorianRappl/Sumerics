@@ -28,10 +28,11 @@
         readonly NotificationsViewModel _notifications;
 
         VariableViewModel _selectedVariable;
+        PlotViewModel _lastPlot;
 
-        String input;
-        String functionFilter;
-        String variableFilter;
+        String _input;
+        String _functionFilter;
+        String _variableFilter;
 
         #endregion
 
@@ -42,7 +43,7 @@
             var provider = container.Get<IApiProvider>();
 
             _container = container;
-            _kernel = _container.Get<Kernel>();
+            _kernel = container.Get<Kernel>();
 
             _variables = new ObservableCollection<VariableViewModel>();
             _functions = new ObservableCollection<HelpViewModel>();
@@ -95,16 +96,16 @@
 
         public String FunctionFilter
         {
-            get { return functionFilter; }
+            get { return _functionFilter; }
             set 
             { 
-                functionFilter = value;
+                _functionFilter = value;
                 Functions.Clear();
 				var sections = _kernel.Help.Sections;
 
                 foreach (var section in sections)
                 {
-                    if (section.Name.Contains(functionFilter))
+                    if (section.Name.Contains(_functionFilter))
                     {
                         var dialogs = Container.Get<IDialogManager>();
                         Functions.Add(new HelpViewModel(section, dialogs));
@@ -117,16 +118,16 @@
 
 		public String VariableFilter
 		{
-			get { return variableFilter; }
+			get { return _variableFilter; }
 			set
 			{
-				variableFilter = value;
+				_variableFilter = value;
 				Variables.Clear();
 				var variables = _kernel.Context.AllVariables;
 
 				foreach (var variable in variables)
 				{
-                    if (variable.Key.Contains(variableFilter))
+                    if (variable.Key.Contains(_variableFilter))
                     {
                         var vm = new VariableViewModel(variable.Key, variable.Value);
                         Variables.Add(vm);
@@ -162,24 +163,22 @@
             get { return _functions; }
         }
 
+        public PlotViewModel LastPlot
+        {
+            get { return _lastPlot; }
+            set { _lastPlot = value; RaisePropertyChanged(); }
+        }
+
         public String InputCommand
         {
-            get { return input; }
-            set
-            {
-                input = value;
-                RaisePropertyChanged();
-            }
+            get { return _input; }
+            set { _input = value; RaisePropertyChanged(); }
         }
 
 		public HelpViewModel SelectedHelp
 		{
 			get { return null; }
-			set
-			{
-				value.ShowMore.Execute(value);
-				RaisePropertyChanged();
-			}
+			set { value.ShowMore.Execute(value); RaisePropertyChanged(); }
 		}
 
         public VariableViewModel SelectedVariable
@@ -231,7 +230,7 @@
 
         public void OpenEditor(IEnumerable<String> files)
         {
-            var dialogs = _container.Get<IDialogManager>();
+            var dialogs = Container.Get<IDialogManager>();
 
             foreach (var file in files)
             {
@@ -295,7 +294,7 @@
         {
             Dispatch(() =>
             {
-                if (e.Name.Contains(variableFilter))
+                if (e.Name.Contains(_variableFilter))
                 {
                     var vm = new VariableViewModel(e.Name, e.Value);
                     _variables.Add(vm);
@@ -358,7 +357,7 @@
             {
                 var visualizer = Container.Get<IVisualizer>();
                 var console = Container.Get<IConsole>();
-                //LastPlot = new PlotViewModel(e.Value, visualizer, console);
+                LastPlot = new PlotViewModel(e.Value, visualizer, console);
             });
         }
 
