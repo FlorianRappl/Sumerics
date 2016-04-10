@@ -1,3 +1,5 @@
+![Sumerics Logo](images/logo_wide.png)
+
 # Sumerics
 
 Sumerics is a touch enabled sensor application for doing numerical calculations on Windows 8+ computers. It is enhanced for the latest generation of Ultrabooks featuring various sensors and a touch screen.
@@ -6,7 +8,29 @@ The app is described in greater detail in two articles. One of these articles ca
 
 ## Installation
 
-The application is distributed via Chocolatey.
+The application is distributed via Chocolatey. The source and installer binary can also be downloaded from GitHub.
+
+## Screenshots
+
+The console view with the REPL to enable a convenient workflow.
+
+![Console](images/console.png)
+
+The plot view represents the previously added plot object.
+
+![Plots of Bessel Function](images/bessel.png)
+
+Sumerics uses the Windows touch input to recognize touch drawn queries.
+
+![Interface to Match Query Drawing](images/input.png)
+
+There are various kinds of supported plots, e.g., Contour plots.
+
+![Contour Plot of the Mandelbrot Set](images/mandelbrot.png)
+
+A group plot type exists to allow displaying a grid of (different) plots.
+
+![Various Plots](images/plotting.png)
 
 ## Contributions
 
@@ -14,7 +38,29 @@ Contributions in any form are welcome. PRs are happily accepted, as long as the 
 
 ## History
 
-TBD
+This history only covers the publications that happened regarding the Intel AppUp store. The history of Sumerics vNext will be recorded in form of official releases and attached release notes.
+
+* v1.0.2: *20.02.2013*
+  - foo
+
+* v1.0.1: *13.02.2013*
+  - bar
+
+* v1.0.0: *07.02.2013*
+  - foo
+
+* v0.9.9: *13.12.2012*
+  - bar
+
+* v0.9.8: *29.11.2012*
+  - foo
+
+* v0.9.7: *28.11.2012*
+  - bar
+
+* v0.9.6: *22.11.2012*
+  - Initially published version in the Intel AppUp store
+  - fii
 
 ## License
 
