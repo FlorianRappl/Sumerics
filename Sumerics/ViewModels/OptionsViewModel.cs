@@ -33,7 +33,8 @@
                 Compass = settings.Compass,
                 Gyrometer = settings.Gyrometer,
                 Inclinometer = settings.Inclinometer,
-                Light = settings.Light
+                Light = settings.Light,
+                Language = settings.Language
             };
             _save = new RelayCommand(obj =>
             {
@@ -48,6 +49,7 @@
                 settings.Gyrometer = _options.Gyrometer;
                 settings.Inclinometer = _options.Inclinometer;
                 settings.Light = _options.Light;
+                settings.Language = _options.Language;
                 settings.Save();
 
                 if (window != null)
@@ -184,6 +186,16 @@
 				RaisePropertyChanged();
 			}
 		}
+
+        public String Language
+        {
+            get { return _options.Language; }
+            set
+            {
+                _options.Language = value;
+                RaisePropertyChanged();
+            }
+        }
 
         #endregion
 

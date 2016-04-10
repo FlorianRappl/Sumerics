@@ -34,6 +34,7 @@
             Gyrometer = settings.Gyrometer;
             Inclinometer = settings.Inclinometer;
             Light = settings.Light;
+            Language = settings.Language;
             History = settings.History ?? new StringCollection();
         }
 
@@ -61,6 +62,8 @@
 
         public Boolean Light { get; set; }
 
+        public String Language { get; set; }
+
         public StringCollection History { get; private set; }
 
         #endregion
@@ -80,6 +83,7 @@
             _settings.Inclinometer = Inclinometer;
             _settings.Light = Light;
             _settings.History = History;
+            _settings.Language = Language;
             _settings.Save();
 
             if (Changed != null)

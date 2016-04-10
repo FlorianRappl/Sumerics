@@ -23,5 +23,7 @@
         public Boolean Compass { get; set; }
 
         public Boolean Light { get; set; }
+
+        public String Language { get; set; }
     }
 }

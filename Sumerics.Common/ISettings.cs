@@ -25,6 +25,8 @@
 
         Boolean Light { get; set; }
 
+        String Language { get; set; }
+
         StringCollection History { get; }
 
         void Save();
