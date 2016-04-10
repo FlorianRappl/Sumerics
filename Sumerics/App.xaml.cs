@@ -1,8 +1,11 @@
 ﻿namespace Sumerics
 {
+    using Sumerics.Properties;
     using Sumerics.Resources;
     using Sumerics.ViewModels;
     using System;
+    using System.Globalization;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Threading;
 
@@ -16,6 +19,9 @@
         public App()
         {
             _app = new SumericsApp();
+
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(Settings.Default.Language);
+
             DispatcherUnhandledException += HandleUnhandledException;
         }
 
