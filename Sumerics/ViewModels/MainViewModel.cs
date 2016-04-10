@@ -93,9 +93,6 @@
             get { return _container; }
         }
 
-        /// <summary>
-        /// Gets or sets the currently applied function (help) filter.
-        /// </summary>
         public String FunctionFilter
         {
             get { return functionFilter; }
@@ -118,9 +115,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets or sets the currently applied variable filter.
-        /// </summary>
 		public String VariableFilter
 		{
 			get { return variableFilter; }
@@ -143,49 +137,31 @@
 			}
 		}
 
-        /// <summary>
-        /// Gets or sets the available plugins.
-        /// </summary>
 		public List<PluginViewModel> Plugins
 		{
 			get { return _kernel.Plugins; }
 		}
 
-        /// <summary>
-        /// Gets or sets the available notifications.
-        /// </summary>
         public NotificationsViewModel Notifications
         {
             get { return _notifications; }
         }
 
-        /// <summary>
-        /// Gets or sets the available autocomplete items.
-        /// </summary>
 		public ObservableCollection<AutocompleteItem> AvailableItems
 		{
 			get { return _availableItems; }
 		}
 
-        /// <summary>
-        /// Gets or sets the variables contained in the current workspace.
-        /// </summary>
 		public ObservableCollection<VariableViewModel> Variables
 		{
 			get { return _variables; }
 		}
 
-        /// <summary>
-        /// Gets or sets the functions available in the help.
-        /// </summary>
         public ObservableCollection<HelpViewModel> Functions
         {
             get { return _functions; }
         }
 
-        /// <summary>
-        /// Gets or sets the current input command.
-        /// </summary>
         public String InputCommand
         {
             get { return input; }
@@ -196,9 +172,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets or sets the selected help.
-        /// </summary>
 		public HelpViewModel SelectedHelp
 		{
 			get { return null; }
@@ -209,9 +182,6 @@
 			}
 		}
 
-        /// <summary>
-        /// Gets or sets the selected variable.
-        /// </summary>
         public VariableViewModel SelectedVariable
         {
             get { return _selectedVariable; }
@@ -228,9 +198,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets or sets the selected value.
-        /// </summary>
         public Value SelectedValue
         {
             get 
@@ -261,6 +228,16 @@
         #endregion
 
         #region Methods
+
+        public void OpenEditor(IEnumerable<String> files)
+        {
+            var dialogs = _container.Get<IDialogManager>();
+
+            foreach (var file in files)
+            {
+                dialogs.Open(Dialog.Editor, file);
+            }
+        }
 
         void FillLists()
 		{
@@ -386,5 +363,5 @@
         }
 
         #endregion
-	}
+    }
 }

@@ -20,14 +20,14 @@
 		Int32 _time;
 		Int32 _length;
 
-		static readonly OxyColor[] colors = new[] 
+		static readonly OxyColor[] Colors = new[] 
         { 
             OxyColors.Blue, 
             OxyColors.Red,
             OxyColors.Green 
         };
 
-		static readonly MarkerType[] markers = new[] 
+		static readonly MarkerType[] Markers = new[] 
         { 
             MarkerType.Square, 
             MarkerType.Circle, 
@@ -112,10 +112,10 @@
                     {
                         _model.Series.Add(new LineSeries 
                         { 
-                            Color = colors[i], 
+                            Color = Colors[i], 
                             StrokeThickness = 1.0, 
                             Title = labels[i],
-                            MarkerType = markers[i]
+                            MarkerType = Markers[i]
                         });
                     }
 				}
@@ -139,17 +139,10 @@
 			    LegendBackground = OxyColor.FromArgb(100, 240, 240, 240),
 			    LegendBorder = OxyColors.LightGray,
 			    PlotAreaBorderThickness = new OxyThickness(0),
-			    LegendOrientation = LegendOrientation.Horizontal
+			    LegendOrientation = LegendOrientation.Horizontal,
             };
-            model.Axes.Add(new LinearAxis
-            {
-			    Position = AxisPosition.Bottom,
-			    Title = "Seconds"
-            });
-            model.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Left
-            });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "Seconds" });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
             return model;
 		}
 

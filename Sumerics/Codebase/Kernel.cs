@@ -60,7 +60,7 @@
             get { return _queries; }
         }
 
-        public Boolean IsWindows8
+        public static Boolean IsWindows8
         {
             get { return Environment.OSVersion.Version >= new Version(6, 2); }
         }

@@ -5,7 +5,8 @@
     using Sumerics.MathInput;
     using Sumerics.ViewModels;
     using System;
-    using System.Diagnostics;
+    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
@@ -35,7 +36,7 @@
             MyConsole.MathInputReceived += MathInputReceived;
             MainTabs.SelectionChanged += CurrentTabChanged;
 
-            _sensors = new SensorManager();
+            _sensors = new SensorManager(SensorGrid);
 
             vm.Container.All<ISettings>().ForEach(settings => settings.Changed += (s, ev) => LoadSettings());
 
@@ -48,16 +49,13 @@
 
         async void CurrentTabChanged(Object sender, SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == 1 && e.AddedItems[0] is HeaderedContentControl)
+            if (MainTabs.SelectedIndex == 1 && e.AddedItems.Count == 1 && e.AddedItems[0] is HeaderedContentControl)
             {
-                if (MainTabs.SelectedIndex == 1)
-                {
-                    //This "hack" is required due to problems with the MetroTabs...
-                    //obviously they require like ~100 ms before they can give the
-                    //Focus away (at least to Windows Forms elements).
-                    await Task.Delay(100);
-                    MyConsole.SetFocus();
-                }
+                //This "hack" is required due to problems with the MetroTabs...
+                //obviously they require like ~100 ms before they can give the
+                //Focus away (at least to Windows Forms elements).
+                await Task.Delay(100);
+                MyConsole.SetFocus();
             }
         }
 
@@ -107,9 +105,7 @@
             if (service != null)
             {
                 var settings = _vm.Container.Get<ISettings>();
-                Debug.WriteLine(result);
                 var query = service.ConvertToYamp(result);
-                Debug.WriteLine(query);
 
                 if (settings != null && settings.AutoEvaluate)
                 {
@@ -126,18 +122,15 @@
 
         #region Methods
 
-        /// <summary>
-        /// (Re-)Loads the settings.
-        /// </summary>
 		ISettings LoadSettings()
 		{
             var settings = _vm.Container.Get<ISettings>();
 
-            _sensors.Install(AccelerometerPlot, SensorGrid);
-            _sensors.Install(GyrometerPlot, SensorGrid);
-            _sensors.Install(InclinometerPlot, SensorGrid);
-            _sensors.Install(LightPlot, SensorGrid);
-            _sensors.Install(CompassPlot, SensorGrid);
+            _sensors.InstallAccelerometer(AccelerometerPlot);
+            _sensors.InstallGyrometer(GyrometerPlot);
+            _sensors.InstallInclinometer(InclinometerPlot);
+            _sensors.InstallAmbientLight(LightPlot);
+            _sensors.InstallCompass(CompassPlot);
 
             if (settings == null)
             {
@@ -157,23 +150,23 @@
                 _sensors.Set(CompassPlot, settings.Compass, settings.LiveSensorHistory);
                 MyConsole.ConsoleFontSize = settings.ConsoleFontSize;
 
-                //if (Core.IsWindows8)
-                //{
-                //    SensorsTab.Visibility = System.Windows.Visibility.Visible;
+                if (Kernel.IsWindows8)
+                {
+                    SensorsTab.Visibility = Visibility.Visible;
 
-                //    if (settings.LivePlotActive && !sensorRunning)
-                //    {
-                //        PerformMeasurement().FireAndForget();
-                //    }
-                //    else if (!settings.LivePlotActive && sensorRunning)
-                //    {
-                //        sensorRunning = false;
-                //    }
-                //}
-                //else
-                //{
-                //    SensorsTab.Visibility = System.Windows.Visibility.Collapsed;
-                //}
+                    if (settings.LiveSensorData && !_sensors.IsRunning)
+                    {
+                        _sensors.Measure();
+                    }
+                    else if (!settings.LiveSensorData && _sensors.IsRunning)
+                    {
+                        _sensors.Cancel();
+                    }
+                }
+                else
+                {
+                    SensorsTab.Visibility = Visibility.Collapsed;
+                }
             }
 
             return settings;
@@ -195,30 +188,40 @@
 
         protected override void OnDrop(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                var files = e.Data.GetData(DataFormats.FileDrop) as String[];
-
-                if (files != null && files.Length > 0)
-                {
-                    foreach (var file in files)
-                    {
-                        //TODO if *.sws try open; otherwise open script file
-                        Debug.WriteLine(file);
-                    }
-                }
-            }
+            var files = GetFileFromDrop(e.Data).ToArray();
+            _vm.OpenEditor(files);
         }
 
         protected override void OnDragOver(DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (GetFileFromDrop(e.Data).Any())
             {
                 e.Effects = DragDropEffects.Link;
             }
             else
             {
                 e.Effects = DragDropEffects.None;
+            }
+        }
+
+        static IEnumerable<String> GetFileFromDrop(IDataObject dataObject)
+        {
+            if (dataObject.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = dataObject.GetData(DataFormats.FileDrop) as String[];
+
+                if (files != null && files.Length > 0)
+                {
+                    foreach (var file in files)
+                    {
+                        var extension = Path.GetExtension(file);
+
+                        if (extension.Equals(".sws", StringComparison.OrdinalIgnoreCase))
+                        {
+                            yield return file;
+                        }
+                    }
+                }
             }
         }
 

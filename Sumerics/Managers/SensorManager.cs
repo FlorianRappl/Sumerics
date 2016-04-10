@@ -2,6 +2,7 @@
 {
     using Sumerics.Controls;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
@@ -10,20 +11,33 @@
 
     sealed class SensorManager
     {
+        static readonly GridLength RemainingHeight = new GridLength(1.0, GridUnitType.Star);
+        static readonly GridLength ZeroHeight = new GridLength(0.0);
+
         readonly Accelerometer _accelerometer;
         readonly Gyrometer _gyrometer;
         readonly Inclinometer _inclinometer;
         readonly AmbientLight _light;
         readonly Compass _compass;
+        readonly List<Action> _updaters;
+        readonly Grid _grid;
+        Task _task;
         CancellationTokenSource _cts;
 
-        public SensorManager()
+        public SensorManager(Grid grid)
         {
             _accelerometer = new Accelerometer();
             _gyrometer = new Gyrometer();
             _inclinometer = new Inclinometer();
             _light = new AmbientLight();
             _compass = new Compass();
+            _updaters = new List<Action>();
+            _grid = grid;
+        }
+
+        public Boolean IsRunning
+        {
+            get { return _task != null; }
         }
 
         public void Cancel()
@@ -32,26 +46,94 @@
             {
                 _cts.Cancel();
                 _cts = null;
+                _task = null;
             }
         }
 
-        public void Install(SensorPlot plot, Grid sensors)
+        public void Measure()
+        {
+            if (_task == null)
+            {
+                _cts = new CancellationTokenSource();
+                _task = MeasureAsync(_cts.Token);
+            }
+        }
+
+        public void InstallAccelerometer(SensorPlot plot)
+        {
+            Install(plot);
+            _updaters.Add(() =>
+            {
+                var acc = _accelerometer.CurrentAcceleration;
+                plot.AddValues(acc.X, acc.Y, acc.Z);
+            });
+        }
+
+        public void InstallGyrometer(SensorPlot plot)
+        {
+            Install(plot);
+            _updaters.Add(() =>
+            {
+                var gyro = _gyrometer.CurrentAngularVelocity;
+                plot.AddValues(gyro.X, gyro.Y, gyro.Z);
+            });
+        }
+
+        public void InstallInclinometer(SensorPlot plot)
+        {
+            Install(plot);
+            _updaters.Add(() =>
+            {
+                var inc = _inclinometer.CurrentGradient;
+                plot.AddValues(inc.Pitch, inc.Roll, inc.Yaw);
+            });
+        }
+
+        public void InstallAmbientLight(SensorPlot plot)
+        {
+            Install(plot);
+            _updaters.Add(() =>
+            {
+                var light = _light.CurrentLight;
+                plot.AddValues(light);
+            });
+        }
+
+        public void InstallCompass(SensorPlot plot)
+        {
+            Install(plot);
+            _updaters.Add(() =>
+            {
+                var comp = _compass.CurrentHeading;
+                plot.AddValues(comp.Magnetic);
+            });
+        }
+
+        public void Set(SensorPlot plot, Boolean show, Int32 length)
+        {
+            plot.Length = length;
+            plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            plot.Maximized = false;
+            _grid.RowDefinitions[Grid.GetRow(plot)].Height = show ? RemainingHeight : ZeroHeight;
+        }
+
+        void Install(SensorPlot plot)
         {
             plot.PreviewMouseDown += (s, e) =>
             {
                 var row = Grid.GetRow(plot);
 
-                for (var i = 0; i < sensors.RowDefinitions.Count; i++)
+                for (var i = 0; i < _grid.RowDefinitions.Count; i++)
                 {
                     if (i != row)
                     {
-                        var sensor = sensors.Children[i] as SensorPlot;
+                        var sensor = _grid.Children[i] as SensorPlot;
 
                         if (sensor != null && sensor.Visibility == System.Windows.Visibility.Visible)
                         {
                             var auto = new GridLength(1.0, GridUnitType.Star);
                             var height = plot.Maximized ? auto : new GridLength(0.0);
-                            sensors.RowDefinitions[i].Height = height;
+                            _grid.RowDefinitions[i].Height = height;
                         }
                     }
                 }
@@ -60,36 +142,16 @@
             };
         }
 
-        public void Set(SensorPlot plot, Boolean show, Int32 length)
+        async Task MeasureAsync(CancellationToken cancellationToken)
         {
-            plot.Length = length;
-            plot.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-            //SensorGrid.RowDefinitions[Grid.GetRow(plot)].Height = show ? new GridLength(1.0, GridUnitType.Star) : new GridLength(0.0);
-            plot.Maximized = false;
-        }
-
-        public async Task MeasureAsync()
-        {
-            if (_cts == null)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                _cts = new CancellationTokenSource();
-
-                while (!_cts.IsCancellationRequested)
+                foreach (var updater in _updaters)
                 {
-                    var acc = _accelerometer.CurrentAcceleration;
-                    var gyro = _gyrometer.CurrentAngularVelocity;
-                    var inc = _inclinometer.CurrentGradient;
-                    var light = _light.CurrentLight;
-                    var comp = _compass.CurrentHeading;
-
-                    //AccelerometerPlot.AddValues(acc[0], acc[1], acc[2]);
-                    //GyrometerPlot.AddValues(gyro[0], gyro[1], gyro[2]);
-                    //InclinometerPlot.AddValues(inc[0], inc[1], inc[2]);
-                    //LightPlot.AddValues(light);
-                    //CompassPlot.AddValues(comp);
-
-                    await Task.Delay(1000, _cts.Token);
+                    updater.Invoke();
                 }
+
+                await Task.Delay(1000, cancellationToken);
             }
         }
     }
