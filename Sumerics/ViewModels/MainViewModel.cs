@@ -81,7 +81,7 @@
                     query = newQuery;
                 }
 
-                _kernel.RunAsync(qrvm, query).FireAndForget();
+                var task = _kernel.RunAsync(qrvm, query);
             });
         }
 

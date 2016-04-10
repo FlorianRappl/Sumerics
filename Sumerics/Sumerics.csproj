@@ -215,7 +215,6 @@
     <Compile Include="Proxies\ConsoleProxy.cs" />
     <Compile Include="Codebase\IsNullConverter.cs" />
     <Compile Include="Codebase\ListBoxItemBehavior.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Views\ConsoleEnterWindow.xaml.cs">
       <DependentUpon>ConsoleEnterWindow.xaml</DependentUpon>
     </Compile>
