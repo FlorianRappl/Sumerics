@@ -41,26 +41,30 @@ Contributions in any form are welcome. PRs are happily accepted, as long as the 
 This history only covers the publications that happened regarding the Intel AppUp store. The history of Sumerics vNext will be recorded in form of official releases and attached release notes.
 
 * v1.0.2: *20.02.2013*
-  - foo
+  - Fixed some bugs
+  - Upgraded YAMP
 
 * v1.0.1: *13.02.2013*
-  - bar
+  - Wording enhancements
+  - Improved documentation
 
 * v1.0.0: *07.02.2013*
-  - foo
+  - Integrated online help
+  - Provided the YAMP.Physics plugin
 
 * v0.9.9: *13.12.2012*
-  - bar
+  - Included scripting in YAMP
+  - Enable the use of plugins
 
 * v0.9.8: *29.11.2012*
-  - foo
+  - Integrated the code editor
+  - Updated YAMP
 
 * v0.9.7: *28.11.2012*
-  - bar
+  - Removed the graphical editor
 
 * v0.9.6: *22.11.2012*
   - Initially published version in the Intel AppUp store
-  - fii
 
 ## License
 
