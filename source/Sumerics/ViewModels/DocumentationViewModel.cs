@@ -349,9 +349,10 @@
 
         static void InsertIntoParagraph(Paragraph p, String title, List<HelpExample> examples)
         {
-            var r = new Run(title);
-            r.Foreground = new SolidColorBrush(Colors.Black);
-            p.Inlines.Add(r);
+            p.Inlines.Add(new Run(title)
+            {
+                Foreground = new SolidColorBrush(Colors.Black)
+            });
             p.Inlines.Add(new LineBreak());
 
             if (examples.Count > 0)
@@ -363,9 +364,10 @@
             }
             else
             {
-                var no = new Run(Messages.NoExamplesAvailable);
-                no.Foreground = new SolidColorBrush(Colors.DarkGray);
-                p.Inlines.Add(no);
+                p.Inlines.Add(new Run(Messages.NoExamplesAvailable)
+                {
+                    Foreground = new SolidColorBrush(Colors.DarkGray)
+                });
             }
 
             p.Inlines.Add(new LineBreak());
@@ -373,61 +375,70 @@
 
         static void InsertIntoParagraph(Paragraph p, HelpExample example, Int32 nr)
         {
-            var c = new Run(Messages.CopyCommand);
-            c.Foreground = new SolidColorBrush(Colors.LightGray);
-            c.FontSize = 10.0;
-            p.Inlines.Add(c);
-            c.Cursor = Cursors.Hand;
-            c.MouseDown += (sndr, evnt) => { Clipboard.SetText(example.Example); };
-            var d = new Run(example.Example);
-            d.Foreground = new SolidColorBrush(Colors.Green);
-            p.Inlines.Add(d);
+            p.Inlines.Add(new Run(Messages.CopyCommand)
+            {
+                Foreground = new SolidColorBrush(Colors.LightGray),
+                FontSize = 10.0,
+                Cursor = Cursors.Hand
+            });
+            p.Inlines.LastInline.MouseDown += (sndr, evnt) => Clipboard.SetText(example.Example);
+            p.Inlines.Add(new Run(example.Example)
+            {
+                Foreground = new SolidColorBrush(Colors.Green)
+            });
             p.Inlines.Add(new LineBreak());
-            var e = new Run(example.Description);
-            e.Foreground = new SolidColorBrush(Colors.DarkGray);
-            p.Inlines.Add(e);
+            p.Inlines.Add(new Run(example.Description)
+            {
+                Foreground = new SolidColorBrush(Colors.DarkGray)
+            });
             p.Inlines.Add(new LineBreak());
         }
 
         static void InsertIntoParagraph(Paragraph p, String title, IEnumerable<String> text)
         {
-            var r = new Run(title);
-            r.Foreground = new SolidColorBrush(Colors.Black);
-            p.Inlines.Add(r);
+            p.Inlines.Add(new Run(title)
+            {
+                Foreground = new SolidColorBrush(Colors.Black)
+            });
             p.Inlines.Add(new LineBreak());
 
             foreach (var txt in text)
             {
-                var d = new Run(txt);
-                d.Foreground = new SolidColorBrush(Colors.Green);
-                p.Inlines.Add(d);
+                p.Inlines.Add(new Run(txt)
+                {
+                    Foreground = new SolidColorBrush(Colors.Green)
+                });
                 p.Inlines.Add(new LineBreak());
             }
         }
 
         static void InsertIntoParagraph(Paragraph p, String title, String text)
         {
-            var r = new Run(title);
-            r.Foreground = new SolidColorBrush(Colors.Black);
-            r.FontWeight = FontWeights.Bold;
-            p.Inlines.Add(r);
+            p.Inlines.Add(new Run(title)
+            {
+                Foreground = new SolidColorBrush(Colors.Black),
+                FontWeight = FontWeights.Bold
+            });
             p.Inlines.Add(new LineBreak());
-            var d = new Run(text);
-            d.Foreground = new SolidColorBrush(Colors.Blue);
-            p.Inlines.Add(d);
+            p.Inlines.Add(new Run(text)
+            {
+                Foreground = new SolidColorBrush(Colors.Blue)
+            });
         }
 
         static void InsertIntoParagraph(Paragraph p, String description)
         {
-            var r = new Run(Messages.Description);
-            r.Foreground = new SolidColorBrush(Colors.Black);
-            r.FontWeight = FontWeights.Bold;
-            r.FontSize = 20;
-            p.Inlines.Add(r);
+            p.Inlines.Add(new Run(Messages.Description)
+            {
+                Foreground = new SolidColorBrush(Colors.Black),
+                FontWeight = FontWeights.Bold,
+                FontSize = 20
+            });
             p.Inlines.Add(new LineBreak());
-            var d = new Run(description);
-            d.Foreground = new SolidColorBrush(Colors.Blue);
-            p.Inlines.Add(d);
+            p.Inlines.Add(new Run(description)
+            {
+                Foreground = new SolidColorBrush(Colors.Blue)
+            });
         }
 
         #endregion
