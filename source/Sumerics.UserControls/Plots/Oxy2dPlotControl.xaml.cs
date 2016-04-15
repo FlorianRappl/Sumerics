@@ -3,7 +3,6 @@
     using Sumerics.Plots;
     using System;
     using System.IO;
-    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for Oxy2dPlotControl.xaml
