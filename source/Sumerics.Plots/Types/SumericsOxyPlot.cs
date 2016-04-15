@@ -32,11 +32,6 @@
 			get { return _model; }
 		}
 
-        public XYPlotValue XYPlot 
-        { 
-            get { return _plot; }
-        }
-
         #endregion
 
         #region Some very general modifiers

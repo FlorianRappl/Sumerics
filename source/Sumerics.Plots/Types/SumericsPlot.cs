@@ -57,6 +57,8 @@
 
         #region Plot Changed
 
+        protected abstract void UpdateProperties();
+
         void PlotValueChanged(Object sender, PlotEventArgs e)
         {
             var source = e.PropertyName;

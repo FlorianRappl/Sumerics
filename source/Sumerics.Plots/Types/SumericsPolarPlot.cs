@@ -19,16 +19,43 @@
             base(plot)
 		{
             _plot = plot;
-            SetSeries(Model);
-            SetProperties(Model);
+            SetSeries();
+            SetProperties();
 		}
+
+        #endregion
+
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            var model = Model;
+            var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
+            var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
+
+            var angle = model.Axes[0] as AngleAxis;
+            angle.MajorGridlineStyle = major;
+            angle.MinorGridlineStyle = minor;
+            angle.FractionUnit = _plot.FractionUnit;
+            angle.FractionUnitSymbol = _plot.FractionSymbol;
+            angle.Minimum = _plot.MinX;
+            angle.Maximum = _plot.MaxX;
+
+            var magnitude = model.Axes[1] as MagnitudeAxis;
+            magnitude.MajorGridlineStyle = major;
+            magnitude.MinorGridlineStyle = minor;
+            magnitude.Minimum = _plot.MinY;
+            magnitude.Maximum = _plot.MaxY;
+        }
 
         #endregion
 
         #region Helpers
 
-        void SetSeries(PlotModel model)
+        void SetSeries()
 		{
+            var model = Model;
+
 			for (var i = 0; i < _plot.Count; i++)
 			{
 				var points = _plot[i];
@@ -45,8 +72,9 @@
 			}
 		}
 
-		void SetProperties(PlotModel model)
-		{
+		void SetProperties()
+        {
+            var model = Model;
 			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
 			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 			model.PlotAreaBorderThickness = new OxyThickness(0);
@@ -72,26 +100,6 @@
 				Minimum = _plot.MinY,
 				Maximum = _plot.MaxY
 			});
-		}
-
-		void UpdateProperties(PlotModel model)
-		{
-			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
-			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
-
-			var angle = model.Axes[0] as AngleAxis;
-			angle.MajorGridlineStyle = major;
-			angle.MinorGridlineStyle = minor;
-			angle.FractionUnit = _plot.FractionUnit;
-			angle.FractionUnitSymbol = _plot.FractionSymbol;
-			angle.Minimum = _plot.MinX;
-			angle.Maximum = _plot.MaxX;
-
-			var magnitude = model.Axes[1] as MagnitudeAxis;
-			magnitude.MajorGridlineStyle = major;
-			magnitude.MinorGridlineStyle = minor;
-			magnitude.Minimum = _plot.MinY;
-			magnitude.Maximum = _plot.MaxY;
 		}
 
         #endregion

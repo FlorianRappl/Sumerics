@@ -37,5 +37,14 @@
         }
 
         #endregion
+
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            //TODO Update Model
+        }
+
+        #endregion
     }
 }

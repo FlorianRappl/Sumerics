@@ -19,16 +19,64 @@
             base(plot)
 		{
 			_plot = plot;
-			SetSeries(Model);
-			SetProperties(Model);
+			SetSeries();
+			SetProperties();
 		}
 
 		#endregion
 
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            var model = Model;
+            var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
+            var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
+
+            if (_plot.IsLogX && model.Axes[0] is LinearAxis)
+            {
+                model.Axes[0] = new LogarithmicAxis();
+                model.Axes[0].Position = AxisPosition.Bottom;
+            }
+            else if (!_plot.IsLogX && model.Axes[0] is LogarithmicAxis)
+            {
+                model.Axes[0] = new LinearAxis();
+                model.Axes[0].Position = AxisPosition.Bottom;
+            }
+
+            if (_plot.IsLogY && model.Axes[1] is LinearAxis)
+            {
+                model.Axes[1] = new LogarithmicAxis();
+                model.Axes[1].Position = AxisPosition.Bottom;
+            }
+            else if (!_plot.IsLogY && model.Axes[1] is LogarithmicAxis)
+            {
+                model.Axes[1] = new LinearAxis();
+                model.Axes[1].Position = AxisPosition.Bottom;
+            }
+
+            model.Axes[0].MajorGridlineStyle = major;
+            model.Axes[0].MinorGridlineStyle = minor;
+            model.Axes[0].Title = _plot.XLabel;
+
+            model.Axes[1].MajorGridlineStyle = major;
+            model.Axes[1].MinorGridlineStyle = minor;
+            model.Axes[1].Title = _plot.YLabel;
+
+            model.Axes[0].Minimum = _plot.MinX;
+            model.Axes[0].Maximum = _plot.MaxX;
+            model.Axes[1].Minimum = _plot.MinY;
+            model.Axes[1].Maximum = _plot.MaxY;
+        }
+
+        #endregion
+
         #region Helpers
 
-        void SetSeries(PlotModel model)
+        void SetSeries()
 		{
+            var model = Model;
+
 			for (var i = 0; i < _plot.Count; i++)
 			{
 				var points = _plot[i];
@@ -45,8 +93,9 @@
 			}
 		}
 
-		void SetProperties(PlotModel model)
+		void SetProperties()
 		{
+            var model = Model;
 			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
 			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 			model.Axes.Add(_plot.IsLogX ? (Axis)new LogarithmicAxis() : new LinearAxis());
@@ -63,47 +112,6 @@
 			model.Axes[1].Minimum = _plot.MinY;
 			model.Axes[1].Maximum = _plot.MaxY;
 			model.Axes[1].Title = _plot.YLabel;
-		}
-
-		void UpdateProperties(PlotModel model)
-		{
-			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
-			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
-
-			if (_plot.IsLogX && model.Axes[0] is LinearAxis)
-			{
-				model.Axes[0] = new LogarithmicAxis();
-				model.Axes[0].Position = AxisPosition.Bottom;
-			}
-			else if (!_plot.IsLogX && model.Axes[0] is LogarithmicAxis)
-			{
-				model.Axes[0] = new LinearAxis();
-				model.Axes[0].Position = AxisPosition.Bottom;
-			}
-
-			if (_plot.IsLogY && model.Axes[1] is LinearAxis)
-			{
-				model.Axes[1] = new LogarithmicAxis();
-				model.Axes[1].Position = AxisPosition.Bottom;
-			}
-			else if (!_plot.IsLogY && model.Axes[1] is LogarithmicAxis)
-			{
-				model.Axes[1] = new LinearAxis();
-				model.Axes[1].Position = AxisPosition.Bottom;
-			}
-
-			model.Axes[0].MajorGridlineStyle = major;
-			model.Axes[0].MinorGridlineStyle = minor;
-			model.Axes[0].Title = _plot.XLabel;
-
-			model.Axes[1].MajorGridlineStyle = major;
-			model.Axes[1].MinorGridlineStyle = minor;
-			model.Axes[1].Title = _plot.YLabel;
-
-			model.Axes[0].Minimum = _plot.MinX;
-			model.Axes[0].Maximum = _plot.MaxX;
-			model.Axes[1].Minimum = _plot.MinY;
-			model.Axes[1].Maximum = _plot.MaxY;
 		}
 
 		#endregion

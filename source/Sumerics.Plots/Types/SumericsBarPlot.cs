@@ -19,16 +19,40 @@
             base(plot)
 		{
 			_plot = plot;
-			SetSeries(Model);
-			SetProperties(Model);
+			SetSeries();
+			SetProperties();
 		}
 
 		#endregion
 
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            var model = Model;
+            var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
+            var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
+
+            model.Axes[0].MajorGridlineStyle = major;
+            model.Axes[0].MinorGridlineStyle = minor;
+            model.Axes[0].Title = _plot.XLabel;
+
+            model.Axes[1].MajorGridlineStyle = major;
+            model.Axes[1].MinorGridlineStyle = minor;
+            model.Axes[1].Title = _plot.YLabel;
+
+            model.Axes[1].Minimum = _plot.MinY;
+            model.Axes[1].Maximum = _plot.MaxY;
+        }
+
+        #endregion
+
         #region Helpers
 
-        void SetSeries(PlotModel model)
+        void SetSeries()
 		{
+            var model = Model;
+
 			for (var i = 0; i < _plot.Count; i++)
 			{
 				var points = _plot[i];
@@ -63,8 +87,9 @@
             }
 		}
 
-		void SetProperties(PlotModel model)
-		{
+		void SetProperties()
+        {
+            var model = Model;
 			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
 			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 			model.Axes.Add(new CategoryAxis());
@@ -79,23 +104,6 @@
 			model.Axes[1].Minimum = _plot.MinY;
 			model.Axes[1].Maximum = _plot.MaxY;
 			model.Axes[1].Title = _plot.YLabel;
-		}
-
-		void UpdateProperties(PlotModel model)
-		{
-			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
-			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
-
-			model.Axes[0].MajorGridlineStyle = major;
-			model.Axes[0].MinorGridlineStyle = minor;
-			model.Axes[0].Title = _plot.XLabel;
-
-			model.Axes[1].MajorGridlineStyle = major;
-			model.Axes[1].MinorGridlineStyle = minor;
-			model.Axes[1].Title = _plot.YLabel;
-
-			model.Axes[1].Minimum = _plot.MinY;
-			model.Axes[1].Maximum = _plot.MaxY;
 		}
 
 		#endregion

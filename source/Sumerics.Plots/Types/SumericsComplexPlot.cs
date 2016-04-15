@@ -19,8 +19,8 @@
             base(plot)
 		{
 			_plot = plot;
-			SetSeries(Model);
-			SetProperties(Model);
+			SetSeries();
+			SetProperties();
 		}
 
 		#endregion
@@ -39,16 +39,35 @@
 
 		#endregion
 
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            var model = Model;
+
+            model.Axes[0].Title = _plot.XLabel;
+            model.Axes[1].Title = _plot.YLabel;
+
+            model.Axes[0].Minimum = _plot.MinX;
+            model.Axes[0].Maximum = _plot.MaxX;
+
+            model.Axes[1].Minimum = _plot.MinY;
+            model.Axes[1].Maximum = _plot.MaxY;
+        }
+
+        #endregion
+
         #region Helpers
 
-        void SetSeries(PlotModel model)
+        void SetSeries()
 		{
 			var series = new ComplexSeries(_plot.Fz);
-			model.Series.Add(series);
+			Model.Series.Add(series);
 		}
 
-		void SetProperties(PlotModel model)
+		void SetProperties()
 		{
+            var model = Model;
             model.Axes.Add(new LinearAxis
             {
                 Position = AxisPosition.Bottom,
@@ -63,18 +82,6 @@
 			    Maximum = _plot.MaxY,
 			    Title = _plot.YLabel
             });		
-		}
-
-		void UpdateProperties(PlotModel model)
-		{
-			model.Axes[0].Title = _plot.XLabel;
-			model.Axes[1].Title = _plot.YLabel;
-
-			model.Axes[0].Minimum = _plot.MinX;
-			model.Axes[0].Maximum = _plot.MaxX;
-
-			model.Axes[1].Minimum = _plot.MinY;
-			model.Axes[1].Maximum = _plot.MaxY;
 		}
 
 		#endregion

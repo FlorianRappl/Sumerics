@@ -1,6 +1,5 @@
 ﻿namespace Sumerics.Plots
 {
-    using OxyPlot;
     using OxyPlot.Axes;
     using OxyPlot.Series;
     using System;
@@ -21,8 +20,8 @@
             : base(plot)
 		{
 			_plot = plot;
-			SetSeries(Model);
-			SetProperties(Model);
+			SetSeries();
+			SetProperties();
 		}
 
 		#endregion
@@ -41,6 +40,25 @@
 
 		#endregion
 
+        #region Methods
+
+        protected override void UpdateProperties()
+        {
+            var model = Model;
+            //_series.IsInterpolated = _plot.IsInterpolated;
+
+            model.Axes[0].Title = _plot.XLabel;
+            model.Axes[1].Title = _plot.YLabel;
+
+            model.Axes[0].Minimum = _plot.MinX;
+            model.Axes[0].Maximum = _plot.MaxX;
+
+            model.Axes[1].Minimum = _plot.MinY;
+            model.Axes[1].Maximum = _plot.MaxY;
+        }
+
+        #endregion
+
         #region Helpers
 
         void UpdateSeries(HeatMapSeries series, IPointSeries points)
@@ -49,8 +67,10 @@
             //series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
         }
 
-		void SetSeries(PlotModel model)
-		{
+		void SetSeries()
+        {
+            var model = Model;
+
             for (var i = 0; i < _plot.Count; i++)
             {
                 var points = _plot[i];
@@ -61,8 +81,9 @@
             }
 		}
 
-		void SetProperties(PlotModel model)
+		void SetProperties()
         {
+            var model = Model;
             //_series.IsInterpolated = _plot.IsInterpolated;
 
 			model.Axes.Add(new OxyPlot.Axes.LinearAxis());
@@ -81,20 +102,6 @@
 
             model.Axes[1].StartPosition = 1;
             model.Axes[1].EndPosition = 0;
-		}
-
-		void UpdateProperties(PlotModel model)
-        {
-            //_series.IsInterpolated = _plot.IsInterpolated;
-
-			model.Axes[0].Title = _plot.XLabel;
-			model.Axes[1].Title = _plot.YLabel;
-
-			model.Axes[0].Minimum = _plot.MinX;
-			model.Axes[0].Maximum = _plot.MaxX;
-
-			model.Axes[1].Minimum = _plot.MinY;
-			model.Axes[1].Maximum = _plot.MaxY;
 		}
 
 		#endregion
