@@ -40,6 +40,16 @@
 
         #region Methods
 
+        protected override void UpdateSeries()
+        {
+            //TODO Update Model
+        }
+
+        protected override void UpdateData()
+        {
+            //TODO Update Model
+        }
+
         protected override void UpdateProperties()
         {
             //TODO Update Model

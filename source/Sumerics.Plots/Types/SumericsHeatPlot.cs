@@ -18,10 +18,13 @@
 
         public SumericsHeatPlot(HeatmapPlotValue plot)
             : base(plot)
-		{
-			_plot = plot;
-			SetSeries();
-			SetProperties();
+        {
+            var model = Model;
+            _plot = plot;
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+			UpdateSeries();
+			UpdateProperties();
 		}
 
 		#endregion
@@ -57,19 +60,10 @@
             model.Axes[1].Maximum = _plot.MaxY;
         }
 
-        #endregion
-
-        #region Helpers
-
-        void UpdateSeries(HeatMapSeries series, IPointSeries points)
-        {
-            series.Title = points.Label;
-            //series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
-        }
-
-		void SetSeries()
+        protected override void UpdateSeries()
         {
             var model = Model;
+            model.Series.Clear();
 
             for (var i = 0; i < _plot.Count; i++)
             {
@@ -79,30 +73,21 @@
                 //UpdateSeries(ser, points);
                 //model.Series.Add(ser);
             }
-		}
+        }
 
-		void SetProperties()
+        protected override void UpdateData()
         {
-            var model = Model;
-            //_series.IsInterpolated = _plot.IsInterpolated;
+        }
 
-			model.Axes.Add(new OxyPlot.Axes.LinearAxis());
-			model.Axes.Add(new OxyPlot.Axes.LinearAxis());
+        #endregion
 
-            model.Axes[0].Position = AxisPosition.Bottom;
-            model.Axes[1].Position = AxisPosition.Left;
+        #region Helpers
 
-			model.Axes[0].Minimum = _plot.MinX - 1.0;
-			model.Axes[0].Maximum = _plot.MaxX;
-			model.Axes[0].Title = _plot.XLabel;
-
-            model.Axes[1].Minimum = _plot.MinY - 1.0;
-            model.Axes[1].Maximum = _plot.MaxY;
-            model.Axes[1].Title = _plot.YLabel;
-
-            model.Axes[1].StartPosition = 1;
-            model.Axes[1].EndPosition = 0;
-		}
+        void UpdateSeries(HeatMapSeries series, IPointSeries points)
+        {
+            series.Title = points.Label;
+            //series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
+        }
 
 		#endregion
     }

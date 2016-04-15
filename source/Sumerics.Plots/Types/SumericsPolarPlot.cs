@@ -17,10 +17,15 @@
 
         public SumericsPolarPlot(PolarPlotValue plot) : 
             base(plot)
-		{
+        {
+            var model = Model;
+            model.PlotAreaBorderThickness = new OxyThickness(0);
+            model.PlotType = PlotType.Polar;
             _plot = plot;
-            SetSeries();
-            SetProperties();
+            model.Axes.Add(new AngleAxis { FormatAsFractions = true });
+            model.Axes.Add(new MagnitudeAxis());
+            UpdateSeries();
+            UpdateProperties();
 		}
 
         #endregion
@@ -38,8 +43,10 @@
             angle.MinorGridlineStyle = minor;
             angle.FractionUnit = _plot.FractionUnit;
             angle.FractionUnitSymbol = _plot.FractionSymbol;
-            angle.Minimum = _plot.MinX;
-            angle.Maximum = _plot.MaxX;
+            angle.StartAngle = _plot.MinX;
+            angle.EndAngle = _plot.MaxX;
+            angle.MinorStep = _plot.MaxX / 16.0;
+            angle.MajorStep = _plot.MaxX / 8.0;
 
             var magnitude = model.Axes[1] as MagnitudeAxis;
             magnitude.MajorGridlineStyle = major;
@@ -48,59 +55,30 @@
             magnitude.Maximum = _plot.MaxY;
         }
 
-        #endregion
-
-        #region Helpers
-
-        void SetSeries()
-		{
-            var model = Model;
-
-			for (var i = 0; i < _plot.Count; i++)
-			{
-				var points = _plot[i];
-				var series = new LineSeries();
-
-				for (var j = 0; j < points.Count; j++)
-				{
-                    var point = new DataPoint(points[j].Magnitude, points[j].Angle);
-					series.Points.Add(point);
-				}
-
-				UpdateLineSeries(series, points);
-				model.Series.Add(series);
-			}
-		}
-
-		void SetProperties()
+        protected override void UpdateSeries()
         {
             var model = Model;
-			var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
-			var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
-			model.PlotAreaBorderThickness = new OxyThickness(0);
-			model.PlotType = PlotType.Polar;
+            model.Series.Clear();
 
-			model.Axes.Add(new AngleAxis
-			{
-                StartAngle = _plot.MinX,
-                EndAngle = _plot.MaxX,
-                MinorStep = _plot.MaxX / 16.0,
-                MajorStep = _plot.MaxX / 8.0,
-				MajorGridlineStyle = major,
-				MinorGridlineStyle = minor,
-				FormatAsFractions = true,
-				FractionUnit = _plot.FractionUnit,
-				FractionUnitSymbol = _plot.FractionSymbol
-			});
+            for (var i = 0; i < _plot.Count; i++)
+            {
+                var points = _plot[i];
+                var series = new LineSeries();
 
-			model.Axes.Add(new MagnitudeAxis()
-			{
-				MajorGridlineStyle = major,
-				MinorGridlineStyle = minor,
-				Minimum = _plot.MinY,
-				Maximum = _plot.MaxY
-			});
-		}
+                for (var j = 0; j < points.Count; j++)
+                {
+                    var point = new DataPoint(points[j].Magnitude, points[j].Angle);
+                    series.Points.Add(point);
+                }
+
+                UpdateLineSeries(series, points);
+                model.Series.Add(series);
+            }
+        }
+
+        protected override void UpdateData()
+        {
+        }
 
         #endregion
     }

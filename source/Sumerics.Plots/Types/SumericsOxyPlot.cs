@@ -1,7 +1,9 @@
 ﻿namespace Sumerics.Plots
 {
     using OxyPlot;
+    using OxyPlot.Axes;
     using OxyPlot.Series;
+    using System;
     using YAMP;
 
 	abstract class SumericsOxyPlot : SumericsPlot
@@ -35,6 +37,16 @@
         #endregion
 
         #region Some very general modifiers
+
+        protected static Axis Axis(Boolean log, AxisPosition position)
+        {
+            if (log)
+            {
+                return new LogarithmicAxis { Position = position };
+            }
+
+            return new LinearAxis { Position = position };
+        }
 
         protected void SetGeneralProperties(PlotModel model)
 		{

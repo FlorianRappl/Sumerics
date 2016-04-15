@@ -1,6 +1,5 @@
 ﻿namespace Sumerics.Plots
 {
-    using OxyPlot;
     using OxyPlot.Axes;
     using System;
     using YAMP;
@@ -17,10 +16,13 @@
 
 		public SumericsComplexPlot(ComplexPlotValue plot) : 
             base(plot)
-		{
-			_plot = plot;
-			SetSeries();
-			SetProperties();
+        {
+            var model = Model;
+            _plot = plot;
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+			UpdateSeries();
+			UpdateProperties();
 		}
 
 		#endregion
@@ -41,6 +43,18 @@
 
         #region Methods
 
+        protected override void UpdateSeries()
+        {
+            var model = Model;
+            var series = new ComplexSeries(_plot.Fz);
+            model.Series.Clear();
+            model.Series.Add(series);
+        }
+
+        protected override void UpdateData()
+        {
+        }
+
         protected override void UpdateProperties()
         {
             var model = Model;
@@ -56,34 +70,5 @@
         }
 
         #endregion
-
-        #region Helpers
-
-        void SetSeries()
-		{
-			var series = new ComplexSeries(_plot.Fz);
-			Model.Series.Add(series);
-		}
-
-		void SetProperties()
-		{
-            var model = Model;
-            model.Axes.Add(new LinearAxis
-            {
-                Position = AxisPosition.Bottom,
-			    Minimum = _plot.MinX,
-			    Maximum = _plot.MaxX,
-			    Title = _plot.XLabel
-            });
-            model.Axes.Add(new LinearAxis
-            {
-			    Position = AxisPosition.Left,
-			    Minimum = _plot.MinY,
-			    Maximum = _plot.MaxY,
-			    Title = _plot.YLabel
-            });		
-		}
-
-		#endregion
-	}
+    }
 }

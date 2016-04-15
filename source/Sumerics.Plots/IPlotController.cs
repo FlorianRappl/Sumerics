@@ -5,8 +5,6 @@
 
     public interface IPlotController
     {
-        IPlotControl Control { get; set; }
-
         Boolean IsGridEnabled { get; }
 
         Boolean IsSeriesEnabled { get; }

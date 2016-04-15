@@ -8,15 +8,14 @@
 	{
 		#region Fields
 
-        static readonly Dictionary<String, Action<IPlotControl>> handlers = new Dictionary<String, Action<IPlotControl>>(StringComparer.InvariantCultureIgnoreCase)
+        static readonly Dictionary<String, Action<SumericsPlot>> handlers = new Dictionary<String, Action<SumericsPlot>>(StringComparer.InvariantCultureIgnoreCase)
         {
-            { "data", c => c.RefreshData() },
-            { "series", c => c.RefreshSeries() },
-            { "properties", c => c.RefreshSeries() }
+            { "data", c => c.UpdateData() },
+            { "series", c => c.UpdateSeries() },
+            { "properties", c => c.UpdateProperties() }
         };
 
 		readonly PlotValue _plot;
-        IPlotControl _control;
 
 		#endregion
 
@@ -31,12 +30,6 @@
 		#endregion
 
         #region Properties
-
-        public IPlotControl Control
-        {
-            get { return _control; }
-            set { _control = value; }
-        }
 
         public virtual Boolean IsSeriesEnabled
 		{
@@ -55,26 +48,36 @@
 
 		#endregion
 
-        #region Plot Changed
+        #region Methods
 
         protected abstract void UpdateProperties();
 
+        protected abstract void UpdateSeries();
+
+        protected abstract void UpdateData();
+
+        #endregion
+
+        #region Plot Changed
+
+        void Update()
+        {
+            UpdateProperties();
+            UpdateData();
+            UpdateSeries();
+        }
+
         void PlotValueChanged(Object sender, PlotEventArgs e)
         {
-            var source = e.PropertyName;
-            var handler = default(Action<IPlotControl>);
-            var control = _control;
+            var handler = default(Action<SumericsPlot>);
 
-            if (control != null)
+            if (handlers.TryGetValue(e.PropertyName, out handler))
             {
-                if (handlers.TryGetValue(source, out handler))
-                {
-                    handler(control);
-                }
-                else
-                {
-                    control.RefreshProperties();
-                }
+                handler.Invoke(this);
+            }
+            else
+            {
+                Update();
             }
         }
 

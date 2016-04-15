@@ -54,7 +54,6 @@
     <Compile Include="IBarPlotController.cs" />
     <Compile Include="IGridPlotController.cs" />
     <Compile Include="I2dPlotController.cs" />
-    <Compile Include="IPlotControl.cs" />
     <Compile Include="IPlotController.cs" />
     <Compile Include="Series\ComplexSeries.cs" />
     <Compile Include="PlotFactory.cs" />
