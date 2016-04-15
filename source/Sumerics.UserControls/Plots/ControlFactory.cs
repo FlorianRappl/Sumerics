@@ -2,18 +2,18 @@
 {
     using Sumerics.Plots;
 
-    public sealed class ControlFactory : TypeFactory<IPlotController, IPlotControl>
+    public sealed class ControlFactory : TypeFactory<IPlotController, BasePlotControl>
     {
         public ControlFactory()
             : base(false)
         {
-            Register<I3dPlotController>(controller => new Wpf3dPlotControl(controller));
-            Register<I2dPlotController>(controller => new Oxy2dPlotControl(controller));
-            Register<IGridPlotController>(controller => new GridPlotControl(controller));
-            Register<IBarPlotController>(controller => new OxyBarPlotControl(controller));
+            Register<I3dPlotController>(controller => new Wpf3dPlotControl());
+            Register<I2dPlotController>(controller => new Oxy2dPlotControl());
+            Register<IGridPlotController>(controller => new GridPlotControl());
+            Register<IBarPlotController>(controller => new OxyBarPlotControl());
         }
 
-        protected override IPlotControl CreateDefault()
+        protected override BasePlotControl CreateDefault()
         {
             return null;
         }

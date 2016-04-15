@@ -1,22 +1,19 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using Sumerics.Plots;
     using System;
     using System.IO;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Interaction logic for GridPlotControl.xaml
     /// </summary>
-    public partial class GridPlotControl : BasePlotControl, IPlotControl
+    public partial class GridPlotControl : BasePlotControl
     {
-        public GridPlotControl(IGridPlotController controller)
+        public GridPlotControl()
         {
             InitializeComponent();
-            controller.Control = this;
         }
 
         public void ToggleGrid()

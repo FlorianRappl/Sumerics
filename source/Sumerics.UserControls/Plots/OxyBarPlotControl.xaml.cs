@@ -1,19 +1,16 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using Sumerics.Plots;
     using System;
     using System.IO;
-    using System.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for OxyBarPlotControl.xaml
     /// </summary>
-    public partial class OxyBarPlotControl : OxyPlotControl, IPlotControl
+    public partial class OxyBarPlotControl : OxyPlotControl
     {
-        public OxyBarPlotControl(IBarPlotController controller)
+        public OxyBarPlotControl()
         {
             InitializeComponent();
-            controller.Control = this;
         }
 
         /*

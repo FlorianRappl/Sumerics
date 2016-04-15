@@ -1,18 +1,16 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using Sumerics.Plots;
     using System;
     using System.IO;
 
     /// <summary>
     /// Interaction logic for Oxy2dPlotControl.xaml
     /// </summary>
-    public partial class Oxy2dPlotControl : OxyPlotControl, IPlotControl
+    public partial class Oxy2dPlotControl : OxyPlotControl
     {
-        public Oxy2dPlotControl(I2dPlotController controller)
+        public Oxy2dPlotControl()
         {
             InitializeComponent();
-            controller.Control = this;
         }
 
         public void RefreshData()

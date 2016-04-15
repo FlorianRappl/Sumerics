@@ -1,22 +1,19 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using Sumerics.Plots;
     using System;
     using System.IO;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Interaction logic for Wpf3dPlotControl.xaml
     /// </summary>
-    public partial class Wpf3dPlotControl : BasePlotControl, IPlotControl
+    public partial class Wpf3dPlotControl : BasePlotControl
     {
-        public Wpf3dPlotControl(I3dPlotController controller)
+        public Wpf3dPlotControl()
         {
             InitializeComponent();
-            controller.Control = this;
             /*
             // Surface:
 
