@@ -7,6 +7,7 @@
     using System;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using YAMP;
 
@@ -14,7 +15,7 @@
     {
         #region Fields
 
-        static readonly PlotFactory ControllerFactory = new PlotFactory();
+        static readonly PlotFactory ControllerFactory = PlotFactory.Instance;
 
         readonly IPlotController _controller;
         readonly ICommand _center;
@@ -24,6 +25,7 @@
         readonly ICommand _grid;
         readonly ICommand _save;
         readonly ICommand _series;
+        readonly ICommand _print;
         readonly ICommand _settings;
 
         #endregion
@@ -40,6 +42,7 @@
             _center = new RelayCommand(_ =>_controller.CenterPlot());
             _dock = new RelayCommand(_ => visualizer.Dock(this));
             _undock = new RelayCommand(_ => visualizer.Undock());
+            _print = new RelayCommand(_ => Print(plot));
             _save = new RelayCommand(_ => Save(plot));
         }
 
@@ -137,6 +140,27 @@
             {
                 var context = new SeriesViewModel((XYPlotValue)plot);
                 ShowDialog<PlotSeriesWindow>(context);
+            }
+        }
+
+        static void Print(PlotValue plot)
+        {
+            var printDialog = new PrintDialog();
+            var result = printDialog.ShowDialog();
+
+            if (result.HasValue && result.Value)
+            {
+                var canvas = new Canvas
+                {
+                    Width = printDialog.PrintableAreaWidth,
+                    Height = printDialog.PrintableAreaHeight
+                };
+
+                canvas.Measure(new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
+                canvas.Arrange(new Rect(0, 0, printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
+                //plot.RenderToCanvas(canvas);
+                canvas.UpdateLayout();
+                printDialog.PrintVisual(canvas, plot.Title ?? "Sumerics Plot");
             }
         }
 

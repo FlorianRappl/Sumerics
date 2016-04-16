@@ -4,7 +4,9 @@
 
 	public sealed class PlotFactory : TypeFactory<PlotValue, IPlotController>
 	{
-        public PlotFactory()
+        public static readonly PlotFactory Instance = new PlotFactory();
+
+        private PlotFactory()
             : base(true)
         {
             Register<Plot2DValue>(plot => new Sumerics2DPlot(plot));

@@ -50,7 +50,7 @@
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
-                    Click="PrintButtonClick">
+                    Command="{Binding PrintPlot}">
                 <Image Source="Images/printer.png"
                        ToolTip="{x:Static res:Messages.PrintPlotToolTip}" />
             </Button>

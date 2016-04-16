@@ -51,17 +51,6 @@
             }
         }
 
-        protected void UpdateScatterSeries(ScatterErrorSeries series, IPointSeries points)
-        {
-            UpdateXySeries(series, points);
-            series.ErrorBarColor = points.Color.OxyColorFromString();
-            series.MarkerType = (MarkerType)((int)points.Symbol);
-            series.MarkerFill = series.ErrorBarColor;
-            series.MarkerSize = 3.0;
-            series.MarkerStroke = series.ErrorBarColor;
-            series.MarkerStrokeThickness = 1.0;
-        }
-
         protected override void UpdateData()
         {
             UpdateSeries();
@@ -107,6 +96,21 @@
             model.Axes[0].Maximum = _plot.MaxX;
             model.Axes[1].Minimum = _plot.MinY;
             model.Axes[1].Maximum = _plot.MaxY;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        void UpdateScatterSeries(ScatterErrorSeries series, IPointSeries points)
+        {
+            UpdateXySeries(series, points);
+            series.ErrorBarColor = points.Color.OxyColorFromString();
+            series.MarkerType = (MarkerType)((int)points.Symbol);
+            series.MarkerFill = series.ErrorBarColor;
+            series.MarkerSize = 3.0;
+            series.MarkerStroke = series.ErrorBarColor;
+            series.MarkerStrokeThickness = 1.0;
         }
 
         #endregion

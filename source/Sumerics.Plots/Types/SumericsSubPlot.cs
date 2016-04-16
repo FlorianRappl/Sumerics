@@ -10,7 +10,6 @@
         #region Fields
 
         readonly GridPlotModel _model;
-        readonly List<SumericsPlot> _subplots;
         readonly SubPlotValue _plot;
 
         #endregion
@@ -20,8 +19,11 @@
         public SumericsSubPlot(SubPlotValue plot) 
             : base(plot)
         {
-            _model = new GridPlotModel();
-            _subplots = new List<SumericsPlot>();
+            _model = new GridPlotModel
+            {
+                CanEditSeries = false,
+                CanToggleGrid = false
+            };
             _plot = plot;
         }
 
@@ -40,17 +42,31 @@
 
         protected override void UpdateSeries()
         {
-            //TODO Update Model
         }
 
         protected override void UpdateData()
         {
-            //TODO Update Model
         }
 
         protected override void UpdateProperties()
         {
-            //TODO Update Model
+            _model.Title = _plot.Title;
+            _model.Rows = _plot.Rows;
+            _model.Columns = _plot.Columns;
+            _model.Models = new SubplotModel[_plot.Count];
+
+            for (int i = 0; i < _plot.Count; i++)
+            {
+                var subplot = _plot[i];
+                _model.Models[i] = new SubplotModel
+                {
+                    ColumnIndex = subplot.Column,
+                    ColumnSpan = subplot.ColumnSpan,
+                    RowIndex = subplot.Row,
+                    RowSpan = subplot.RowSpan,
+                    Controller = PlotFactory.Instance.Create(subplot.Plot)
+                };
+            }
         }
 
         #endregion

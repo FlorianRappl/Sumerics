@@ -49,30 +49,5 @@
         }
 
         #endregion
-
-        #region Printing Methods
-
-        void PrintButtonClick(Object sender, RoutedEventArgs e)
-        {
-            var printDialog = new PrintDialog();
-            var result = printDialog.ShowDialog();
-
-            if (result.HasValue && result.Value)
-            {
-                var canvas = new Canvas
-                {
-                    Width = printDialog.PrintableAreaWidth,
-                    Height = printDialog.PrintableAreaHeight
-                };
-
-                canvas.Measure(new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
-                canvas.Arrange(new Rect(0, 0, printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
-                //_plot.RenderToCanvas(canvas);
-                canvas.UpdateLayout();
-                //printDialog.PrintVisual(canvas, _plot.Plot.Title ?? "Sumerics Plot");
-            }
-        }
-
-        #endregion
 	}
 }

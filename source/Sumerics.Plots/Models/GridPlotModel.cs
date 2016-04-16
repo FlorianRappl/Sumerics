@@ -8,7 +8,7 @@
 
         public Int32 Columns { get; set; }
 
-        public Object[,] Models { get; set; }
+        public SubplotModel[] Models { get; set; }
 
         public String Title { get; set; }
     }
