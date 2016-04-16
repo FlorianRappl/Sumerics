@@ -7,7 +7,7 @@
     /// </summary>
     public partial class PlotWindow : MetroWindow
     {
-        private PlotWindow()
+        public PlotWindow()
         {
             InitializeComponent();
         }

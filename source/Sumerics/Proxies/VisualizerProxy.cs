@@ -1,107 +1,137 @@
 ﻿namespace Sumerics.Proxies
 {
-    using Sumerics.Controls;
     using Sumerics.Dialogs;
-    using Sumerics.Plots;
     using Sumerics.ViewModels;
     using Sumerics.Views;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using YAMP;
 
     sealed class VisualizerProxy : IVisualizer
     {
+        readonly List<PlotViewModel> _contexts;
         readonly IConsole _console;
-        PlotControl _plotter;
 
         public VisualizerProxy(IConsole console)
         {
+            _contexts = new List<PlotViewModel>();
             _console = console;
         }
 
-        public PlotControl Plotter
+        public void Show(Object obj)
         {
-            get { return _plotter ?? (_plotter = GetPlotter()); }
+            var plot = obj as PlotValue;
+            var vm = GetViewModel();
+
+            if (plot != null && vm != null)
+            {
+                var context = new PlotViewModel(plot, this, _console);
+                _contexts.Add(context);
+                vm.LastPlot = context;
+            }
         }
 
-        public void Dock()
+        public Object HideCurrent()
         {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                var window = DialogExtensions.Get<PlotWindow>();
+            var context = _contexts.LastOrDefault();
+            var vm = GetViewModel();
 
-                if (window != null)
+            if (context != null && vm != null)
+            {
+                _contexts.Remove(context);
+                vm.LastPlot = _contexts.LastOrDefault();
+            }
+
+            return context;
+        }
+
+        public void Dock(Object obj)
+        {
+            var context = ConvertToViewModel(obj);
+
+            if (context != null)
+            {
+                App.Current.Dispatcher.Invoke(() =>
                 {
-                    //SetPlot(window.Controller);
-                    window.Close();
-                }
-            });
+                    DialogExtensions.GetAll<PlotWindow>().Where(m => Object.ReferenceEquals(m.DataContext, context)).ForEach(window =>
+                    {
+                        Show(context);
+                        window.Close();
+                    });
+                });
+            }
         }
 
-        public void Dock(Object context)
+        public void DockLast()
         {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                var window = DialogExtensions.Get<PlotWindow>();
+            var window = DialogExtensions.GetAll<PlotWindow>().LastOrDefault();
 
-                //if (window != null && Object.ReferenceEquals(window.Controller.Plot, context))
-                //{
-                //    SetPlot(window.Controller);
-                //    window.Close();
-                //}
-            });
+            if (window != null)
+            {
+                Dock(window.DataContext);
+            }
         }
 
         public void Undock()
         {
             App.Current.Dispatcher.Invoke(() =>
             {
-                //Plotter.Undock();
-            });
-        }
+                var context = HideCurrent();
 
-        public void Undock(Object context)
-        {
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                //var plotter = Plotter;
-
-                //if (plotter.Data == null || !Object.ReferenceEquals(plotter.Data.Plot, context))
-                //{
-                //    var model = new PlotViewModel((PlotValue)context, this, _console);
-                //    model.UndockPlot();
-                //}
-                //else
-                //{
-                //    plotter.Undock();
-                //}
-            });
-        }
-
-        static void SetPlot(IPlotController controller)
-        {
-            var window = App.Current.MainWindow as MainWindow;
-
-            if (window != null)
-            {
-                var vm = window.DataContext as MainViewModel;
-
-                if (vm != null)
+                if (context != null)
                 {
-                    //vm.LastPlot = controller;
+                    var window = new PlotWindow { DataContext = context };
+                    window.Show();
                 }
+            });
+        }
+
+        public void UndockAny(Object obj)
+        {
+            var context = ConvertToViewModel(obj);
+
+            if (context != null)
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    if (Object.ReferenceEquals(context, _contexts.LastOrDefault()))
+                    {
+                        Undock();
+                    }
+                    else if (_contexts.Remove(context))
+                    {
+                        var window = new PlotWindow { DataContext = context };
+                        window.Show();
+                    }
+                });
             }
         }
 
-        static PlotControl GetPlotter()
+        PlotViewModel ConvertToViewModel(Object obj)
+        {
+            if (obj is PlotValue)
+            {
+                return _contexts.FirstOrDefault(m => Object.ReferenceEquals(m.Plot, obj)) ??
+                    DialogExtensions.GetAll<PlotWindow>().
+                        Select(m => m.DataContext as PlotViewModel).
+                        Where(m => m != null).
+                        FirstOrDefault(m => Object.ReferenceEquals(m.Plot, obj));
+            }
+
+            return obj as PlotViewModel;
+        }
+
+        static MainViewModel GetViewModel()
         {
             var window = App.Current.MainWindow as MainWindow;
 
             if (window != null)
             {
-                return window.MyLastPlot;
+                return window.DataContext as MainViewModel;
             }
 
-            return null;
+            return default(MainViewModel);
         }
     }
 }

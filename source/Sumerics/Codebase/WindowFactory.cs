@@ -30,7 +30,7 @@
 
         public static WindowFactory Instance = new WindowFactory();
 
-        protected override Window CreateDefault()
+        public override Window CreateDefault()
         {
             return null;
         }

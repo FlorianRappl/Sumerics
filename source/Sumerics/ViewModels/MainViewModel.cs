@@ -356,8 +356,7 @@
             Dispatch(() =>
             {
                 var visualizer = Container.Get<IVisualizer>();
-                var console = Container.Get<IConsole>();
-                LastPlot = new PlotViewModel(e.Value, visualizer, console);
+                visualizer.Show(e.Value);
             });
         }
 

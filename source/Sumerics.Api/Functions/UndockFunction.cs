@@ -26,7 +26,7 @@
         public void Function(PlotValue plot)
         {
             var visualizer = _application.Get<IVisualizer>();
-            visualizer.Undock(plot);
+            visualizer.UndockAny(plot);
         }
     }
 }

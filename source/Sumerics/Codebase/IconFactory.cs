@@ -106,7 +106,7 @@
             return _imgFunctionHd;
         }
 
-        protected override BitmapImage CreateDefault()
+        public override BitmapImage CreateDefault()
         {
             return Icons.unknown.ToBitmapImage();
         }

@@ -23,31 +23,34 @@
 
         public TProduct Create(TKey value)
         {
-            var type = value.GetType();
-            var interfaces = type.GetInterfaces();
-            var closest = default(Func<TKey, TProduct>);
-
-            foreach (var pair in _mapping)
+            if (value != null)
             {
-                if (type == pair.Key)
+                var type = value.GetType();
+                var interfaces = type.GetInterfaces();
+                var closest = default(Func<TKey, TProduct>);
+
+                foreach (var pair in _mapping)
                 {
-                    closest = pair.Value;
+                    if (type == pair.Key)
+                    {
+                        closest = pair.Value;
+                        return closest(value);
+                    }
+                    else if (type.IsSubclassOf(pair.Key) || interfaces.Contains(pair.Key))
+                    {
+                        closest = pair.Value;
+                    }
+                }
+
+                if (!_requireExactMatch && closest != null)
+                {
                     return closest(value);
                 }
-                else if (type.IsSubclassOf(pair.Key) || interfaces.Contains(pair.Key))
-                {
-                    closest = pair.Value;
-                }
-            }
-
-            if (!_requireExactMatch && closest != null)
-            {
-                return closest(value);
             }
 
             return CreateDefault();
         }
 
-        protected abstract TProduct CreateDefault();
+        public abstract TProduct CreateDefault();
     }
 }

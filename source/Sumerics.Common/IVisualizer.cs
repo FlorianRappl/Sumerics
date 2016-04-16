@@ -4,9 +4,16 @@
 
     public interface IVisualizer
     {
-        void Dock();
+        void Show(Object context);
+
+        Object HideCurrent();
+
         void Dock(Object context);
+
+        void DockLast();
+
         void Undock();
-        void Undock(Object context);
+
+        void UndockAny(Object context);
     }
 }

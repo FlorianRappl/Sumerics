@@ -18,7 +18,7 @@
         public void Function()
         {
             var visualizer = _application.Get<IVisualizer>();
-            visualizer.Dock();
+            visualizer.DockLast();
         }
 
         [Description("Docks the given plot to the main window.")]

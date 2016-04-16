@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Dialogs
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
 
@@ -26,7 +27,13 @@
         public static T Get<T>()
             where T : Window
         {
-            return  App.Current.Windows.OfType<T>().FirstOrDefault();
+            return GetAll<T>().FirstOrDefault();
+        }
+
+        public static IEnumerable<T> GetAll<T>()
+            where T : Window
+        {
+            return App.Current.Windows.OfType<T>();
         }
 
         public static void Close<T>(this IDialogHandler handler)

@@ -16,7 +16,6 @@
         static readonly PlotFactory ControllerFactory = new PlotFactory();
 
         readonly IVisualizer _visualizer;
-        readonly PlotValue _plot;
         readonly IConsole _console;
         readonly IPlotController _controller;
 
@@ -28,7 +27,6 @@
         {
             _visualizer = visualizer;
             _console = console;
-            _plot = plot;
             _controller = ControllerFactory.Create(plot);
         }
 
@@ -36,9 +34,14 @@
 
         #region Properties
 
-        public IPlotController Controller
+        public Object Model
         {
-            get { return _controller; }
+            get { return _controller.Model; }
+        }
+
+        public PlotValue Plot
+        {
+            get { return _controller.Plot; }
         }
 
         #endregion
@@ -53,58 +56,63 @@
 
         public void OpenPlotSettings()
         {
-            if (_plot is XYPlotValue)
+            var plot = Plot;
+
+            if (plot is XYPlotValue)
             {
-                var context = new PlotSettingsViewModel((XYPlotValue)_plot);
+                var context = new PlotSettingsViewModel((XYPlotValue)plot);
                 ShowDialog<PlotSettingsWindow>(context);
             }
-            else if (_plot is SubPlotValue)
+            else if (plot is SubPlotValue)
             {
-                var context = new SubPlotSettingsViewModel((SubPlotValue)_plot);
+                var context = new SubPlotSettingsViewModel((SubPlotValue)plot);
                 ShowDialog<SubPlotSettingsWindow>(context);
             }
         }
 
         public void OpenPlotSeries()
         {
-            if (_plot is ContourPlotValue)
+            var plot = Plot;
+
+            if (plot is ContourPlotValue)
             {
-                var context = new ContourViewModel((ContourPlotValue)_plot);
+                var context = new ContourViewModel((ContourPlotValue)plot);
                 ShowDialog<ContourSeriesWindow>(context);
             }
-            else if (_plot is HeatmapPlotValue)
+            else if (plot is HeatmapPlotValue)
             {
-                var context = new HeatmapViewModel((HeatmapPlotValue)_plot);
+                var context = new HeatmapViewModel((HeatmapPlotValue)plot);
                 ShowDialog<HeatSeriesWindow>(context);
             }
-            else if (_plot is XYPlotValue)
+            else if (plot is XYPlotValue)
             {
-                var context = new SeriesViewModel((XYPlotValue)_plot);
+                var context = new SeriesViewModel((XYPlotValue)plot);
                 ShowDialog<PlotSeriesWindow>(context);
             }
         }
 
         public void UndockPlot()
         {
-            _visualizer.Undock(_plot);
+            _visualizer.Undock();
         }
 
         public void DockPlot()
         {
-            _visualizer.Dock(_plot);
+            _visualizer.Dock(this);
         }
 
         public void SavePlot()
         {
+            var plot = Plot;
             var context = new SaveImageViewModel();
             context.ImageWidth = 640;
             context.ImageHeight = 480;
             var window = new SaveImageWindow { DataContext = context };
             window.Title = Messages.SavePlotAs;
 
-            if (!String.IsNullOrEmpty(_plot.Title))
+            if (!String.IsNullOrEmpty(plot.Title))
             {
-                context.SelectedFile = new FileModel(_plot.Title);
+                context.SelectedFile = new FileModel(plot.Title);
             }
 
             window.ShowDialog();

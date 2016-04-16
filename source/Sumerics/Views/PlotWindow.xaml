@@ -27,7 +27,7 @@
     
     <Controls:MetroContentControl>
         <r:PlotControl Grid.Row="0" 
-                       x:Name="Plot" 
-                       CanDock="true" />
+                       DataContext="{Binding Model}"
+                       IsDocked="False" />
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
