@@ -1,7 +1,6 @@
 ﻿<Controls:MetroWindow x:Class="Sumerics.Views.PlotWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:local="clr-namespace:Sumerics"
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
@@ -26,8 +25,7 @@
     </Window.Resources>
     
     <Controls:MetroContentControl>
-        <r:PlotControl Grid.Row="0" 
-                       DataContext="{Binding Model}"
+        <r:PlotControl DataContext="{Binding}"
                        IsDocked="False" />
     </Controls:MetroContentControl>
 </Controls:MetroWindow>

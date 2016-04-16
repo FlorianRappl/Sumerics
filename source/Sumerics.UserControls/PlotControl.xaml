@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+             xmlns:local="clr-namespace:Sumerics.Controls.Plots"
              mc:Ignorable="d"
              d:DesignHeight="300" 
              d:DesignWidth="400">
@@ -25,6 +26,8 @@
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
+
+            <local:PlotControlConverter x:Key="plotControlConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -34,66 +37,77 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         
-        <ContentControl Name="PlotArea" 
-                        Grid.Row="0" />
+        <ContentControl Content="{Binding Model, 
+            FallbackValue={x:Static local:PlotControlConverter.Default}, 
+            Converter={StaticResource plotControlConverter}}" />
   
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1">
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Name="SaveButton"
-                    Click="SaveButtonClick">
+                    Command="{Binding SavePlot}"
+                    CommandParameter="{Binding SavePlotParameter}">
                 <Image Source="Images/save.png" 
                        ToolTip="{x:Static res:Messages.SavePlotToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
-                    Name="PrintButton"
                     Click="PrintButtonClick">
                 <Image Source="Images/printer.png"
                        ToolTip="{x:Static res:Messages.PrintPlotToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Name="DuplicateButton"
-                    Click="DuplicateButtonClick">
-                <Image Source="Images/undock.png"
-                       ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" 
-                       x:Name="DockImg" />
+                    Command="{Binding DockPlot}"
+                    CommandParameter="{Binding DockPlotParameter}"
+                    x:Name="DockButton">
+                <Image Source="Images/dock.png"
+                       ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Name="SeriesButton"
-                    Click="SeriesButtonClick" 
-                    IsEnabled="{Binding CanEditSeries, FallbackValue=False}">
+                    Command="{Binding UndockPlot}"
+                    CommandParameter="{Binding UndockPlotParameter}"
+                    Visibility="Collapsed"
+                    x:Name="UndockButton">
+                <Image Source="Images/undock.png"
+                       ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" />
+            </Button>
+
+            <Button Style="{StaticResource DisableIfEmpty}" 
+                    Command="{Binding EditSeries}"
+                    CommandParameter="{Binding EditSeriesParameter}"
+                    IsEnabled="{Binding Model.CanEditSeries, FallbackValue=False}">
                 <Image Source="Images/series.png" 
                        ToolTip="{x:Static res:Messages.IncludedSeriesToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Name="SettingsButton"
-                    Click="SettingsButtonClick">
+                    Command="{Binding OpenSettings}"
+                    CommandParameter="{Binding OpenSettingsParameter}">
                 <Image Source="Images/settings.png" 
                        ToolTip="{x:Static res:Messages.PlotSettingsToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
-                    Name="GridButton"
-                    Click="GridButtonClick" 
-                    IsEnabled="{Binding CanToggleGrid, FallbackValue=False}">
+                    Command="{Binding ToggleGrid}"
+                    CommandParameter="{Binding ToggleGridParameter}"
+                    IsEnabled="{Binding Model.CanToggleGrid, FallbackValue=False}">
                 <Image Source="Images/gridlines.png"
                        ToolTip="{x:Static res:Messages.ToggleGridlinesToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
-                    Name="CenterButton"
-                    Click="CenterButtonClick">
+                    Command="{Binding CenterPlot}"
+                    CommandParameter="{Binding CenterPlotParameter}">
                 <Image Source="Images/fix.png" 
                        ToolTip="{x:Static res:Messages.ResetAxesTansformationsToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}"
-                    Name="ConsoleButton"
-                    Click="ConsoleButtonClick">
+            <Button Style="{DynamicResource DisableIfEmpty}"
+                    Command="{Binding OpenConsole}"
+                    CommandParameter="{Binding OpenConsoleParameter}"
+                    Visibility="Collapsed"
+                    Name="ConsoleButton">
                 <Image Source="Images/console.png" 
                        ToolTip="{x:Static res:Messages.EnterCommandToolTip}" />
             </Button>

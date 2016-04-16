@@ -258,10 +258,8 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <uc:PlotControl DataContext="{Binding LastPlot.Model}" 
-                                        Grid.Row="0"
-                                        IsDocked="True"
-                                        x:Name="MyLastPlot" />
+                        <uc:PlotControl DataContext="{Binding LastPlot}"
+                                        IsDocked="True" />
 
                         <Expander ExpandDirection="Right" 
                                   Grid.Column="1">

@@ -177,6 +177,7 @@
       <DependentUpon>OxyBarPlotControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Plots\OxyPlotControl.cs" />
+    <Compile Include="Plots\PlotControlConverter.cs" />
     <Compile Include="Plots\Wpf3dPlotControl.xaml.cs">
       <DependentUpon>Wpf3dPlotControl.xaml</DependentUpon>
     </Compile>
