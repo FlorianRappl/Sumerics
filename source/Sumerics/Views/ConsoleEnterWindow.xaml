@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
 
             <TextBox Controls:TextboxHelper.Watermark="{x:Static res:Messages.PlaceTheStatement}" 
-                     Text="{Binding Input}"
+                     Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"
                      x:Name="InputBox"
                      FontSize="20"
                      TabIndex="0"
