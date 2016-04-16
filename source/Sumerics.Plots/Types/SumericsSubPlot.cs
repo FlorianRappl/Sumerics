@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.Plots
 {
+    using Sumerics.Plots.Models;
     using System;
     using System.Collections.Generic;
     using YAMP;
@@ -8,6 +9,7 @@
     {
         #region Fields
 
+        readonly GridPlotModel _model;
         readonly List<SumericsPlot> _subplots;
         readonly SubPlotValue _plot;
 
@@ -18,6 +20,7 @@
         public SumericsSubPlot(SubPlotValue plot) 
             : base(plot)
         {
+            _model = new GridPlotModel();
             _subplots = new List<SumericsPlot>();
             _plot = plot;
         }
@@ -26,14 +29,9 @@
 
         #region Properties
 
-        public override Boolean IsGridEnabled
+        public override Object Model
         {
-            get { return false; }
-        }
-
-        public override Boolean IsSeriesEnabled
-        {
-            get { return false; }
+            get { return _model; }
         }
 
         #endregion
@@ -53,6 +51,15 @@
         protected override void UpdateProperties()
         {
             //TODO Update Model
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected override void Refresh()
+        {
+            //TODO
         }
 
         #endregion

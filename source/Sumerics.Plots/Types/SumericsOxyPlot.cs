@@ -3,6 +3,7 @@
     using OxyPlot;
     using OxyPlot.Axes;
     using OxyPlot.Series;
+    using Sumerics.Plots.Models;
     using System;
     using YAMP;
 
@@ -10,7 +11,7 @@
     {
         #region Fields
 
-        readonly PlotModel _model;
+        protected readonly OxyPlotModel _model;
         readonly XYPlotValue _plot;
 
         #endregion
@@ -21,44 +22,46 @@
             base(plot)
 		{
             _plot = plot;
-            _model = new PlotModel();
-            SetGeneralProperties(_model);
+            var model = new PlotModel();
+            _model = new OxyPlotModel { Model = model };
+            model.PlotMargins = new OxyThickness(0);
+            model.Padding = new OxyThickness(0, 10, 10, 0);
+            UpdateGeneralProperties();
 		}
 
         #endregion
 
         #region Properties
 
-        public PlotModel Model
+        public override Object Model
 		{
 			get { return _model; }
 		}
 
         #endregion
 
-        #region Some very general modifiers
+        #region Methods
 
-        protected static Axis Axis(Boolean log, AxisPosition position)
+        protected override void Refresh()
         {
-            if (log)
-            {
-                return new LogarithmicAxis { Position = position };
-            }
+            var model = _model.Model;
 
-            return new LinearAxis { Position = position };
+            if (model.PlotView != null)
+            {
+                model.InvalidatePlot(false);
+            }
         }
 
-        protected void SetGeneralProperties(PlotModel model)
-		{
-			model.Title = _plot.Title;
-			model.PlotMargins = new OxyThickness(0);
-			model.Padding = new OxyThickness(0, 10, 10, 0);
-			model.IsLegendVisible = _plot.ShowLegend;
-			model.LegendBackground = _plot.LegendBackground.OxyColorFromString();
-			model.LegendBorderThickness = _plot.LegendLineWidth;
-			model.LegendBorder = _plot.LegendLineColor.OxyColorFromString();
-			model.LegendPosition = (OxyPlot.LegendPosition)_plot.LegendPosition;
-		}
+        protected void UpdateGeneralProperties()
+        {
+            var model = _model.Model;
+            model.Title = _plot.Title;
+            model.IsLegendVisible = _plot.ShowLegend;
+            model.LegendBackground = _plot.LegendBackground.OxyColorFromString();
+            model.LegendBorderThickness = _plot.LegendLineWidth;
+            model.LegendBorder = _plot.LegendLineColor.OxyColorFromString();
+            model.LegendPosition = (OxyPlot.LegendPosition)_plot.LegendPosition;
+        }
 
         protected void UpdateLineSeries(XYAxisSeries series, IPointSeries points)
         {
@@ -70,15 +73,21 @@
             //series.MarkerSize = 3.0;
             //series.MarkerStroke = series.Color;
             //series.MarkerStrokeThickness = 1.0;
-		}
+        }
 
-		protected void Refresh()
-		{
-            if (Model.PlotView != null)
+        #endregion
+
+        #region Helpers
+
+        protected static Axis Axis(Boolean log, AxisPosition position)
+        {
+            if (log)
             {
-                Model.InvalidatePlot(false);
+                return new LogarithmicAxis { Position = position };
             }
-		}
+
+            return new LinearAxis { Position = position };
+        }
 
         #endregion
     }

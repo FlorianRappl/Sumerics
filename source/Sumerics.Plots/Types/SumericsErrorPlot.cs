@@ -18,7 +18,7 @@
 		public SumericsErrorPlot(ErrorPlotValue plot) : 
             base(plot)
 		{
-            var model = Model;
+            var model = _model.Model;
             _plot = plot;
             model.Axes.Add(Axis(_plot.IsLogX, AxisPosition.Bottom));
             model.Axes.Add(Axis(_plot.IsLogY, AxisPosition.Left));
@@ -32,7 +32,7 @@
 
         protected override void UpdateSeries()
         {
-            var model = Model;
+            var model = _model.Model;
             model.Series.Clear();
 
             for (var i = 0; i < _plot.Count; i++)
@@ -57,7 +57,7 @@
 
         protected override void UpdateProperties()
         {
-            var model = Model;
+            var model = _model.Model;
             var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
             var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 

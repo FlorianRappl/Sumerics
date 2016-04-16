@@ -50,11 +50,10 @@
     <Compile Include="Helpers\BufferState.cs" />
     <Compile Include="Helpers\ColorExtensions.cs" />
     <Compile Include="Helpers\ColorTriplet.cs" />
-    <Compile Include="I3dPlotController.cs" />
-    <Compile Include="IBarPlotController.cs" />
-    <Compile Include="IGridPlotController.cs" />
-    <Compile Include="I2dPlotController.cs" />
     <Compile Include="IPlotController.cs" />
+    <Compile Include="Models\GridPlotModel.cs" />
+    <Compile Include="Models\OxyPlotModel.cs" />
+    <Compile Include="Models\WpfPlotModel.cs" />
     <Compile Include="Series\ComplexSeries.cs" />
     <Compile Include="PlotFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

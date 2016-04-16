@@ -1,6 +1,5 @@
 ﻿namespace Sumerics.Plots
 {
-    using System;
     using YAMP;
 
     sealed class SumericsSurfacePlot : Sumerics3DPlot
@@ -17,15 +16,6 @@
             : base(plot)
         {
             _plot = plot;
-        }
-
-        #endregion
-
-        #region Properties
-
-        public override Boolean IsSeriesEnabled
-        {
-            get { return false; }
         }
 
         #endregion

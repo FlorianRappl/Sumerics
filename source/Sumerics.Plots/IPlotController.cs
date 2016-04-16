@@ -5,10 +5,8 @@
 
     public interface IPlotController
     {
-        Boolean IsGridEnabled { get; }
-
-        Boolean IsSeriesEnabled { get; }
-
         PlotValue Plot { get; }
+
+        Object Model { get; }
     }
 }

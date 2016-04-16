@@ -18,12 +18,10 @@
 		public SumericsBarPlot(BarPlotValue plot) : 
             base(plot)
 		{
-            var model = Model;
+            var model = _model.Model;
             _plot = plot;
-            model.Axes.Add(new CategoryAxis());
-            model.Axes.Add(new LinearAxis());
-            model.Axes[0].Position = AxisPosition.Bottom;
-            model.Axes[1].Position = AxisPosition.Left;
+            model.Axes.Add(new CategoryAxis { Position = AxisPosition.Bottom });
+            model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
 			UpdateSeries();
 			UpdateProperties();
 		}
@@ -34,7 +32,7 @@
 
         protected override void UpdateSeries()
         {
-            var model = Model;
+            var model = _model.Model;
             model.Series.Clear();
 
             for (var i = 0; i < _plot.Count; i++)
@@ -62,7 +60,7 @@
 
         protected override void UpdateProperties()
         {
-            var model = Model;
+            var model = _model.Model;
             var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
             var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 

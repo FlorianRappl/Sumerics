@@ -1,12 +1,14 @@
 ﻿namespace Sumerics.Plots
 {
+    using Sumerics.Plots.Models;
     using System;
     using YAMP;
 
-	abstract class Sumerics3DPlot : SumericsPlot, I3dPlotController
+	abstract class Sumerics3DPlot : SumericsPlot
     {
         #region Fields
 
+        protected readonly WpfPlotModel _model;
         readonly XYZPlotValue _plot;
 
         Boolean _isLogx;
@@ -20,6 +22,7 @@
         public Sumerics3DPlot(XYZPlotValue plot)
             : base(plot)
         {
+            _model = new WpfPlotModel();
             _plot = plot;
         }
 
@@ -27,9 +30,9 @@
 
         #region Properties
 
-        public override Boolean IsGridEnabled
+        public override Object Model
         {
-            get { return true; }
+            get { return _model; }
         }
 
         public Boolean IsLogX
@@ -48,6 +51,15 @@
         {
             get { return _isLogz; }
             protected set { _isLogz = value; }
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected override void Refresh()
+        {
+            //TODO
         }
 
         #endregion

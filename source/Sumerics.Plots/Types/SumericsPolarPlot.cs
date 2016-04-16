@@ -18,7 +18,7 @@
         public SumericsPolarPlot(PolarPlotValue plot) : 
             base(plot)
         {
-            var model = Model;
+            var model = _model.Model;
             model.PlotAreaBorderThickness = new OxyThickness(0);
             model.PlotType = PlotType.Polar;
             _plot = plot;
@@ -34,7 +34,7 @@
 
         protected override void UpdateProperties()
         {
-            var model = Model;
+            var model = _model.Model;
             var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
             var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 
@@ -57,7 +57,7 @@
 
         protected override void UpdateSeries()
         {
-            var model = Model;
+            var model = _model.Model;
             model.Series.Clear();
 
             for (var i = 0; i < _plot.Count; i++)

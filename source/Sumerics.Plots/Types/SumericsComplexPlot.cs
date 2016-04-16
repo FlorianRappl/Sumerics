@@ -1,7 +1,6 @@
 ﻿namespace Sumerics.Plots
 {
     using OxyPlot.Axes;
-    using System;
     using YAMP;
 
 	sealed class SumericsComplexPlot : SumericsOxyPlot
@@ -17,7 +16,7 @@
 		public SumericsComplexPlot(ComplexPlotValue plot) : 
             base(plot)
         {
-            var model = Model;
+            var model = _model.Model;
             _plot = plot;
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
@@ -27,25 +26,11 @@
 
 		#endregion
 
-		#region Properties
-
-		public override Boolean IsGridEnabled
-		{
-			get { return false; }
-		}
-
-		public override Boolean IsSeriesEnabled
-		{
-			get { return false; }
-		}
-
-		#endregion
-
         #region Methods
 
         protected override void UpdateSeries()
         {
-            var model = Model;
+            var model = _model.Model;
             var series = new ComplexSeries(_plot.Fz);
             model.Series.Clear();
             model.Series.Add(series);
@@ -57,7 +42,7 @@
 
         protected override void UpdateProperties()
         {
-            var model = Model;
+            var model = _model.Model;
 
             model.Axes[0].Title = _plot.XLabel;
             model.Axes[1].Title = _plot.YLabel;

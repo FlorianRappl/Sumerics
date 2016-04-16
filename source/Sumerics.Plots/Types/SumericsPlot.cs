@@ -31,15 +31,10 @@
 
         #region Properties
 
-        public virtual Boolean IsSeriesEnabled
-		{
-			get { return true; }
-		}
-
-        public virtual Boolean IsGridEnabled
-		{
-			get { return true; }
-		}
+        public abstract Object Model
+        {
+            get;
+        }
 
 		public PlotValue Plot
 		{
@@ -55,6 +50,8 @@
         protected abstract void UpdateSeries();
 
         protected abstract void UpdateData();
+
+        protected abstract void Refresh();
 
         #endregion
 
@@ -79,6 +76,8 @@
             {
                 Update();
             }
+
+            Refresh();
         }
 
 		#endregion

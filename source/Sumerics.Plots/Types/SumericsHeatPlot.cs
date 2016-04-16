@@ -2,7 +2,6 @@
 {
     using OxyPlot.Axes;
     using OxyPlot.Series;
-    using System;
     using YAMP;
 
     sealed class SumericsHeatPlot : SumericsOxyPlot
@@ -19,7 +18,7 @@
         public SumericsHeatPlot(HeatmapPlotValue plot)
             : base(plot)
         {
-            var model = Model;
+            var model = _model.Model;
             _plot = plot;
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
@@ -29,25 +28,11 @@
 
 		#endregion
 
-		#region Properties
-
-		public override Boolean IsGridEnabled
-		{
-			get { return false; }
-		}
-
-		public override Boolean IsSeriesEnabled
-		{
-			get { return true; }
-		}
-
-		#endregion
-
         #region Methods
 
         protected override void UpdateProperties()
         {
-            var model = Model;
+            var model = _model.Model;
             //_series.IsInterpolated = _plot.IsInterpolated;
 
             model.Axes[0].Title = _plot.XLabel;
@@ -62,7 +47,7 @@
 
         protected override void UpdateSeries()
         {
-            var model = Model;
+            var model = _model.Model;
             model.Series.Clear();
 
             for (var i = 0; i < _plot.Count; i++)

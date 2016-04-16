@@ -1,16 +1,16 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using Sumerics.Plots;
+    using Sumerics.Plots.Models;
+    using System;
 
-    public sealed class ControlFactory : TypeFactory<IPlotController, BasePlotControl>
+    public sealed class ControlFactory : TypeFactory<Object, BasePlotControl>
     {
         public ControlFactory()
-            : base(false)
+            : base(true)
         {
-            Register<I3dPlotController>(controller => new Wpf3dPlotControl());
-            Register<I2dPlotController>(controller => new Oxy2dPlotControl());
-            Register<IGridPlotController>(controller => new GridPlotControl());
-            Register<IBarPlotController>(controller => new OxyBarPlotControl());
+            Register<OxyPlotModel>(model => new Oxy2dPlotControl { DataContext = model });
+            Register<GridPlotModel>(model => new GridPlotControl { DataContext = model });
+            Register<WpfPlotModel>(model => new Wpf3dPlotControl { DataContext = model });
         }
 
         protected override BasePlotControl CreateDefault()
