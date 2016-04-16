@@ -53,9 +53,10 @@
 
         protected override void UpdateData()
         {
+            UpdateSeries();
         }
 
-        protected override void UpdateProperties()
+        protected override void UpdateCustomProperties()
         {
             var model = _model.Model;
             var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;

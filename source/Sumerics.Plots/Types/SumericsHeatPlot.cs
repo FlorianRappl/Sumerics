@@ -30,7 +30,7 @@
 
         #region Methods
 
-        protected override void UpdateProperties()
+        protected override void UpdateCustomProperties()
         {
             var model = _model.Model;
             //_series.IsInterpolated = _plot.IsInterpolated;
@@ -62,6 +62,7 @@
 
         protected override void UpdateData()
         {
+            UpdateSeries();
         }
 
         #endregion

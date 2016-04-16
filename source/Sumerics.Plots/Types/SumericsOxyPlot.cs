@@ -26,7 +26,6 @@
             _model = new OxyPlotModel { Model = model };
             model.PlotMargins = new OxyThickness(0);
             model.Padding = new OxyThickness(0, 10, 10, 0);
-            UpdateGeneralProperties();
 		}
 
         #endregion
@@ -52,7 +51,7 @@
             }
         }
 
-        protected void UpdateGeneralProperties()
+        protected sealed override void UpdateProperties()
         {
             var model = _model.Model;
             model.Title = _plot.Title;
@@ -61,7 +60,10 @@
             model.LegendBorderThickness = _plot.LegendLineWidth;
             model.LegendBorder = _plot.LegendLineColor.OxyColorFromString();
             model.LegendPosition = (OxyPlot.LegendPosition)_plot.LegendPosition;
+            UpdateCustomProperties();
         }
+
+        protected abstract void UpdateCustomProperties();
 
         protected void UpdateLineSeries(XYAxisSeries series, IPointSeries points)
         {
