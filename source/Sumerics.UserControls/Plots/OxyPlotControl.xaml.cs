@@ -4,14 +4,48 @@
     using System.IO;
 
     /// <summary>
-    /// Interaction logic for Oxy2dPlotControl.xaml
+    /// Interaction logic for OxyPlotControl.xaml
     /// </summary>
-    public partial class Oxy2dPlotControl : OxyPlotControl
+    public partial class OxyPlotControl : BasePlotControl
     {
-        public Oxy2dPlotControl()
+        public OxyPlotControl()
         {
             InitializeComponent();
         }
+
+        /*
+        public override void RenderToCanvas(Canvas canvas)
+        {
+            //var rc = new OxyPlot.Wpf.CanvasRenderContext(canvas);
+            //model.Render(rc);
+        }
+
+        public override void ExportPlot(string fileName, int width, int height)
+        {
+            control.SaveBitmap(fileName, width, height, OxyColors.White);
+        }
+
+        public override void AsPreview()
+        {
+            IsPreview = true;
+
+            _model.PlotAreaBorderThickness = new OxyThickness(0);
+            _model.PlotMargins = new OxyThickness(0);
+            _model.Padding = new OxyThickness(0);
+            _model.IsLegendVisible = false;
+            _model.Axes[0].IsAxisVisible = false;
+            _model.Axes[1].IsAxisVisible = false;
+
+            _model.Axes[0].IsZoomEnabled = false;
+            _model.Axes[1].IsZoomEnabled = false;
+            control.IsManipulationEnabled = false;
+
+            control.PlotAreaBorderThickness = new Thickness(0);
+            control.PlotMargins = new Thickness(0);
+            control.Padding = new Thickness(0);
+            control.Margin = new Thickness(0);
+        }
+         */
 
         public void RefreshData()
         {
@@ -126,6 +160,20 @@
                 var data = _plot.GetSeries(i);
                 var series = (LineSeries)Model.Series[i];
                 UpdateLineSeries(series, data);
+            }
+
+            Refresh();
+        }
+         
+        // BAR PLOT:
+
+        public void RefreshSeries()
+        {
+            for (var i = 0; i < _plot.Count; i++)
+            {
+                var data = (BarPlotValue.BarPoints)_plot.GetSeries(i);
+                var series = (ColumnSeries)Model.Series[i];
+                UpdateSeries(series, data);
             }
 
             Refresh();

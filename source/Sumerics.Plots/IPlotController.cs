@@ -8,5 +8,9 @@
         PlotValue Plot { get; }
 
         Object Model { get; }
+
+        void CenterPlot();
+
+        void ToggleGrid();
     }
 }

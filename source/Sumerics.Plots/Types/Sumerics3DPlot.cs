@@ -22,7 +22,11 @@
         public Sumerics3DPlot(XYZPlotValue plot)
             : base(plot)
         {
-            _model = new WpfPlotModel();
+            _model = new WpfPlotModel
+            {
+                CanEditSeries = false,
+                CanToggleGrid = false
+            };
             _plot = plot;
         }
 

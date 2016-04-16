@@ -170,13 +170,9 @@
     <Compile Include="Plots\GridPlotControl.xaml.cs">
       <DependentUpon>GridPlotControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Plots\Oxy2dPlotControl.xaml.cs">
-      <DependentUpon>Oxy2dPlotControl.xaml</DependentUpon>
+    <Compile Include="Plots\OxyPlotControl.xaml.cs">
+      <DependentUpon>OxyPlotControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Plots\OxyBarPlotControl.xaml.cs">
-      <DependentUpon>OxyBarPlotControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Plots\OxyPlotControl.cs" />
     <Compile Include="Plots\PlotControlConverter.cs" />
     <Compile Include="Plots\Wpf3dPlotControl.xaml.cs">
       <DependentUpon>Wpf3dPlotControl.xaml</DependentUpon>
@@ -242,11 +238,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Plots\Oxy2dPlotControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Plots\OxyBarPlotControl.xaml">
+    <Page Include="Plots\OxyPlotControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

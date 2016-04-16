@@ -23,9 +23,12 @@
 		{
             _plot = plot;
             var model = new PlotModel();
-            _model = new OxyPlotModel { Model = model };
-            model.PlotMargins = new OxyThickness(0);
-            model.Padding = new OxyThickness(0, 10, 10, 0);
+            _model = new OxyPlotModel 
+            { 
+                Model = model,
+                CanEditSeries = true,
+                CanToggleGrid = true
+            };
 		}
 
         #endregion
@@ -49,6 +52,27 @@
             {
                 model.InvalidatePlot(false);
             }
+        }
+
+        protected override void OnCenterPlot()
+        {
+            _model.Model.ResetAllAxes();
+        }
+
+        protected override void OnToggleGrid()
+        {
+            if (_plot.Gridlines)
+            {
+                _plot.Gridlines = false;
+                _plot.MinorGridlines = false;
+            }
+            else
+            {
+                _plot.Gridlines = true;
+                _plot.MinorGridlines = true;
+            }
+
+            _plot.UpdateLayout();
         }
 
         protected sealed override void UpdateProperties()

@@ -33,83 +33,14 @@
         public PlotViewModel(PlotValue plot, IVisualizer visualizer, IConsole console)
         {
             _controller = ControllerFactory.Create(plot);
-            _console = new RelayCommand(_ => 
-            {
-                var context = new ConsoleEnterViewModel(console);
-                ShowDialog<ConsoleEnterWindow>(context);
-            });
-            _settings = new RelayCommand(_ =>
-            {
-                if (plot is XYPlotValue)
-                {
-                    var context = new PlotSettingsViewModel((XYPlotValue)plot);
-                    ShowDialog<PlotSettingsWindow>(context);
-                }
-                else if (plot is SubPlotValue)
-                {
-                    var context = new SubPlotSettingsViewModel((SubPlotValue)plot);
-                    ShowDialog<SubPlotSettingsWindow>(context);
-                }
-            });
-            _series = new RelayCommand(_ =>
-            {
-                if (plot is ContourPlotValue)
-                {
-                    var context = new ContourViewModel((ContourPlotValue)plot);
-                    ShowDialog<ContourSeriesWindow>(context);
-                }
-                else if (plot is HeatmapPlotValue)
-                {
-                    var context = new HeatmapViewModel((HeatmapPlotValue)plot);
-                    ShowDialog<HeatSeriesWindow>(context);
-                }
-                else if (plot is XYPlotValue)
-                {
-                    var context = new SeriesViewModel((XYPlotValue)plot);
-                    ShowDialog<PlotSeriesWindow>(context);
-                }
-            });
-            _grid = new RelayCommand(_ =>
-            {
-                //TODO
-            });
-            _dock = new RelayCommand(_ =>
-            {
-                visualizer.Dock(this);
-            });
-            _undock = new RelayCommand(_ =>
-            {
-                visualizer.Undock();
-            });
-            _save = new RelayCommand(_ =>
-            {
-                var context = new SaveImageViewModel();
-                context.ImageWidth = 640;
-                context.ImageHeight = 480;
-                var window = new SaveImageWindow { DataContext = context };
-                window.Title = Messages.SavePlotAs;
-
-                if (!String.IsNullOrEmpty(plot.Title))
-                {
-                    context.SelectedFile = new FileModel(plot.Title);
-                }
-
-                window.ShowDialog();
-
-                if (context.Accepted)
-                {
-                    var path = context.SelectedFile.FullName;
-                    //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
-                    var filename = Path.GetFileName(path);
-                    var message = String.Format(Messages.PlotSavedMessage, filename);
-                    var output = new OutputViewModel
-                    {
-                        Title = Messages.FileCreated,
-                        Message = message
-                    };
-                    output.ShowWindow();
-                }
-            });
+            _console = new RelayCommand(_ => ShowConsole(console));
+            _settings = new RelayCommand(_ => ShowSettings(plot));
+            _series = new RelayCommand(_ => ShowSeries(plot));
+            _grid = new RelayCommand(_ => _controller.ToggleGrid());
+            _center = new RelayCommand(_ =>_controller.CenterPlot());
+            _dock = new RelayCommand(_ => visualizer.Dock(this));
+            _undock = new RelayCommand(_ => visualizer.Undock());
+            _save = new RelayCommand(_ => Save(plot));
         }
 
         #endregion
@@ -169,6 +100,75 @@
         #endregion
 
         #region Helpers
+
+        static void ShowConsole(IConsole console)
+        {
+            var context = new ConsoleEnterViewModel(console);
+            ShowDialog<ConsoleEnterWindow>(context);
+        }
+
+        static void ShowSettings(PlotValue plot)
+        {
+            if (plot is XYPlotValue)
+            {
+                var context = new PlotSettingsViewModel((XYPlotValue)plot);
+                ShowDialog<PlotSettingsWindow>(context);
+            }
+            else if (plot is SubPlotValue)
+            {
+                var context = new SubPlotSettingsViewModel((SubPlotValue)plot);
+                ShowDialog<SubPlotSettingsWindow>(context);
+            }
+        }
+
+        static void ShowSeries(PlotValue plot)
+        {
+            if (plot is ContourPlotValue)
+            {
+                var context = new ContourViewModel((ContourPlotValue)plot);
+                ShowDialog<ContourSeriesWindow>(context);
+            }
+            else if (plot is HeatmapPlotValue)
+            {
+                var context = new HeatmapViewModel((HeatmapPlotValue)plot);
+                ShowDialog<HeatSeriesWindow>(context);
+            }
+            else if (plot is XYPlotValue)
+            {
+                var context = new SeriesViewModel((XYPlotValue)plot);
+                ShowDialog<PlotSeriesWindow>(context);
+            }
+        }
+
+        static void Save(PlotValue plot)
+        {
+            var context = new SaveImageViewModel();
+            context.ImageWidth = 640;
+            context.ImageHeight = 480;
+            var window = new SaveImageWindow { DataContext = context };
+            window.Title = Messages.SavePlotAs;
+
+            if (!String.IsNullOrEmpty(plot.Title))
+            {
+                context.SelectedFile = new FileModel(plot.Title);
+            }
+
+            window.ShowDialog();
+
+            if (context.Accepted)
+            {
+                var path = context.SelectedFile.FullName;
+                //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
+                var filename = Path.GetFileName(path);
+                var message = String.Format(Messages.PlotSavedMessage, filename);
+                var output = new OutputViewModel
+                {
+                    Title = Messages.FileCreated,
+                    Message = message
+                };
+                output.ShowWindow();
+            }
+        }
 
         static void ShowDialog<TWindow>(Object context)
             where TWindow : Window, new()

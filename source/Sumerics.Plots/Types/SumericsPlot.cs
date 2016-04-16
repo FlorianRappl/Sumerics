@@ -45,6 +45,24 @@
 
         #region Methods
 
+        public void CenterPlot()
+        {
+            OnCenterPlot();
+        }
+
+        public void ToggleGrid()
+        {
+            OnToggleGrid();
+        }
+
+        protected virtual void OnCenterPlot()
+        {
+        }
+
+        protected virtual void OnToggleGrid()
+        {
+        }
+
         protected abstract void UpdateProperties();
 
         protected abstract void UpdateSeries();
