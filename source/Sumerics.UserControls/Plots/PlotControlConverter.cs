@@ -9,7 +9,10 @@
     {
         static readonly ControlFactory Factory = new ControlFactory();
 
-        public static readonly FrameworkElement Default = Factory.CreateDefault();
+        public static FrameworkElement Default
+        {
+            get { return Factory.CreateDefault(); }
+        }
 
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {

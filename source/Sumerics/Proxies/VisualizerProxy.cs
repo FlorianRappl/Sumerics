@@ -22,13 +22,10 @@
         public void Show(Object obj)
         {
             var plot = obj as PlotValue;
-            var vm = GetViewModel();
 
-            if (plot != null && vm != null)
+            if (plot != null)
             {
-                var context = new PlotViewModel(plot, this, _console);
-                _contexts.Add(context);
-                vm.LastPlot = context;
+                Display(new PlotViewModel(plot, this, _console));
             }
         }
 
@@ -56,7 +53,7 @@
                 {
                     DialogExtensions.GetAll<PlotWindow>().Where(m => Object.ReferenceEquals(m.DataContext, context)).ForEach(window =>
                     {
-                        Show(context);
+                        Display(context);
                         window.Close();
                     });
                 });
@@ -105,6 +102,17 @@
                         window.Show();
                     }
                 });
+            }
+        }
+
+        void Display(PlotViewModel context)
+        {
+            var vm = GetViewModel();
+
+            if (vm != null)
+            {
+                _contexts.Add(context);
+                vm.LastPlot = context;
             }
         }
 

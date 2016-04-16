@@ -44,8 +44,7 @@
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1">
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Command="{Binding SavePlot}"
-                    CommandParameter="{Binding SavePlotParameter}">
+                    Command="{Binding SavePlot}">
                 <Image Source="Images/save.png" 
                        ToolTip="{x:Static res:Messages.SavePlotToolTip}" />
             </Button>
@@ -58,7 +57,6 @@
 
             <Button Style="{StaticResource DisableIfEmpty}" 
                     Command="{Binding DockPlot}"
-                    CommandParameter="{Binding DockPlotParameter}"
                     x:Name="DockButton">
                 <Image Source="Images/dock.png"
                        ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" />
@@ -66,7 +64,6 @@
 
             <Button Style="{StaticResource DisableIfEmpty}" 
                     Command="{Binding UndockPlot}"
-                    CommandParameter="{Binding UndockPlotParameter}"
                     Visibility="Collapsed"
                     x:Name="UndockButton">
                 <Image Source="Images/undock.png"
@@ -75,37 +72,32 @@
 
             <Button Style="{StaticResource DisableIfEmpty}" 
                     Command="{Binding EditSeries}"
-                    CommandParameter="{Binding EditSeriesParameter}"
                     IsEnabled="{Binding Model.CanEditSeries, FallbackValue=False}">
                 <Image Source="Images/series.png" 
                        ToolTip="{x:Static res:Messages.IncludedSeriesToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}" 
-                    Command="{Binding OpenSettings}"
-                    CommandParameter="{Binding OpenSettingsParameter}">
+                    Command="{Binding OpenSettings}">
                 <Image Source="Images/settings.png" 
                        ToolTip="{x:Static res:Messages.PlotSettingsToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
                     Command="{Binding ToggleGrid}"
-                    CommandParameter="{Binding ToggleGridParameter}"
                     IsEnabled="{Binding Model.CanToggleGrid, FallbackValue=False}">
                 <Image Source="Images/gridlines.png"
                        ToolTip="{x:Static res:Messages.ToggleGridlinesToolTip}" />
             </Button>
 
             <Button Style="{StaticResource DisableIfEmpty}"
-                    Command="{Binding CenterPlot}"
-                    CommandParameter="{Binding CenterPlotParameter}">
+                    Command="{Binding CenterPlot}">
                 <Image Source="Images/fix.png" 
                        ToolTip="{x:Static res:Messages.ResetAxesTansformationsToolTip}" />
             </Button>
 
             <Button Style="{DynamicResource DisableIfEmpty}"
                     Command="{Binding OpenConsole}"
-                    CommandParameter="{Binding OpenConsoleParameter}"
                     Visibility="Collapsed"
                     Name="ConsoleButton">
                 <Image Source="Images/console.png" 
