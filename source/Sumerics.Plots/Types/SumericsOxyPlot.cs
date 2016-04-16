@@ -57,6 +57,7 @@
         protected override void OnCenterPlot()
         {
             _model.Model.ResetAllAxes();
+            Refresh();
         }
 
         protected override void OnToggleGrid()

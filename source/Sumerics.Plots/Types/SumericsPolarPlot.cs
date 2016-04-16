@@ -3,6 +3,7 @@
     using OxyPlot;
     using OxyPlot.Axes;
     using OxyPlot.Series;
+    using System;
     using YAMP;
 
 	sealed class SumericsPolarPlot : SumericsOxyPlot
@@ -34,25 +35,32 @@
 
         protected override void UpdateCustomProperties()
         {
+            const Double ConvertToDegree = 180.0 / Math.PI;
+
             var model = _model.Model;
-            var major = _plot.Gridlines ? LineStyle.Solid : LineStyle.None;
-            var minor = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
+            var gridline = _plot.MinorGridlines ? LineStyle.Solid : LineStyle.None;
 
             var angle = model.Axes[0] as AngleAxis;
-            angle.MajorGridlineStyle = major;
-            angle.MinorGridlineStyle = minor;
+            angle.MajorGridlineStyle = LineStyle.Solid;
+            angle.MinorGridlineStyle = gridline;
             angle.FractionUnit = _plot.FractionUnit;
             angle.FractionUnitSymbol = _plot.FractionSymbol;
-            angle.StartAngle = _plot.MinX;
-            angle.EndAngle = _plot.MaxX;
-            angle.MinorStep = _plot.MaxX / 16.0;
-            angle.MajorStep = _plot.MaxX / 8.0;
+            angle.StartAngle = _plot.MinX * ConvertToDegree;
+            angle.EndAngle = _plot.MaxX * ConvertToDegree;
+            angle.MinorStep = angle.EndAngle / 16.0;
+            angle.MajorStep = angle.EndAngle / 8.0;
 
             var magnitude = model.Axes[1] as MagnitudeAxis;
-            magnitude.MajorGridlineStyle = major;
-            magnitude.MinorGridlineStyle = minor;
+            magnitude.MajorGridlineStyle = LineStyle.Solid;
+            magnitude.MinorGridlineStyle = gridline;
             magnitude.Minimum = _plot.MinY;
             magnitude.Maximum = _plot.MaxY;
+        }
+
+        protected override void OnToggleGrid()
+        {
+            _plot.MinorGridlines = !_plot.MinorGridlines;
+            _plot.UpdateLayout();
         }
 
         protected override void UpdateSeries()
