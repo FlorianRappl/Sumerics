@@ -26,28 +26,9 @@
             RefreshProperties();*/
         }
 
-        public void RefreshData()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshProperties()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshSeries()
-        {
-            throw new NotImplementedException();
-        }
-
         public void ToggleGrid()
         {
             Plot.ShowAxis = !Plot.ShowAxis;
-        }
-
-        public void PreviewMode()
-        {
         }
 
         public void CenterPlot()

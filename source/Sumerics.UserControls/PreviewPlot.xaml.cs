@@ -1,9 +1,5 @@
 ﻿namespace Sumerics.Controls
 {
-    using OxyPlot;
-    using OxyPlot.Axes;
-    using OxyPlot.Series;
-    using System.Windows;
     using System.Windows.Controls;
 
     /// <summary>
@@ -19,6 +15,7 @@
         }
 
         #endregion
+
         /*
         #region Dependency Property
 
@@ -116,6 +113,27 @@
 			var ctrl = new OxyPlot.Wpf.Plot();
 			//ctrl.Model = model;
 			return ctrl;
+        }
+        
+        public override void AsPreview()
+        {
+            IsPreview = true;
+
+            _model.PlotAreaBorderThickness = new OxyThickness(0);
+            _model.PlotMargins = new OxyThickness(0);
+            _model.Padding = new OxyThickness(0);
+            _model.IsLegendVisible = false;
+            _model.Axes[0].IsAxisVisible = false;
+            _model.Axes[1].IsAxisVisible = false;
+
+            _model.Axes[0].IsZoomEnabled = false;
+            _model.Axes[1].IsZoomEnabled = false;
+            control.IsManipulationEnabled = false;
+
+            control.PlotAreaBorderThickness = new Thickness(0);
+            control.PlotMargins = new Thickness(0);
+            control.Padding = new Thickness(0);
+            control.Margin = new Thickness(0);
         }
 
         #endregion

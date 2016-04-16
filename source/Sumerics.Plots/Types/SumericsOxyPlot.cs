@@ -89,16 +89,21 @@
 
         protected abstract void UpdateCustomProperties();
 
-        protected void UpdateLineSeries(XYAxisSeries series, IPointSeries points)
+        protected void UpdateXySeries(XYAxisSeries series, IPointSeries points)
         {
             series.Title = points.Label;
-            //series.StrokeThickness = points.Lines ? points.LineWidth : 0.0;
-            //series.Color = points.Color.OxyColorFromString();
-            //series.MarkerType = (MarkerType)((int)points.Symbol);
-            //series.MarkerFill = series.Color;
-            //series.MarkerSize = 3.0;
-            //series.MarkerStroke = series.Color;
-            //series.MarkerStrokeThickness = 1.0;
+        }
+
+        protected void UpdateLineSeries(LineSeries series, IPointSeries points)
+        {
+            UpdateXySeries(series, points);
+            series.StrokeThickness = points.Lines ? points.LineWidth : 0.0;
+            series.Color = points.Color.OxyColorFromString();
+            series.MarkerType = (MarkerType)((int)points.Symbol);
+            series.MarkerFill = series.Color;
+            series.MarkerSize = 3.0;
+            series.MarkerStroke = series.Color;
+            series.MarkerStrokeThickness = 1.0;
         }
 
         #endregion

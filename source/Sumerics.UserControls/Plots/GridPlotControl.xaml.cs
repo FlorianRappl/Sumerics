@@ -16,33 +16,6 @@
             InitializeComponent();
         }
 
-        public void ToggleGrid()
-        {
-        }
-
-        public void PreviewMode()
-        {
-        }
-
-        public void CenterPlot()
-        {
-        }
-
-        public void RefreshData()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshProperties()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RefreshSeries()
-        {
-            throw new NotImplementedException();
-        }
-
         public void ExportAsPng(Stream s, Int32 width, Int32 height)
         {
             var bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);

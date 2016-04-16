@@ -46,9 +46,20 @@
                     series.Points.Add(point);
                 }
 
-                UpdateLineSeries(series, points);
+                UpdateScatterSeries(series, points);
                 model.Series.Add(series);
             }
+        }
+
+        protected void UpdateScatterSeries(ScatterErrorSeries series, IPointSeries points)
+        {
+            UpdateXySeries(series, points);
+            series.ErrorBarColor = points.Color.OxyColorFromString();
+            series.MarkerType = (MarkerType)((int)points.Symbol);
+            series.MarkerFill = series.ErrorBarColor;
+            series.MarkerSize = 3.0;
+            series.MarkerStroke = series.ErrorBarColor;
+            series.MarkerStrokeThickness = 1.0;
         }
 
         protected override void UpdateData()

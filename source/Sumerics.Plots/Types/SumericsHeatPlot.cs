@@ -1,7 +1,9 @@
 ﻿namespace Sumerics.Plots
 {
+    using OxyPlot;
     using OxyPlot.Axes;
     using OxyPlot.Series;
+    using System;
     using YAMP;
 
     sealed class SumericsHeatPlot : SumericsOxyPlot
@@ -9,7 +11,7 @@
 		#region Fields
 
 		readonly HeatmapPlotValue _plot;
-        HeatMapSeries _series;
+        readonly LinearColorAxis _colorAxes;
 
 		#endregion
 
@@ -22,6 +24,8 @@
             _plot = plot;
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom });
             model.Axes.Add(new LinearAxis { Position = AxisPosition.Left });
+            _colorAxes = new LinearColorAxis { Position = AxisPosition.Right };
+            model.Axes.Add(_colorAxes);
 			UpdateSeries();
 			UpdateProperties();
 		}
@@ -33,7 +37,7 @@
         protected override void UpdateCustomProperties()
         {
             var model = _model.Model;
-            //_series.IsInterpolated = _plot.IsInterpolated;
+            var colors = _plot.ColorPalette.GenerateColors(50);
 
             model.Axes[0].Title = _plot.XLabel;
             model.Axes[1].Title = _plot.YLabel;
@@ -43,6 +47,10 @@
 
             model.Axes[1].Minimum = _plot.MinY;
             model.Axes[1].Maximum = _plot.MaxY;
+
+            _colorAxes.Palette = new OxyPalette(colors);
+            _colorAxes.Minimum = _plot.Minimum;
+            _colorAxes.Maximum = _plot.Maximum;
         }
 
         protected override void UpdateSeries()
@@ -53,10 +61,9 @@
             for (var i = 0; i < _plot.Count; i++)
             {
                 var points = _plot[i];
-                _series = new HeatMapSeries();
-                //(Int32)_plot.MaxX, (Int32)_plot.MaxY, points
-                //UpdateSeries(ser, points);
-                //model.Series.Add(ser);
+                var series = new HeatMapSeries();
+                UpdateSeries(series, points);
+                model.Series.Add(series);
             }
         }
 
@@ -69,10 +76,24 @@
 
         #region Helpers
 
-        void UpdateSeries(HeatMapSeries series, IPointSeries points)
+        void UpdateSeries(HeatMapSeries series, Points<HeatmapPlotValue.HeatPoint> points)
         {
             series.Title = points.Label;
-            //series.HeatmapColors = GenerateColors(_plot.ColorPalette, 50);
+            series.Interpolate = _plot.IsInterpolated;
+            series.X0 = _plot.MinX;
+            series.X1 = _plot.MaxX;
+            series.Y0 = _plot.MinY;
+            series.Y1 = _plot.MaxY;
+            var cols = (Int32)_plot.MaxX;
+            var rows = (Int32)_plot.MaxY;
+            var data = new Double[cols, rows];
+
+            foreach (var point in points)
+            {
+                data[point.Column - 1, point.Row - 1] = point.Magnitude;
+            }
+
+            series.Data = data;
         }
 
 		#endregion
