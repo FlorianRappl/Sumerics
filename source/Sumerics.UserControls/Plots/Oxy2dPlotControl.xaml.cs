@@ -50,13 +50,6 @@
         /*
         // HEATMAP:
 
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
-
         public override void RefreshSeries()
         {
             for (var i = 0; i < _plot.Count; i++)
@@ -69,21 +62,7 @@
             Refresh();
         }
 
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
-            Refresh();
-        }
-
         // ERRROR:
-
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
 
         public override void RefreshSeries()
         {
@@ -94,13 +73,6 @@
                 UpdateLineSeries(series, data);
             }
 
-            Refresh();
-        }
-
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
             Refresh();
         }
 
@@ -117,13 +89,6 @@
             }
         }
 
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
-
         public override void RefreshSeries()
         {
             for (var i = 0; i < _plot.Count; i++)
@@ -136,42 +101,9 @@
             Refresh();
         }
 
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
-            Refresh();
-        }
-
         // COMPLEX:
 
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
-
-        public override void RefreshSeries()
-        {
-            Refresh();
-        }
-
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
-            Refresh();
-        }
-
         // POLAR:
-
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
 
         public override void RefreshSeries()
         {
@@ -182,25 +114,11 @@
                 UpdateLineSeries(series, data);
             }
 
-            Refresh();
-        }
-
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
             Refresh();
         }
 
         // CLASSIC (2D):
 
-        public override void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
-
         public override void RefreshSeries()
         {
             for (var i = 0; i < _plot.Count; i++)
@@ -210,13 +128,6 @@
                 UpdateLineSeries(series, data);
             }
 
-            Refresh();
-        }
-
-        public override void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
             Refresh();
         }
          */

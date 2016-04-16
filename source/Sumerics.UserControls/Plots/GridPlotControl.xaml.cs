@@ -109,10 +109,6 @@
             }
         }
 
-        public void RefreshData()
-        {
-        }
-
         public void RefreshSeries()
         {
             _plotGrid.Children.Clear();

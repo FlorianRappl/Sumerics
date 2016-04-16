@@ -13,6 +13,18 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Buttons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="DisableIfEmpty" 
+                   TargetType="{x:Type Button}"
+                   BasedOn="{StaticResource  MetroCircleButton}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding}" 
+                                 Value="{x:Null}">
+                        <Setter Property="IsEnabled"
+                                Value="False"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     
@@ -27,59 +39,54 @@
   
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1">
-            <Button Style="{DynamicResource MetroCircleButton}" 
+            <Button Style="{StaticResource DisableIfEmpty}" 
                     Name="SaveButton"
-                    Click="SaveButtonClick" 
-                    IsEnabled="False">
+                    Click="SaveButtonClick">
                 <Image Source="Images/save.png" 
                        ToolTip="{x:Static res:Messages.SavePlotToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}"
+            <Button Style="{StaticResource DisableIfEmpty}"
                     Name="PrintButton"
-                    Click="PrintButtonClick" 
-                    IsEnabled="False">
+                    Click="PrintButtonClick">
                 <Image Source="Images/printer.png"
                        ToolTip="{x:Static res:Messages.PrintPlotToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" 
+            <Button Style="{StaticResource DisableIfEmpty}" 
                     Name="DuplicateButton"
-                    Click="DuplicateButtonClick" 
-                    IsEnabled="False">
+                    Click="DuplicateButtonClick">
                 <Image Source="Images/undock.png"
                        ToolTip="{x:Static res:Messages.DuplicatePlotToolTip}" 
                        x:Name="DockImg" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" 
+            <Button Style="{StaticResource DisableIfEmpty}" 
                     Name="SeriesButton"
                     Click="SeriesButtonClick" 
-                    IsEnabled="False">
+                    IsEnabled="{Binding CanEditSeries, FallbackValue=False}">
                 <Image Source="Images/series.png" 
                        ToolTip="{x:Static res:Messages.IncludedSeriesToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" 
+            <Button Style="{StaticResource DisableIfEmpty}" 
                     Name="SettingsButton"
-                    Click="SettingsButtonClick" 
-                    IsEnabled="False">
+                    Click="SettingsButtonClick">
                 <Image Source="Images/settings.png" 
                        ToolTip="{x:Static res:Messages.PlotSettingsToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}"
+            <Button Style="{StaticResource DisableIfEmpty}"
                     Name="GridButton"
                     Click="GridButtonClick" 
-                    IsEnabled="False">
+                    IsEnabled="{Binding CanToggleGrid, FallbackValue=False}">
                 <Image Source="Images/gridlines.png"
                        ToolTip="{x:Static res:Messages.ToggleGridlinesToolTip}" />
             </Button>
 
-            <Button Style="{DynamicResource MetroCircleButton}" 
+            <Button Style="{StaticResource DisableIfEmpty}"
                     Name="CenterButton"
-                    Click="CenterButtonClick" 
-                    IsEnabled="False">
+                    Click="CenterButtonClick">
                 <Image Source="Images/fix.png" 
                        ToolTip="{x:Static res:Messages.ResetAxesTansformationsToolTip}" />
             </Button>
@@ -91,6 +98,5 @@
                        ToolTip="{x:Static res:Messages.EnterCommandToolTip}" />
             </Button>
         </StackPanel>
-        
     </Grid>
 </UserControl>

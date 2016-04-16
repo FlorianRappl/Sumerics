@@ -1,13 +1,10 @@
 ﻿namespace Sumerics.Controls
 {
     using Sumerics.Controls.Plots;
-    using Sumerics.Plots;
-    using Sumerics.Resources;
     using System;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
     /// <summary>
@@ -19,8 +16,6 @@
 
         static readonly ControlFactory Factory = new ControlFactory();
 
-        Boolean _canDock;
-
         #endregion
 
         #region ctor
@@ -28,56 +23,13 @@
         public PlotControl()
         {
             InitializeComponent();
-			PlotArea.Content = Placeholder;
+			PlotArea.Content = Factory.CreateDefault();
+            DataContextChanged += (s, ev) => PlotArea.Content = Factory.Create(ev.NewValue);
 		}
 
 		#endregion
 
         #region Dependency Properties
-
-        public static readonly DependencyProperty ControllerProperty = DependencyProperty.Register(
-                "Controller",
-				typeof(IPlotController),
-				typeof(PlotControl),
-                new FrameworkPropertyMetadata(null, OnControllerChanged));
-
-        public IPlotController Controller
-        {
-            get { return (IPlotController)GetValue(ControllerProperty); }
-            set { SetValue(ControllerProperty, value); }
-        }
-
-        static void OnControllerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var host = d as PlotControl;
-            var controller = e.NewValue as IPlotController;
-			var activate = false;
-			var grid = true;
-            var series = true;
-
-            if (controller != null)
-            {
-                var control = Factory.Create(controller);
-                series = controller.IsSeriesEnabled;
-                grid = controller.IsGridEnabled;
-                host.PlotArea.Content = control;
-                activate = true;
-            }
-
-            if (!activate || host.PlotArea.Content == null)
-            {
-                host.PlotArea.Content = host.Placeholder;
-                activate = false;
-            }
-
-			host.SettingsButton.IsEnabled = activate;
-			host.SaveButton.IsEnabled = activate;
-			host.SeriesButton.IsEnabled = activate && series;
-			host.PrintButton.IsEnabled = activate;
-			host.GridButton.IsEnabled = activate && grid;
-            host.CenterButton.IsEnabled = activate;
-            host.DuplicateButton.IsEnabled = activate;
-		}
 
         public ICommand GridCommand
         {
@@ -205,46 +157,33 @@
         public static readonly DependencyProperty SaveCommandParameterProperty =
             DependencyProperty.Register("SaveCommandParameter", typeof(Object), typeof(PlotControl), new PropertyMetadata(null));
 
-        #endregion
-
-        #region Properties
-
-		public TextBlock Placeholder
-		{
-			get
-			{
-                return new TextBlock
-                {
-				    Text = Messages.PlotPlaceholder,
-				    FontSize = 16,
-				    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-				    HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-				    Foreground = new SolidColorBrush(Colors.DarkGray)
-                };
-			}
-		}
-
-        public Boolean CanDock
+        public Boolean IsDocked
         {
-            get { return _canDock; }
-            set
-            {
-                _canDock = value;
+            get { return (Boolean)GetValue(IsDockedProperty); }
+            set { SetValue(IsDockedProperty, value); }
+        }
 
-                if (_canDock)
-                {
-                    DockImg.Source = new BitmapImage(new Uri(@"Images\dock.png", UriKind.Relative));
-                    ConsoleButton.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    DockImg.Source = new BitmapImage(new Uri(@"Images\undock.png", UriKind.Relative));
-                    ConsoleButton.Visibility = System.Windows.Visibility.Visible;
-                }
+        public static readonly DependencyProperty IsDockedProperty =
+            DependencyProperty.Register("IsDocked", typeof(Boolean), typeof(PlotControl), new PropertyMetadata(Changed));
+
+        private static void Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var docked = (Boolean)e.NewValue;
+            var control = d as PlotControl;
+
+            if (docked)
+            {
+                control.DockImg.Source = new BitmapImage(new Uri(@"Images\undock.png", UriKind.Relative));
+                control.ConsoleButton.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                control.DockImg.Source = new BitmapImage(new Uri(@"Images\dock.png", UriKind.Relative));
+                control.ConsoleButton.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
 
-		#endregion
+        #endregion
 
         #region Printing Methods
 

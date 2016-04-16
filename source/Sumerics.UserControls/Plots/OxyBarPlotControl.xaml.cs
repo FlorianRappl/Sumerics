@@ -14,13 +14,6 @@
         }
 
         /*
-        public void RefreshData()
-        {
-            Model.Series.Clear();
-            SetSeries(Model);
-            Refresh();
-        }
-
         public void RefreshSeries()
         {
             for (var i = 0; i < _plot.Count; i++)
@@ -30,13 +23,6 @@
                 UpdateSeries(series, data);
             }
 
-            Refresh();
-        }
-
-        public void RefreshProperties()
-        {
-            SetGeneralProperties(Model);
-            UpdateProperties(Model);
             Refresh();
         }
          */

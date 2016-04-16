@@ -137,11 +137,6 @@
             _control.SetTransformWireframe(_plot.MinX, _plot.MaxX, _plot.MinY, _plot.MaxY, _plot.MinZ, _plot.MaxZ);
         }
 
-        public override void RefreshSeries()
-        {
-            RefreshData();
-        }
-
         public override void RefreshProperties()
         {
             _control.Title = _plot.Title;
@@ -162,11 +157,6 @@
                 _control.SetVertex(i, (Single)_plot[0, i].X, (Single)_plot[0, i].Y, (Single)_plot[0, i].Z);
             }
 
-            RefreshProperties();
-        }
-
-        public override void RefreshSeries()
-        {
             RefreshProperties();
         }
 
