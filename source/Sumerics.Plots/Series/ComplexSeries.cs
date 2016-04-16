@@ -11,7 +11,7 @@
 
 		readonly Func<ScalarValue, ScalarValue> _f;
 		readonly BufferState _buffer;
-		//OxyBitmap points;
+        OxyImage _points;
 
 		#endregion
 
@@ -59,7 +59,7 @@
                 var height = (Int32)state.Height / g;
                 var scaleX = (XAxis.ScreenMax.X - XAxis.ScreenMin.X) / width;
                 var scaleY = (YAxis.ScreenMax.Y - YAxis.ScreenMin.Y) / height;
-                //points = new OxyBitmap(width, height);
+                var pixels = new OxyColor[width, height];
                 _buffer.ReplaceWith(state);
 
 				var dx = (end.X - origin.X) / width;
@@ -75,7 +75,7 @@
                     for (var j = 0; j < height; j++)
 					{
                         var value = _f(z);
-						//points.SetPixel(i, j, value.GetColor());
+                        pixels[i, j] = value.GetColor();
 						sy += scaleY;
 						z.ImaginaryValue += dy;
 					}
@@ -83,9 +83,11 @@
 					z.Value += dx;
 					sx += scaleX;
 				}
+
+                _points = OxyImage.Create(pixels, ImageFormat.Png);
 			}
 
-            //rc.DrawImage(new OxyRect(XAxis.ScreenMin.X, YAxis.ScreenMin.Y, state.Width,state.Height), points);
+            rc.DrawImage(_points, XAxis.ScreenMin.X, YAxis.ScreenMin.Y, state.Width, state.Height, 1.0, true);
 		}
 
 		#endregion
