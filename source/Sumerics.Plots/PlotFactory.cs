@@ -19,7 +19,7 @@
             Register<SurfacePlotValue>(plot => new SumericsSurfacePlot(plot));
         }
 
-        protected override IPlotController CreateDefault()
+        public override IPlotController CreateDefault()
         {
             return null;
         }

@@ -51,6 +51,7 @@
     <Compile Include="Helpers\ColorExtensions.cs" />
     <Compile Include="Helpers\ColorTriplet.cs" />
     <Compile Include="IPlotController.cs" />
+    <Compile Include="Models\BasePlotModel.cs" />
     <Compile Include="Models\GridPlotModel.cs" />
     <Compile Include="Models\OxyPlotModel.cs" />
     <Compile Include="Models\WpfPlotModel.cs" />

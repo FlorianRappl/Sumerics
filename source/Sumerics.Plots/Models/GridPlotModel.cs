@@ -2,14 +2,14 @@
 {
     using System;
 
-    public class GridPlotModel
+    public class GridPlotModel : BasePlotModel
     {
-        Int32 Rows { get; set; }
+        public Int32 Rows { get; set; }
 
-        Int32 Columns { get; set; }
+        public Int32 Columns { get; set; }
 
-        Object[,] Models { get; set; }
+        public Object[,] Models { get; set; }
 
-        String Title { get; set; }
+        public String Title { get; set; }
     }
 }

@@ -2,10 +2,8 @@
 {
     using System;
 
-    public class WpfPlotModel
+    public class WpfPlotModel : BasePlotModel
     {
-        Boolean IsSeriesEnabled { get; set; }
-
-        String Title { get; set; }
+        public String Title { get; set; }
     }
 }
