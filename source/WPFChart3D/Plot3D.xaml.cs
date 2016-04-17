@@ -26,7 +26,6 @@
         readonly ScreenSpaceLines3D _wireframes;
         readonly ScreenSpaceLines3D _axis;
         readonly Model3D _model3d;
-
         readonly ScaleTransform3D _scale;
         readonly AxisAngleRotation3D _rotate;
 
@@ -90,6 +89,20 @@
             TrackBall.ManipulationDelta += TouchDelta;
             TrackBall.ManipulationStarted += TouchStarted;
             TrackBall.PreviewMouseWheel += MouseWheelRotated;
+        }
+
+        #endregion
+
+        #region Properties
+
+        public ScaleTransform3D ScaleTransform
+        {
+            get { return _scale; }
+        }
+
+        public AxisAngleRotation3D RotateTransform
+        {
+            get { return _rotate; }
         }
 
         #endregion
@@ -233,14 +246,11 @@
 
         public void ResetTransformation()
         {
-            var tg = TrackBall.Transform as Transform3DGroup;
-            var scale = tg.Children[0] as ScaleTransform3D;
-            var rotate = (tg.Children[1] as RotateTransform3D).Rotation as AxisAngleRotation3D;
-            scale.ScaleX = 1;
-            scale.ScaleY = 1;
-            scale.ScaleZ = 1;
-            rotate.Axis = new Vector3D(0, 0, 1);
-            rotate.Angle = 0;
+            _scale.ScaleX = 1;
+            _scale.ScaleY = 1;
+            _scale.ScaleZ = 1;
+            _rotate.Axis = new Vector3D(0, 0, 1);
+            _rotate.Angle = 0;
         }
 
         public void CreateSurface(Int32 nx, Int32 ny)
