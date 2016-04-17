@@ -12,6 +12,8 @@
 	{
 		#region Fields
 
+        static readonly IEnumerable<PointSymbol> symbols = Enum.GetValues(typeof(PointSymbol)).Cast<PointSymbol>();
+
         readonly IPointSeries _series;
 		readonly Int32 _index;
 
@@ -52,7 +54,7 @@
                     _title = value;
                 }
 
-				RaisePropertyChanged("Title");
+				RaisePropertyChanged();
 			}
 		}
 
@@ -62,7 +64,7 @@
 			set
 			{
 				_color = (SolidColorBrush)value;
-				RaisePropertyChanged("Color");
+				RaisePropertyChanged();
 			}
 		}
 
@@ -72,7 +74,7 @@
 			set
 			{
 				_symbol = value;
-				RaisePropertyChanged("Symbol");
+				RaisePropertyChanged();
 			}
 		}
 
@@ -82,13 +84,13 @@
 			set
 			{
 				_lines = value;
-				RaisePropertyChanged("Lines");
+				RaisePropertyChanged();
 			}
 		}
 
 		public IEnumerable<PointSymbol> Symbols
 		{
-			get { return Enum.GetValues(typeof(PointSymbol)).Cast<PointSymbol>(); }
+			get { return symbols; }
 		}
 
 		#endregion

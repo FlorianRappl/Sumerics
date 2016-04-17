@@ -51,11 +51,6 @@
             }
         }
 
-        protected override void UpdateData()
-        {
-            UpdateSeries();
-        }
-
         protected override void UpdateCustomProperties()
         {
             var model = _model.Model;

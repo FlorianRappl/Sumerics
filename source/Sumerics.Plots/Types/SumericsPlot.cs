@@ -8,11 +8,11 @@
 	{
 		#region Fields
 
-        static readonly Dictionary<String, Action<SumericsPlot>> handlers = new Dictionary<String, Action<SumericsPlot>>(StringComparer.InvariantCultureIgnoreCase)
+        static readonly Dictionary<String, Action<SumericsPlot>> handlers = new Dictionary<String, Action<SumericsPlot>>(StringComparer.OrdinalIgnoreCase)
         {
-            { "data", c => c.UpdateData() },
-            { "series", c => c.UpdateSeries() },
-            { "properties", c => c.UpdateProperties() }
+            { "Data", c => c.UpdateSeries() },
+            { "Layout", c => c.UpdateProperties() },
+            { "Properties", c => c.UpdateSeries() }
         };
 
 		readonly PlotValue _plot;
@@ -67,8 +67,6 @@
 
         protected abstract void UpdateSeries();
 
-        protected abstract void UpdateData();
-
         protected abstract void Refresh();
 
         #endregion
@@ -78,7 +76,6 @@
         void Update()
         {
             UpdateProperties();
-            UpdateData();
             UpdateSeries();
         }
 

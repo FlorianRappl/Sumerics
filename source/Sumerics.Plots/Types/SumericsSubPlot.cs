@@ -44,10 +44,6 @@
         {
         }
 
-        protected override void UpdateData()
-        {
-        }
-
         protected override void UpdateProperties()
         {
             _model.Title = _plot.Title;

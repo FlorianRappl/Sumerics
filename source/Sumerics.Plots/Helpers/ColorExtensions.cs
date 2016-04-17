@@ -11,11 +11,11 @@
         {
             var value = 0u;
 
-            if (color.Length == 7 && color[0] == '#' && UInt32.TryParse(color.Substring(1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out value))
+            if (color.Length == 7 && color[0] == '#' && UInt32.TryParse("FF" + color.Substring(1), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out value))
             {
                 return OxyColor.FromUInt32(value);
             }
-            else if (color.Length >= 10 && color.StartsWith("rgb(", StringComparison.InvariantCultureIgnoreCase) && color[color.Length - 1] == ')')
+            else if (color.Length >= 10 && color.StartsWith("rgb(", StringComparison.OrdinalIgnoreCase) && color[color.Length - 1] == ')')
             {
                 var content = color.Substring(4, color.Length - 5);
                 var commas = 0;

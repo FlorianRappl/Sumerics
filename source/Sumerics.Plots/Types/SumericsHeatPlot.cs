@@ -67,11 +67,6 @@
             }
         }
 
-        protected override void UpdateData()
-        {
-            UpdateSeries();
-        }
-
         #endregion
 
         #region Helpers
