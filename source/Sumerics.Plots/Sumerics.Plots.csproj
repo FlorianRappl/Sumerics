@@ -53,7 +53,9 @@
     <Compile Include="IPlotController.cs" />
     <Compile Include="Models\BasePlotModel.cs" />
     <Compile Include="Models\GridPlotModel.cs" />
+    <Compile Include="Models\LiveModel.cs" />
     <Compile Include="Models\OxyPlotModel.cs" />
+    <Compile Include="Models\Plot3dAxis.cs" />
     <Compile Include="Models\SubplotModel.cs" />
     <Compile Include="Models\SubplotModels.cs" />
     <Compile Include="Models\WpfPlotModel.cs" />

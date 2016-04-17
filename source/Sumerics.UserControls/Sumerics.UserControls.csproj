@@ -171,6 +171,7 @@
     <Compile Include="Plots\GridPlotControl.xaml.cs">
       <DependentUpon>GridPlotControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Plots\OxyColorConverter.cs" />
     <Compile Include="Plots\OxyPlotControl.xaml.cs">
       <DependentUpon>OxyPlotControl.xaml</DependentUpon>
     </Compile>

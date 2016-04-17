@@ -20,7 +20,7 @@
             return Byte.Parse(sub, NumberStyles.HexNumber);
         }
 
-        public static Byte ToRgbColor(this String str)
+        public static Byte FromHex(this String str)
         {
             var sub = Math.Min(Int32.Parse(str), 255);
             return Convert.ToByte(sub);

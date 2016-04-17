@@ -11,10 +11,6 @@
         protected readonly WpfPlotModel _model;
         readonly XYZPlotValue _plot;
 
-        Boolean _isLogx;
-        Boolean _isLogy;
-        Boolean _isLogz;
-
         #endregion
 
         #region ctor
@@ -25,7 +21,10 @@
             _model = new WpfPlotModel
             {
                 CanEditSeries = false,
-                CanToggleGrid = false
+                CanToggleGrid = false,
+                XAxis = new Plot3dAxis(),
+                YAxis = new Plot3dAxis(),
+                ZAxis = new Plot3dAxis()
             };
             _plot = plot;
         }
@@ -39,31 +38,25 @@
             get { return _model; }
         }
 
-        public Boolean IsLogX
-        {
-            get { return _isLogx; }
-            protected set { _isLogx = value; }
-        }
-
-        public Boolean IsLogY
-        {
-            get { return _isLogy; }
-            protected set { _isLogy = value; }
-        }
-
-        public Boolean IsLogZ
-        {
-            get { return _isLogz; }
-            protected set { _isLogz = value; }
-        }
-
         #endregion
 
         #region Methods
 
+        protected override void OnCenterPlot()
+        {
+            _model.XAxis.Reset();
+            _model.YAxis.Reset();
+            _model.ZAxis.Reset();
+        }
+
+        protected override void OnToggleGrid()
+        {
+            _model.IsAxisShown = !_model.IsAxisShown;
+        }
+
         protected override void Refresh()
         {
-            //TODO
+            UpdateSeries();
         }
 
         #endregion

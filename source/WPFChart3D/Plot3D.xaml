@@ -8,19 +8,19 @@
              d:DesignHeight="300" 
              d:DesignWidth="300">
     <Grid>
-        <TextBlock x:Name="xTitle" 
+        <TextBlock x:Name="TitleBlock"
                    VerticalAlignment="Top"
                    FontSize="18" 
                    FontWeight="Bold" 
                    HorizontalAlignment="Center"
                    Margin="0 5" />
-        <l:TrackballDecorator Name="trackBall">
-            <Viewport3D Name="mainViewport" 
+        <l:TrackballDecorator x:Name="TrackBall">
+            <Viewport3D x:Name="MainViewport" 
                         ClipToBounds = "True"  
                         IsHitTestVisible="false"
                         RenderOptions.EdgeMode="Aliased">
                 <Viewport3D.Camera>
-                    <OrthographicCamera x:Name="camera"
+                    <OrthographicCamera x:Name="Camera"
                                         Width="2"
                                         FarPlaneDistance="10"
 	                                    NearPlaneDistance="1" 
@@ -28,6 +28,7 @@
 	                                    UpDirection="0,1,0"
 	                                    Position="0,0,2" />
                 </Viewport3D.Camera>
+                
                 <Viewport3D.Children>
                     <ModelVisual3D x:Name="Light1">
                         <ModelVisual3D.Content>
@@ -35,12 +36,14 @@
                                               Direction="1, 1, -1" />
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
+                    
                     <ModelVisual3D x:Name="Light2">
                         <ModelVisual3D.Content>
                             <DirectionalLight Color="White"
                                               Direction="-1, 1, -1" />
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
+                    
                     <ModelVisual3D x:Name="Light3">
                         <ModelVisual3D.Content>
                             <DirectionalLight Color="White" 

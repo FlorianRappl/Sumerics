@@ -53,7 +53,7 @@
                 if (!numbers.Contains(str[i]))
                 {
                     var color = str.Substring(start, i - start);
-                    colors[currentIndex] = color.ToRgbColor();
+                    colors[currentIndex] = color.FromHex();
                     currentIndex++;
                     start = i + 1;
                 }
