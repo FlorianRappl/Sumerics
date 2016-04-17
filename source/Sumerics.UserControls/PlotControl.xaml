@@ -38,8 +38,8 @@
         </Grid.RowDefinitions>
         
         <ContentControl Content="{Binding Model, 
-            FallbackValue={x:Static local:PlotControlConverter.Default}, 
-            Converter={StaticResource plotControlConverter}}" />
+                        FallbackValue={x:Static local:PlotControlConverter.Default}, 
+                        Converter={StaticResource plotControlConverter}}" />
   
         <StackPanel Orientation="Horizontal"
                     Grid.Row="1">

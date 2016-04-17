@@ -16,6 +16,7 @@
             InitializeComponent();
         }
 
+        /*
         public void ExportAsPng(Stream s, Int32 width, Int32 height)
         {
             var bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
@@ -38,7 +39,6 @@
             encoder.Save(s);
         }
 
-        /*
         public override void RenderToCanvas(Canvas canvas)
         {
             var printGrid = SetupGrid();

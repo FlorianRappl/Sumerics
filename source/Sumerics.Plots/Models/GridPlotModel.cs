@@ -4,12 +4,33 @@
 
     public class GridPlotModel : BasePlotModel
     {
-        public Int32 Rows { get; set; }
+        Int32 _rows;
+        Int32 _columns;
+        String _title;
+        SubplotModels _models;
 
-        public Int32 Columns { get; set; }
+        public Int32 Rows
+        {
+            get { return _rows; }
+            set { _rows = value; RaisePropertyChanged(); }
+        }
 
-        public SubplotModel[] Models { get; set; }
+        public Int32 Columns
+        {
+            get { return _columns; }
+            set { _columns = value; RaisePropertyChanged(); }
+        }
 
-        public String Title { get; set; }
+        public SubplotModels Models
+        {
+            get { return _models; }
+            set { _models = value; RaisePropertyChanged(); }
+        }
+
+        public String Title
+        {
+            get { return _title; }
+            set { _title = value; RaisePropertyChanged(); }
+        }
     }
 }

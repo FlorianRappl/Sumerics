@@ -2,7 +2,6 @@
 {
     using Sumerics.Plots.Models;
     using System;
-    using System.Collections.Generic;
     using YAMP;
 
     sealed class SumericsSubPlot : SumericsPlot
@@ -22,9 +21,12 @@
             _model = new GridPlotModel
             {
                 CanEditSeries = false,
-                CanToggleGrid = false
+                CanToggleGrid = false,
+                Models = new SubplotModels()
             };
             _plot = plot;
+            UpdateProperties();
+            UpdateSeries();
         }
 
         #endregion
@@ -42,6 +44,21 @@
 
         protected override void UpdateSeries()
         {
+            var models = _model.Models;
+            models.Clear();
+
+            for (var i = 0; i < _plot.Count; i++)
+            {
+                var subplot = _plot[i];
+                _model.Models.Add(new SubplotModel
+                {
+                    ColumnIndex = subplot.Column,
+                    ColumnSpan = subplot.ColumnSpan,
+                    RowIndex = subplot.Row,
+                    RowSpan = subplot.RowSpan,
+                    Controller = PlotFactory.Instance.Create(subplot.Plot)
+                });
+            }
         }
 
         protected override void UpdateProperties()
@@ -49,20 +66,6 @@
             _model.Title = _plot.Title;
             _model.Rows = _plot.Rows;
             _model.Columns = _plot.Columns;
-            _model.Models = new SubplotModel[_plot.Count];
-
-            for (int i = 0; i < _plot.Count; i++)
-            {
-                var subplot = _plot[i];
-                _model.Models[i] = new SubplotModel
-                {
-                    ColumnIndex = subplot.Column,
-                    ColumnSpan = subplot.ColumnSpan,
-                    RowIndex = subplot.Row,
-                    RowSpan = subplot.RowSpan,
-                    Controller = PlotFactory.Instance.Create(subplot.Plot)
-                };
-            }
         }
 
         #endregion

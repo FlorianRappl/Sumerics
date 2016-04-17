@@ -55,6 +55,7 @@
     <Compile Include="Models\GridPlotModel.cs" />
     <Compile Include="Models\OxyPlotModel.cs" />
     <Compile Include="Models\SubplotModel.cs" />
+    <Compile Include="Models\SubplotModels.cs" />
     <Compile Include="Models\WpfPlotModel.cs" />
     <Compile Include="Series\ComplexSeries.cs" />
     <Compile Include="PlotFactory.cs" />

@@ -7,19 +7,41 @@
                        mc:Ignorable="d" 
                        d:DesignHeight="300" 
                        d:DesignWidth="300">
+    <local:BasePlotControl.Resources>
+        <local:PlotControlConverter x:Key="plotControlConverter" />
+    </local:BasePlotControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <TextBlock x:Name="Title" 
-                   FontSize="18"
+        <TextBlock FontSize="18"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
+                   Text="{Binding Title}"
                    Grid.Row="0" />
-        
-        <Grid x:Name="Plots" 
-              Grid.Row="1" />
+
+        <ItemsControl ItemsSource="{Binding Models}"
+                      Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid Grid.Row="1"
+                          local:GridHelpers.Columns="{Binding Columns}"
+                          local:GridHelpers.Rows="{Binding Rows}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding Controller, 
+                                    FallbackValue={x:Static local:PlotControlConverter.Default}, 
+                                    Converter={StaticResource plotControlConverter}}"
+                                    Grid.Row="{Binding RowIndex}"
+                                    Grid.RowSpan="{Binding RowSpan}"
+                                    Grid.Column="{Binding ColumnIndex}"
+                                    Grid.ColumnSpan="{Binding ColumnSpan}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </local:BasePlotControl>

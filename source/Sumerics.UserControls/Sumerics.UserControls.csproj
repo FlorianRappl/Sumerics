@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Plots\BasePlotControl.cs" />
     <Compile Include="Plots\ControlFactory.cs" />
+    <Compile Include="Plots\GridHelpers.cs" />
     <Compile Include="Plots\GridPlotControl.xaml.cs">
       <DependentUpon>GridPlotControl.xaml</DependentUpon>
     </Compile>
