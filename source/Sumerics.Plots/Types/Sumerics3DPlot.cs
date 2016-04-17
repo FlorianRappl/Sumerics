@@ -22,9 +22,8 @@
             {
                 CanEditSeries = false,
                 CanToggleGrid = false,
-                XAxis = new Plot3dAxis(),
-                YAxis = new Plot3dAxis(),
-                ZAxis = new Plot3dAxis()
+                IsAxisShown = false,
+                Transformation = new Transform3dModel(),
             };
             _plot = plot;
         }
@@ -44,9 +43,7 @@
 
         protected override void OnCenterPlot()
         {
-            _model.XAxis.Reset();
-            _model.YAxis.Reset();
-            _model.ZAxis.Reset();
+            _model.Transformation.Reset();
         }
 
         protected override void OnToggleGrid()

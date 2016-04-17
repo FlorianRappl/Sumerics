@@ -1,17 +1,19 @@
 ﻿namespace Sumerics.Plots.Models
 {
-    using OxyPlot;
     using System;
 
     public class WpfPlotModel : BasePlotModel
     {
         String _title;
         Boolean _axisShown;
-        Plot3dAxis _xAxis;
-        Plot3dAxis _yAxis;
-        Plot3dAxis _zAxis;
-        Double _thickness;
-        OxyColor _color;
+        Transform3dModel _transform;
+        Object _model;
+
+        public Object Model
+        {
+            get { return _model; }
+            set { _model = value; RaisePropertyChanged(); }
+        }
 
         public String Title
         {
@@ -25,34 +27,10 @@
             set { _axisShown = value; RaisePropertyChanged(); }
         }
 
-        public Plot3dAxis XAxis
+        public Transform3dModel Transformation
         {
-            get { return _xAxis; }
-            set { _xAxis = value; RaisePropertyChanged(); }
-        }
-
-        public Plot3dAxis YAxis
-        {
-            get { return _yAxis; }
-            set { _yAxis = value; RaisePropertyChanged(); }
-        }
-
-        public Plot3dAxis ZAxis
-        {
-            get { return _zAxis; }
-            set { _zAxis = value; RaisePropertyChanged(); }
-        }
-
-        public Double Thickness
-        {
-            get { return _thickness; }
-            set { _thickness = value; RaisePropertyChanged(); }
-        }
-
-        public OxyColor Color
-        {
-            get { return _color; }
-            set { _color = value; RaisePropertyChanged(); }
+            get { return _transform; }
+            set { _transform = value; RaisePropertyChanged(); }
         }
     }
 }

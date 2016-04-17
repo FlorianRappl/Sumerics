@@ -1,5 +1,8 @@
 ﻿namespace Sumerics.Plots
 {
+    using Sumerics.Plots.Models;
+    using System;
+    using System.Linq;
     using YAMP;
 
     sealed class SumericsLinePlot3D : Sumerics3DPlot
@@ -26,60 +29,65 @@
 
         protected override void UpdateSeries()
         {
-            //_control.SetWireframe(false);
-            _model.XAxis.IsLogarithmic = _plot.IsLogX;
-            _model.YAxis.IsLogarithmic = _plot.IsLogY;
-            _model.ZAxis.IsLogarithmic = _plot.IsLogZ;
+            var logx = _plot.IsLogX;
+            var logy = _plot.IsLogY;
+            var logz = _plot.IsLogZ;
+            var modelSeries = new SeriesModel[_plot.Count];
 
             for (var i = 0; i < _plot.Count; i++)
             {
                 var series = _plot[i];
-                _model.Color = series.Color.OxyColorFromString();
-                _model.Thickness = series.LineWidth;
+                var xt = series.Select(m => m.X);
+                var yt = series.Select(m => m.Y);
+                var zt = series.Select(m => m.Z);
 
-                //var xt = series.Select(m => m.X);
+                if (logx)
+                {
+                    xt = xt.Select(m => Math.Log(m));
+                }
 
-                //if (_isLogx)
-                //{
-                //    xt = xt.Select(m => Math.Log(m));
-                //}
+                if (logy)
+                {
+                    yt = yt.Select(m => Math.Log(m));
+                }
 
-                //var x = xt.ToArray();
+                if (logz)
+                {
+                    zt = zt.Select(m => Math.Log(m));
+                }
 
-                //var yt = series.Select(m => m.Y);
-
-                //if (_isLogy)
-                //{
-                //    yt = yt.Select(m => Math.Log(m));
-                //}
-
-                //var y = yt.ToArray();
-
-                //var zt = series.Select(m => m.Z);
-
-                //if (_isLogz)
-                //{
-                //    zt = zt.Select(m => Math.Log(m));
-                //}
-
-                //var z = zt.ToArray();
-
-                //for (var j = 2; j < series.Count; j += 2)
-                //{
-                //    var x1 = x[j - 2];
-                //    var x2 = x[j - 1];
-                //    var x3 = x[j - 0];
-                //    var y1 = y[j - 2];
-                //    var y2 = y[j - 1];
-                //    var y3 = y[j - 0];
-                //    var z1 = z[j - 2];
-                //    var z2 = z[j - 1];
-                //    var z3 = z[j - 0];
-                //    _control.AddWireframeVertex(x1, y1, z1, x2, y2, z2, x3, y3, z3);
-                //}
+                modelSeries[i] = new SeriesModel
+                {
+                    Xs = xt.ToArray(),
+                    Ys = yt.ToArray(),
+                    Zs = zt.ToArray(),
+                    Color = series.Color.OxyColorFromString(),
+                    Thickness = series.LineWidth
+                };
             }
 
-            //_control.SetTransformWireframe(_plot.MinX, _plot.MaxX, _plot.MinY, _plot.MaxY, _plot.MinZ, _plot.MaxZ);
+            _model.Model = new LinePlotModel
+            {
+                XAxes = new Plot3dAxis
+                {
+                    IsLogarithmic = logx,
+                    Minimum = _plot.MinX,
+                    Maximum = _plot.MaxX
+                },
+                YAxes = new Plot3dAxis
+                {
+                    IsLogarithmic = logy,
+                    Minimum = _plot.MinY,
+                    Maximum = _plot.MaxY
+                },
+                ZAxes = new Plot3dAxis
+                {
+                    IsLogarithmic = logz,
+                    Minimum = _plot.MinZ,
+                    Maximum = _plot.MaxZ
+                },
+                Series = modelSeries
+            };
         }
 
         protected override void UpdateProperties()

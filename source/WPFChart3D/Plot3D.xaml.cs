@@ -21,18 +21,18 @@
 
         #region Fields
 
-        TransformMatrix _transformMatrix;
-        Chart3D _3dChart;
-        ViewportRect _selectRect;
-        ScreenSpaceLines3D _wireframes;
-        ScreenSpaceLines3D _axis;
-        Model3D _model3d;
+        readonly TransformMatrix _transformMatrix;
+        readonly ViewportRect _selectRect;
+        readonly ScreenSpaceLines3D _wireframes;
+        readonly ScreenSpaceLines3D _axis;
+        readonly Model3D _model3d;
 
-        ScaleTransform3D _scale;
-        AxisAngleRotation3D _rotate;
+        readonly ScaleTransform3D _scale;
+        readonly AxisAngleRotation3D _rotate;
+
         Vector3D _previousPosition3D;
         Point _origin;
-
+        Chart3D _3dChart;
         Double _xMin;
         Double _xMax;
         Double _yMin;
@@ -62,7 +62,27 @@
             _selectRect = new ViewportRect();
 
             InitializeComponent();
-            ObtainTransforms();
+            var tg = TrackBall.Transform as Transform3DGroup;
+
+            if (tg != null && tg.Children.Count == 2)
+            {
+                _scale = (ScaleTransform3D)tg.Children[0];
+                _rotate = (AxisAngleRotation3D)((RotateTransform3D)tg.Children[1]).Rotation;
+
+                if (TrackBall.Viewport3D != null && TrackBall.Viewport3D.Camera != null)
+                {
+                    if (TrackBall.Viewport3D.Camera.IsFrozen)
+                    {
+                        TrackBall.Viewport3D.Camera = TrackBall.Viewport3D.Camera.Clone();
+                    }
+
+                    if (TrackBall.Viewport3D.Camera.Transform != tg)
+                    {
+                        TrackBall.Viewport3D.Camera.Transform = tg;
+                    }
+                }
+            }
+
             MainViewport.Children.Add(_wireframes);
             MainViewport.Children.Add(_axis);
 
@@ -126,36 +146,6 @@
             control.TitleBlock.Text = (String)e.NewValue;
         }
 
-        public Double WireframeThickness
-        {
-            get { return (Double)GetValue(WireframeThicknessProperty); }
-            set { SetValue(WireframeThicknessProperty, value); }
-        }
-
-        public static readonly DependencyProperty WireframeThicknessProperty =
-            DependencyProperty.Register("WireframeThickness", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnWireframeThicknessChanged));
-
-        static void OnWireframeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            control._wireframes.Thickness = (Double)e.NewValue;
-        }
-
-        public Color WireframeColor
-        {
-            get { return (Color)GetValue(WireframeColorProperty); }
-            set { SetValue(WireframeColorProperty, value); }
-        }
-
-        public static readonly DependencyProperty WireframeColorProperty =
-            DependencyProperty.Register("WireframeColor", typeof(Color), typeof(Plot3D), new PropertyMetadata(OnWireframeColorChanged));
-
-        static void OnWireframeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            control._wireframes.Color = (Color)e.NewValue;
-        }
-
         public Boolean IsAxisShown
         {
             get { return (Boolean)GetValue(IsAxisShownProperty); }
@@ -176,6 +166,66 @@
                 control.ShowAxis();
             }
         }
+
+        public Object Model
+        {
+            get { return (Object)GetValue(ModelProperty); }
+            set { SetValue(ModelProperty, value); }
+        }
+
+        public static readonly DependencyProperty ModelProperty =
+            DependencyProperty.Register("Model", typeof(Object), typeof(Plot3D), new PropertyMetadata(OnModelChanged));
+
+        private static void OnModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //TODO see TODO region
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region TODO
+
+        static void OnWireframeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            control._wireframes.Thickness = (Double)e.NewValue;
+        }
+
+        static void OnWireframeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            control._wireframes.Color = (Color)e.NewValue;
+        }
+
+        //_control.CreateSurface(plot.Nx, plot.Ny);
+        //LOOP {
+        //_control.SetVertex(i, (Single)_plot[0, i].X, (Single)_plot[0, i].Y, (Single)_plot[0, i].Z);
+        //}
+        //_control.SetView((Single)_plot.MinX, (Single)_plot.MaxX, (Single)_plot.MinY, (Single)_plot.MaxY, (Single)_plot.MinZ, (Single)_plot.MaxZ);
+        //_control.SetColors((Single)_plot.MinZ, (Single)_plot.MaxZ, GenerateColors(_plot.ColorPalette, 20));
+        //_control.Publish();
+        //_control.SetWireframe(_plot.IsMesh);
+        //_control.SetSurface(_plot.IsSurf);
+
+        //If Model NAME == LinePlotModel
+        //foreach (var series in Series)
+        //{
+        //for (var j = 2; j < series.Count; j += 2)
+        //{
+        //    var x1 = x[j - 2];
+        //    var x2 = x[j - 1];
+        //    var x3 = x[j - 0];
+        //    var y1 = y[j - 2];
+        //    var y2 = y[j - 1];
+        //    var y3 = y[j - 0];
+        //    var z1 = z[j - 2];
+        //    var z2 = z[j - 1];
+        //    var z3 = z[j - 0];
+        //    _control.AddWireframeVertex(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+        //}
+        //}
+        //_control.SetTransformWireframe();
 
         #endregion
 
@@ -242,11 +292,6 @@
             }
         }
 
-        public Viewport3D Viewport
-        {
-            get { return MainViewport; }
-        }
-
         public void Publish()
         {
             var meshs = ((UniformSurfaceChart3D)_3dChart).GetMeshes();
@@ -270,23 +315,14 @@
             var p1 = new Point3D(x1, y1, z1);
             var p2 = new Point3D(x2, y2, z2);
             var p3 = new Point3D(x3, y3, z3);
+            var space = _wireframes;
 
-            AddWireframeVertex(_wireframes, p1, p2, p3);
-        }
-
-        void AddWireframeVertex(ScreenSpaceLines3D space, Point3D p1, Point3D p2, Point3D p3)
-        {
             space.Points.Add(p1);
             space.Points.Add(p2);
             space.Points.Add(p2);
             space.Points.Add(p3);
             space.Points.Add(p3);
             space.Points.Add(p1);
-        }
-
-        public void AddWireframeVertex(Double x, Double y, Double z)
-        {
-            _wireframes.Points.Add(new Point3D(x, y, z));
         }
 
         void Project(Double xmin, Double xmax, Double ymin, Double ymax, Double zmin, Double zmax)
@@ -298,7 +334,7 @@
             _zMin = zmin;
             _zMax = zmax;
 
-            _transformMatrix.CalculateProjectionMatrix(_xMin, _xMax, _yMin, _yMax, _zMin, _zMax, 0.5);
+            _transformMatrix.CalculateProjectionMatrix(xmin, xmax, ymin, ymax, zmin, zmax, 0.5);
         }
 
         public void SetTransformWireframe(Double xmin, Double xmax, Double ymin, Double ymax, Double zmin, Double zmax)
@@ -332,51 +368,6 @@
             {
                 MainViewport.Children.Remove(_model3d);
             }
-        }
-
-        #endregion
-
-        #region Test Surface
-
-        public void TestSurfacePlot(Int32 nGridNo)
-        {
-            var nXNo = nGridNo;
-            var nYNo = nGridNo;
-            var chart = new UniformSurfaceChart3D();
-            chart.SetGrid(nXNo, nYNo, -100, 100, -100, 100);
-            _3dChart = chart;
-
-            var xC = chart.XCenter();
-            var yC = chart.YCenter();
-            var nVertNo = chart.GetDataNo();
-            var zV = 0f;
-
-            for (var i = 0; i < nVertNo; i++)
-            {
-                var vert = chart[i];
-                var r = 0.15 * Math.Sqrt((vert.X - xC) * (vert.X - xC) + (vert.Y - yC) * (vert.Y - yC));
-                zV = r < 1e-10 ? 1f : (Single)(Math.Sin(r) / r);
-                chart[i].Z = zV;
-            }
-
-            _3dChart.GetDataRange();
-            var zMin = chart.ZMin();
-            var zMax = chart.ZMax();
-
-            for (var i = 0; i < nVertNo; i++)
-            {
-                var vert = chart[i];
-                var h = (vert.Z - zMin) / (zMax - zMin);
-                var color = TextureMapping.PseudoColor(h);
-                chart[i].Color = color;
-            }
-
-            var meshs = chart.GetMeshes();
-            var model3d = new Model3D();
-            var backMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Gray));
-            model3d.UpdateModel(meshs, backMaterial);
-            _transformMatrix.CalculateProjectionMatrix(_3dChart.XMin(), _3dChart.XMax(), _3dChart.YMin(), _3dChart.YMax(), zMin, zMax, 0.5);
-            TransformChart();
         }
 
         #endregion
@@ -493,30 +484,6 @@
             geo.Geometry = cube;
             _axis.MakeWireframe(geo);
             _axis.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
-        }
-
-        void ObtainTransforms()
-        {
-            var tg = TrackBall.Transform as Transform3DGroup;
-
-            if (tg != null && tg.Children.Count == 2)
-            {
-                _scale = (ScaleTransform3D)tg.Children[0];
-                _rotate = (AxisAngleRotation3D)((RotateTransform3D)tg.Children[1]).Rotation;
-
-                if (TrackBall.Viewport3D != null && TrackBall.Viewport3D.Camera != null)
-                {
-                    if (TrackBall.Viewport3D.Camera.IsFrozen)
-                    {
-                        TrackBall.Viewport3D.Camera = TrackBall.Viewport3D.Camera.Clone();
-                    }
-
-                    if (TrackBall.Viewport3D.Camera.Transform != tg)
-                    {
-                        TrackBall.Viewport3D.Camera.Transform = tg;
-                    }
-                }
-            }
         }
 
         void Zoom(Double scale)
