@@ -33,15 +33,17 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <ContentControl Content="{Binding Controller, 
-                                    FallbackValue={x:Static local:PlotControlConverter.Default}, 
-                                    Converter={StaticResource plotControlConverter}}"
-                                    Grid.Row="{Binding RowIndex}"
-                                    Grid.RowSpan="{Binding RowSpan}"
-                                    Grid.Column="{Binding ColumnIndex}"
-                                    Grid.ColumnSpan="{Binding ColumnSpan}"/>
+                    <ContentControl Content="{Binding Controller.Model, Converter={StaticResource plotControlConverter}}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding RowIndex}" />
+                    <Setter Property="Grid.RowSpan" Value="{Binding RowSpan}" />
+                    <Setter Property="Grid.Column" Value="{Binding ColumnIndex}" />
+                    <Setter Property="Grid.ColumnSpan" Value="{Binding ColumnSpan}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
         </ItemsControl>
     </Grid>
 </local:BasePlotControl>

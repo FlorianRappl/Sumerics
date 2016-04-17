@@ -52,9 +52,9 @@
                 var subplot = _plot[i];
                 _model.Models.Add(new SubplotModel
                 {
-                    ColumnIndex = subplot.Column,
+                    ColumnIndex = subplot.Column - 1,
                     ColumnSpan = subplot.ColumnSpan,
-                    RowIndex = subplot.Row,
+                    RowIndex = subplot.Row - 1,
                     RowSpan = subplot.RowSpan,
                     Controller = PlotFactory.Instance.Create(subplot.Plot)
                 });
@@ -74,7 +74,6 @@
 
         protected override void Refresh()
         {
-            //TODO
         }
 
         #endregion

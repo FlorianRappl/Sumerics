@@ -1,11 +1,5 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using System;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
     /// <summary>
     /// Interaction logic for GridPlotControl.xaml
     /// </summary>
@@ -79,52 +73,6 @@
 
                 _subplots[i].RenderToCanvas(c);
                 c.UpdateLayout();
-            }
-        }
-
-        public void RefreshSeries()
-        {
-            _plotGrid.Children.Clear();
-            _subplots.Clear();
-
-            for (var i = 0; i < _plot.Count; i++)
-            {
-                var data = _plot[i];
-                var subplot = PlotFactory.Create(data.Plot);
-                var ctrl = subplot.Content;
-                _plotGrid.Children.Add(ctrl);
-
-                Grid.SetRow(ctrl, data.Row - 1);
-                Grid.SetColumn(ctrl, data.Column - 1);
-                Grid.SetRowSpan(ctrl, data.RowSpan);
-                Grid.SetColumnSpan(ctrl, data.ColumnSpan);
-
-                _subplots.Add(subplot);
-            }
-
-            _oldCount = _plot.Count;
-        }
-
-        public void RefreshProperties()
-        {
-            _plotGrid.RowDefinitions.Clear();
-            _plotGrid.ColumnDefinitions.Clear();
-
-            for (var i = 0; i < _plot.Columns; i++)
-            {
-                _plotGrid.ColumnDefinitions.Add(new ColumnDefinition());
-            }
-
-            for (var i = 0; i < _plot.Rows; i++)
-            {
-                _plotGrid.RowDefinitions.Add(new RowDefinition());
-            }
-
-            _title.Text = _plot.Title;
-
-            if (_oldCount != _plot.Count)
-            {
-                RefreshSeries();
             }
         }
         */
