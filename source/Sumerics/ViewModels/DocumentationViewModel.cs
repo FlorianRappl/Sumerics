@@ -25,6 +25,7 @@
         readonly ICommand _back;
         readonly ICommand _more;
         readonly WebBrowser _browser;
+        readonly IConsole _console;
         String _searchText;
         HelpSection _topic;
         String _breadCrumb;
@@ -39,7 +40,7 @@
 
 		#region ctor
 
-        public DocumentationViewModel(Documentation documentation, ICommandFactory commands)
+        public DocumentationViewModel(Documentation documentation, ICommandFactory commands, IConsole console)
 		{
             _searchText = String.Empty;
             _breadCrumb = BuildBreadCrumb(Messages.Documentation, Messages.Overview);
@@ -48,6 +49,7 @@
             _results = new ObservableCollection<HelpSection>();
             _documentation = documentation;
             _commands = commands;
+            _console = console;
             _browser = new WebBrowser
             {
                 Visibility = Visibility.Hidden,
@@ -340,14 +342,14 @@
             return p;
         }
 
-        static Paragraph GetExamples(List<HelpExample> examples)
+        Paragraph GetExamples(List<HelpExample> examples)
         {
             var p = new Paragraph();
             InsertIntoParagraph(p, Messages.Examples, examples);
             return p;
         }
 
-        static void InsertIntoParagraph(Paragraph p, String title, List<HelpExample> examples)
+        void InsertIntoParagraph(Paragraph p, String title, List<HelpExample> examples)
         {
             p.Inlines.Add(new Run(title)
             {
@@ -373,7 +375,7 @@
             p.Inlines.Add(new LineBreak());
         }
 
-        static void InsertIntoParagraph(Paragraph p, HelpExample example, Int32 nr)
+        void InsertIntoParagraph(Paragraph p, HelpExample example, Int32 nr)
         {
             p.Inlines.Add(new Run(Messages.CopyCommand)
             {
@@ -382,6 +384,13 @@
                 Cursor = Cursors.Hand
             });
             p.Inlines.LastInline.MouseDown += (sndr, evnt) => Clipboard.SetText(example.Example);
+            p.Inlines.Add(new Run(Messages.ExecuteCommand)
+            {
+                Foreground = new SolidColorBrush(Colors.LightGray),
+                FontSize = 10.0,
+                Cursor = Cursors.Hand
+            });
+            p.Inlines.LastInline.MouseDown += (sndr, evnt) => _console.Execute(example.Example);
             p.Inlines.Add(new Run(example.Example)
             {
                 Foreground = new SolidColorBrush(Colors.Green)

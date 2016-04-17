@@ -25,7 +25,8 @@
             {
                 var kernel = _app.Get<IKernel>() as Kernel;
                 var commands = _app.Get<ICommandFactory>();
-                var context = new DocumentationViewModel(kernel.Help, commands);
+                var console = _app.Get<IConsole>();
+                var context = new DocumentationViewModel(kernel.Help, commands, console);
                 window = WindowFactory.Instance.Create(context);
             }
             else

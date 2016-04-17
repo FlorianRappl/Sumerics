@@ -322,7 +322,7 @@ namespace Sumerics.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ( copy ).
+        ///   Looks up a localized string similar to [copy].
         /// </summary>
         public static string CopyCommand {
             get {
@@ -678,6 +678,15 @@ namespace Sumerics.Resources {
         public static string Exception {
             get {
                 return ResourceManager.GetString("Exception", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to [run].
+        /// </summary>
+        public static string ExecuteCommand {
+            get {
+                return ResourceManager.GetString("ExecuteCommand", resourceCulture);
             }
         }
         

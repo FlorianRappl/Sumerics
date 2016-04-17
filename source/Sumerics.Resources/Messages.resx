@@ -434,7 +434,7 @@
     <value>Arguments</value>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>( copy )</value>
+    <value>[copy]</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>Data</value>
@@ -693,5 +693,8 @@
   </data>
   <data name="LanguageRestart" xml:space="preserve">
     <value>Changing the language requires a restart of the application to take effect.</value>
+  </data>
+  <data name="ExecuteCommand" xml:space="preserve">
+    <value>[run]</value>
   </data>
 </root>
