@@ -487,8 +487,8 @@
 
         void Execute()
         {
-            var command = CompileCommand;
-            var parameter = CompileCommandParameter;
+            var command = ExecuteCommand;
+            var parameter = ExecuteCommandParameter;
 
             if (command != null && command.CanExecute(parameter))
             {

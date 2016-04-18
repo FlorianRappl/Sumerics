@@ -157,7 +157,7 @@
 
         public void Execute()
         {
-            if (_currentExecution == null || _currentExecution.Running)
+            if (_currentExecution == null || !_currentExecution.Running)
             {
                 _awaiting = true;
                 var message = String.Format(Messages.EvaluateFile, FileName);
