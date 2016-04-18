@@ -7,6 +7,8 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Windows;
+    using System.Windows.Data;
     using YAMP;
 
     /// <summary>
@@ -48,9 +50,8 @@
                 Items.Add(item);
             }
 
-            Control = new EditorControl 
+            _ed = new EditorControl 
             { 
-                DataContext = this,
                 OpenFileCommand = _parent.Open,
                 NewFileCommand = _parent.Create,
                 AutoCompleteItems = Items,
@@ -61,6 +62,12 @@
                 ExecuteCommand = new RelayCommand(_ => Execute()),
                 MathConverter = _parent.Service.ConvertToYamp,
             };
+
+            var binding = new Binding();
+            binding.Path = new PropertyPath("Changed");
+            binding.Source = this;
+            binding.Mode = BindingMode.TwoWay;
+            BindingOperations.SetBinding(_ed, EditorControl.ChangedProperty, binding);
         }
 
         public EditorFileViewModel(EditorViewModel parent, Kernel kernel, String path)
@@ -129,8 +136,6 @@
                         return;
                     }
                 }
-
-                Changed = false;
             }
 
             _kernel.RunningQueriesChanged -= OnRunningQueriesChanged;
@@ -242,16 +247,7 @@
         public Boolean Changed
         {
             get { return _changed; }
-            set
-            {
-                if (value && _originalText == _ed.Text)
-                {
-                    value = false;
-                }
-
-                _changed = value;
-                RaisePropertyChanged();
-            }
+            set { _changed = value; RaisePropertyChanged(); }
         }
 
         public String Text

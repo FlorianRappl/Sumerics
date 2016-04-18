@@ -67,6 +67,7 @@
 
             Editor.UndoRedoStateChanged += UndoRedoStateChanged;
             Editor.SelectionChanged += SelectionChanged;
+            Editor.TextChanged += ContentChanged;
             Editor.TextChangedDelayed += ContentChangedDelayed;
 
             Editor.ToolTipNeeded += ShowToolTip;
@@ -373,8 +374,6 @@
 
         void SaveButtonClicked(Object sender, RoutedEventArgs e)
         {
-            Editor.IsChanged = false;
-
             var command = SaveCommand;
             var parameter = SaveCommandParameter;
 
@@ -386,8 +385,6 @@
 
         void SaveAsButtonClick(Object sender, RoutedEventArgs e)
         {
-            Editor.IsChanged = false;
-
             var command = SaveAsCommand;
             var parameter = SaveAsCommandParameter;
 
@@ -397,10 +394,13 @@
             }
         }
 
-        void ContentChangedDelayed(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        void ContentChanged(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
             Changed = Editor.IsChanged;
+        }
 
+        void ContentChangedDelayed(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
+        {
             var command = CompileCommand;
             var parameter = CompileCommandParameter;
 
