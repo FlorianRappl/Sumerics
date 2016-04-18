@@ -1,6 +1,5 @@
-﻿namespace Sumerics.Plots.Models
+﻿namespace WPFChart3D.Data
 {
-    using OxyPlot;
     using System;
 
     public class SeriesModel
@@ -11,7 +10,7 @@
 
         public Double[] Zs { get; set; }
 
-        public OxyColor Color { get; set; }
+        public WpfColor Color { get; set; }
 
         public Double Thickness { get; set; }
     }

@@ -93,20 +93,6 @@
 
         #endregion
 
-        #region Properties
-
-        public ScaleTransform3D ScaleTransform
-        {
-            get { return _scale; }
-        }
-
-        public AxisAngleRotation3D RotateTransform
-        {
-            get { return _rotate; }
-        }
-
-        #endregion
-
         #region Mouse Wheel
 
         void MouseWheelRotated(Object sender, MouseWheelEventArgs e)
@@ -180,6 +166,121 @@
             }
         }
 
+        public Double ScaleX
+        {
+            get { return (Double)GetValue(ScaleXProperty); }
+            set { SetValue(ScaleXProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScaleXProperty =
+            DependencyProperty.Register("ScaleX", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleXChanged));
+
+        static void OnScaleXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            control._scale.ScaleX = value;
+        }
+
+        public Double ScaleY
+        {
+            get { return (Double)GetValue(ScaleYProperty); }
+            set { SetValue(ScaleYProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScaleYProperty =
+            DependencyProperty.Register("ScaleY", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleYChanged));
+
+        static void OnScaleYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            control._scale.ScaleY = value;
+        }
+
+        public Double ScaleZ
+        {
+            get { return (Double)GetValue(ScaleZProperty); }
+            set { SetValue(ScaleZProperty, value); }
+        }
+
+        public static readonly DependencyProperty ScaleZProperty =
+            DependencyProperty.Register("ScaleZ", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleZChanged));
+
+        static void OnScaleZChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            control._scale.ScaleZ = value;
+        }
+
+        public Double RotateX
+        {
+            get { return (Double)GetValue(RotateXProperty); }
+            set { SetValue(RotateXProperty, value); }
+        }
+
+        public static readonly DependencyProperty RotateXProperty =
+            DependencyProperty.Register("RotateX", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateXChanged));
+
+        static void OnRotateXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            var axis = control._rotate.Axis;
+            control._rotate.Axis = new Vector3D(value, axis.Y, axis.Z);
+        }
+
+        public Double RotateY
+        {
+            get { return (Double)GetValue(RotateYProperty); }
+            set { SetValue(RotateYProperty, value); }
+        }
+
+        public static readonly DependencyProperty RotateYProperty =
+            DependencyProperty.Register("RotateY", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateYChanged));
+
+        static void OnRotateYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            var axis = control._rotate.Axis;
+            control._rotate.Axis = new Vector3D(axis.X, value, axis.Z);
+        }
+
+        public Double RotateZ
+        {
+            get { return (Double)GetValue(RotateZProperty); }
+            set { SetValue(RotateZProperty, value); }
+        }
+
+        public static readonly DependencyProperty RotateZProperty =
+            DependencyProperty.Register("RotateZ", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateZChanged));
+
+        static void OnRotateZChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            var axis = control._rotate.Axis;
+            control._rotate.Axis = new Vector3D(axis.X, axis.Y, value);
+        }
+
+        public Double RotateAngle
+        {
+            get { return (Double)GetValue(RotateAngleProperty); }
+            set { SetValue(RotateAngleProperty, value); }
+        }
+
+        public static readonly DependencyProperty RotateAngleProperty =
+            DependencyProperty.Register("RotateAngle", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateAngleChanged));
+
+        static void OnRotateAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (Plot3D)d;
+            var value = (Double)e.NewValue;
+            control._rotate.Angle = value;
+        }
+
         public Object Model
         {
             get { return (Object)GetValue(ModelProperty); }
@@ -189,7 +290,7 @@
         public static readonly DependencyProperty ModelProperty =
             DependencyProperty.Register("Model", typeof(Object), typeof(Plot3D), new PropertyMetadata(OnModelChanged));
 
-        private static void OnModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             //TODO see TODO region
             throw new NotImplementedException();
@@ -243,15 +344,6 @@
         #endregion
 
         #region Plotting
-
-        public void ResetTransformation()
-        {
-            _scale.ScaleX = 1;
-            _scale.ScaleY = 1;
-            _scale.ScaleZ = 1;
-            _rotate.Axis = new Vector3D(0, 0, 1);
-            _rotate.Angle = 0;
-        }
 
         public void CreateSurface(Int32 nx, Int32 ny)
         {

@@ -1,4 +1,4 @@
-﻿namespace Sumerics.Plots.Models
+﻿namespace WPFChart3D.Data
 {
     public class LinePlotModel
     {

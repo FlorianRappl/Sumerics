@@ -106,7 +106,7 @@
 		{
 			series.StrokeThickness = points.LineWidth;
 			series.Title = points.Label;
-			series.ContourColors = _plot.ColorPalette.GenerateColors(_plot.Levels.Length);
+			series.ContourColors = _plot.ColorPalette.GenerateOxyColors(_plot.Levels.Length);
 
 			if (_plot.ShowLevel)
 			{

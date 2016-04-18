@@ -1,7 +1,7 @@
 ﻿namespace Sumerics.Plots
 {
-    using Sumerics.Plots.Models;
     using System;
+    using WPFChart3D.Data;
     using YAMP;
 
     sealed class SumericsSurfacePlot : Sumerics3DPlot
@@ -68,10 +68,10 @@
                     Xs = x,
                     Ys = y,
                     Zs = z,
-                    Color = _plot.Color.OxyColorFromString(),
+                    Color = _plot.Color.WpfColorFromString(),
                     Thickness = _plot.MeshThickness
                 },
-                Colors = _plot.ColorPalette.GenerateColors(20)
+                Colors = _plot.ColorPalette.GenerateWpfColors(20)
             };
         }
 

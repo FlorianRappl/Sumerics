@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Plots", "Sumerics.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sumerics.Resources", "Sumerics.Resources\Sumerics.Resources.csproj", "{510F4806-4872-46C9-B92A-4562B2E52481}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFChart3D.Data", "WPFChart3D.Data\WPFChart3D.Data.csproj", "{EB4A43B5-D815-465F-9042-54B6347D7D51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AppUp|Any CPU = AppUp|Any CPU
@@ -241,6 +243,18 @@ Global
 		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|Any CPU.Build.0 = Release|Any CPU
 		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|x64.ActiveCfg = Release|Any CPU
 		{510F4806-4872-46C9-B92A-4562B2E52481}.Release|x86.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.AppUp|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.AppUp|Any CPU.Build.0 = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.AppUp|x64.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.AppUp|x86.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Release|x64.ActiveCfg = Release|Any CPU
+		{EB4A43B5-D815-465F-9042-54B6347D7D51}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

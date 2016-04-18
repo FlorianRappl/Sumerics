@@ -10,5 +10,12 @@
                        d:DesignWidth="300">
     <p:Plot3D Title="{Binding Title}"
               IsAxisShown="{Binding IsAxisShown}"
-              Model="{Binding Model}" />
+              Model="{Binding Model}"
+              ScaleX="{Binding Transformation.ScaleX}"
+              ScaleY="{Binding Transformation.ScaleY}"
+              ScaleZ="{Binding Transformation.ScaleZ}"
+              RotateX="{Binding Transformation.RotateX}"
+              RotateY="{Binding Transformation.RotateY}"
+              RotateZ="{Binding Transformation.RotateZ}"
+              RotateAngle="{Binding Transformation.Angle}" />
 </local:BasePlotControl>

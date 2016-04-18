@@ -37,7 +37,7 @@
         protected override void UpdateCustomProperties()
         {
             var model = _model.Model;
-            var colors = _plot.ColorPalette.GenerateColors(50);
+            var colors = _plot.ColorPalette.GenerateOxyColors(50);
 
             model.Axes[0].Title = _plot.XLabel;
             model.Axes[1].Title = _plot.YLabel;

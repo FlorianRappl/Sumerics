@@ -144,6 +144,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WPFChart3D.Data\WPFChart3D.Data.csproj">
+      <Project>{eb4a43b5-d815-465f-9042-54b6347d7d51}</Project>
+      <Name>WPFChart3D.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPFTools3D\WPFTools3D.csproj">
       <Project>{5f603892-de40-4246-a969-1c6717afe35d}</Project>
       <Name>WPFTools3D</Name>

@@ -53,15 +53,11 @@
     <Compile Include="IPlotController.cs" />
     <Compile Include="Models\BasePlotModel.cs" />
     <Compile Include="Models\GridPlotModel.cs" />
-    <Compile Include="Models\LinePlotModel.cs" />
     <Compile Include="Models\LiveModel.cs" />
     <Compile Include="Models\OxyPlotModel.cs" />
-    <Compile Include="Models\Plot3dAxis.cs" />
     <Compile Include="Models\SubplotModel.cs" />
     <Compile Include="Models\SubplotModels.cs" />
-    <Compile Include="Models\SurfacePlotModel.cs" />
     <Compile Include="Models\Transform3dModel.cs" />
-    <Compile Include="Models\SeriesModel.cs" />
     <Compile Include="Models\WpfPlotModel.cs" />
     <Compile Include="Series\ComplexSeries.cs" />
     <Compile Include="PlotFactory.cs" />
@@ -87,6 +83,10 @@
     <ProjectReference Include="..\Sumerics.Common\Sumerics.Common.csproj">
       <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
       <Name>Sumerics.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WPFChart3D.Data\WPFChart3D.Data.csproj">
+      <Project>{eb4a43b5-d815-465f-9042-54b6347d7d51}</Project>
+      <Name>WPFChart3D.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

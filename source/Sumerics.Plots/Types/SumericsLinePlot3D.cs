@@ -1,8 +1,8 @@
 ﻿namespace Sumerics.Plots
 {
-    using Sumerics.Plots.Models;
     using System;
     using System.Linq;
+    using WPFChart3D.Data;
     using YAMP;
 
     sealed class SumericsLinePlot3D : Sumerics3DPlot
@@ -61,7 +61,7 @@
                     Xs = xt.ToArray(),
                     Ys = yt.ToArray(),
                     Zs = zt.ToArray(),
-                    Color = series.Color.OxyColorFromString(),
+                    Color = series.Color.WpfColorFromString(),
                     Thickness = series.LineWidth
                 };
             }

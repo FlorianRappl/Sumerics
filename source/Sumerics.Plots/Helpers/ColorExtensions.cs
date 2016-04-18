@@ -3,10 +3,23 @@
     using OxyPlot;
     using System;
     using System.Globalization;
+    using WPFChart3D.Data;
     using YAMP;
 
     static class ColorExtensions
     {
+        public static WpfColor WpfColorFromString(this String color)
+        {
+            var oxy = color.OxyColorFromString();
+            return new WpfColor
+            {
+                A = oxy.A,
+                R = oxy.R,
+                G = oxy.G,
+                B = oxy.B
+            };
+        }
+
         public static OxyColor OxyColorFromString(this String color)
         {
             var value = 0u;
@@ -79,7 +92,27 @@
             return OxyColors.White;
         }
 
-        public static OxyColor[] GenerateColors(this ColorPalettes palette, Int32 length)
+        public static WpfColor[] GenerateWpfColors(this ColorPalettes palette, Int32 length)
+        {
+            var colors = palette.GenerateOxyColors(length);
+            var transformed = new WpfColor[colors.Length];
+
+            for (int i = 0; i < colors.Length; i++)
+            {
+                var color = colors[i];
+                transformed[i] = new WpfColor
+                {
+                    A = color.A,
+                    R = color.R,
+                    G = color.G,
+                    B = color.B,
+                };
+            }
+
+            return transformed;
+        }
+
+        public static OxyColor[] GenerateOxyColors(this ColorPalettes palette, Int32 length)
         {
             var colors = new OxyColor[length];
             var args = new Object[] { length };
