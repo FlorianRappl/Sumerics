@@ -6,6 +6,7 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
+    using WPFChart3D.Data;
     using WPFTools3D;
 
     /// <summary>
@@ -292,110 +293,52 @@
 
         static void OnModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            //TODO see TODO region
-            throw new NotImplementedException();
+            var control = (Plot3D)d;
+            var value = e.NewValue;
+
+            if (value is SurfacePlotModel)
+            {
+                control.Apply((SurfacePlotModel)value);
+            }
+            else if (value is LinePlotModel)
+            {
+                control.Apply((LinePlotModel)value);
+            }
         }
 
         #endregion
 
-        #region TODO
+        #region Apply Model
 
-        static void OnWireframeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        void Apply(SurfacePlotModel model)
         {
-            var control = (Plot3D)d;
-            control._wireframes.Thickness = (Double)e.NewValue;
-        }
-
-        static void OnWireframeColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            control._wireframes.Color = (Color)e.NewValue;
-        }
-
-        //_control.CreateSurface(plot.Nx, plot.Ny);
-        //LOOP {
-        //_control.SetVertex(i, (Single)_plot[0, i].X, (Single)_plot[0, i].Y, (Single)_plot[0, i].Z);
-        //}
-        //_control.SetView((Single)_plot.MinX, (Single)_plot.MaxX, (Single)_plot.MinY, (Single)_plot.MaxY, (Single)_plot.MinZ, (Single)_plot.MaxZ);
-        //_control.SetColors((Single)_plot.MinZ, (Single)_plot.MaxZ, GenerateColors(_plot.ColorPalette, 20));
-        //_control.Publish();
-        //_control.SetWireframe(_plot.IsMesh);
-        //_control.SetSurface(_plot.IsSurf);
-
-        //If Model NAME == LinePlotModel
-        //foreach (var series in Series)
-        //{
-        //for (var j = 2; j < series.Count; j += 2)
-        //{
-        //    var x1 = x[j - 2];
-        //    var x2 = x[j - 1];
-        //    var x3 = x[j - 0];
-        //    var y1 = y[j - 2];
-        //    var y2 = y[j - 1];
-        //    var y3 = y[j - 0];
-        //    var z1 = z[j - 2];
-        //    var z2 = z[j - 1];
-        //    var z3 = z[j - 0];
-        //    _control.AddWireframeVertex(x1, y1, z1, x2, y2, z2, x3, y3, z3);
-        //}
-        //}
-        //_control.SetTransformWireframe();
-
-        #endregion
-
-        #region Plotting
-
-        public void CreateSurface(Int32 nx, Int32 ny)
-        {
+            var nx = model.Nx;
+            var ny = model.Ny;
             var surface = new UniformSurfaceChart3D();
             _3dChart = surface;
             _3dChart.SetDataNo(nx * ny);
             surface.SetGrid(nx, ny);
-        }
+            _wireframes.Thickness = model.Data.Thickness;
+            _wireframes.Color = model.Data.Color.Convert();
 
-        public void SetVertex(Int32 i, Single x, Single y, Single z)
-        {
-            _3dChart[i] = new Vertex3D
+            var x = model.Data.Xs;
+            var y = model.Data.Ys;
+            var z = model.Data.Zs;
+            var length = x.Length;
+
+            for (int i = 0; i < length; i++)
             {
-                X = x,
-                Y = y,
-                Z = z
-            };
-        }
-
-        public void SetView(Single xmin, Single xmax, Single ymin, Single ymax, Single zmin, Single zmax)
-        {
-            _3dChart.SetDataRange(xmin, xmax, ymin, ymax, zmin, zmax);
-        }
-
-        public void SetColors(Single zmin, Single zmax)
-        {
-            var nv = _3dChart.GetDataNo();
-
-            for (var i = 0; i < nv; i++)
-            {
-                var vert = _3dChart[i];
-                var h = (vert.Z - zmin) / (zmax - zmin);
-                var color = TextureMapping.PseudoColor(h);
-                _3dChart[i].Color = color;
+                _3dChart[i] = new Vertex3D
+                {
+                    X = (Single)x[i],
+                    Y = (Single)y[i], 
+                    Z = (Single)z[i]
+                };
             }
-        }
 
-        public void SetColors(Single zmin, Single zmax, Color[] colors)
-        {
-            var nv = _3dChart.GetDataNo();
+            SetView(model.XAxis, model.YAxis, model.ZAxis);
+            SetColors(model.ZAxis, model.Colors);
 
-            for (var i = 0; i < nv; i++)
-            {
-                var vert = _3dChart[i];
-                var h = (vert.Z - zmin) / (zmax - zmin);
-                var index = (Int32)Math.Min(Math.Floor(h * colors.Length), colors.Length - 1);
-                _3dChart[i].Color = colors[index];
-            }
-        }
-
-        public void Publish()
-        {
             var meshs = ((UniformSurfaceChart3D)_3dChart).GetMeshes();
 
             var backMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Gray));
@@ -408,46 +351,10 @@
             var zMin = _3dChart.ZMin();
             var zMax = _3dChart.ZMax();
 
-            Project(xMin, xMax, yMin, yMax, zMin, zMax);
+            Project(model.XAxis, model.YAxis, model.ZAxis);
             TransformChart();
-        }
 
-        public void AddWireframeVertex(Double x1, Double y1, Double z1, Double x2, Double y2, Double z2, Double x3, Double y3, Double z3)
-        {
-            var p1 = new Point3D(x1, y1, z1);
-            var p2 = new Point3D(x2, y2, z2);
-            var p3 = new Point3D(x3, y3, z3);
-            var space = _wireframes;
-
-            space.Points.Add(p1);
-            space.Points.Add(p2);
-            space.Points.Add(p2);
-            space.Points.Add(p3);
-            space.Points.Add(p3);
-            space.Points.Add(p1);
-        }
-
-        void Project(Double xmin, Double xmax, Double ymin, Double ymax, Double zmin, Double zmax)
-        {
-            _xMin = xmin;
-            _xMax = xmax;
-            _yMin = ymin;
-            _yMax = ymax;
-            _zMin = zmin;
-            _zMax = zmax;
-
-            _transformMatrix.CalculateProjectionMatrix(xmin, xmax, ymin, ymax, zmin, zmax, 0.5);
-        }
-
-        public void SetTransformWireframe(Double xmin, Double xmax, Double ymin, Double ymax, Double zmin, Double zmax)
-        {
-            Project(xmin, xmax, ymin, ymax, zmin, zmax);
-            _wireframes.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
-        }
-
-        public void SetWireframe(Boolean status)
-        {
-            if (status)
+            if (model.IsWireframeShown)
             {
                 _wireframes.MakeWireframe(_model3d.Content);
             }
@@ -455,26 +362,82 @@
             {
                 _wireframes.Points.Clear();
             }
-        }
 
-        public void SetSurface(Boolean status)
-        {
-            if (status)
-            {
-                if (!MainViewport.Children.Contains(_model3d))
-                {
-                    MainViewport.Children.Add(_model3d);
-                }
-            }
-            else
+            if (!model.IsSurfaceShown)
             {
                 MainViewport.Children.Remove(_model3d);
             }
+            else if (!MainViewport.Children.Contains(_model3d))
+            {
+                MainViewport.Children.Add(_model3d);
+            }
+        }
+
+        void Apply(LinePlotModel model)
+        {
+            foreach (var series in model.Series)
+            {
+                var x = series.Xs;
+                var y = series.Ys;
+                var z = series.Zs;
+                var length = x.Length;
+                _wireframes.Thickness = series.Thickness;
+                _wireframes.Color = series.Color.Convert();
+
+                for (var j = 2; j < length; j += 2)
+                {
+                    var p1 = new Point3D(x[j - 2], y[j - 2], z[j - 2]);
+                    var p2 = new Point3D(x[j - 1], y[j - 1], z[j - 1]);
+                    var p3 = new Point3D(x[j - 0], y[j - 0], z[j - 0]);
+
+                    _wireframes.Points.Add(p1);
+                    _wireframes.Points.Add(p2);
+                    _wireframes.Points.Add(p2);
+                    _wireframes.Points.Add(p3);
+                    _wireframes.Points.Add(p3);
+                    _wireframes.Points.Add(p1);
+                }
+            }
+
+            Project(model.XAxes, model.YAxes, model.ZAxes);
+            _wireframes.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
         }
 
         #endregion
 
         #region Helper
+
+        void SetColors(Plot3dAxis axes, WpfColor[] colors)
+        {
+            var nv = _3dChart.GetDataNo();
+            var offset = axes.Minimum;
+            var norm = axes.Maximum - offset;
+
+            for (var i = 0; i < nv; i++)
+            {
+                var vert = _3dChart[i];
+                var h = (vert.Z - offset) / norm;
+                var index = Math.Max(Math.Min((Int32)Math.Floor(h * colors.Length), colors.Length - 1), 0);
+                _3dChart[i].Color = colors[index].Convert();
+            }
+        }
+
+        void Project(Plot3dAxis xAxes, Plot3dAxis yAxes, Plot3dAxis zAxes)
+        {
+            _xMin = xAxes.Minimum;
+            _xMax = xAxes.Maximum;
+            _yMin = yAxes.Minimum;
+            _yMax = yAxes.Maximum;
+            _zMin = zAxes.Minimum;
+            _zMax = zAxes.Maximum;
+
+            _transformMatrix.CalculateProjectionMatrix(_xMin, _xMax, _yMin, _yMax, _zMin, _zMax, 0.5);
+        }
+
+        void SetView(Plot3dAxis xAxes, Plot3dAxis yAxes, Plot3dAxis zAxes)
+        {
+            _3dChart.SetDataRange((Single)xAxes.Minimum, (Single)xAxes.Maximum, (Single)yAxes.Minimum, (Single)yAxes.Maximum, (Single)zAxes.Minimum, (Single)zAxes.Maximum);
+        }
 
         void ShowAxis()
         {

@@ -21,7 +21,7 @@
             _model = new WpfPlotModel
             {
                 CanEditSeries = false,
-                CanToggleGrid = false,
+                CanToggleGrid = true,
                 IsAxisShown = false,
                 Transformation = new Transform3dModel(),
             };
