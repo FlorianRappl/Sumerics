@@ -4,6 +4,7 @@
     using Sumerics.Resources;
     using System;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -209,7 +210,7 @@
         }
 
         public static readonly DependencyProperty CompileCommandParameterProperty =
-            DependencyProperty.Register("CompileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(false));
+            DependencyProperty.Register("CompileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
 
         public ICommand ExecuteCommand
         {
@@ -264,21 +265,37 @@
 
         public static readonly DependencyProperty OpenFileCommandParameterProperty =
             DependencyProperty.Register("OpenFileCommandParameter", typeof(Object), typeof(EditorControl), new PropertyMetadata(null));
-        
-        #endregion
 
-        #region Properties
-
-        public String Text
+        public Boolean IsActive
         {
-            get { return Editor.Text; }
-            set
+            get { return (Boolean)GetValue(IsActiveProperty); }
+            set { SetValue(IsActiveProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsActiveProperty =
+            DependencyProperty.Register("IsActive", typeof(Boolean), typeof(EditorControl), new PropertyMetadata(OnActivated));
+
+        static async void OnActivated(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as EditorControl;
+            var value = (Boolean)e.NewValue;
+
+            if (ctrl != null && value)
             {
-                Editor.Text = value;
-                Editor.IsChanged = false;
+                await Task.Delay(100);
+                ctrl.SetFocus();
             }
         }
 
+        public String Text
+        {
+            get { return (String)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(String), typeof(EditorControl), new PropertyMetadata(""));
+        
         #endregion
 
         #region Events
@@ -330,7 +347,7 @@
             else if (e.KeyCode == System.Windows.Forms.Keys.N && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
                 var command = NewFileCommand;
-                var parameter = NewFileCommandParameter;
+                var parameter = NewFileCommandParameter ?? this;
 
                 if (command != null && command.CanExecute(parameter))
                 {
@@ -340,7 +357,7 @@
             else if (e.KeyCode == System.Windows.Forms.Keys.O && e.Modifiers == System.Windows.Forms.Keys.Control)
             {
                 var command = OpenFileCommand;
-                var parameter = OpenFileCommandParameter;
+                var parameter = OpenFileCommandParameter ?? this;
 
                 if (command != null && command.CanExecute(parameter))
                 {
@@ -364,7 +381,7 @@
         void CloseButtonClicked(Object sender, RoutedEventArgs e)
         {
             var command = CloseCommand;
-            var parameter = CloseCommandParameter;
+            var parameter = CloseCommandParameter ?? this;
 
             if (command != null && command.CanExecute(parameter))
             {
@@ -375,7 +392,7 @@
         void SaveButtonClicked(Object sender, RoutedEventArgs e)
         {
             var command = SaveCommand;
-            var parameter = SaveCommandParameter;
+            var parameter = SaveCommandParameter ?? this;
 
             if (command != null && command.CanExecute(parameter))
             {
@@ -386,7 +403,7 @@
         void SaveAsButtonClick(Object sender, RoutedEventArgs e)
         {
             var command = SaveAsCommand;
-            var parameter = SaveAsCommandParameter;
+            var parameter = SaveAsCommandParameter ?? this;
 
             if (command != null && command.CanExecute(parameter))
             {
@@ -397,12 +414,13 @@
         void ContentChanged(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
             Changed = Editor.IsChanged;
+            Text = Editor.Text;
         }
 
         void ContentChangedDelayed(Object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
             var command = CompileCommand;
-            var parameter = CompileCommandParameter;
+            var parameter = CompileCommandParameter ?? this;
 
             if (command != null && command.CanExecute(parameter))
             {
@@ -462,6 +480,12 @@
 
         #region Methods
 
+        void SetFocus()
+        {
+            Host.Focus();
+            Editor.Focus();
+        }
+
         void InsertText(String obj)
         {
             Editor.InsertText(obj);
@@ -479,16 +503,10 @@
             Editor.ClearSelected();
         }
 
-        public void SetFocus()
-        {
-            Host.Focus();
-            Editor.Focus();
-        }
-
         void Execute()
         {
             var command = ExecuteCommand;
-            var parameter = ExecuteCommandParameter;
+            var parameter = ExecuteCommandParameter ?? this;
 
             if (command != null && command.CanExecute(parameter))
             {

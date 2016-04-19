@@ -165,7 +165,7 @@
                 {
                     if (Files[i].Changed)
                     {
-                        Files[i].Save();
+                        Files[i].Save.Execute(null);
                     }
                 }
 

@@ -434,6 +434,10 @@
       <Project>{1109e5ef-0473-46d7-9ff9-b686107ea5b7}</Project>
       <Name>Sumerics.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sumerics.Console\Sumerics.Console.csproj">
+      <Project>{6dd14a85-ccfc-4774-bd26-0f5772512319}</Project>
+      <Name>Sumerics.Console</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sumerics.MathInput\Sumerics.MathInput.csproj">
       <Project>{42f72d64-3415-4424-a8c4-9fb906e889cc}</Project>
       <Name>Sumerics.MathInput</Name>

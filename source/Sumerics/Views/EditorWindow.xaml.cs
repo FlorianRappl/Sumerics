@@ -3,7 +3,7 @@
     using MahApps.Metro.Controls;
     using Sumerics.ViewModels;
     using System;
-    using System.Threading.Tasks;
+    using System.Linq;
     using System.Windows.Controls;
 
     /// <summary>
@@ -25,24 +25,14 @@
             };
         }
 
-        async void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)
+        void SelectedTabChanged(Object sender, SelectionChangedEventArgs e)
         {
             var tabs = sender as TabControl;
+            var selected = tabs.SelectedItem;
 
-            if (tabs != null)
+            foreach (var tab in tabs.Items.OfType<EditorFileViewModel>())
             {
-                if (tabs.SelectedItem != null)
-                {
-                    var editor = tabs.SelectedItem as EditorFileViewModel;
-
-                    //Again we need to hack it...
-                    //For explanations see MainWindow codebehind.
-                    if (editor != null)
-                    {
-                        await Task.Delay(100);
-                        editor.Control.SetFocus();
-                    }
-                }
+                tab.IsSelected = Object.ReferenceEquals(selected, tab);
             }
         }
     }

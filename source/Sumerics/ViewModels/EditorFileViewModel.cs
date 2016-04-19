@@ -9,6 +9,7 @@
     using System.IO;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Input;
     using YAMP;
 
     /// <summary>
@@ -23,12 +24,17 @@
         readonly List<AutocompleteItem> _variableItems;
         readonly ObservableCollection<AutocompleteItem> _items;
         readonly Kernel _kernel;
+        readonly RelayCommand _close;
+        readonly RelayCommand _saveAs;
+        readonly RelayCommand _save;
+        readonly RelayCommand _compile;
+        readonly RelayCommand _execute;
 
+        String _text;
         String _path;
+        Boolean _selected;
         Boolean _awaiting;
         Boolean _changed;
-        EditorControl _ed;
-        String _originalText;
         QueryResultViewModel _currentExecution;
 
         #endregion
@@ -50,42 +56,114 @@
                 Items.Add(item);
             }
 
-            _ed = new EditorControl 
-            { 
-                OpenFileCommand = _parent.Open,
-                NewFileCommand = _parent.Create,
-                AutoCompleteItems = Items,
-                SaveAsCommand = new RelayCommand(_ => SaveAs()),
-                SaveCommand = new RelayCommand(_ => Save()),
-                CloseCommand = new RelayCommand(_ => Close()),
-                CompileCommand = new RelayCommand(_ => Compile()),
-                ExecuteCommand = new RelayCommand(_ => Execute()),
-                MathConverter = _parent.Service.ConvertToYamp,
-            };
-
-            var binding = new Binding();
-            binding.Path = new PropertyPath("Changed");
-            binding.Source = this;
-            binding.Mode = BindingMode.TwoWay;
-            BindingOperations.SetBinding(_ed, EditorControl.ChangedProperty, binding);
+            _close = new RelayCommand(_ => CloseEditor());
+            _saveAs = new RelayCommand(_ => SaveCurrentAs());
+            _save = new RelayCommand(_ => SaveCurrent());
+            _compile = new RelayCommand(obj => CompileSource(obj as EditorControl));
+            _execute = new RelayCommand(_ => ExecuteFile());
         }
 
         public EditorFileViewModel(EditorViewModel parent, Kernel kernel, String path)
             : this(parent, kernel)
         {
             _path = path;
-            ReadText();
+            _text = ReadText(path);
         }
 
         #endregion
 
-        #region Commands
+        #region Properties
 
-        public void Save()
+        public Func<String, String> Converter
+        {
+            get { return _parent.Service.ConvertToYamp; }
+        }
+
+        public ICommand Close
+        {
+            get { return _close; }
+        }
+
+        public ICommand Save
+        {
+            get { return _save; }
+        }
+
+        public ICommand SaveAs
+        {
+            get { return _saveAs; }
+        }
+
+        public ICommand Compile
+        {
+            get { return _compile; }
+        }
+
+        public ICommand Execute
+        {
+            get { return _execute; }
+        }
+
+        public List<AutocompleteItem> VariableItems
+        {
+            get { return _variableItems; }
+        }
+
+        public ObservableCollection<AutocompleteItem> Items
+        {
+            get { return _items; }
+        }
+
+        public Boolean IsSaveAs
+        {
+            get { return String.IsNullOrEmpty(_path); }
+        }
+
+        public String FilePath
+        {
+            get { return _path; }
+        }
+
+        public Boolean Changed
+        {
+            get { return _changed; }
+            set { _changed = value; RaisePropertyChanged(); }
+        }
+
+        public Boolean IsSelected
+        {
+            get { return _selected; }
+            set { _selected = value; RaisePropertyChanged(); }
+        }
+
+        public String Text
+        {
+            get { return _text ?? String.Empty; }
+            set { _text = value; }
+        }
+
+        public String FileName
+        {
+            get
+            {
+                if (IsSaveAs)
+                {
+                    return Messages.EditorUntitledFile;
+                }
+
+                return Path.GetFileName(_path);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        void SaveCurrent()
         {
             if (IsSaveAs)
             {
-                SaveAs();
+                SaveCurrentAs();
             }
             else
             {
@@ -93,7 +171,7 @@
             }
         }
 
-        public void SaveAs()
+        void SaveCurrentAs()
         {
             var context = new SaveFileViewModel(Environment.CurrentDirectory);
             context.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
@@ -110,7 +188,7 @@
             }
         }
 
-        public void Close()
+        void CloseEditor()
         {
             if (Changed)
             {
@@ -127,12 +205,12 @@
                 }
                 else if (result == 0)
                 {
-                    Save();
+                    SaveCurrent();
 
                     //Application apparently crashed, i.e. could not write file
                     if (Changed)
                     {
-                        Close();
+                        CloseEditor();
                         return;
                     }
                 }
@@ -142,25 +220,29 @@
             _parent.Remove(this);
         }
 
-        public void Compile()
+        void CompileSource(EditorControl ed)
         {
-            Clean();
             var p = _kernel.Parser.Parse(Text.Replace("\r\n", "\n"));
 
-            if (p.Parser.HasErrors)
+            if (ed != null)
             {
-                foreach (var error in p.Parser.Errors)
-                {
-                    _ed.SetError(error.Line, error.Column, error.Length, error.Message);
-                }
+                Clean(ed);
 
-                _ed.Refresh();
+                if (p.Parser.HasErrors)
+                {
+                    foreach (var error in p.Parser.Errors)
+                    {
+                        ed.SetError(error.Line, error.Column, error.Length, error.Message);
+                    }
+
+                    ed.Refresh();
+                }
             }
 
             AddVariableSymbols(p.Parser.CollectedSymbols);
         }
 
-        public void Execute()
+        void ExecuteFile()
         {
             if (_currentExecution == null || !_currentExecution.Running)
             {
@@ -170,10 +252,6 @@
                 _awaiting = false;
             }
         }
-
-        #endregion
-
-        #region Events
 
         void OnRunningQueriesChanged(Object sender, EventArgs e)
         {
@@ -187,9 +265,9 @@
             }
         }
 
-        public void Clean()
+        void Clean(EditorControl ed)
         {
-            _ed.ClearErrors();
+            ed.ClearErrors();
 
             for (var i = 0; i < VariableItems.Count; i++)
             {
@@ -210,80 +288,18 @@
             }
         }
 
-        #endregion
-
-        #region Properties
-
-        public List<AutocompleteItem> VariableItems
-        {
-            get { return _variableItems; }
-        }
-
-        public ObservableCollection<AutocompleteItem> Items
-        {
-            get { return _items; }
-        }
-
-        public EditorControl Control
-        {
-            get { return _ed; }
-            set
-            {
-                _ed = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public Boolean IsSaveAs
-        {
-            get { return String.IsNullOrEmpty(_path); }
-        }
-
-        public String FilePath
-        {
-            get { return _path; }
-        }
-
-        public Boolean Changed
-        {
-            get { return _changed; }
-            set { _changed = value; RaisePropertyChanged(); }
-        }
-
-        public String Text
-        {
-            get { return _ed.Text; }
-            set { _ed.Text = value; _originalText = value; }
-        }
-
-        public String FileName
-        {
-            get 
-            {
-                if (IsSaveAs)
-                {
-                    return Messages.EditorUntitledFile;
-                }
-
-                return Path.GetFileName(_path); 
-            }
-        }
-
-        #endregion
-
-        #region Methods
-
-        void ReadText()
+        static String ReadText(String path)
         {
             try
             {
-                Text = File.ReadAllText(_path);
-                Changed = false;
+                return File.ReadAllText(path);
             }
             catch (Exception ex)
             {
                 ShowOutputDialog(Messages.ErrorCannotOpenFile, ex.Message);
             }
+
+            return String.Empty;
         }
 
         void SaveText()
