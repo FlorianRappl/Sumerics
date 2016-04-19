@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
 
     /// <summary>
@@ -22,7 +23,6 @@
         readonly ICommand _create;
         readonly ICommand _open;
         readonly ObservableCollection<EditorFileViewModel> _files;
-        EditorFileViewModel selectedFile;
 
         #endregion
 
@@ -46,9 +46,11 @@
                 var context = new OpenFileViewModel();
                 context.AddFilter(Messages.AllFiles + " (*.*)", "*.*");
                 context.AddFilter(Messages.YampScript + " (*.ys)", "*.ys");
-                var dialog = new OpenFileWindow();
-                dialog.DataContext = context;
-                dialog.Title = Messages.OpenFile;
+                var dialog = new OpenFileWindow
+                {
+                    DataContext = context,
+                    Title = Messages.OpenFile
+                };
                 dialog.ShowDialog();
 
                 if (context.Accepted)
@@ -81,12 +83,26 @@
 
         public EditorFileViewModel SelectedFile
         {
-            get { return selectedFile; }
+            get { return _files.Where(m => m.IsSelected).FirstOrDefault(); }
             set
             {
-                selectedFile = value;
+                foreach (var file in _files)
+                {
+                    file.IsSelected = Object.ReferenceEquals(file, value);
+                }
+
                 RaisePropertyChanged();
             }
+        }
+
+        public ICommand Create
+        {
+            get { return _create; }
+        }
+
+        public ICommand Open
+        {
+            get { return _open; }
         }
 
         #endregion
@@ -173,20 +189,6 @@
             }
 
             return false;
-        }
-
-        #endregion
-
-        #region Commands
-
-        public ICommand Create
-        {
-            get { return _create; }
-        }
-
-        public ICommand Open
-        {
-            get { return _open; }
         }
 
         #endregion

@@ -118,6 +118,24 @@
             typeof(EditorControl),
             new FrameworkPropertyMetadata(new ObservableCollection<AutocompleteItem>(), OnAutoCompleteItemsChange));
 
+        static void OnAutoCompleteItemsChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = d as EditorControl;
+
+            if (ctrl != null)
+            { 
+                var newList = (ObservableCollection<AutocompleteItem>)e.NewValue;
+                var oldList = ctrl._autoComplete.AvailableItems;
+
+                oldList.Clear();
+
+                foreach (var entry in newList)
+                {
+                    oldList.Add(entry);
+                }
+             }
+        }
+
         public Func<String, String> MathConverter
         {
             get { return (Func<String, String>)GetValue(MathConverterProperty); }
@@ -294,25 +312,11 @@
         }
 
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(String), typeof(EditorControl), new PropertyMetadata(""));
+            DependencyProperty.Register("Text", typeof(String), typeof(EditorControl), new PropertyMetadata(null));
         
         #endregion
 
         #region Events
-
-        static void OnAutoCompleteItemsChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var basis = (EditorControl)d;
-            var newList = (ObservableCollection<AutocompleteItem>)e.NewValue;
-            var oldList = basis._autoComplete.AvailableItems;
-
-            oldList.Clear();
-
-            foreach (var entry in newList)
-            {
-                oldList.Add(entry);
-            }
-        }
 
         void InputPanelButtonClicked(Object sender, RoutedEventArgs e)
         {

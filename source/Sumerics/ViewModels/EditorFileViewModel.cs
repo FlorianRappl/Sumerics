@@ -7,8 +7,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
-    using System.Windows;
-    using System.Windows.Data;
     using System.Windows.Input;
     using YAMP;
 
@@ -44,18 +42,11 @@
         public EditorFileViewModel(EditorViewModel parent, Kernel kernel)
         {
             _kernel = kernel;
-            kernel.RunningQueriesChanged += OnRunningQueriesChanged;
+            _kernel.RunningQueriesChanged += OnRunningQueriesChanged;
             _debugContext = new ParseContext(_kernel.Parser.Context);
-
             _parent = parent;
-            _items = new ObservableCollection<AutocompleteItem>();
+            _items = new ObservableCollection<AutocompleteItem>(EditorViewModel.BasicItems);
             _variableItems = new List<AutocompleteItem>();
-
-            foreach (var item in EditorViewModel.BasicItems)
-            {
-                Items.Add(item);
-            }
-
             _close = new RelayCommand(_ => CloseEditor());
             _saveAs = new RelayCommand(_ => SaveCurrentAs());
             _save = new RelayCommand(_ => SaveCurrent());

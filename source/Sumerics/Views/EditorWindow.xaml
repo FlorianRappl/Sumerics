@@ -72,21 +72,20 @@
             <Border Background="#EEE" 
                     Grid.Column="1" />
 
-            <TabControl ItemsSource="{Binding Files}" 
+            <TabControl ItemsSource="{Binding Files}"
                         Grid.Column="2"
                         Margin="15"
-                        SelectedItem="{Binding SelectedFile}"
-                        SelectionChanged="SelectedTabChanged">
-                
+                        SelectedItem="{Binding SelectedFile}">
+
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding FileName}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
-                
+
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <ContentControl Content="{Binding}" />
+                        <ContentPresenter Content="{Binding}" />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
                 
