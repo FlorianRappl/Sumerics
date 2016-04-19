@@ -180,6 +180,7 @@
     <Compile Include="Codebase\Queries.cs" />
     <Compile Include="Codebase\RichTextBoxHelper.cs" />
     <Compile Include="Codebase\SumericsInfo.cs" />
+    <Compile Include="Codebase\TabContent.cs" />
     <Compile Include="Codebase\WindowFactory.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="Dialogs\AboutDialogHandler.cs" />

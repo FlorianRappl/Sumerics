@@ -6,6 +6,7 @@
                       xmlns:r="clr-namespace:Sumerics.Controls;assembly=UserControls"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:res="clr-namespace:Sumerics.Resources;assembly=Sumerics.Resources"
+                      xmlns:cb="clr-namespace:Sumerics.Codebase"
                       Title="{x:Static res:Messages.Editor}"
                       Icon="../Icons/Sumerics.png"
                       WindowStartupLocation="CenterScreen"
@@ -75,6 +76,7 @@
             <TabControl ItemsSource="{Binding Files}"
                         Grid.Column="2"
                         Margin="15"
+                        cb:TabContent.IsCached="True"
                         SelectedItem="{Binding SelectedFile}">
 
                 <TabControl.ItemTemplate>
@@ -83,11 +85,11 @@
                     </DataTemplate>
                 </TabControl.ItemTemplate>
 
-                <TabControl.ContentTemplate>
+                <cb:TabContent.Template>
                     <DataTemplate>
                         <ContentPresenter Content="{Binding}" />
                     </DataTemplate>
-                </TabControl.ContentTemplate>
+                </cb:TabContent.Template>
                 
             </TabControl>
         </Grid>

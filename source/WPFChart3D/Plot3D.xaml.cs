@@ -68,19 +68,7 @@
             {
                 _scale = (ScaleTransform3D)tg.Children[0];
                 _rotate = (AxisAngleRotation3D)((RotateTransform3D)tg.Children[1]).Rotation;
-
-                if (TrackBall.Viewport3D != null && TrackBall.Viewport3D.Camera != null)
-                {
-                    if (TrackBall.Viewport3D.Camera.IsFrozen)
-                    {
-                        TrackBall.Viewport3D.Camera = TrackBall.Viewport3D.Camera.Clone();
-                    }
-
-                    if (TrackBall.Viewport3D.Camera.Transform != tg)
-                    {
-                        TrackBall.Viewport3D.Camera.Transform = tg;
-                    }
-                }
+                TrackBall.Viewport3D.Camera.Transform = tg;
             }
 
             MainViewport.Children.Add(_wireframes);
@@ -553,9 +541,9 @@
 
         void Zoom(Double scale)
         {
-            _scale.ScaleX *= scale;
-            _scale.ScaleY *= scale;
-            _scale.ScaleZ *= scale;
+            ScaleX *= scale;
+            ScaleY *= scale;
+            ScaleZ *= scale;
         }
 
         void Rotate(Vector translation)
@@ -569,8 +557,10 @@
                 var angle = Vector3D.AngleBetween(_previousPosition3D, pos);
                 var delta = new Quaternion(axis, -angle);
                 var q = new Quaternion(_rotate.Axis, _rotate.Angle) * delta;
-                _rotate.Axis = q.Axis;
-                _rotate.Angle = q.Angle;
+                RotateX = q.Axis.X;
+                RotateY = q.Axis.Y;
+                RotateZ = q.Axis.Z;
+                RotateAngle = q.Angle;
                 _previousPosition3D = pos;
             }
         }
