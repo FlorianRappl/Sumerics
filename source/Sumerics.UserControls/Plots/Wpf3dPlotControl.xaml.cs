@@ -1,27 +1,31 @@
 ﻿namespace Sumerics.Controls.Plots
 {
-    using WPFChart3D;
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Interaction logic for Wpf3dPlotControl.xaml
     /// </summary>
     public partial class Wpf3dPlotControl : BasePlotControl
     {
-        static readonly Plot3D Dummy = default(Plot3D);
-
         public Wpf3dPlotControl()
         {
             InitializeComponent();
         }
 
-        /*
-        public void ExportAsPng(Stream stream, Int32 width, Int32 height)
+        protected override void RenderToCanvas(Canvas canvas)
         {
-            var bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
             var dv = new DrawingVisual();
-            var vb = new VisualBrush(Plot.Viewport);
+            var vb = new VisualBrush(Plotter);
+            var width = (Int32)canvas.Width;
+            var height = (Int32)canvas.Height;
+            var renderBitmap = new RenderTargetBitmap(width, height, 96d, 96d, PixelFormats.Pbgra32);
+            var encoder = new PngBitmapEncoder();
 
-            using (DrawingContext dc = dv.RenderOpen())
+            using (var dc = dv.RenderOpen())
             {
                 dc.DrawRectangle(vb, null, new Rect(new Point(), new Size
                 {
@@ -30,12 +34,9 @@
                 }));
             }
 
-            bmp.Render(dv);
-
-            var encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(bmp));
-            encoder.Save(stream);
+            renderBitmap.Render(dv);
+            encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+            canvas.Children.Add(new Image { Source = renderBitmap });
         }
-         */
     }
 }

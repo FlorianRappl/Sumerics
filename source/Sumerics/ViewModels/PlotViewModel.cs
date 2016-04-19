@@ -1,5 +1,6 @@
 ﻿namespace Sumerics.ViewModels
 {
+    using Sumerics.Controls.Plots;
     using Sumerics.Models;
     using Sumerics.Plots;
     using Sumerics.Resources;
@@ -42,8 +43,8 @@
             _center = new RelayCommand(_ =>_controller.CenterPlot());
             _dock = new RelayCommand(_ => visualizer.Dock(this));
             _undock = new RelayCommand(_ => visualizer.Undock());
-            _print = new RelayCommand(_ => Print(plot));
-            _save = new RelayCommand(_ => Save(plot));
+            _print = new RelayCommand(obj => Print(plot, obj as IPlotSerializer));
+            _save = new RelayCommand(obj => Save(plot, obj as IPlotSerializer));
         }
 
         #endregion
@@ -83,6 +84,11 @@
         public ICommand ToggleGrid
         {
             get { return _grid; }
+        }
+
+        public ICommand PrintPlot
+        {
+            get { return _print; }
         }
 
         public ICommand SavePlot
@@ -143,28 +149,18 @@
             }
         }
 
-        static void Print(PlotValue plot)
+        static void Print(PlotValue plot, IPlotSerializer plotter)
         {
             var printDialog = new PrintDialog();
             var result = printDialog.ShowDialog();
 
             if (result.HasValue && result.Value)
             {
-                var canvas = new Canvas
-                {
-                    Width = printDialog.PrintableAreaWidth,
-                    Height = printDialog.PrintableAreaHeight
-                };
-
-                canvas.Measure(new Size(printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
-                canvas.Arrange(new Rect(0, 0, printDialog.PrintableAreaWidth, printDialog.PrintableAreaHeight));
-                //plot.RenderToCanvas(canvas);
-                canvas.UpdateLayout();
-                printDialog.PrintVisual(canvas, plot.Title ?? "Sumerics Plot");
+                plotter.Print(printDialog, plot.Title ?? "Sumerics Plot");
             }
         }
 
-        static void Save(PlotValue plot)
+        static void Save(PlotValue plot, IPlotSerializer plotter)
         {
             var context = new SaveImageViewModel();
             context.ImageWidth = 640;
@@ -182,7 +178,6 @@
             if (context.Accepted)
             {
                 var path = context.SelectedFile.FullName;
-                //frame.ExportPlot(path, context.ImageWidth, context.ImageHeight);
                 var filename = Path.GetFileName(path);
                 var message = String.Format(Messages.PlotSavedMessage, filename);
                 var output = new OutputViewModel
@@ -190,6 +185,12 @@
                     Title = Messages.FileCreated,
                     Message = message
                 };
+
+                using (var fs = File.Create(path))
+                {
+                    plotter.Save(fs, context.ImageWidth, context.ImageHeight);
+                }
+
                 output.ShowWindow();
             }
         }

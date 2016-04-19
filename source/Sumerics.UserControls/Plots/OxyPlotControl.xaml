@@ -9,5 +9,5 @@
                        d:DesignHeight="300" 
                        d:DesignWidth="300">
     <oxy:PlotView Model="{Binding Model}"
-                  x:Name="Foo" />
+                  x:Name="Plotter" />
 </local:BasePlotControl>

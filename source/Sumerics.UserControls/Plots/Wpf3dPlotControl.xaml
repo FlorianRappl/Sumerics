@@ -17,5 +17,6 @@
               RotateX="{Binding Transformation.RotateX}"
               RotateY="{Binding Transformation.RotateY}"
               RotateZ="{Binding Transformation.RotateZ}"
-              RotateAngle="{Binding Transformation.Angle}" />
+              RotateAngle="{Binding Transformation.Angle}"
+              x:Name="Plotter" />
 </local:BasePlotControl>

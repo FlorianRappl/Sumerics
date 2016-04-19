@@ -10,7 +10,7 @@
     <local:BasePlotControl.Resources>
         <local:PlotControlConverter x:Key="plotControlConverter" />
     </local:BasePlotControl.Resources>
-    <Grid>
+    <Grid x:Name="Plotter">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
