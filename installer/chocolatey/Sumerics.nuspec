@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Sumerics</id>
+    <version>2.0.0.0</version>
+    <title>Sensor Numerics</title>
+    <authors>Florian Rappl</authors>
+    <owners>FlorianRappl</owners>
+    <licenseUrl>https://github.com/FlorianRappl/Sumerics/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/FlorianRappl/Sumerics</projectUrl>
+    <iconUrl>https://raw.github.com/FlorianRappl/Sumerics/master/images/logo_small.png</iconUrl>
+    <releaseNotes>https://github.com/FlorianRappl/Sumerics/releases</releaseNotes>
+    <packageSourceUrl>https://github.com/FlorianRappl/Sumerics/tree/master/installer/chocolatey</packageSourceUrl>
+    <projectSourceUrl>https://github.com/FlorianRappl/Sumerics</projectSourceUrl>
+    <docsUrl>https://github.com/FlorianRappl/Sumerics/tree/master/docs</docsUrl>
+    <bugTrackerUrl>https://github.com/FlorianRappl/Sumerics/issues</bugTrackerUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Sensor Numerics for Intel Ultrabooks™ combines the power of numerical computations with the ability to perform experiments with the Intel Ultrabook™ over the integrated sensors.</description>
+    <summary>An alternative to Alfred on Windows, that is made with JavaScript.</summary>
+    <tags>sumerics sensor numerics ultrabook intel math plot</tags>
+  </metadata>
+  <files>
+    <file src="tools\*.*" target="tools" />
+  </files>
+</package>
