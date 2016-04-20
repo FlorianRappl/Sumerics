@@ -6,7 +6,6 @@
     {
         String _title;
         Boolean _axisShown;
-        Transform3dModel _transform;
         Object _model;
 
         public Object Model
@@ -25,12 +24,6 @@
         {
             get { return _axisShown; }
             set { _axisShown = value; RaisePropertyChanged(); }
-        }
-
-        public Transform3dModel Transformation
-        {
-            get { return _transform; }
-            set { _transform = value; RaisePropertyChanged(); }
         }
     }
 }

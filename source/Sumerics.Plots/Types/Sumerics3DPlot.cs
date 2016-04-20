@@ -22,8 +22,7 @@
             {
                 CanEditSeries = false,
                 CanToggleGrid = true,
-                IsAxisShown = false,
-                Transformation = new Transform3dModel(),
+                IsAxisShown = false
             };
             _plot = plot;
         }
@@ -43,7 +42,8 @@
 
         protected override void OnCenterPlot()
         {
-            _model.Transformation.Reset();
+            //TODO: How to make trafo persistent and reset-able?
+            //_model.Transformation.Reset();
         }
 
         protected override void OnToggleGrid()

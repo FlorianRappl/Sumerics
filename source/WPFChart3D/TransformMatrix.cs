@@ -8,21 +8,17 @@
 
     public class TransformMatrix
     {
-        const Double degi = 1.0 / 180.0;
+        const Double DegInverse = 1.0 / 180.0;
+        const Double ScaleFactor = 1.3;
 
-        readonly Matrix3D _viewMatrix = new Matrix3D();
-        readonly Matrix3D _projMatrix = new Matrix3D();
-
+        Matrix3D _viewMatrix = Matrix3D.Identity;
+        Matrix3D _projMatrix = Matrix3D.Identity;
         Boolean _mouseDown = false;
         Point _movePoint;
 
-        public Matrix3D TotalMatrix = new Matrix3D();
-
-        public Double ScaleFactor = 1.3;
-
-        public void ResetView()
+        public Matrix3D TotalMatrix
         {
-            _viewMatrix.SetIdentity();
+            get { return Matrix3D.Multiply(_projMatrix, _viewMatrix); }
         }
 
         public void OnLBtnDown(Point pt)
@@ -35,8 +31,10 @@
         {
             if (_mouseDown)
             {
+                var viewMatrix = new Matrix3D();
                 var width = viewPort.ActualWidth;
                 var height = viewPort.ActualHeight;
+                viewMatrix.Append(_viewMatrix);
 
                 if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                 {
@@ -46,7 +44,7 @@
                     var shiftX = 2 * (pt.X - _movePoint.X) / (width);
                     var shiftY = -2 * (pt.Y - _movePoint.Y) / (width);
 
-                    _viewMatrix.Translate(new Vector3D(shiftX, shiftY, 0));
+                    viewMatrix.Translate(new Vector3D(shiftX, shiftY, 0));
                     _movePoint = pt;
                 }
                 else
@@ -54,12 +52,12 @@
                     var aY = 180 * (pt.X - _movePoint.X) / width;
                     var aX = 180 * (pt.Y - _movePoint.Y) / height;
 
-                    _viewMatrix.Rotate(new Quaternion(new Vector3D(1, 0, 0), aX));
-                    _viewMatrix.Rotate(new Quaternion(new Vector3D(0, 1, 0), aY));
+                    viewMatrix.Rotate(new Quaternion(new Vector3D(1, 0, 0), aX));
+                    viewMatrix.Rotate(new Quaternion(new Vector3D(0, 1, 0), aY));
                     _movePoint = pt;
                 }
 
-                TotalMatrix = Matrix3D.Multiply(_projMatrix, _viewMatrix);
+                _viewMatrix = viewMatrix;
             }
         }
 		
@@ -71,49 +69,34 @@
         public void OnKeyDown(KeyEventArgs args)
         {
             var f = 1.0 / ScaleFactor;
+            var viewMatrix = new Matrix3D();
+            viewMatrix.Append(_viewMatrix);
 
             switch (args.Key)
             {
                 case Key.Home:
-                     _viewMatrix.SetIdentity();
-                     break;
+                    viewMatrix = Matrix3D.Identity;
+                    break;
 
                 case Key.OemPlus:
-                     _viewMatrix.Scale(new Vector3D(f, f, f));
-                     break;
+                    viewMatrix.Scale(new Vector3D(f, f, f));
+                    break;
 
                 case Key.OemMinus:
-                     _viewMatrix.Scale(new Vector3D(f, f, f));
-                     break;
+                    viewMatrix.Scale(new Vector3D(f, f, f));
+                    break;
 
                 default:
-                     return;
+                    return;
             }
 
-            TotalMatrix = Matrix3D.Multiply(_projMatrix, _viewMatrix);
-        }
-
-        public static Point3D Transform(Point3D pt1, Point3D center, Double aX, Double aZ)
-        {
-            var angleX = 3.1415926 * aX * degi;
-            var angleZ = 3.1415926 * aZ * degi;
-
-			// rotate from z-axis
-            var x2 = pt1.X * Math.Cos(angleZ) + pt1.Z * Math.Sin(angleZ);
-            var y2 = pt1.Y;
-            var z2 = -pt1.X * Math.Sin(angleZ) + pt1.Z * Math.Cos(angleZ);
-
-            var x3 = center.X + x2 * Math.Cos(angleX) - y2 * Math.Sin(angleX);
-            var y3 = center.Y + x2 * Math.Sin(angleX) + y2 * Math.Cos(angleX);
-            var z3 = center.Z + z2;
-
-            return new Point3D(x3, y3, z3);
+            _viewMatrix = viewMatrix;
         }
 
         public static void Transform(Mesh3D model, Point3D center, Double aX, Double aZ)
         {
-            var angleX = 3.1415926 * aX * degi;
-            var angleZ = 3.1415926 * aZ * degi;
+            var angleX = 3.1415926 * aX * DegInverse;
+            var angleZ = 3.1415926 * aZ * DegInverse;
             var nVertNo = model.GetVertexNo();
 
             for (var i = 0; i < nVertNo; i++)
@@ -133,18 +116,9 @@
             }
         }
 
-        public void CalculateProjectionMatrix(WPFChart3D.Mesh3D mesh, Double scaleFactor)
-        {
-            CalculateProjectionMatrix(mesh.XMin, mesh.XMax, mesh.YMin, mesh.YMax, mesh.ZMin, mesh.ZMax, scaleFactor);
-        }
-
-        public void CalculateProjectionMatrix(Double min, Double max, Double scaleFactor)
-        {
-            CalculateProjectionMatrix(min, max, min, max, min, max, scaleFactor);
-        }
-
         public void CalculateProjectionMatrix(Double xMin, Double xMax, Double yMin, Double yMax, Double zMin, Double zMax, Double scaleFactor)
         {
+            var projMatrix = Matrix3D.Identity;
             var xC = (xMin + xMax) * 0.5;
             var yC = (yMin + yMax) * 0.5;
             var zC = (zMin + zMax) * 0.5;
@@ -153,8 +127,8 @@
             var yRange = (yMax - yMin) * 0.5;
             var zRange = (zMax - zMin) * 0.5;
 
-            _projMatrix.SetIdentity();
-            _projMatrix.Translate(new Vector3D(-xC, -yC, -zC));
+            var v = new Vector3D(-xC, -yC, -zC);
+            projMatrix.Translate(v);
 
             if (xRange >= 1e-10)
             {
@@ -162,9 +136,12 @@
                 var sY = scaleFactor / yRange;
                 var sZ = scaleFactor / zRange;
 
-                _projMatrix.Scale(new Vector3D(sX, sY, sZ));
-                TotalMatrix = Matrix3D.Multiply(_projMatrix, _viewMatrix);
+                var s = new Vector3D(sX, sY, sZ);
+
+                projMatrix.Scale(s);
             }
+
+            _projMatrix = projMatrix;
         }
 
         public Point VertexToScreenPt(Point3D point, Viewport3D viewPort)

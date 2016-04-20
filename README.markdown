@@ -40,6 +40,11 @@ Contributions in any form are welcome. PRs are happily accepted, as long as the 
 
 This history only covers the publications that happened regarding the Intel AppUp store. The history of Sumerics vNext will be recorded in form of official releases and attached release notes.
 
+* v2.0.0: *20.04.2016*
+  - Release of vNext
+  - Complete refactoring
+  - Upgraded YAMP
+
 * v1.0.2: *20.02.2013*
   - Fixed some bugs
   - Upgraded YAMP

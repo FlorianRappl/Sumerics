@@ -33,12 +33,6 @@
         Vector3D _previousPosition3D;
         Point _origin;
         Chart3D _3dChart;
-        Double _xMin;
-        Double _xMax;
-        Double _yMin;
-        Double _yMax;
-        Double _zMin;
-        Double _zMax;
 
         #endregion
 
@@ -149,125 +143,10 @@
             var shown = (Boolean)e.NewValue;
             control._axis.Points.Clear();
 
-            if (shown)
+            if (shown && control.Model != null)
             {
                 control.ShowAxis();
             }
-        }
-
-        public Double ScaleX
-        {
-            get { return (Double)GetValue(ScaleXProperty); }
-            set { SetValue(ScaleXProperty, value); }
-        }
-
-        public static readonly DependencyProperty ScaleXProperty =
-            DependencyProperty.Register("ScaleX", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleXChanged));
-
-        static void OnScaleXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            control._scale.ScaleX = value;
-        }
-
-        public Double ScaleY
-        {
-            get { return (Double)GetValue(ScaleYProperty); }
-            set { SetValue(ScaleYProperty, value); }
-        }
-
-        public static readonly DependencyProperty ScaleYProperty =
-            DependencyProperty.Register("ScaleY", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleYChanged));
-
-        static void OnScaleYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            control._scale.ScaleY = value;
-        }
-
-        public Double ScaleZ
-        {
-            get { return (Double)GetValue(ScaleZProperty); }
-            set { SetValue(ScaleZProperty, value); }
-        }
-
-        public static readonly DependencyProperty ScaleZProperty =
-            DependencyProperty.Register("ScaleZ", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnScaleZChanged));
-
-        static void OnScaleZChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            control._scale.ScaleZ = value;
-        }
-
-        public Double RotateX
-        {
-            get { return (Double)GetValue(RotateXProperty); }
-            set { SetValue(RotateXProperty, value); }
-        }
-
-        public static readonly DependencyProperty RotateXProperty =
-            DependencyProperty.Register("RotateX", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateXChanged));
-
-        static void OnRotateXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            var axis = control._rotate.Axis;
-            control._rotate.Axis = new Vector3D(value, axis.Y, axis.Z);
-        }
-
-        public Double RotateY
-        {
-            get { return (Double)GetValue(RotateYProperty); }
-            set { SetValue(RotateYProperty, value); }
-        }
-
-        public static readonly DependencyProperty RotateYProperty =
-            DependencyProperty.Register("RotateY", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateYChanged));
-
-        static void OnRotateYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            var axis = control._rotate.Axis;
-            control._rotate.Axis = new Vector3D(axis.X, value, axis.Z);
-        }
-
-        public Double RotateZ
-        {
-            get { return (Double)GetValue(RotateZProperty); }
-            set { SetValue(RotateZProperty, value); }
-        }
-
-        public static readonly DependencyProperty RotateZProperty =
-            DependencyProperty.Register("RotateZ", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateZChanged));
-
-        static void OnRotateZChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            var axis = control._rotate.Axis;
-            control._rotate.Axis = new Vector3D(axis.X, axis.Y, value);
-        }
-
-        public Double RotateAngle
-        {
-            get { return (Double)GetValue(RotateAngleProperty); }
-            set { SetValue(RotateAngleProperty, value); }
-        }
-
-        public static readonly DependencyProperty RotateAngleProperty =
-            DependencyProperty.Register("RotateAngle", typeof(Double), typeof(Plot3D), new PropertyMetadata(OnRotateAngleChanged));
-
-        static void OnRotateAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var control = (Plot3D)d;
-            var value = (Double)e.NewValue;
-            control._rotate.Angle = value;
         }
 
         public Object Model
@@ -314,7 +193,7 @@
             var z = model.Data.Zs;
             var length = x.Length;
 
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 _3dChart[i] = new Vertex3D
                 {
@@ -328,17 +207,9 @@
             SetColors(model.ZAxis, model.Colors);
 
             var meshs = ((UniformSurfaceChart3D)_3dChart).GetMeshes();
-
             var backMaterial = new DiffuseMaterial(new SolidColorBrush(Colors.Gray));
+
             _model3d.UpdateModel(meshs, backMaterial);
-
-            var xMin = _3dChart.XMin();
-            var xMax = _3dChart.XMax();
-            var yMin = _3dChart.YMin();
-            var yMax = _3dChart.YMax();
-            var zMin = _3dChart.ZMin();
-            var zMax = _3dChart.ZMax();
-
             Project(model.XAxis, model.YAxis, model.ZAxis);
             TransformChart();
 
@@ -358,6 +229,11 @@
             else if (!MainViewport.Children.Contains(_model3d))
             {
                 MainViewport.Children.Add(_model3d);
+            }
+
+            if (IsAxisShown)
+            {
+                ShowAxis();
             }
         }
 
@@ -389,6 +265,11 @@
 
             Project(model.XAxes, model.YAxes, model.ZAxes);
             _wireframes.Transform = new MatrixTransform3D(_transformMatrix.TotalMatrix);
+
+            if (IsAxisShown)
+            {
+                ShowAxis();
+            }
         }
 
         #endregion
@@ -412,14 +293,7 @@
 
         void Project(Plot3dAxis xAxes, Plot3dAxis yAxes, Plot3dAxis zAxes)
         {
-            _xMin = xAxes.Minimum;
-            _xMax = xAxes.Maximum;
-            _yMin = yAxes.Minimum;
-            _yMax = yAxes.Maximum;
-            _zMin = zAxes.Minimum;
-            _zMax = zAxes.Maximum;
-
-            _transformMatrix.CalculateProjectionMatrix(_xMin, _xMax, _yMin, _yMax, _zMin, _zMax, 0.5);
+            _transformMatrix.CalculateProjectionMatrix(xAxes.Minimum, xAxes.Maximum, yAxes.Minimum, yAxes.Maximum, zAxes.Minimum, zAxes.Maximum, 0.5);
         }
 
         void SetView(Plot3dAxis xAxes, Plot3dAxis yAxes, Plot3dAxis zAxes)
@@ -431,16 +305,22 @@
         {
             var geo = new GeometryModel3D();
             var cube = new MeshGeometry3D();
+            var xmin = _3dChart.XMin();
+            var xmax = _3dChart.XMax();
+            var ymin = _3dChart.YMin();
+            var ymax = _3dChart.YMax();
+            var zmin = _3dChart.ZMin();
+            var zmax = _3dChart.ZMax();
 
-            var p1 = new Point3D(_xMin, _yMin, _zMin);
-            var p2 = new Point3D(_xMax, _yMin, _zMin);
-            var p5 = new Point3D(_xMax, _yMax, _zMin);
-            var p3 = new Point3D(_xMin, _yMax, _zMin);
+            var p1 = new Point3D(xmin, ymin, zmin);
+            var p2 = new Point3D(xmax, ymin, zmin);
+            var p5 = new Point3D(xmax, ymax, zmin);
+            var p3 = new Point3D(xmin, ymax, zmin);
 
-            var p4 = new Point3D(_xMin, _yMin, _zMax);
-            var p6 = new Point3D(_xMax, _yMin, _zMax);
-            var p8 = new Point3D(_xMin, _yMax, _zMax);
-            var p7 = new Point3D(_xMax, _yMax, _zMax);
+            var p4 = new Point3D(xmin, ymin, zmax);
+            var p6 = new Point3D(xmax, ymin, zmax);
+            var p8 = new Point3D(xmin, ymax, zmax);
+            var p7 = new Point3D(xmax, ymax, zmax);
 
             cube.Positions.Add(p1);//0 - 0 0 0
             cube.Positions.Add(p2);//1 - 1 0 0
@@ -452,24 +332,24 @@
             cube.Positions.Add(p8);//6 - 0 1 1
             cube.Positions.Add(p7);//7 - 1 1 1
 
-            var zh = (_zMax - _zMin) * 0.5;
-            var xh = (_xMax - _xMin) * 0.5;
-            var yh = (_yMax - _yMin) * 0.5;
+            var xh = _3dChart.XRange() * 0.5;
+            var yh = _3dChart.YRange() * 0.5;
+            var zh = _3dChart.ZRange() * 0.5;
 
-            var pc1 = new Point3D(_xMin, _yMin, zh);
-            var pc2 = new Point3D(_xMax, _yMin, zh);
-            var pc5 = new Point3D(_xMax, _yMax, zh);
-            var pc3 = new Point3D(_xMin, _yMax, zh);
+            var pc1 = new Point3D(xmin, ymin, zh);
+            var pc2 = new Point3D(xmax, ymin, zh);
+            var pc5 = new Point3D(xmax, ymax, zh);
+            var pc3 = new Point3D(xmin, ymax, zh);
 
-            var pc4 = new Point3D(xh, _yMin, _zMax);
-            var pc6 = new Point3D(_xMax, yh, _zMax);
-            var pc8 = new Point3D(_xMin, yh, _zMax);
-            var pc7 = new Point3D(xh, _yMax, _zMax);
+            var pc4 = new Point3D(xh, ymin, zmax);
+            var pc6 = new Point3D(xmax, yh, zmax);
+            var pc8 = new Point3D(xmin, yh, zmax);
+            var pc7 = new Point3D(xh, ymax, zmax);
 
-            var pc9 = new Point3D(xh, _yMin, _zMin);
-            var pc10 = new Point3D(_xMax, yh, _zMin);
-            var pc11 = new Point3D(_xMin, yh, _zMin);
-            var pc12 = new Point3D(xh, _yMax, _zMin);
+            var pc9 = new Point3D(xh, ymin, zmin);
+            var pc10 = new Point3D(xmax, yh, zmin);
+            var pc11 = new Point3D(xmin, yh, zmin);
+            var pc12 = new Point3D(xh, ymax, zmin);
 
             cube.Positions.Add(pc1);//8
             cube.Positions.Add(pc2);//9
@@ -541,9 +421,9 @@
 
         void Zoom(Double scale)
         {
-            ScaleX *= scale;
-            ScaleY *= scale;
-            ScaleZ *= scale;
+            _scale.ScaleX *= scale;
+            _scale.ScaleY *= scale;
+            _scale.ScaleZ *= scale;
         }
 
         void Rotate(Vector translation)
@@ -557,10 +437,8 @@
                 var angle = Vector3D.AngleBetween(_previousPosition3D, pos);
                 var delta = new Quaternion(axis, -angle);
                 var q = new Quaternion(_rotate.Axis, _rotate.Angle) * delta;
-                RotateX = q.Axis.X;
-                RotateY = q.Axis.Y;
-                RotateZ = q.Axis.Z;
-                RotateAngle = q.Angle;
+                _rotate.Axis = q.Axis;
+                _rotate.Angle = q.Angle;
                 _previousPosition3D = pos;
             }
         }
@@ -579,15 +457,13 @@
 
         void TransformChart()
         {
-            if (_model3d.Content != null)
-            {
-                var group = _model3d.Content.Transform as Transform3DGroup;
+            var group = _model3d.Content.Transform as Transform3DGroup;
 
-                if (group != null)
-                {
-                    group.Children.Clear();
-                    group.Children.Add(new MatrixTransform3D(_transformMatrix.TotalMatrix));
-                }
+            if (group != null)
+            {
+                var matrix = new MatrixTransform3D(_transformMatrix.TotalMatrix);
+                group.Children.Clear();
+                group.Children.Add(matrix);
             }
         }
 
