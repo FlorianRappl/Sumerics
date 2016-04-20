@@ -17,6 +17,10 @@ build/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
+installer/nuget/lib
+installer/Releases
+!installer/Releases/RELEASES
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
