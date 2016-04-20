@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Sumerics</id>
+    <version>2.0.0.0</version>
+    <authors>Florian Rappl</authors>
+    <owners>Florian Rappl</owners>
+    <licenseUrl>https://github.com/FlorianRappl/Sumerics/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/FlorianRappl/Sumerics</projectUrl>
+    <iconUrl>https://raw.github.com/FlorianRappl/Sumerics/master/images/logo_small.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>For all changes see: https://github.com/FlorianRappl/Sumerics.</releaseNotes>
+    <copyright>Copyright 2012 - 2016, Florian Rappl.</copyright>
+    <description>Sensor Numerics for Intel Ultrabooks™ combines the power of numerical computations with the ability to perform experiments with the Intel Ultrabook™ over the integrated sensors.</description>
+  </metadata>
+</package>
