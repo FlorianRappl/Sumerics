@@ -1,11 +1,13 @@
 ﻿namespace Sumerics
 {
+    using Squirrel;
     using Sumerics.Properties;
     using Sumerics.Resources;
     using Sumerics.ViewModels;
     using System;
     using System.Globalization;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
 
@@ -27,9 +29,22 @@
 
         void Application_Startup(Object sender, StartupEventArgs e)
         {
+            var updater = CheckForUpdates();
             _app.RegisterAssemblies();
             var vm = new MainViewModel(_app);
             vm.ShowWindow();
+        }
+
+        async Task CheckForUpdates()
+        {
+            try
+            {
+                using (var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/FlorianRappl/Sumerics"))
+                {
+                    await mgr.UpdateApp();
+                }
+            }
+            catch { }
         }
 
         void HandleUnhandledException(Object sender, DispatcherUnhandledExceptionEventArgs e)
