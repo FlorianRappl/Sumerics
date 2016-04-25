@@ -120,13 +120,581 @@
   <data name="About" xml:space="preserve">
     <value>Über</value>
   </data>
+  <data name="AboutPositionMessage" xml:space="preserve">
+    <value>Ihre aktuelle Position ist {0}° {1}° mit Richtung {2}° Nord.</value>
+  </data>
+  <data name="Accelerometer" xml:space="preserve">
+    <value>Beschleunigungsmesser</value>
+  </data>
+  <data name="AccelerometerLabel" xml:space="preserve">
+    <value>Beschleunigungsmesser:</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Fortgeschritten</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>Alle Dateien</value>
+  </data>
+  <data name="Arguments" xml:space="preserve">
+    <value>Argumente</value>
+  </data>
+  <data name="AutomaticHint" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="BackToolTip" xml:space="preserve">
+    <value>Zurück zum Thema</value>
+  </data>
+  <data name="ChangeWorkingDirectory" xml:space="preserve">
+    <value>Arbeitsverzeichnis ändern</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="CloseFileToolTip" xml:space="preserve">
+    <value>Datei schließen</value>
+  </data>
+  <data name="CodeSnippet" xml:space="preserve">
+    <value>Codeschnipsel: {0}</value>
+  </data>
+  <data name="CollapseAllBlocks" xml:space="preserve">
+    <value>Alle Blöcke kollabieren</value>
+  </data>
+  <data name="ColorLabel" xml:space="preserve">
+    <value>Farbe:</value>
+  </data>
+  <data name="ColorPaletteLabel" xml:space="preserve">
+    <value>Farbpalette:</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>Spalte</value>
+  </data>
+  <data name="ColumnAbbr" xml:space="preserve">
+    <value>col</value>
+  </data>
+  <data name="ColumnsLabel" xml:space="preserve">
+    <value>Anzuzeigende Spalten:</value>
+  </data>
+  <data name="ColumnsRange" xml:space="preserve">
+    <value>Spalten {0} bis {1}</value>
+  </data>
+  <data name="CommandHistory" xml:space="preserve">
+    <value>Befehlsverlauf</value>
+  </data>
+  <data name="CommandHistoryLabel" xml:space="preserve">
+    <value>Befehlsverlauf:</value>
+  </data>
+  <data name="Compass" xml:space="preserve">
+    <value>Kompass</value>
+  </data>
+  <data name="CompassLabel" xml:space="preserve">
+    <value>Kompass:</value>
+  </data>
+  <data name="CompilationError" xml:space="preserve">
+    <value>Kompilierungsfehler</value>
+  </data>
+  <data name="ComputationAborted" xml:space="preserve">
+    <value>Die Rechnung wurde abgebrochen.</value>
+  </data>
+  <data name="Console" xml:space="preserve">
+    <value>Konsole</value>
+  </data>
+  <data name="ContourSettings" xml:space="preserve">
+    <value>Kontureinstellungen</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>[kopieren]</value>
+  </data>
+  <data name="CopyToClipboard" xml:space="preserve">
+    <value>In die Zwischenablage kopieren</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Aktuell</value>
+  </data>
+  <data name="CustomizeSubplot" xml:space="preserve">
+    <value>Aktuellen Subplot anpassen</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Daten</value>
+  </data>
+  <data name="DataTitleHint" xml:space="preserve">
+    <value>Hier Titel eingeben</value>
+  </data>
+  <data name="DataTitleLabel" xml:space="preserve">
+    <value>Datentitel:</value>
+  </data>
+  <data name="DecisionRequired" xml:space="preserve">
+    <value>Entscheidung benötigt</value>
+  </data>
+  <data name="DecisionRequiredLabel" xml:space="preserve">
+    <value>Ihre Entscheidung ist benötigt:</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beschreibung</value>
+  </data>
+  <data name="DimOfMatrix" xml:space="preserve">
+    <value>{0} x {1} Matrix</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Deaktiviert</value>
+  </data>
+  <data name="Documentation" xml:space="preserve">
+    <value>Dokumentation</value>
+  </data>
+  <data name="DrawExpression" xml:space="preserve">
+    <value>Ausdruck zeichnen</value>
+  </data>
+  <data name="DrawInput" xml:space="preserve">
+    <value>Eingabe zeichnen</value>
+  </data>
+  <data name="DrawInputToolTip" xml:space="preserve">
+    <value>Eingabe zeichnen</value>
+  </data>
+  <data name="DuplicatePlotToolTip" xml:space="preserve">
+    <value>Plot verdoppeln</value>
+  </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
+  <data name="EditorSaveAnswerCancel" xml:space="preserve">
+    <value>Abbrechen.</value>
+  </data>
+  <data name="EditorSaveAnswerNo" xml:space="preserve">
+    <value>Nein, danke!</value>
+  </data>
+  <data name="EditorSaveAnswerYes" xml:space="preserve">
+    <value>Ja, speichere die Änderungen.</value>
+  </data>
+  <data name="EditorSaveAnswerYesMultiple" xml:space="preserve">
+    <value>Ja, ich will sie speichern.</value>
+  </data>
+  <data name="EditorSaveQuestion" xml:space="preserve">
+    <value>Der Inhalt wurde geändert. Änderungen speichern?</value>
+  </data>
+  <data name="EditorSaveQuestionMultiple" xml:space="preserve">
+    <value>Sie haben {0} ungespeicherte Datei(en). Wolen Sie sie speichern?</value>
+  </data>
+  <data name="EditorUntitledFile" xml:space="preserve">
+    <value>Unbenannt</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Aktiviert</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>Englisch</value>
+  </data>
+  <data name="EnterCommandToolTip" xml:space="preserve">
+    <value>Befehl eingeben</value>
+  </data>
+  <data name="EnterQuickStatement" xml:space="preserve">
+    <value>Kurzen Ausdruck eingeben</value>
+  </data>
+  <data name="ErrorAbbr" xml:space="preserve">
+    <value>err</value>
+  </data>
+  <data name="ErrorCannotCreateFile" xml:space="preserve">
+    <value>Die Datei {0} exisitert nicht und kann nicht erstellt werden. Gewöhnlich liegt das an ungenügenden Berechtigungen. Versuchen Sie Sumerics als Administrator auszuführen oder erstellen Sie die Datei selbst, um diese Ausnahme loszuwerden.</value>
+  </data>
+  <data name="ErrorCannotOpenFile" xml:space="preserve">
+    <value>Datei kann nicht geöffnet werden</value>
+  </data>
+  <data name="ErrorCannotSaveFile" xml:space="preserve">
+    <value>Datei kann nicht gespeichert werden</value>
+  </data>
+  <data name="ErrorLogLabel" xml:space="preserve">
+    <value>Fehlerprotokoll:</value>
+  </data>
+  <data name="EvaluateFile" xml:space="preserve">
+    <value>Evaluiere {0}</value>
+  </data>
+  <data name="EvaluateInput" xml:space="preserve">
+    <value>Evaluiere Eingabe</value>
+  </data>
+  <data name="EvaluateMathDrawingsLabel" xml:space="preserve">
+    <value>Evaluiere Mathezeichnungen:</value>
+  </data>
+  <data name="Evaluating" xml:space="preserve">
+    <value>Evaluation ...</value>
+  </data>
+  <data name="Examples" xml:space="preserve">
+    <value>Beispiele</value>
+  </data>
+  <data name="Exception" xml:space="preserve">
+    <value>Ausnahme aufgetreten</value>
+  </data>
+  <data name="ExecuteCommand" xml:space="preserve">
+    <value>[ausführen]</value>
+  </data>
+  <data name="ExecuteToolTip" xml:space="preserve">
+    <value>Ausführen</value>
+  </data>
+  <data name="ExpandAllBlocks" xml:space="preserve">
+    <value>Alle Blöcke erweitern</value>
+  </data>
+  <data name="FileCreated" xml:space="preserve">
+    <value>Datei erstellt</value>
+  </data>
+  <data name="FontSizeLabel" xml:space="preserve">
+    <value>Schriftgröße:</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Algemein</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>Deutsch</value>
   </data>
+  <data name="GlobalStartupScriptLabel" xml:space="preserve">
+    <value>Globales Startskript:
+(benötigt Administratorberechtigung)</value>
+  </data>
+  <data name="Gyrometer" xml:space="preserve">
+    <value>Gyrometer</value>
+  </data>
+  <data name="GyrometerLabel" xml:space="preserve">
+    <value>Gyrometer:</value>
+  </data>
+  <data name="HeatmapSettings" xml:space="preserve">
+    <value>Heatmap Einstellungen</value>
+  </data>
+  <data name="HeightInPx" xml:space="preserve">
+    <value>Höhe (px)</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="Inclinometer" xml:space="preserve">
+    <value>Inklinometer</value>
+  </data>
+  <data name="InclinometerLabel" xml:space="preserve">
+    <value>Inklinometer:</value>
+  </data>
+  <data name="IncludedSeriesToolTip" xml:space="preserve">
+    <value>Eingeschlossene Datenreihe</value>
+  </data>
+  <data name="InfoToolTip" xml:space="preserve">
+    <value>Mehr Information</value>
+  </data>
+  <data name="InputHint" xml:space="preserve">
+    <value>Eingabe hier</value>
+  </data>
+  <data name="InputRequestedLabel" xml:space="preserve">
+    <value>Ihre Eingabe wurde angefordert:</value>
+  </data>
+  <data name="InputRequired" xml:space="preserve">
+    <value>Eingabe benötigt</value>
+  </data>
+  <data name="Interaction" xml:space="preserve">
+    <value>Interaktion</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>Das {0} Schlüsselwort.</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="LanguageRestart" xml:space="preserve">
+    <value>Eine Änderung der Sprache erfordert einen Neustart der Anwendung, um Auswirkungen zu haben.</value>
+  </data>
+  <data name="LegendBackgroundColorLabel" xml:space="preserve">
+    <value>Legendenhintergrundsfarbe:</value>
+  </data>
+  <data name="LegendBorderColorLabel" xml:space="preserve">
+    <value>Legendenrahmenfarbe:</value>
+  </data>
+  <data name="LegendPositionLabel" xml:space="preserve">
+    <value>Legendenposition:</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Helligkeitssensor</value>
+  </data>
+  <data name="LightLabel" xml:space="preserve">
+    <value>Helligkeitssensor:</value>
+  </data>
+  <data name="Line" xml:space="preserve">
+    <value>Linie</value>
+  </data>
+  <data name="LineAbbr" xml:space="preserve">
+    <value>ln</value>
+  </data>
+  <data name="LinesOfText" xml:space="preserve">
+    <value>{0} Zeilen Text</value>
+  </data>
+  <data name="LivestreamLabel" xml:space="preserve">
+    <value>Livestream:</value>
+  </data>
+  <data name="LoadWorkspace" xml:space="preserve">
+    <value>Workspace laden</value>
+  </data>
+  <data name="LocalVariable" xml:space="preserve">
+    <value>Lokale Variable {0}.</value>
+  </data>
+  <data name="MaximumEntriesLabel" xml:space="preserve">
+    <value>Maximale Anzahl Einträge:</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Nachricht</value>
+  </data>
+  <data name="MoreToolTip" xml:space="preserve">
+    <value>Weitere Hilfethemen</value>
+  </data>
+  <data name="NewFileToolTip" xml:space="preserve">
+    <value>Neue Datei</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Nächstes</value>
+  </data>
+  <data name="NoDescriptionAvailable" xml:space="preserve">
+    <value>Keine Beschreibung verfügbar.</value>
+  </data>
+  <data name="NoExamplesAvailable" xml:space="preserve">
+    <value>Keine Beispiele verfügbar.</value>
+  </data>
+  <data name="NotificationAvailable" xml:space="preserve">
+    <value>Neue Benachrichtigung verfügbar!</value>
+  </data>
+  <data name="NoUsagesAvailable" xml:space="preserve">
+    <value>Keine Verwendungen verfügbar.</value>
+  </data>
+  <data name="OnlyChoice" xml:space="preserve">
+    <value>Die einzige Option.</value>
+  </data>
+  <data name="OpenDocumentation" xml:space="preserve">
+    <value>Dokumentation öffnen</value>
+  </data>
+  <data name="OpenEditor" xml:space="preserve">
+    <value>Editor öffnen</value>
+  </data>
+  <data name="OpenFile" xml:space="preserve">
+    <value>Datei öffnen...</value>
+  </data>
+  <data name="OpenFileToolTip" xml:space="preserve">
+    <value>Datei öffnen</value>
+  </data>
+  <data name="OpenWorkspace" xml:space="preserve">
+    <value>Workspace öffnen...</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>Optionen</value>
+  </data>
+  <data name="Overview" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="OverwriteAnswerCancel" xml:space="preserve">
+    <value>Ich bin mir nicht sicher, bitte abbrechen.</value>
+  </data>
+  <data name="OverwriteAnswerYes" xml:space="preserve">
+    <value>Klar, mach weiter und überschreib das.</value>
+  </data>
+  <data name="OverwriteQuestion" xml:space="preserve">
+    <value>Willst du die Datei {0} überschreiben?</value>
+  </data>
+  <data name="PasteFromClipboard" xml:space="preserve">
+    <value>Aus der Zwischenablage einfügen</value>
+  </data>
+  <data name="Places" xml:space="preserve">
+    <value>Orte</value>
+  </data>
+  <data name="PlaceTheStatement" xml:space="preserve">
+    <value>Ausdruck hier eingeben.</value>
+  </data>
+  <data name="Plot" xml:space="preserve">
+    <value>Plot</value>
+  </data>
+  <data name="PlotPlaceholder" xml:space="preserve">
+    <value>Noch nichts zu visualisieren. Mit dem Befehl plot(1:100, rand(100,3)) kann man z.B. einen einfachen Plot erzeugen.</value>
+  </data>
+  <data name="PlotSavedMessage" xml:space="preserve">
+    <value>Der plot wurde erfolgreich in der Datei {0} gespeichert.</value>
+  </data>
+  <data name="PlotSettings" xml:space="preserve">
+    <value>Ploteinstellungen</value>
+  </data>
+  <data name="PlotSettingsToolTip" xml:space="preserve">
+    <value>Ploteinstellungen</value>
+  </data>
+  <data name="PlotTitleHint" xml:space="preserve">
+    <value>Titel hier eingeben</value>
+  </data>
+  <data name="PlotTitleLabel" xml:space="preserve">
+    <value>Titel des Plots:</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Plugins können die Möglichkeiten von Sumerics erweitern. Ein Plugin einzufügen ist nicht kompliziert. Fügen Sie einfach das gewünschte Plugin in den Unterordner plugins von Sumerics. Es wird dann in der Liste unten angezeigt. Diese Liste ist der Ort, an dem existierende Plugins aktiviert und deaktiviert werden können.</value>
+  </data>
+  <data name="Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="PngFile" xml:space="preserve">
+    <value>PNG Datei</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Vorheriges</value>
+  </data>
+  <data name="PrintPlotToolTip" xml:space="preserve">
+    <value>Plot drucken</value>
+  </data>
+  <data name="Quickview" xml:space="preserve">
+    <value>Schnellanzeige</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Wiederholen</value>
+  </data>
+  <data name="ResetAxesTansformationsToolTip" xml:space="preserve">
+    <value>Achsentransformationen zurücksetzen</value>
+  </data>
+  <data name="RestartRequired" xml:space="preserve">
+    <value>Veränderungen erfordern einen Neustart der Anwendung.</value>
+  </data>
+  <data name="Returns" xml:space="preserve">
+    <value>Rückgabe</value>
+  </data>
+  <data name="RowsLabel" xml:space="preserve">
+    <value>Anzuzeigende Zeilen:</value>
+  </data>
+  <data name="Samples" xml:space="preserve">
+    <value>Beispiele</value>
+  </data>
+  <data name="SamplesDescription" xml:space="preserve">
+    <value>Demonstrationen und Beispiele</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Speichern</value>
+  </data>
+  <data name="SaveFile" xml:space="preserve">
+    <value>Datei speichern...</value>
+  </data>
+  <data name="SaveFileAsToolTip" xml:space="preserve">
+    <value>Datei speichern unter...</value>
+  </data>
+  <data name="SaveFileToolTip" xml:space="preserve">
+    <value>Datei speichern</value>
+  </data>
+  <data name="SaveImage" xml:space="preserve">
+    <value>Bild speichern...</value>
+  </data>
+  <data name="SavePlotAs" xml:space="preserve">
+    <value>Plot speichern unter...</value>
+  </data>
+  <data name="SavePlotToolTip" xml:space="preserve">
+    <value>Plot speichern</value>
+  </data>
+  <data name="SaveWorkspace" xml:space="preserve">
+    <value>Workspace speichern</value>
+  </data>
+  <data name="SaveWorkspaceAs" xml:space="preserve">
+    <value>Workspace speichern unter...</value>
+  </data>
+  <data name="SearchHelp" xml:space="preserve">
+    <value>Hilfe durchsuchen</value>
+  </data>
+  <data name="SearchHint" xml:space="preserve">
+    <value>Suchen...</value>
+  </data>
+  <data name="SearchVariables" xml:space="preserve">
+    <value>Variablen durchsuchen</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Ordner auswählen</value>
+  </data>
+  <data name="SensorPlots" xml:space="preserve">
+    <value>Sensorplots</value>
+  </data>
+  <data name="Sensors" xml:space="preserve">
+    <value>Sensoren</value>
+  </data>
+  <data name="SeriesSettings" xml:space="preserve">
+    <value>Datenreiheneinstellungen</value>
+  </data>
+  <data name="SeriesTitleHint" xml:space="preserve">
+    <value>Titel hier eingeben</value>
+  </data>
+  <data name="SeriesTitleLabel" xml:space="preserve">
+    <value>Datenreihentitel:</value>
+  </data>
+  <data name="ShowAutocomplete" xml:space="preserve">
+    <value>Autovervollständigung anzeigen</value>
+  </data>
+  <data name="ShowHideErrorsToolTip" xml:space="preserve">
+    <value>Fehler anzeigen / verstecken</value>
+  </data>
+  <data name="ShowLegendHint" xml:space="preserve">
+    <value>Legende sichtbar</value>
+  </data>
+  <data name="ShowLegendLabel" xml:space="preserve">
+    <value>Legende anzeigen:</value>
+  </data>
+  <data name="ShowLevelsHint" xml:space="preserve">
+    <value>Linien sichtbar</value>
+  </data>
+  <data name="ShowLevelsLabel" xml:space="preserve">
+    <value>Levels anzeigen:</value>
+  </data>
+  <data name="ShowLinesLabel" xml:space="preserve">
+    <value>Linien anzeigen:</value>
+  </data>
+  <data name="StopEvaluation" xml:space="preserve">
+    <value>Aktuelle Evaluation abbrechen</value>
+  </data>
+  <data name="SubplotSettings" xml:space="preserve">
+    <value>Subplot Einstellungen</value>
+  </data>
+  <data name="SumericsWorkspace" xml:space="preserve">
+    <value>Sumerics Workspace</value>
+  </data>
+  <data name="SymbolLabel" xml:space="preserve">
+    <value>Symbol:</value>
+  </data>
+  <data name="Textfile" xml:space="preserve">
+    <value>Textdatei</value>
+  </data>
+  <data name="TitleHint" xml:space="preserve">
+    <value>Titel hier eingeben</value>
+  </data>
+  <data name="TitleLabel" xml:space="preserve">
+    <value>Plottitel:</value>
+  </data>
+  <data name="ToggleGridlinesToolTip" xml:space="preserve">
+    <value>Gridlinien ein/aus</value>
+  </data>
+  <data name="ToggleInputPanel" xml:space="preserve">
+    <value>Eingabefeld ein/aus</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Rückgängig</value>
+  </data>
+  <data name="UnexpectedError" xml:space="preserve">
+    <value>Unerwarteter Fehler</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+    <value>Verwendung</value>
+  </data>
+  <data name="UsedPackages" xml:space="preserve">
+    <value>Sensor Numerics verwendet folgende Pakete</value>
+  </data>
+  <data name="UserStartupScriptLabel" xml:space="preserve">
+    <value>Benutzerstartskript:</value>
+  </data>
+  <data name="Variable" xml:space="preserve">
+    <value>Variable</value>
+  </data>
+  <data name="ViewInEditor" xml:space="preserve">
+    <value>In Editor betrachten</value>
+  </data>
+  <data name="Visualization" xml:space="preserve">
+    <value>Visualisierung</value>
+  </data>
+  <data name="WatchSamples" xml:space="preserve">
+    <value>Beispiele anschauen</value>
+  </data>
+  <data name="WidthInPx" xml:space="preserve">
+    <value>Breite (px)</value>
+  </data>
+  <data name="YampScript" xml:space="preserve">
+    <value>YAMP Skript</value>
   </data>
 </root>
