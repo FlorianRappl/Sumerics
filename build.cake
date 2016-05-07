@@ -152,7 +152,7 @@ Task("Create-Installer")
         Squirrel(package, new SquirrelSettings
         {
             Silent = true,
-            NoMsi = true,
+            NoMsi = false,
             ReleaseDirectory = releasesDir
         });
     });
@@ -195,7 +195,7 @@ Task("Publish-Release")
 
         var release = github.Release.Create("FlorianRappl", "Sumerics", new NewRelease("v" + version) 
         {
-            Name = version,
+            Name = "Sumerics " + version,
             Body = String.Join(Environment.NewLine, releaseNotes.Notes),
             Prerelease = false,
             TargetCommitish = "master"
@@ -208,6 +208,7 @@ Task("Publish-Release")
             using (var contentStream = System.IO.File.OpenRead(releaseFile.FullPath))
             {
                 var fileName = releaseFile.GetFilename().ToString();
+                fileName = fileName.Replace("Setup.", "Sumerics.");
                 github.Release.UploadAsset(release, new ReleaseAssetUpload(fileName, "application/binary", contentStream, null)).Wait();
             }
         }
@@ -220,7 +221,7 @@ Task("Publish-Package")
     .Does(() =>
     {
         var apiKey = EnvironmentVariable("CHOCOLATEY_API_KEY");
-        var fileName = "Sumerics" + version + ".nupkg";
+        var fileName = "Sumerics." + version + ".nupkg";
         var package = chocolateyRoot + File(fileName);
 
         if (String.IsNullOrEmpty(apiKey))
