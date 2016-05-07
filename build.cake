@@ -24,7 +24,7 @@ var releaseNotes = ParseReleaseNotes("./CHANGELOG.md");
 var version = releaseNotes.Version.ToString();
 var buildSourceDir = Directory("./source/Sumerics/bin") + Directory(configuration);
 var buildResultDir = Directory("./build") + Directory(version);
-var installerDir = Directory("./installer")
+var installerDir = Directory("./installer");
 var nugetRoot = installerDir + Directory("nuget");
 var chocolateyRoot = installerDir + Directory("chocolatey");
 var releasesDir = installerDir + Directory("releases");
@@ -98,7 +98,8 @@ Task("Copy-Files")
     {
         var target = nugetRoot + Directory("lib") + Directory("net45");
         CopyDirectory(buildSourceDir, target);
-        DeleteFiles(GetFiles(target.Path.FullPath + "/*.pdb"​));
+        DeleteFiles(GetFiles(target.Path.FullPath + "/*.pdb"));
+        DeleteFiles(GetFiles(target.Path.FullPath + "/*.vshost.*"));
     });
 
 Task("Create-Package")
@@ -118,7 +119,7 @@ Task("Create-Package")
         NuGetPack(spec, new NuGetPackSettings
         {
             Version = version,
-            BasePath = nuspec.GetDirectory(),
+            BasePath = nugetRoot,
             OutputDirectory = nugetRoot,
             Symbols = false
         });
@@ -146,7 +147,7 @@ Task("Create-Chocolatey")
         var nuspec = chocolateyRoot + File("Sumerics.nuspec");
         var scriptFile = chocolateyRoot + Directory("tools") + File("chocolateyInstall.ps1");
 
-        File.WriteAllText(scriptFile.Path.FullPath, content);
+        System.IO.File.WriteAllText(scriptFile.Path.FullPath, content);
         
         ChocolateyPack(nuspec, new ChocolateyPackSettings
         {
@@ -184,7 +185,7 @@ Task("Publish-Release")
 
         foreach (var releaseFile in releaseFiles)
         {
-            using (var contentStream = File.OpenRead(releaseFile.FullPath))
+            using (var contentStream = System.IO.File.OpenRead(releaseFile.FullPath))
             {
                 var fileName = releaseFile.GetFilename().ToString();
                 github.Release.UploadAsset(release, new ReleaseAssetUpload(fileName, "application/binary", contentStream, null)).Wait();
@@ -200,7 +201,7 @@ Task("Publish-Package")
     {
         var apiKey = EnvironmentVariable("CHOCOLATEY_API_KEY");
         var fileName = "Sumerics" + version + ".nupkg";
-        var package = GetFile(chocolateyRoot.Path.FullPath + "/" + fileName);
+        var package = chocolateyRoot + File(fileName);
 
         if (String.IsNullOrEmpty(apiKey))
         {
@@ -226,7 +227,8 @@ Task("Update-AppVeyor-Build-Number")
     
 Task("Package")
     .IsDependentOn("Run-Unit-Tests")
-    .IsDependentOn("Create-Package");
+    .IsDependentOn("Create-Chocolatey")
+    .IsDependentOn("Create-Installer");
 
 Task("Default")
     .IsDependentOn("Package");    
