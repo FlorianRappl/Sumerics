@@ -114,6 +114,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="Codebase\CanvasDragSource.cs" />
     <Compile Include="Codebase\CanvasDropTarget.cs" />
     <Compile Include="Codebase\CircleButton.cs" />

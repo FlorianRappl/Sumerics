@@ -218,6 +218,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="Codebase\FileLogger.cs" />
     <Compile Include="Codebase\IconFactory.cs" />
     <Compile Include="Codebase\Kernel.cs" />

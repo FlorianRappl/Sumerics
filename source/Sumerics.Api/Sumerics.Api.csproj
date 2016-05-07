@@ -43,6 +43,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="ApiModule.cs" />
     <Compile Include="ApiProvider.cs" />
     <Compile Include="Functions\DockFunction.cs" />

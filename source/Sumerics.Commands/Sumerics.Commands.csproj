@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="CommandModule.cs" />
     <Compile Include="Commands\CdCommand.cs" />
     <Compile Include="Commands\ClearCommand.cs" />

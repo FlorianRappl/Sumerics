@@ -25,14 +25,14 @@
             </ResourceDictionary.MergedDictionaries>
             
             <DataTemplate DataType="{x:Type vm:EditorFileViewModel}">
-                <r:EditorControl OpenFileCommand="{Binding DataContext.Open, ElementName=Parent}"
+                <r:EditorControl OpenFileCommand="{Binding DataContext.Open, ElementName=ParentControl}"
                                  CloseCommand="{Binding Close}"
                                  Text="{Binding Text, Mode=TwoWay}"
                                  Changed="{Binding Changed, Mode=TwoWay}"
                                  CompileCommand="{Binding Compile}"
                                  ExecuteCommand="{Binding Execute}"
                                  AutoCompleteItems="{Binding Items}"
-                                 NewFileCommand="{Binding DataContext.Create, ElementName=Parent}"
+                                 NewFileCommand="{Binding DataContext.Create, ElementName=ParentControl}"
                                  SaveCommand="{Binding Save}"
                                  SaveAsCommand="{Binding SaveAs}"
                                  MathConverter="{Binding Converter}"
@@ -41,7 +41,7 @@
         </ResourceDictionary>
     </Window.Resources>
     
-    <Controls:MetroContentControl x:Name="Parent">
+    <Controls:MetroContentControl x:Name="ParentControl">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50" />

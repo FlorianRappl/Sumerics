@@ -39,6 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\ProductInfo.cs">
+      <Link>ProductInfo.cs</Link>
+    </Compile>
     <Compile Include="LinePlotModel.cs" />
     <Compile Include="Plot3dAxis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
