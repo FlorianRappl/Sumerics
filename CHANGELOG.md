@@ -1,3 +1,7 @@
+# 2.0.1
+
+- Provide German translations
+
 # 2.0.0
 
 - Release of vNext

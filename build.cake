@@ -55,8 +55,26 @@ Task("Restore-Packages")
         NuGetRestore("./source/Sumerics.sln");
     });
 
+Task("Update-Assembly-Version")
+    .Does(() =>
+    {
+        var file = Directory("./source") + File("ProductInfo.cs");
+
+        CreateAssemblyInfo(file, new AssemblyInfoSettings
+        {
+            Product = "Sumerics",
+            Description = "Sensor Numerics for Intel Ultrabooks™ combines the power of numerical computations with the ability to perform experiments with the Intel Ultrabook™ over the integrated sensors.",
+            Version = version,
+            FileVersion = version,
+            Company = "Florian Rappl",
+            Trademark = "",
+            Copyright = String.Format("Copyright © 2012 - {0}", DateTime.Now.Year)
+        });
+    });
+
 Task("Build")
     .IsDependentOn("Restore-Packages")
+    .IsDependentOn("Update-Assembly-Version")
     .Does(() =>
     {
         if (isRunningOnWindows)
@@ -145,8 +163,10 @@ Task("Create-Chocolatey")
     {
         var content = String.Format("$packageName = 'Sumerics'{1}$installerType = 'exe'{1}$url32 = 'https://github.com/FlorianRappl/Sumerics/releases/download/v{0}/Sumerics.exe'{1}$silentArgs = ''{1}{1}Install-ChocolateyPackage \"$packageName\" \"$installerType\" \"$silentArgs\" \"$url32\"", version, Environment.NewLine);
         var nuspec = chocolateyRoot + File("Sumerics.nuspec");
-        var scriptFile = chocolateyRoot + Directory("tools") + File("chocolateyInstall.ps1");
+        var toolsDirectory = chocolateyRoot + Directory("tools");
+        var scriptFile = toolsDirectory + File("chocolateyInstall.ps1");
 
+        CreateDirectory(toolsDirectory);
         System.IO.File.WriteAllText(scriptFile.Path.FullPath, content);
         
         ChocolateyPack(nuspec, new ChocolateyPackSettings
@@ -231,7 +251,7 @@ Task("Package")
     .IsDependentOn("Create-Installer");
 
 Task("Default")
-    .IsDependentOn("Package");    
+    .IsDependentOn("Package");
 
 Task("Publish")
     .IsDependentOn("Publish-Package")
